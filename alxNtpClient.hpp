@@ -1,4 +1,4 @@
-﻿/**
+/**
   ******************************************************************************
   * @file alxNtpClient.hpp
   * @brief Auralix C++ Library - ALX NTP Client Module
@@ -16,6 +16,7 @@
 #include <alxGlobal.hpp>
 #include <alxRtc.hpp>
 #include <alxOsCriticalSection.hpp>
+#include <gmConf.hpp>
 
 
 //******************************************************************************
@@ -132,15 +133,11 @@ namespace Alx
 				(
 					Alx::AlxRtc::IRtc* rtc,
 					NetworkInterface* net,
-					const char* serverIp,
-					uint16_t serverPort,
-					bool isServerIpHostnameFormat
+                    Config *config
 				) :
 					rtc(rtc),
 					net(net),
-					serverIp(serverIp),
-					serverPort(serverPort),
-					isServerIpHostnameFormat(isServerIpHostnameFormat)
+					config(config)
 				{};
 				virtual ~NtpClient() {};
 				uint64_t GetUnixTime_ns(void) override
@@ -187,9 +184,9 @@ namespace Alx
 					}
 
 					// #5.1 Resolve server IP address if it is in hostname format
-					if(isServerIpHostnameFormat)
+					if(config->ntp.hostname_format)
 					{
-						nsapiError = net->gethostbyname(serverIp, &sockAddrServer);
+						nsapiError = net->gethostbyname(config->ntp.ip, &sockAddrServer);
 						if (nsapiError != NSAPI_ERROR_OK)
 						{
 							ALX_NTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
@@ -200,7 +197,7 @@ namespace Alx
 					// #5.2 Else use provided
 					else
 					{
-						bool status = sockAddrServer.set_ip_address(serverIp);
+						bool status = sockAddrServer.set_ip_address(config->ntp.ip);
 						if(status == false)
 						{
 							ALX_NTP_CLIENT_TRACE("Err: Invalid IP");
@@ -210,7 +207,7 @@ namespace Alx
 					}
 
 					// #6 Set server port
-					sockAddrServer.set_port(serverPort);	// No Return
+					sockAddrServer.set_port(config->ntp.port);	// No Return
 
 					// #7 Set socket timeout
 					sock.set_timeout(SOCK_TIMEOUT_ms);		// No Return
@@ -343,9 +340,7 @@ namespace Alx
 				UDPSocket sock;
 
 				// Parameters
-				const char* serverIp = "";
-				uint16_t serverPort = 0;
-				bool isServerIpHostnameFormat = false;
+				Config *config;
 
 				// Variables
 				RxPacket rxPacket = {};
