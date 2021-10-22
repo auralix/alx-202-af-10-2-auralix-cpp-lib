@@ -246,13 +246,12 @@ namespace Alx
 					const char* name,
 					uint32_t id,
 					uint32_t groupId,
-					char* valDefBuff,
+					const char* valDefBuff,
 					uint32_t valBuffLen,
-					uint32_t valBuffDefLen,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
 				)
 				{
-					AlxParamItem_CtorStr(&me, name, id, groupId, valDefBuff, valBuffLen, valBuffDefLen, valOutOfRangeHandle);
+					AlxParamItem_CtorStr(&me, name, id, groupId, valDefBuff, valBuffLen, valOutOfRangeHandle);
 				};
 				virtual ~ParamItem() {};
 				const char*			GetName(void) override							{ return AlxParamItem_GetName(&me); }
