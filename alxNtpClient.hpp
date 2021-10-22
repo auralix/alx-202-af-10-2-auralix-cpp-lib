@@ -16,7 +16,6 @@
 #include <alxGlobal.hpp>
 #include <alxRtc.hpp>
 #include <alxOsCriticalSection.hpp>
-#include <gmConf.hpp>
 
 
 //******************************************************************************
@@ -133,11 +132,15 @@ namespace Alx
 				(
 					Alx::AlxRtc::IRtc* rtc,
 					NetworkInterface* net,
-                    Config *config
+					const char* serverIp,
+					uint16_t* serverPort,
+					bool* isServerIpHostnameFormat
 				) :
 					rtc(rtc),
 					net(net),
-					config(config)
+					serverIp(serverIp),
+					serverPort(serverPort),
+					isServerIpHostnameFormat(isServerIpHostnameFormat)
 				{};
 				virtual ~NtpClient() {};
 				uint64_t GetUnixTime_ns(void) override
@@ -184,9 +187,9 @@ namespace Alx
 					}
 
 					// #5.1 Resolve server IP address if it is in hostname format
-					if(config->ntp.hostname_format)
+					if(*isServerIpHostnameFormat)
 					{
-						nsapiError = net->gethostbyname(config->ntp.ip, &sockAddrServer);
+						nsapiError = net->gethostbyname(serverIp, &sockAddrServer);
 						if (nsapiError != NSAPI_ERROR_OK)
 						{
 							ALX_NTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
@@ -197,7 +200,7 @@ namespace Alx
 					// #5.2 Else use provided
 					else
 					{
-						bool status = sockAddrServer.set_ip_address(config->ntp.ip);
+						bool status = sockAddrServer.set_ip_address(serverIp);
 						if(status == false)
 						{
 							ALX_NTP_CLIENT_TRACE("Err: Invalid IP");
@@ -207,7 +210,7 @@ namespace Alx
 					}
 
 					// #6 Set server port
-					sockAddrServer.set_port(config->ntp.port);	// No Return
+					sockAddrServer.set_port(*serverPort);	// No Return
 
 					// #7 Set socket timeout
 					sock.set_timeout(SOCK_TIMEOUT_ms);		// No Return
@@ -340,7 +343,9 @@ namespace Alx
 				UDPSocket sock;
 
 				// Parameters
-				Config *config;
+				const char* serverIp = "";
+				uint16_t* serverPort = nullptr;
+				bool* isServerIpHostnameFormat = nullptr;
 
 				// Variables
 				RxPacket rxPacket = {};
