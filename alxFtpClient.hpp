@@ -65,10 +65,10 @@ namespace Alx
 				(
 					NetworkInterface* net,
 					const char* serverIp,
-					uint16_t serverPort,
+					uint16_t* serverPort,
 					const char* username,
 					const char* password,
-					bool isServerIpHostnameFormat
+					bool* isServerIpHostnameFormat
 				) :
 					net(net),
 					serverIp(serverIp),
@@ -106,7 +106,7 @@ namespace Alx
 					}
 
 					// #5.1 Resolve server IP address if it is in hostname format
-					if(isServerIpHostnameFormat)
+					if(*isServerIpHostnameFormat)
 					{
 						nsapiError = net->gethostbyname(serverIp, &ctrlSockAddrServer);	// FTP server IP is IP of FTP server control socket IP
 						if(nsapiError != NSAPI_ERROR_OK)
@@ -129,7 +129,7 @@ namespace Alx
 					}
 
 					// #6 Set server control socket port
-					ctrlSockAddrServer.set_port(serverPort);	// No Return -> FTP server port is port of FTP server control socket port
+					ctrlSockAddrServer.set_port(*serverPort);	// No Return -> FTP server port is port of FTP server control socket port
 
 					// #7 Set control socket timeout
 					ctrlSock.set_timeout(CTRL_SOCK_TIMEOUT_ms);	// No Return
@@ -561,10 +561,10 @@ namespace Alx
 
 				// Parameters
 				const char* serverIp = "";
-				uint16_t serverPort = 0;
+				uint16_t* serverPort = nullptr;
 				const char *username = "";
 				const char *password = "";
-				bool isServerIpHostnameFormat = false;
+				bool* isServerIpHostnameFormat = nullptr;
 
 				// Variables
 				char buff[BUFF_LEN] = {};

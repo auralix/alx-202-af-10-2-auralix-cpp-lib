@@ -1,4 +1,4 @@
-﻿/**
+/**
   ******************************************************************************
   * @file alxNtpClient.hpp
   * @brief Auralix C++ Library - ALX NTP Client Module
@@ -133,8 +133,8 @@ namespace Alx
 					Alx::AlxRtc::IRtc* rtc,
 					NetworkInterface* net,
 					const char* serverIp,
-					uint16_t serverPort,
-					bool isServerIpHostnameFormat
+					uint16_t* serverPort,
+					bool* isServerIpHostnameFormat
 				) :
 					rtc(rtc),
 					net(net),
@@ -187,7 +187,7 @@ namespace Alx
 					}
 
 					// #5.1 Resolve server IP address if it is in hostname format
-					if(isServerIpHostnameFormat)
+					if(*isServerIpHostnameFormat)
 					{
 						nsapiError = net->gethostbyname(serverIp, &sockAddrServer);
 						if (nsapiError != NSAPI_ERROR_OK)
@@ -210,7 +210,7 @@ namespace Alx
 					}
 
 					// #6 Set server port
-					sockAddrServer.set_port(serverPort);	// No Return
+					sockAddrServer.set_port(*serverPort);	// No Return
 
 					// #7 Set socket timeout
 					sock.set_timeout(SOCK_TIMEOUT_ms);		// No Return
@@ -344,8 +344,8 @@ namespace Alx
 
 				// Parameters
 				const char* serverIp = "";
-				uint16_t serverPort = 0;
-				bool isServerIpHostnameFormat = false;
+				uint16_t* serverPort = nullptr;
+				bool* isServerIpHostnameFormat = nullptr;
 
 				// Variables
 				RxPacket rxPacket = {};
