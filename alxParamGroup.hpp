@@ -33,7 +33,6 @@ namespace Alx
 				virtual ~IParamGroup() {};
 				virtual const char*			GetName(void) =							0;
 		};
-		// template<typename T> mislim da ne pride vpoštev, ker ma lahko vsak item drugi tip podatka
 		class ParamGroup : public IParamGroup
 		{
 			public:
@@ -43,7 +42,7 @@ namespace Alx
 				// #1 Uint8
 				ParamGroup
 				(
-				AlxParamItem::IParamItem memSafe,	// Replace with actual memSafe object!
+				AlxParamItem::IParamItem* memSafe,	// Replace with actual memSafe object!
 				const char* name,
 				uint32_t len, // Uporablja se za memSafe pisanje, branje. Mogoče dolžina podatkov v itemParam. Vlka verjetnost da se to v cpp izračuna in da ne bo v cpp konstrukturju
 				AlxParamItem::IParamItem** paramItemArr,
@@ -51,36 +50,38 @@ namespace Alx
 				uint8_t initNumOfTries
 				)
 				{
-					// Get valBuff size
+					// Get valBuff size for all items
 					uint8_t valbuffSize = 0;
 					for(uint32_t i = 0; i < numOfParamItems; i++)
 					{
-
 						valbuffSize = valbuffSize + paramItemArr[i]->GetValLen();
 					}
 
+					// Create buffers
+					uint8_t valBuff[valbuffSize];
+					uint8_t valStoredBuff[valbuffSize];
+					uint8_t valToStoreBuff[valbuffSize];
 
-					me->valBuff[valbuffSize];		// Treba nardit buffer ki bo tolk vlek da grejo not podatki iz vseh itemov.. nek for stavek ko vsakemu itemu vzame dolžino podatkov...
-					me->valStoredBuff[valbuffSize]; // Isto dolg ko prvi
-					me->valToStoreBuff[valbuffSize]; // Isto dolg ko prvi.
-
+					// Create array of pointers for items c structures
 					for(uint32_t i = 0 ; i < numOfParamItems ; i++)
 					{
+						// Get pointer value from arrays of pointers for object item[i]
 						AlxParamItem::IParamItem* temp = *(paramItemArr + i);
+						// Get C structure pointer from object[i]
 						//paramGroupParamItemArr[i] = temp->GetCStructPtr();
 					}
 
-					/*
-					AlxParamGroup_Ctor( me,
-										memSafe->GetCStructPtr();,
-										name,
-										len,
-										uint8_t* valBuff,
-										uint8_t* valStoredBuff,
-										uint8_t* valToStoreBuff,
-										AlxParamItem** paramItemArr,
-										uint32_t numOfParamItems,
-										uint8_t initNumOfTries);*/
+
+//					AlxParamGroup_Ctor( me,
+//										memSafe->GetCStructPtr(), //
+//										name,
+//										valbuffSize, // len in c
+//										valBuff,
+//										valStoredBuff,
+//										valToStoreBuff,
+//										paramItemArr,
+//										numOfParamItems,
+//										initNumOfTries);
 				};
 
 				virtual ~ParamGroup() {};
