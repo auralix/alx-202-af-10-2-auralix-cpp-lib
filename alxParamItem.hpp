@@ -66,6 +66,7 @@ namespace Alx
 				virtual void				SetValArr(void* val) =					0;
 				virtual void				GetValStr(char* val) =					0;
 				virtual ::Alx_Status		SetValStr(char* val) =					0;
+				virtual::AlxParamItem* GetCStructPtr(void)			= 0;
 		};
 		template<uint32_t arrBuffLen = 1, uint32_t strMaxLen = 1>
 		class ParamItem : public IParamItem
@@ -292,6 +293,7 @@ namespace Alx
 				void				SetValArr(void* val) override					{ AlxParamItem_SetValArr(&me, val); }
 				void				GetValStr(char* val) override					{ AlxParamItem_GetValStr(&me, val); }
 				::Alx_Status		SetValStr(char* val) override					{ return AlxParamItem_SetValStr(&me, val); }
+				::AlxParamItem* GetCStructPtr(void) override						{ return &me; }
 			protected:
 			//******************************************************************************
 			// Protected Variables

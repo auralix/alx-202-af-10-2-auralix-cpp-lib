@@ -33,6 +33,7 @@ namespace Alx
 				virtual ~IParamGroup() {};
 				virtual const char*			GetName(void) =							0;
 		};
+		template<uint32_t numOfParamItems, uint32_t dataRawLen>
 		class ParamGroup : public IParamGroup
 		{
 			public:
@@ -42,11 +43,9 @@ namespace Alx
 				// #1 Uint8
 				ParamGroup
 				(
-				AlxParamItem::IParamItem* memSafe,	// Replace with actual memSafe object!
+				AlxParamItem::IParamItem* memSafe,
 				const char* name,
-				uint32_t len, 
 				AlxParamItem::IParamItem** paramItemArr,
-				uint32_t numOfParamItems,
 				uint8_t initNumOfTries
 				)
 				{
@@ -58,9 +57,6 @@ namespace Alx
 					}
 
 					// Create buffers
-					uint8_t valBuff[valbuffSize];	// param * 8
-					uint8_t valStoredBuff[valbuffSize]; //Dolzina bufferjov, na roko zrucana al pa priblizo pa več
-					uint8_t valToStoreBuff[valbuffSize]; //Dolzina bufferjov, na roko zrucana
 
 					// Create array of pointers for items c structures
 					for(uint32_t i = 0 ; i < numOfParamItems ; i++)
@@ -68,33 +64,36 @@ namespace Alx
 						// Get pointer value from arrays of pointers for object item[i]
 						AlxParamItem::IParamItem* temp = *(paramItemArr + i);
 						// Get C structure pointer from object[i]
-						//paramGroupParamItemArr[i] = temp->GetCStructPtr();
+						paramGroupParamItemArr[i] = temp->GetCStructPtr();
 					}
 
 
 //					AlxParamGroup_Ctor( me,
-//										memSafe->GetCStructPtr(), //
-//										name,
-//										valbuffSize, // len in c
-//										valBuff,
-//										valStoredBuff,
-//										valToStoreBuff,
-//										paramItemArr,
-//										numOfParamItems,
-//										initNumOfTries);
+//										memSafe->GetCStructPtr(), // Waiting for GH to commit
+//										name,	// OK
+//										valbuffSize, // OK
+//										valBuff, // OK
+//										valStoredBuff,	// OK
+//										valToStoreBuff, // OK
+//										paramItemArr, // OK
+//										numOfParamItems, // OK
+//										initNumOfTries); // OK
 				};
 
 				virtual ~ParamGroup() {};
 				//const char*			GetName(void) override							{ return AlxParamItem_GetName(&me); }
 
 			private:
-			::AlxParamItem* paramGroupParamItemArr[2048] = {}; // TO DO: Note max 2048 bytes fit into page on G4
+			::AlxParamItem* paramGroupParamItemArr[numOfParamItems] = {}; // TO DO: Note max 2048 bytes fit into page on G4
 
 			protected :
 				//******************************************************************************
 				// Protected Variables
 				//******************************************************************************
-				::AlxParamGroup* me = {} ;
+				::AlxParamGroup me = {} ;
+				uint8_t valBuff[dataRawLen];		// user has to calculate. Safe way: 8bytes * numOfParamItems
+				uint8_t valStoredBuff[dataRawLen];
+				uint8_t valToStoreBuff[dataRawLen];
 
 		};
 	}
