@@ -44,7 +44,7 @@ namespace Alx
 				(
 				AlxParamItem::IParamItem* memSafe,	// Replace with actual memSafe object!
 				const char* name,
-				uint32_t len, // Uporablja se za memSafe pisanje, branje. Mogoče dolžina podatkov v itemParam. Vlka verjetnost da se to v cpp izračuna in da ne bo v cpp konstrukturju
+				uint32_t len, 
 				AlxParamItem::IParamItem** paramItemArr,
 				uint32_t numOfParamItems,
 				uint8_t initNumOfTries
@@ -58,9 +58,9 @@ namespace Alx
 					}
 
 					// Create buffers
-					uint8_t valBuff[valbuffSize];
-					uint8_t valStoredBuff[valbuffSize];
-					uint8_t valToStoreBuff[valbuffSize];
+					uint8_t valBuff[valbuffSize];	// param * 8
+					uint8_t valStoredBuff[valbuffSize]; //Dolzina bufferjov, na roko zrucana al pa priblizo pa več
+					uint8_t valToStoreBuff[valbuffSize]; //Dolzina bufferjov, na roko zrucana
 
 					// Create array of pointers for items c structures
 					for(uint32_t i = 0 ; i < numOfParamItems ; i++)
