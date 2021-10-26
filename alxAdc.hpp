@@ -59,7 +59,7 @@ namespace Alx
 					return AlxAdc_TempSens_GetTemp_degC(&me);
 				}
 				::AlxAdc* GetCStructPtr(void) override
-				{ 
+				{
 					return &me;
 				}
 			protected:
