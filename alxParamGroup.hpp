@@ -50,9 +50,9 @@ namespace Alx
 				// #1 Uint8
 				ParamGroup
 				(
-				AlxParamItem::IParamItem* memSafe,
-				const char* name,
+				AlxMemSafe::IMemSafe* memSafe,
 				AlxParamItem::IParamItem** paramItemArr,
+				const char* name,
 				uint8_t initNumOfTries
 				)
 				{
@@ -73,14 +73,14 @@ namespace Alx
 					}
 
 					// #3 C Constructor
-					AlxParamGroup_Ctor	(me,
+					AlxParamGroup_Ctor	(&me,
 										memSafe->GetCStructPtr(),
 										name,
 										valbuffSize,
 										valBuff,
 										valStoredBuff,
 										valToStoreBuff,
-										paramItemArr,
+										paramGroupParamItemArr,
 										numOfParamItems,
 										initNumOfTries);
 				};
