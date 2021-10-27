@@ -15,7 +15,7 @@
 //******************************************************************************
 #include <alxGlobal.hpp>
 #include <alxParamItem.h>
-//#include <typeinfo> 
+//#include <typeinfo>
 
 
 //******************************************************************************
@@ -62,12 +62,13 @@ namespace Alx
 				virtual ::Alx_Status		SetValDouble(double val) =				0;
 				virtual ::Alx_Status		SetValBool(bool val) =					0;
 
-				virtual void				GetValArr(void* val, uint32_t valLen) =	0;
-				virtual void				SetValArr(void* val, uint32_t valLen) =	0;
+				virtual void				GetValArr(void* val) =					0;
+				virtual void				SetValArr(void* val) =					0;
 				virtual void				GetValStr(char* val) =					0;
 				virtual ::Alx_Status		SetValStr(char* val) =					0;
+				virtual::AlxParamItem* GetCStructPtr(void)			= 0;
 		};
-		//template<typename T>
+		template<uint32_t arrBuffLen = 1, uint32_t strMaxLen = 1>
 		class ParamItem : public IParamItem
 		{
 			public:
@@ -234,12 +235,12 @@ namespace Alx
 					uint32_t id,
 					uint32_t groupId,
 					void* valDefBuff,
-					uint32_t valBuffLen,
-					//uint32_t valBuffDefLen,
+					//uint32_t valBuffLen, This is calculated from tempalte
+					//uint32_t valBuffDefLen, // Arrays msut be always the same length, defined in template
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
 				)
 				{
-					AlxParamItem_CtorArr(&me, name, id, groupId, valDefBuff, valBuffLen, valOutOfRangeHandle);
+					AlxParamItem_CtorArr(&me, name, id, groupId, valDefBuff, arrValBuff, arrValDeffBuff, arrBuffLen, valOutOfRangeHandle);
 				};
 				// #13 Str
 				ParamItem
@@ -247,13 +248,13 @@ namespace Alx
 					const char* name,
 					uint32_t id,
 					uint32_t groupId,
-					char* valDefBuff,
-					uint32_t valBuffLen,
-					uint32_t valBuffDefLen,
+					const char* valDef,
+					//uint32_t valMaxLen,	// This is defined with a template
+					// uint32_t valBuffDefLen, // String are null terminated, no need for lenght
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
 				)
 				{
-					AlxParamItem_CtorStr(&me, name, id, groupId, valDefBuff, valBuffLen, valBuffDefLen, valOutOfRangeHandle);
+					AlxParamItem_CtorStr(&me, name, id, groupId, valDef, strValBuff, strValDefBuff, strMaxLen, valOutOfRangeHandle);
 				};
 				virtual ~ParamItem() {};
 				const char*			GetName(void) override							{ return AlxParamItem_GetName(&me); }
@@ -288,15 +289,20 @@ namespace Alx
 				::Alx_Status		SetValDouble(double val) override				{ return AlxParamItem_SetValDouble(&me, val); }
 				::Alx_Status		SetValBool(bool val) override					{ return AlxParamItem_SetValBool(&me, val); }
 
-				void				GetValArr(void* val, uint32_t valLen) override	{ AlxParamItem_GetValArr(&me, val, valLen); }
-				void				SetValArr(void* val, uint32_t valLen) override	{ AlxParamItem_SetValArr(&me, val, valLen); }
+				void				GetValArr(void* val) override					{ AlxParamItem_GetValArr(&me, val); }
+				void				SetValArr(void* val) override					{ AlxParamItem_SetValArr(&me, val); }
 				void				GetValStr(char* val) override					{ AlxParamItem_GetValStr(&me, val); }
 				::Alx_Status		SetValStr(char* val) override					{ return AlxParamItem_SetValStr(&me, val); }
+				::AlxParamItem* GetCStructPtr(void) override						{ return &me; }
 			protected:
-				//******************************************************************************
-				// Protected Variables
-				//******************************************************************************
-				::AlxParamItem me = {};
+			//******************************************************************************
+			// Protected Variables
+			//******************************************************************************
+			uint8_t arrValBuff		[arrBuffLen] = {};
+			uint8_t arrValDeffBuff	[arrBuffLen] = {};
+			char	strValBuff		[strMaxLen + 1]	 = {}; // + 1 is for nullchar
+			char	strValDefBuff	[strMaxLen + 1]	 = {};
+			::AlxParamItem me = {} ;
 		};
 	}
 }
