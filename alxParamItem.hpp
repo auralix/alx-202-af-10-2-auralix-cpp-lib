@@ -30,43 +30,43 @@ namespace Alx
 			public:
 				IParamItem() {};
 				virtual ~IParamItem() {};
-				virtual const char*			GetName(void) =							0;
-				virtual uint32_t			GetId(void) =							0;
-				virtual uint32_t			GetGroupId(void) =						0;
-				virtual AlxParamItem_Type	GetType(void) =							0;
-				virtual void*				GetValPtr(void) =						0;
-				virtual uint32_t			GetValLen(void) =						0;
-				virtual void				SetValToDef(void) =						0;
+				virtual const char*			GetName(void)				= 0;
+				virtual uint32_t			GetId(void)					= 0;
+				virtual uint32_t			GetGroupId(void)			= 0;
+				virtual AlxParamItem_Type	GetType(void)				= 0;
+				virtual void*				GetValPtr(void)				= 0;
+				virtual uint32_t			GetValLen(void)				= 0;
+				virtual void				SetValToDef(void)			= 0;
 
-				virtual uint8_t				GetValUint8(void) =						0;
-				virtual uint16_t			GetValUint16(void) =					0;
-				virtual uint32_t			GetValUint32(void) =					0;
-				virtual uint64_t			GetValUint64(void) =					0;
-				virtual int8_t				GetValInt8(void) =						0;
-				virtual int16_t				GetValInt16(void) =						0;
-				virtual int32_t				GetValInt32(void) =						0;
-				virtual int64_t				GetValInt64(void) =						0;
-				virtual float				GetValFloat(void) =						0;
-				virtual double				GetValDouble(void) =					0;
-				virtual bool				GetValBool(void) =						0;
+				virtual uint8_t				GetValUint8(void)			= 0;
+				virtual uint16_t			GetValUint16(void)			= 0;
+				virtual uint32_t			GetValUint32(void)			= 0;
+				virtual uint64_t			GetValUint64(void)			= 0;
+				virtual int8_t				GetValInt8(void)			= 0;
+				virtual int16_t				GetValInt16(void)			= 0;
+				virtual int32_t				GetValInt32(void)			= 0;
+				virtual int64_t				GetValInt64(void)			= 0;
+				virtual float				GetValFloat(void)			= 0;
+				virtual double				GetValDouble(void)			= 0;
+				virtual bool				GetValBool(void)			= 0;
 
-				virtual ::Alx_Status		SetValUint8(uint8_t val) =				0;
-				virtual ::Alx_Status		SetValUint16(uint16_t val) =			0;
-				virtual ::Alx_Status		SetValUint32(uint32_t val) =			0;
-				virtual ::Alx_Status		SetValUint64(uint64_t val) =			0;
-				virtual ::Alx_Status		SetValInt8(int8_t val) =				0;
-				virtual ::Alx_Status		SetValInt16(int16_t val) =				0;
-				virtual ::Alx_Status		SetValInt32(int32_t val) =				0;
-				virtual ::Alx_Status		SetValInt64(int64_t val) =				0;
-				virtual ::Alx_Status		SetValFloat(float val) =				0;
-				virtual ::Alx_Status		SetValDouble(double val) =				0;
-				virtual ::Alx_Status		SetValBool(bool val) =					0;
+				virtual ::Alx_Status		SetValUint8(uint8_t val)	= 0;
+				virtual ::Alx_Status		SetValUint16(uint16_t val)	= 0;
+				virtual ::Alx_Status		SetValUint32(uint32_t val)	= 0;
+				virtual ::Alx_Status		SetValUint64(uint64_t val)	= 0;
+				virtual ::Alx_Status		SetValInt8(int8_t val)		= 0;
+				virtual ::Alx_Status		SetValInt16(int16_t val)	= 0;
+				virtual ::Alx_Status		SetValInt32(int32_t val)	= 0;
+				virtual ::Alx_Status		SetValInt64(int64_t val)	= 0;
+				virtual ::Alx_Status		SetValFloat(float val)		= 0;
+				virtual ::Alx_Status		SetValDouble(double val)	= 0;
+				virtual ::Alx_Status		SetValBool(bool val)		= 0;
 
-				virtual void				GetValArr(void* val) =					0;
-				virtual void				SetValArr(void* val) =					0;
-				virtual void				GetValStr(char* val) =					0;
-				virtual ::Alx_Status		SetValStr(char* val) =					0;
-				virtual::AlxParamItem*		GetCStructPtr(void)	=					0;
+				virtual void				GetValArr(void* val)		= 0;
+				virtual void				SetValArr(void* val)		= 0;
+				virtual void				GetValStr(char* val)		= 0;
+				virtual ::Alx_Status		SetValStr(char* val)		= 0;
+				virtual::AlxParamItem*		GetCStructPtr(void)			= 0;
 		};
 		template<uint32_t arrBuffLen = 1, uint32_t strMaxLen = 1>
 		class ParamItem : public IParamItem
@@ -293,16 +293,16 @@ namespace Alx
 				void				SetValArr(void* val) override					{ AlxParamItem_SetValArr(&me, val); }
 				void				GetValStr(char* val) override					{ AlxParamItem_GetValStr(&me, val); }
 				::Alx_Status		SetValStr(char* val) override					{ return AlxParamItem_SetValStr(&me, val); }
-				::AlxParamItem*		GetCStructPtr(void) override					{ return &me; }
-			protected:
-			//******************************************************************************
-			// Protected Variables
-			//******************************************************************************
-			uint8_t arrValBuff		[arrBuffLen] = {};
-			uint8_t arrValDeffBuff	[arrBuffLen] = {};
-			char	strValBuff		[strMaxLen + 1]	 = {}; // + 1 is for nullchar
-			char	strValDefBuff	[strMaxLen + 1]	 = {};
-			::AlxParamItem me = {} ;
+
+			protected:		::AlxParamItem*		GetCStructPtr(void) override					{ return &me; }
+				//******************************************************************************
+				// Protected Variables
+				//******************************************************************************
+				uint8_t arrValBuff		[arrBuffLen] = {};
+				uint8_t arrValDeffBuff	[arrBuffLen] = {};
+				char	strValBuff		[strMaxLen + 1]	 = {}; // + 1 is for nullchar
+				char	strValDefBuff	[strMaxLen + 1]	 = {};
+				::AlxParamItem me = {} ;
 		};
 	}
 }
