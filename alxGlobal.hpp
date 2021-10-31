@@ -35,6 +35,8 @@
 #include <FATFileSystem.h>
 #include <DeviceKey.h>
 #include <kv_config.h>
+#include "KVStore.h"
+#include "kvstore_global_api.h"
 #include <mbed_trace.h>
 #endif
 #if defined(ALX_MBED_CLOUD_CLIENT)
