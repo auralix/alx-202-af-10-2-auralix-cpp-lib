@@ -132,7 +132,7 @@ namespace Alx
 				(
 					Alx::AlxRtc::IRtc* rtc,
 					NetworkInterface* net,
-					const char* serverIp,
+					char** serverIp,
 					uint16_t* serverPort,
 					bool* isServerIpHostnameFormat
 				) :
@@ -189,7 +189,7 @@ namespace Alx
 					// #5.1 Resolve server IP address if it is in hostname format
 					if(*isServerIpHostnameFormat)
 					{
-						nsapiError = net->gethostbyname(serverIp, &sockAddrServer);
+						nsapiError = net->gethostbyname(*serverIp, &sockAddrServer);
 						if (nsapiError != NSAPI_ERROR_OK)
 						{
 							ALX_NTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
@@ -200,7 +200,7 @@ namespace Alx
 					// #5.2 Else use provided
 					else
 					{
-						bool status = sockAddrServer.set_ip_address(serverIp);
+						bool status = sockAddrServer.set_ip_address(*serverIp);
 						if(status == false)
 						{
 							ALX_NTP_CLIENT_TRACE("Err: Invalid IP");
@@ -343,7 +343,7 @@ namespace Alx
 				UDPSocket sock;
 
 				// Parameters
-				const char* serverIp = "";
+				char** serverIp = nullptr;
 				uint16_t* serverPort = nullptr;
 				bool* isServerIpHostnameFormat = nullptr;
 

@@ -64,10 +64,10 @@ namespace Alx
 				FtpClient
 				(
 					NetworkInterface* net,
-					const char* serverIp,
+					char** serverIp,
 					uint16_t* serverPort,
-					const char* username,
-					const char* password,
+					char** username,
+					char** password,
 					bool* isServerIpHostnameFormat
 				) :
 					net(net),
@@ -108,7 +108,7 @@ namespace Alx
 					// #5.1 Resolve server IP address if it is in hostname format
 					if(*isServerIpHostnameFormat)
 					{
-						nsapiError = net->gethostbyname(serverIp, &ctrlSockAddrServer);	// FTP server IP is IP of FTP server control socket IP
+						nsapiError = net->gethostbyname(*serverIp, &ctrlSockAddrServer);	// FTP server IP is IP of FTP server control socket IP
 						if(nsapiError != NSAPI_ERROR_OK)
 						{
 							ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
@@ -119,7 +119,7 @@ namespace Alx
 					// #5.2 Else use provided
 					else
 					{
-						bool status = ctrlSockAddrServer.set_ip_address(serverIp);	// FTP server IP is IP of FTP server control socket IP
+						bool status = ctrlSockAddrServer.set_ip_address(*serverIp);	// FTP server IP is IP of FTP server control socket IP
 						if(status == false)
 						{
 							ALX_FTP_CLIENT_TRACE("Err: Invalid IP");
@@ -170,7 +170,7 @@ namespace Alx
 					}
 
 					// #12 Send username
-					sprintf(buff, "user %s\r\n", username);
+					sprintf(buff, "user %s\r\n", *username);
 					len = strlen(buff);
 					nsapiSizeOrError = ctrlSock.send(buff, len);
 					if(nsapiSizeOrError != (nsapi_size_or_error_t)len)
@@ -198,7 +198,7 @@ namespace Alx
 					}
 
 					// #15 Send password
-					sprintf(buff, "pass %s\r\n", password);
+					sprintf(buff, "pass %s\r\n", *password);
 					len = strlen(buff);
 					nsapiSizeOrError = ctrlSock.send(buff, len);
 					if(nsapiSizeOrError != (nsapi_size_or_error_t)len)
@@ -560,10 +560,10 @@ namespace Alx
 				TCPSocket dataSock;
 
 				// Parameters
-				const char* serverIp = "";
+				char** serverIp = nullptr;
 				uint16_t* serverPort = nullptr;
-				const char *username = "";
-				const char *password = "";
+				char** username = nullptr;
+				char** password = nullptr;
 				bool* isServerIpHostnameFormat = nullptr;
 
 				// Variables
