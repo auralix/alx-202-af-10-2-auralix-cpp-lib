@@ -31,14 +31,15 @@ namespace Alx
 			public:
 				IParamGroup() {};
 				virtual ~IParamGroup() {};
-				virtual Alx_Status 	Init(void)								= 0;
-				virtual void 		Write(void)								= 0;
-				virtual bool 		IsWriteDone(void)						= 0;
-				virtual bool 		IsWriteErr(void)						= 0;
-				virtual bool 		IsValStoredBuffDiff(void)				= 0;
-				virtual void 		ValBuffToValToStoreBuff(void)			= 0;
-				virtual void 		ValToStoreBuffToValStoredBuff(void)		= 0;
-				virtual void 		ParamItemsValToValBuff(void)			= 0;
+				virtual Alx_Status 		Init(void)								= 0;
+				virtual void 			Write(void)								= 0;
+				virtual bool 			IsWriteDone(void)						= 0;
+				virtual bool 			IsWriteErr(void)						= 0;
+				virtual bool 			IsValStoredBuffDiff(void)				= 0;
+				virtual void 			ValBuffToValToStoreBuff(void)			= 0;
+				virtual void 			ValToStoreBuffToValStoredBuff(void)		= 0;
+				virtual void 			ParamItemsValToValBuff(void)			= 0;
+				virtual::AlxParamGroup*	GetCStructPtr(void)						= 0;
 		};
 		template<uint32_t numOfParamItems, uint32_t dataRawLen>
 		class ParamGroup : public IParamGroup
@@ -50,9 +51,9 @@ namespace Alx
 				// #1 Uint8
 				ParamGroup
 				(
-				AlxParamItem::IParamItem* memSafe,
-				const char* name,
+				AlxMemSafe::IMemSafe* memSafe,
 				AlxParamItem::IParamItem** paramItemArr,
+				const char* name,
 				uint8_t initNumOfTries
 				)
 				{
@@ -73,29 +74,30 @@ namespace Alx
 					}
 
 					// #3 C Constructor
-					AlxParamGroup_Ctor	(me,
+					AlxParamGroup_Ctor	(&me,
 										memSafe->GetCStructPtr(),
 										name,
 										valbuffSize,
 										valBuff,
 										valStoredBuff,
 										valToStoreBuff,
-										paramItemArr,
+										paramGroupParamItemArr,
 										numOfParamItems,
 										initNumOfTries);
 				};
 				virtual ~ParamGroup() {};
-				Alx_Status 	Init(void) override								{AlxParamGroup_Init(&me); }
-				void 		Write(void) override							{AlxParamGroup_Write(&me); }
-				bool 		IsWriteDone(void) override						{AlxParamGroup_IsWriteDone(&me); }
-				bool 		IsWriteErr(void) override						{AlxParamGroup_IsWriteErr(&me); }
-				bool 		IsValStoredBuffDiff(void) override				{AlxParamGroup_IsValStoredBuffDiff(&me); }
-				void 		ValBuffToValToStoreBuff(void) override			{AlxParamGroup_ValBuffToValToStoreBuff(&me); }
-				void 		ValToStoreBuffToValStoredBuff(void) override	{AlxParamGroup_ValToStoreBuffToValStoredBuff(&me); }
-				void 		ParamItemsValToValBuff(void) override			{AlxParamGroup_ParamItemsValToValBuff(&me); }
+				Alx_Status 			Init(void) override								{AlxParamGroup_Init(&me); }
+				void 				Write(void) override							{AlxParamGroup_Write(&me); }
+				bool 				IsWriteDone(void) override						{AlxParamGroup_IsWriteDone(&me); }
+				bool 				IsWriteErr(void) override						{AlxParamGroup_IsWriteErr(&me); }
+				bool 				IsValStoredBuffDiff(void) override				{AlxParamGroup_IsValStoredBuffDiff(&me); }
+				void 				ValBuffToValToStoreBuff(void) override			{AlxParamGroup_ValBuffToValToStoreBuff(&me); }
+				void 				ValToStoreBuffToValStoredBuff(void) override	{AlxParamGroup_ValToStoreBuffToValStoredBuff(&me); }
+				void 				ParamItemsValToValBuff(void) override			{AlxParamGroup_ParamItemsValToValBuff(&me); }
+				::AlxParamGroup*	GetCStructPtr(void) override					{ return &me; }
 
 			private:
-			::AlxParamItem* paramGroupParamItemArr[numOfParamItems] = {}; // TO DO: Note max 2048 bytes fit into page on G4
+				::AlxParamItem* paramGroupParamItemArr[numOfParamItems] = {}; // TO DO: Note max 2048 bytes fit into page on G4
 
 			protected :
 				//******************************************************************************
