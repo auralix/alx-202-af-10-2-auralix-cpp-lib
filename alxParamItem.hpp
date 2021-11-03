@@ -221,9 +221,7 @@ namespace Alx
 					const char* name,
 					uint32_t id,
 					uint32_t groupId,
-					bool valDef,
-					bool valMin,
-					bool valMax
+					bool valDef
 				)
 				{
 					AlxParamItem_CtorBool(&me, name, id, groupId, valDef);
