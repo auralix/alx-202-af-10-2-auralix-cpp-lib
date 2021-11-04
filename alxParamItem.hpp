@@ -235,7 +235,7 @@ namespace Alx
 					void* valDefBuff,
 					//uint32_t valBuffLen, This is calculated from tempalte
 					//uint32_t valBuffDefLen, // Arrays msut be always the same length, defined in template
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle // This is not necessary
 				)
 				{
 					AlxParamItem_CtorArr(&me, name, id, groupId, valDefBuff, arrValBuff, arrValDeffBuff, arrBuffLen, valOutOfRangeHandle);
@@ -249,7 +249,7 @@ namespace Alx
 					const char* valDef,
 					//uint32_t valMaxLen,	// This is defined with a template
 					// uint32_t valBuffDefLen, // String are null terminated, no need for lenght
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle // This is not necessary
 				)
 				{
 					AlxParamItem_CtorStr(&me, name, id, groupId, valDef, strValBuff, strValDefBuff, strMaxLen, valOutOfRangeHandle);
