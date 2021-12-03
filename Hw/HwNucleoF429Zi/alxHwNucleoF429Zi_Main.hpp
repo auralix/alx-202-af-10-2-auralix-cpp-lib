@@ -676,8 +676,10 @@ namespace Alx
 		};
 
 		extern Main main;
-		#endif
+
 	}
 }
+
+#endif // #if defined(ALX_HW_NUCLEO_F429ZI_CPP_TEST)
 
 #endif // ALX_HW_NUCLEO_F429ZI_MAIN_HPP
