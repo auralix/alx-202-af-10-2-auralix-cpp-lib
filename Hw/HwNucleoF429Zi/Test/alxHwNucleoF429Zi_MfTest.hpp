@@ -34,6 +34,7 @@ namespace Alx
 			public:
 				G01_BringUp() {};
 				virtual ~G01_BringUp() {};
+			public:
 				void Init(void)
 				{
 					main.alxClkObj.Init();
@@ -44,6 +45,7 @@ namespace Alx
 					T01_Trace();
 					//T02_IoPin();
 				}
+			public:
 				void T01_Trace(void)
 				{
 					while(1)
@@ -60,7 +62,6 @@ namespace Alx
 						AlxDelay_ms(500);
 					}
 				}
-
 			public:
 				Alx::AlxHwNucleoF429Zi_Main::Main main;
 		};
@@ -69,6 +70,7 @@ namespace Alx
 			public:
 				G02_ParamExamples() {};
 				virtual ~G02_ParamExamples() {};
+			public:
 				void Init(void)
 				{
 					main.alxClkObj.Init();
@@ -79,6 +81,7 @@ namespace Alx
 					//T01_ChangeValue();
 					T02_TestBond();
 				}
+			public:
 				void T01_ChangeValue(void)
 				{
 					/*uint8_t x = 0;
@@ -103,16 +106,15 @@ namespace Alx
 
 					no = 0;
 				}
-
 			public:
 				Alx::AlxHwNucleoF429Zi_Main::Main main;
 				//Alx::AlxParamItem::ParamItem height01_mm = { "Test", 1, 1, (uint8_t) 100, (uint8_t) 2, (uint8_t) 150, AlxParamItem_ValOutOfRangeHandle_Assert };
 				//Alx::AlxParamItem::ParamItem height02_mm = { "Test", 1, 1, (uint16_t)100, (uint16_t)2, (uint16_t)150, AlxParamItem_ValOutOfRangeHandle_Assert };
 				//Alx::AlxParamItem::ParamItem_Uint8 height_mm("Test", 1, 1, 100, 2, 150, AlxParamItem_ValOutOfRangeHandle_Assert);
-
 		};
 	}
 }
+
 
 #endif // #if defined(ALX_HW_NUCLEO_F429ZI_CPP_TEST)
 

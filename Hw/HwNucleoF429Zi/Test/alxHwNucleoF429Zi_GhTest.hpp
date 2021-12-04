@@ -34,6 +34,7 @@ namespace Alx
 			public:
 				G01_BringUp() {};
 				virtual ~G01_BringUp() {};
+			public:
 				void Init(void)
 				{
 					main.alxClkObj.Init();
@@ -43,6 +44,7 @@ namespace Alx
 				{
 					T01_Trace();
 				}
+			public:
 				void T01_Trace(void)
 				{
 					while(1)
@@ -59,6 +61,7 @@ namespace Alx
 			public:
 				G02_RangeTests() {};
 				virtual ~G02_RangeTests() {};
+			public:
 				void Init(void)
 				{
 					main.alxClkObj.Init();
@@ -79,6 +82,7 @@ namespace Alx
 					T11_Range_Arr(); // TODO
 					T12_Range_Str();
 				}
+			public:
 				void T01_Range_Uint8(void)
 				{
 					// #1 Assert
@@ -285,6 +289,7 @@ namespace Alx
 			public:
 				G03_BoundTests() {};
 				virtual ~G03_BoundTests() {};
+			public:
 				void Init(void)
 				{
 					main.alxClkObj.Init();
@@ -305,6 +310,7 @@ namespace Alx
 					T11_Bound_Arr(); // TODO
 					T12_Bound_Str();
 				}
+			public:
 				void T01_Bound_Uint8(void)
 				{
 					// #1 Assert
@@ -515,6 +521,7 @@ namespace Alx
 		public:
 			G04_ParamItemTests() {};
 			virtual ~G04_ParamItemTests() {};
+		public:
 			void Init(void)
 			{
 				main.alxClkObj.Init();
@@ -526,6 +533,7 @@ namespace Alx
 				//T02_ParamItem_Uint16();
 				// TODO
 			}
+		public:
 			void T01_ParamItem_Uint8(void)
 			{
 
@@ -539,6 +547,7 @@ namespace Alx
 		};
 	}
 }
+
 
 #endif // #if defined(ALX_HW_NUCLEO_F429ZI_CPP_TEST)
 

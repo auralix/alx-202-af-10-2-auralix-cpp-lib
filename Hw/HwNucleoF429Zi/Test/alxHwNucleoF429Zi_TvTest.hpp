@@ -34,6 +34,7 @@ namespace Alx
 			public:
 				G01_BringUp() {};
 				virtual ~G01_BringUp() {};
+			public:
 				void Init(void)
 				{
 					main.alxClkObj.Init();
@@ -41,13 +42,29 @@ namespace Alx
 				}
 				void Run(void)
 				{
-					T01_Trace();
+					T01_Led();
+					//T02_Trace();
 				}
-				void T01_Trace(void)
+			public:
+				void T01_Led(void)
+				{
+					main.alxIoPin.do_PB0_LED1_GR.Init();
+					main.alxIoPin.do_PB7_LED2_BL.Init();
+					main.alxIoPin.do_PB14_LED3_RD.Init();
+
+					while(1)
+					{
+						main.alxIoPin.do_PB0_LED1_GR.Toggle();
+						main.alxIoPin.do_PB7_LED2_BL.Toggle();
+						main.alxIoPin.do_PB14_LED3_RD.Toggle();
+						AlxDelay_ms(500);
+					}
+				}
+				void T02_Trace(void)
 				{
 					while(1)
 					{
-						ALX_TRACE_STD("", "Test");
+						ALX_TRACE_FORMAT("T02_Trace\r\n");
 						AlxDelay_ms(500);
 					}
 				}
@@ -56,6 +73,7 @@ namespace Alx
 		};
 	}
 }
+
 
 #endif // #if defined(ALX_HW_NUCLEO_F429ZI_CPP_TEST)
 

@@ -15,10 +15,10 @@
 //******************************************************************************
 #include <alxHwNucleoF429Zi_Main.hpp>
 #include <alxHwNucleoF429Zi_GhTest.hpp>
+//#include <alxHwNucleoF429Zi_GkTest.hpp>
 //#include <alxHwNucleoF429Zi_JkTest.hpp>
 #include <alxHwNucleoF429Zi_MfTest.hpp>
 #include <alxHwNucleoF429Zi_TvTest.hpp>
-//#include <alxHwNucleoF429Zi_GkTest.hpp>
 
 
 //******************************************************************************
@@ -46,6 +46,8 @@ namespace Alx
 					//AlxHwNucleoF429Zi_GhTest_G02_RangeTests.Init();
 					//AlxHwNucleoF429Zi_GhTest_G03_BoundTests.Init();
 
+					// Gk
+
 					// Jk
 
 					// Mf
@@ -54,8 +56,6 @@ namespace Alx
 
 					// Tv
 					AlxHwNucleoF429Zi_TvTest_G01_BringUp.Init();
-
-					// Gk
 				}
 				void Run(void)
 				{
@@ -63,6 +63,8 @@ namespace Alx
 					//AlxHwNucleoF429Zi_GhTest_G01_BringUp.Run();
 					//AlxHwNucleoF429Zi_GhTest_G02_RangeTests.Run();
 					//AlxHwNucleoF429Zi_GhTest_G03_BoundTests.Run();
+
+					// Gk
 
 					// Jk
 
@@ -72,14 +74,14 @@ namespace Alx
 
 					// Tv
 					AlxHwNucleoF429Zi_TvTest_G01_BringUp.Run();
-
-					// Gk
 				}
 			public:
 				// Gh
 				//AlxHwNucleoF429Zi_GhTest::G01_BringUp AlxHwNucleoF429Zi_GhTest_G01_BringUp;
 				//AlxHwNucleoF429Zi_GhTest::G02_RangeTests AlxHwNucleoF429Zi_GhTest_G02_RangeTests;
 				//AlxHwNucleoF429Zi_GhTest::G03_BoundTests AlxHwNucleoF429Zi_GhTest_G03_BoundTests;
+
+				// Gk
 
 				// Jk
 
@@ -89,13 +91,12 @@ namespace Alx
 
 				// Tv
 				AlxHwNucleoF429Zi_TvTest::G01_BringUp AlxHwNucleoF429Zi_TvTest_G01_BringUp;
-
-				// Gk
 		};
 
 		extern MainTest mainTest;
 	}
 }
+
 
 #endif // #if defined(ALX_HW_NUCLEO_F429ZI_CPP_TEST)
 
