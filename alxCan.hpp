@@ -95,11 +95,11 @@ namespace Alx
 		{
 			public:
 				Can
-				(	
-					#if defined(STM32F4)
+				(
+					#if defined(ALX_STM32F4)
 				 	CAN_TypeDef* can,
 					#endif
-				 	#if defined(STM32G4)
+				 	#if defined(ALX_STM32G4)
 					FDCAN_GlobalTypeDef* can,
 					#endif
 					AlxIoPin::IIoPin* do_CAN_TX,
