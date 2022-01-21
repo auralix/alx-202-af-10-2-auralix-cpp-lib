@@ -31,15 +31,15 @@ namespace Alx
 			public:
 				IParamGroup() {};
 				virtual ~IParamGroup() {};
-				virtual Alx_Status 		Init(void)								= 0;
-				virtual void 			Write(void)								= 0;
-				virtual bool 			IsWriteDone(void)						= 0;
-				virtual bool 			IsWriteErr(void)						= 0;
-				virtual bool 			IsValStoredBuffDiff(void)				= 0;
-				virtual void 			ValBuffToValToStoreBuff(void)			= 0;
-				virtual void 			ValToStoreBuffToValStoredBuff(void)		= 0;
-				virtual void 			ParamItemsValToValBuff(void)			= 0;
-				virtual::AlxParamGroup*	GetCStructPtr(void)						= 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual void Write(void) = 0;
+				virtual bool IsWriteDone(void) = 0;
+				virtual bool IsWriteErr(void) = 0;
+				virtual bool IsValStoredBuffDiff(void) = 0;
+				virtual void ValBuffToValToStoreBuff(void) = 0;
+				virtual void ValToStoreBuffToValStoredBuff(void) = 0;
+				virtual void ParamItemsValToValBuff(void) = 0;
+				virtual::AlxParamGroup*	GetCStructPtr(void)	= 0;
 		};
 		template<uint32_t numOfParamItems, uint32_t dataRawLen>
 		class ParamGroup : public IParamGroup
@@ -48,7 +48,6 @@ namespace Alx
 				//******************************************************************************
 				// Public Functions
 				//******************************************************************************
-				// #1 Uint8
 				ParamGroup
 				(
 				AlxMemSafe::IMemSafe* memSafe,
@@ -69,6 +68,7 @@ namespace Alx
 					{
 						// #2.1 Get pointer value from arrays of pointers for object item[i]
 						AlxParamItem::IParamItem* temp = *(paramItemArr + i);
+
 						// #2.2 Get C structure pointer from object[i]
 						paramGroupParamItemArr[i] = temp->GetCStructPtr();
 					}
@@ -86,29 +86,30 @@ namespace Alx
 										initNumOfTries);
 				};
 				virtual ~ParamGroup() {};
-				Alx_Status 			Init(void) override								{AlxParamGroup_Init(&me); }
-				void 				Write(void) override							{AlxParamGroup_Write(&me); }
-				bool 				IsWriteDone(void) override						{AlxParamGroup_IsWriteDone(&me); }
-				bool 				IsWriteErr(void) override						{AlxParamGroup_IsWriteErr(&me); }
-				bool 				IsValStoredBuffDiff(void) override				{AlxParamGroup_IsValStoredBuffDiff(&me); }
-				void 				ValBuffToValToStoreBuff(void) override			{AlxParamGroup_ValBuffToValToStoreBuff(&me); }
-				void 				ValToStoreBuffToValStoredBuff(void) override	{AlxParamGroup_ValToStoreBuffToValStoredBuff(&me); }
-				void 				ParamItemsValToValBuff(void) override			{AlxParamGroup_ParamItemsValToValBuff(&me); }
-				::AlxParamGroup*	GetCStructPtr(void) override					{ return &me; }
+				Alx_Status Init(void) override						{AlxParamGroup_Init(&me); }
+				void Write(void) override							{AlxParamGroup_Write(&me); }
+				bool IsWriteDone(void) override						{AlxParamGroup_IsWriteDone(&me); }
+				bool IsWriteErr(void) override						{AlxParamGroup_IsWriteErr(&me); }
+				bool IsValStoredBuffDiff(void) override				{AlxParamGroup_IsValStoredBuffDiff(&me); }
+				void ValBuffToValToStoreBuff(void) override			{AlxParamGroup_ValBuffToValToStoreBuff(&me); }
+				void ValToStoreBuffToValStoredBuff(void) override	{AlxParamGroup_ValToStoreBuffToValStoredBuff(&me); }
+				void ParamItemsValToValBuff(void) override			{AlxParamGroup_ParamItemsValToValBuff(&me); }
+				::AlxParamGroup* GetCStructPtr(void) override		{ return &me; }
 
 			private:
-				::AlxParamItem* paramGroupParamItemArr[numOfParamItems] = {}; // TO DO: Note max 2048 bytes fit into page on G4
+				::AlxParamItem* paramGroupParamItemArr[numOfParamItems] = {};
 
 			protected :
 				//******************************************************************************
 				// Protected Variables
 				//******************************************************************************
 				::AlxParamGroup me = {} ;
-				uint8_t valBuff[dataRawLen];		// user has to calculate. Safe way: 8bytes * numOfParamItems
+				uint8_t valBuff[dataRawLen];		// User has to calculate. Safe way: 8bytes * numOfParamItems
 				uint8_t valStoredBuff[dataRawLen];
 				uint8_t valToStoreBuff[dataRawLen];
 
 		};
 	}
 }
+
 #endif // ALX_PARAM_GROUP_HPP

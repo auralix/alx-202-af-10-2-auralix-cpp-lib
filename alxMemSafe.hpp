@@ -31,15 +31,16 @@ namespace Alx
 			public:
 				IMemSafe() {};
 				virtual ~IMemSafe() {};
-				virtual ::Alx_Status	Read(uint8_t* data, uint32_t len) = 0;
-				virtual ::Alx_Status	Write(uint8_t* data, uint32_t len) = 0;
-				virtual bool			IsReadDone(void) = 0;
-				virtual bool			IsReadErr(void) = 0;
-				virtual bool			IsWriteDone(void) = 0;
-				virtual bool			IsWriteErr(void) = 0;
-				virtual ::AlxMemSafe*	GetCStructPtr(void) = 0;
+				virtual ::Alx_Status Read(uint8_t* data, uint32_t len) = 0;
+				virtual ::Alx_Status Write(uint8_t* data, uint32_t len) = 0;
+				virtual bool IsReadDone(void) = 0;
+				virtual bool IsReadErr(void) = 0;
+				virtual bool IsWriteDone(void) = 0;
+				virtual bool IsWriteErr(void) = 0;
+				virtual ::AlxMemSafe* GetCStructPtr(void) = 0;
 		};
-		template <uint32_t t_Buff1Len, uint32_t t_Buff2Len>
+
+		template <uint32_t buff1Len, uint32_t buff2Len>
 		class MemSafe : public IMemSafe
 		{
 			public:
@@ -72,27 +73,27 @@ namespace Alx
 						memRawReadWriteNumOfTries,
 						memRawReadWriteTimeout_ms,
 						buff1,
-						t_Buff1Len,
+						buff1Len,
 						buff2,
-						t_Buff2Len
+						buff2Len
 					);
 				};
 
-				virtual			~MemSafe() {};
-				::Alx_Status	Read(uint8_t* data, uint32_t len) override		{ return AlxMemSafe_Read(&me, data, len); }
-				::Alx_Status	Write(uint8_t* data, uint32_t len) override		{ return AlxMemSafe_Write(&me, data, len); }
-				bool			IsReadDone(void) override						{ return AlxMemSafe_IsReadDone(&me); }
-				bool			IsReadErr(void) override						{ return AlxMemSafe_IsReadErr(&me); }
-				bool			IsWriteDone(void) override						{ return AlxMemSafe_IsWriteDone(&me); }
-				bool			IsWriteErr(void) override						{ return AlxMemSafe_IsWriteErr(&me); }
-				::AlxMemSafe*	GetCStructPtr(void) override					{ return &me; }
+				virtual ~MemSafe() {};
+				::Alx_Status Read(uint8_t* data, uint32_t len) override		{ return AlxMemSafe_Read(&me, data, len); }
+				::Alx_Status Write(uint8_t* data, uint32_t len) override	{ return AlxMemSafe_Write(&me, data, len); }
+				bool IsReadDone(void) override								{ return AlxMemSafe_IsReadDone(&me); }
+				bool IsReadErr(void) override								{ return AlxMemSafe_IsReadErr(&me); }
+				bool IsWriteDone(void) override								{ return AlxMemSafe_IsWriteDone(&me); }
+				bool IsWriteErr(void) override								{ return AlxMemSafe_IsWriteErr(&me); }
+				::AlxMemSafe* GetCStructPtr(void) override					{ return &me; }
 			protected:
 				//******************************************************************************
 				// Protected Variables
 				//******************************************************************************
 				::AlxMemSafe me = {};
-				uint8_t buff1[t_Buff1Len] ={};
-				uint8_t buff2[t_Buff2Len] ={};
+				uint8_t buff1[buff1Len] ={};
+				uint8_t buff2[buff2Len] ={};
 		};
 	}
 }

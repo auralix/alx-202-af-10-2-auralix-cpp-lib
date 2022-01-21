@@ -30,10 +30,10 @@ namespace Alx
 			public:
 				IParamStore() {};
 				virtual ~IParamStore() {};
-				virtual Alx_Status		Init(Alx_Status* status)	= 0;
-				virtual void			Handle(void)				= 0;
-				virtual bool			IsErr(void)					= 0;
-				virtual::AlxParamStore*	GetCStructPtr(void)			= 0;
+				virtual Alx_Status Init(Alx_Status* status) = 0;
+				virtual void Handle(void) = 0;
+				virtual bool IsErr(void) = 0;
+				virtual::AlxParamStore*	GetCStructPtr(void) = 0;
 		};
 		template<uint32_t numOfParamGroups>
 		class ParamStore : public IParamStore
@@ -49,6 +49,7 @@ namespace Alx
 					{
 						// #2.1 Get pointer value from arrays of pointers for object item[i]
 						AlxParamGroup::IParamGroup* temp = *(paramGroupsArr + i);
+
 						// #2.2 Get C structure pointer from object[i]
 						paramStoreParamGroupArr[i] = temp->GetCStructPtr();
 					}
@@ -58,14 +59,14 @@ namespace Alx
 										numOfParamGroups);
 				};
 				virtual ~ParamStore() {};
-				Alx_Status			Init(Alx_Status* status) override	{AlxParamStore_Init(&me, status, numOfParamGroups);}; // staus??
-				void				Handle(void) override				{AlxParamStore_Handle(&me);};
-				bool				IsErr(void) override				{AlxParamStore_IsErr(&me);};
-				::AlxParamStore*	GetCStructPtr(void)					{return &me;};
+				Alx_Status Init(Alx_Status* status) override	{AlxParamStore_Init(&me, status, numOfParamGroups);};
+				void Handle(void) override						{AlxParamStore_Handle(&me);};
+				bool IsErr(void) override						{AlxParamStore_IsErr(&me);};
+				::AlxParamStore* GetCStructPtr(void)			{return &me;};
 			private:
 			::AlxParamGroup* paramStoreParamGroupArr[numOfParamGroups] = {};
 				protected :
-					::AlxParamStore me = { } ;
+					::AlxParamStore me = {} ;
 
 		};
 	}
