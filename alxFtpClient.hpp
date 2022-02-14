@@ -278,22 +278,9 @@ namespace Alx
 						return Alx_Err;
 					}
 
-					// #5 Receive response from server
-					nsapiSizeOrError = ctrlSock.recv(buff, sizeof(buff));
-					if (nsapiSizeOrError <= 0)
-					{
-						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
-						return Alx_Err;
-					}
+					// #5 Receive response from server	// MF. We won't handle this
 
-					// #6 Expected response: "221" -> Service closing control connection
-					if (strncmp(buff, "221", 3) != 0)
-					{
-						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
-						return Alx_Err;
-					}
+					// #6 Expected response: "221" -> Service closing control connection	// MF: We won't handle this
 
 					// #7 Close control socket
 					nsapiError = ctrlSock.close();
@@ -516,22 +503,9 @@ namespace Alx
 						return Alx_Err;
 					}
 
-					// #19 Receive response from server
-					nsapiSizeOrError = ctrlSock.recv(buff, BUFF_LEN);
-					if (nsapiSizeOrError <= 0)
-					{
-						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
-						return Alx_Err;
-					}
+					// #19 Receive response from server		// MF: We won't handle this
 
-					// #20 Expected response: "226" -> Closing data connection, requested file action successful
-					if (strncmp(buff, "226", 3) != 0)
-					{
-						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
-						return Alx_Err;
-					}
+					// #20 Expected response: "226" -> Closing data connection, requested file action successful	// MF: We won't handle this
 
 					// #21 Unlock mutex
 					mutex.unlock();
@@ -601,7 +575,7 @@ namespace Alx
 					{
 						ALX_FTP_CLIENT_TRACE("Err_CtrlSock: %d", (int32_t)nsapiError);
 					}
-					
+
 					// #3 Close file
 					fclose(fp);	// We will not handle return
 
@@ -619,7 +593,7 @@ namespace Alx
 					fp = nullptr;
 					lenRemain = 0;
 					lenSend = 0;
-					
+
 					// Info
 					isLogin = false;
 
