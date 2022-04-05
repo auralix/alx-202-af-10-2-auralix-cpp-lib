@@ -47,6 +47,12 @@ namespace Alx
 				{
 					AlxFifo_Ctor(&me, buff, buffLen);
 				};
+				Fifo(uint8_t* buffCLib, uint32_t buffLenCLib)
+				{
+					ALX_FIFO_ASSERT(buffLen == 1);	// TV: If we want to use C lib sytle Ctor, then template argument buffLen must be 1
+					
+					AlxFifo_Ctor(&me, buffCLib, buffLenCLib);
+				};
 				virtual ~Fifo() {};
 				void Flush(void) override																						{ AlxFifo_Flush(&me); };
 				::Alx_Status Read(uint8_t* data, uint32_t len = 1) override														{ return AlxFifo_Read(&me, data, len); }
