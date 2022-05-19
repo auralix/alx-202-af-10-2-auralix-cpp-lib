@@ -1,11 +1,8 @@
-﻿/**
-  ******************************************************************************
-  * @file alxParamStore.hpp
-  * @brief Auralix C++ Library - ALX Parameter Management Module
-  * @version $LastChangedRevision: 4304 $
-  * @date $LastChangedDate: 2021-03-09 21:22:50 +0100 (Tue, 09 Mar 2021) $
-  ******************************************************************************
-  */
+﻿//******************************************************************************
+// @file alxParamStore.hpp
+// @brief Auralix C++ Library - ALX Parameter Store Module
+// @copyright Copyright (C) 2022 Auralix d.o.o. All rights reserved.
+//******************************************************************************
 
 #ifndef ALX_PARAM_STORE_HPP
 #define ALX_PARAM_STORE_HPP
@@ -41,35 +38,38 @@ namespace Alx
 			public:
 				ParamStore
 				(
-					Alx::AlxParamGroup::IParamGroup** paramGroupsArr
+					Alx::AlxParamGroup::IParamGroup** paramGroupArr
 				)
 				{
-					// #1 Create array of pointers for groups c structures
+					// #1 Create array of pointers for paramGroupArr
 					for(uint32_t i = 0 ; i < numOfParamGroups ; i++)
 					{
-						// #2.1 Get pointer value from arrays of pointers for object item[i]
-						AlxParamGroup::IParamGroup* temp = *(paramGroupsArr + i);
+						// #1.1 Get pointer value from arrays of pointers for object item[i]
+						AlxParamGroup::IParamGroup* temp = *(paramGroupArr + i);
 
-						// #2.2 Get C structure pointer from object[i]
-						paramStoreParamGroupArr[i] = temp->GetCStructPtr();
+						// #1.2 Get C structure pointer from object[i]
+						this->paramGroupArr[i] = temp->GetCStructPtr();
 					}
 
-					AlxParamStore_Ctor(&me,
-										paramStoreParamGroupArr,
-										numOfParamGroups);
+					// #2 Ctor
+					AlxParamStore_Ctor
+					(
+						&me,
+						this->paramGroupArr,
+						numOfParamGroups
+					);
 				};
 				virtual ~ParamStore() {};
-				Alx_Status Init(Alx_Status* status) override	{AlxParamStore_Init(&me, status, numOfParamGroups);};
-				void Handle(void) override						{AlxParamStore_Handle(&me);};
-				bool IsErr(void) override						{AlxParamStore_IsErr(&me);};
-				::AlxParamStore* GetCStructPtr(void)			{return &me;};
-			private:
-			::AlxParamGroup* paramStoreParamGroupArr[numOfParamGroups] = {};
-				protected :
-					::AlxParamStore me = {} ;
+				Alx_Status Init(Alx_Status* status) override	{ return AlxParamStore_Init(&me, status, numOfParamGroups); };
+				void Handle(void) override						{ AlxParamStore_Handle(&me); };
+				bool IsErr(void) override						{ return AlxParamStore_IsErr(&me); };
+				::AlxParamStore* GetCStructPtr(void) override	{ return &me; };
+			protected:
+				::AlxParamGroup* paramGroupArr[numOfParamGroups] = {};
+				::AlxParamStore me = {};
 
 		};
 	}
 }
 
-#endif // ALX_PARAM_STORE_HPP
+#endif	// #ifndef ALX_PARAM_STORE_HPP

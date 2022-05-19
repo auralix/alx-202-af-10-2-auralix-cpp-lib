@@ -1,11 +1,8 @@
-﻿/**
-  ******************************************************************************
-  * @file alxMemSafe.hpp
-  * @brief Auralix C++ Library - ALX Memory Safe Module
-  * @version $LastChangedRevision: 4304 $
-  * @date $LastChangedDate: 2021-03-09 21:22:50 +0100 (Tue, 09 Mar 2021) $
-  ******************************************************************************
-  */
+﻿//******************************************************************************
+// @file alxMemSafe.hpp
+// @brief Auralix C++ Library - ALX Memory Safe Module
+// @copyright Copyright (C) 2022 Auralix d.o.o. All rights reserved.
+//******************************************************************************
 
 #ifndef ALX_MEM_SAFE_HPP
 #define ALX_MEM_SAFE_HPP
@@ -39,14 +36,10 @@ namespace Alx
 				virtual bool IsWriteErr(void) = 0;
 				virtual ::AlxMemSafe* GetCStructPtr(void) = 0;
 		};
-
 		template <uint32_t buff1Len, uint32_t buff2Len>
 		class MemSafe : public IMemSafe
 		{
 			public:
-				//******************************************************************************
-				// Public Functions
-				//******************************************************************************
 				MemSafe
 				(
 					AlxMemRaw::MemRaw* memRaw,
@@ -78,7 +71,6 @@ namespace Alx
 						buff2Len
 					);
 				};
-
 				virtual ~MemSafe() {};
 				::Alx_Status Read(uint8_t* data, uint32_t len) override		{ return AlxMemSafe_Read(&me, data, len); }
 				::Alx_Status Write(uint8_t* data, uint32_t len) override	{ return AlxMemSafe_Write(&me, data, len); }
@@ -88,9 +80,6 @@ namespace Alx
 				bool IsWriteErr(void) override								{ return AlxMemSafe_IsWriteErr(&me); }
 				::AlxMemSafe* GetCStructPtr(void) override					{ return &me; }
 			protected:
-				//******************************************************************************
-				// Protected Variables
-				//******************************************************************************
 				::AlxMemSafe me = {};
 				uint8_t buff1[buff1Len] ={};
 				uint8_t buff2[buff2Len] ={};
@@ -98,4 +87,4 @@ namespace Alx
 	}
 }
 
-#endif // ALX_MEM_SAFE_HPP
+#endif	// #ifndef ALX_MEM_SAFE_HPP

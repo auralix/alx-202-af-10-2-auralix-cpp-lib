@@ -1,11 +1,8 @@
-﻿/**
-  ******************************************************************************
-  * @file alxMemRaw.hpp
-  * @brief Auralix C++ Library - ALX Memory Raw Module
-  * @version $LastChangedRevision: 4304 $
-  * @date $LastChangedDate: 2021-03-09 21:22:50 +0100 (Tue, 09 Mar 2021) $
-  ******************************************************************************
-  */
+﻿//******************************************************************************
+// @file alxMemRaw.hpp
+// @brief Auralix C++ Library - ALX Memory Raw Module
+// @copyright Copyright (C) 2022 Auralix d.o.o. All rights reserved.
+//******************************************************************************
 
 #ifndef ALX_MEM_RAW_HPP
 #define ALX_MEM_RAW_HPP
@@ -38,9 +35,6 @@ namespace Alx
 		class MemRaw : public IMemRaw
 		{
 			public:
-				//******************************************************************************
-				// Public Functions
-				//******************************************************************************
 				MemRaw()
 				{
 					AlxMemRaw_Ctor(&me);
@@ -52,12 +46,9 @@ namespace Alx
 				::Alx_Status Write(uint32_t addr, uint8_t* data, uint32_t len, bool checkWithReadEnable, uint8_t numOfTries, uint16_t timeout_ms) override	{ return AlxMemRaw_Write(&me, addr, data, len, checkWithReadEnable, numOfTries, timeout_ms); }
 				::AlxMemRaw* GetCStructPtr(void) override																									{ return &me; }
 			protected:
-				//******************************************************************************
-				// Protected Variables
-				//******************************************************************************
 				::AlxMemRaw me = {};
 		};
 	}
 }
 
-#endif // ALX_MEM_RAW_HPP
+#endif	// #ifndef ALX_MEM_RAW_HPP

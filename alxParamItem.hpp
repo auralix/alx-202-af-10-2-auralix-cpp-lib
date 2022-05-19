@@ -1,11 +1,8 @@
-﻿/**
-  ******************************************************************************
-  * @file alxParamItem.hpp
-  * @brief Auralix C++ Library - ALX Parameter Item Module
-  * @version $LastChangedRevision: 4304 $
-  * @date $LastChangedDate: 2021-03-09 21:22:50 +0100 (Tue, 09 Mar 2021) $
-  ******************************************************************************
-  */
+﻿//******************************************************************************
+// @file alxParamItem.hpp
+// @brief Auralix C++ Library - ALX Parameter Item Module
+// @copyright Copyright (C) 2022 Auralix d.o.o. All rights reserved.
+//******************************************************************************
 
 #ifndef ALX_PARAM_ITEM_HPP
 #define ALX_PARAM_ITEM_HPP
@@ -65,15 +62,13 @@ namespace Alx
 				virtual void SetValArr(void* val) = 0;
 				virtual void GetValStr(char* val) = 0;
 				virtual ::Alx_Status SetValStr(char* val) = 0;
+
 				virtual::AlxParamItem* GetCStructPtr(void) = 0;
 		};
 		template<uint32_t arrBuffLen = 1, uint32_t strMaxLen = 1>
 		class ParamItem : public IParamItem
 		{
 			public:
-				//******************************************************************************
-				// Public Functions
-				//******************************************************************************
 				// #1 Uint8
 				ParamItem
 				(
@@ -234,7 +229,7 @@ namespace Alx
 					void* valDefBuff
 				)
 				{
-					AlxParamItem_CtorArr(&me, name, id, groupId, valDefBuff, arrValBuff, arrValDeffBuff, arrBuffLen, AlxParamItem_ValOutOfRangeHandle_Ignore);
+					AlxParamItem_CtorArr(&me, name, id, groupId, valDefBuff, arrValBuff, arrValDefBuff, arrBuffLen, AlxParamItem_ValOutOfRangeHandle_Ignore);
 				};
 				// #13 Str
 				ParamItem
@@ -253,7 +248,7 @@ namespace Alx
 				uint32_t GetGroupId(void) override					{ return AlxParamItem_GetGroupId(&me); }
 				AlxParamItem_Type GetType(void) override			{ return AlxParamItem_GetType(&me); }
 				void* GetValPtr(void) override						{ return AlxParamItem_GetValPtr(&me); }
-				uint32_t GetValLen(void) override					{ AlxParamItem_GetValLen(&me); }
+				uint32_t GetValLen(void) override					{ return AlxParamItem_GetValLen(&me); }
 				void SetValToDef(void) override						{ AlxParamItem_SetValToDef(&me); }
 
 				uint8_t GetValUint8(void) override					{ return AlxParamItem_GetValUint8(&me); }
@@ -284,16 +279,14 @@ namespace Alx
 				void SetValArr(void* val) override					{ AlxParamItem_SetValArr(&me, val); }
 				void GetValStr(char* val) override					{ AlxParamItem_GetValStr(&me, val); }
 				::Alx_Status SetValStr(char* val) override			{ return AlxParamItem_SetValStr(&me, val); }
-				::AlxParamItem*		GetCStructPtr(void) override	{ return &me; }
+
+				::AlxParamItem* GetCStructPtr(void) override		{ return &me; }
 			protected:
-				//******************************************************************************
-				// Protected Variables
-				//******************************************************************************
 				uint8_t arrValBuff		[arrBuffLen] = {};
-				uint8_t arrValDeffBuff	[arrBuffLen] = {};
-				char	strValBuff		[strMaxLen + 1]	 = {}; // + 1 is for nullchar
+				uint8_t arrValDefBuff	[arrBuffLen] = {};
+				char	strValBuff		[strMaxLen + 1]	 = {};	// JK: + 1 is for nullchar
 				char	strValDefBuff	[strMaxLen + 1]	 = {};
-				::AlxParamItem me = {} ;
+				::AlxParamItem me = {};
 		};
 	}
 }
