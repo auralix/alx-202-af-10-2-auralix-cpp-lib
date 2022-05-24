@@ -29,42 +29,30 @@ namespace Alx
 			public:
 				IIoPin() {};
 				virtual ~IIoPin() {};
-				virtual void Init(void)						= 0;
-				virtual void DeInit(void)					= 0;
-				virtual bool Read(void)						= 0;
-				virtual void Write(bool val)				= 0;
-				virtual void Set(void)						= 0;
-				virtual void Reset(void)					= 0;
-				virtual void Toggle(void)					= 0;
-				virtual void Lock(void)						= 0;
-				virtual void IrqHandler(void)				= 0;
-				virtual void Config_PullNone(void)			= 0;
-				virtual void Config_PullUp(void)			= 0;
-				virtual void Config_PullDown(void)			= 0;
-				virtual void Config_AssertOn(void)			= 0;
-				virtual void Config_AssertOff(void)			= 0;
-				virtual ::AlxIoPin* GetCStructPtr(void)		= 0;
+				virtual void Init(void)							= 0;
+				virtual void DeInit(void)						= 0;
+				virtual bool Read(void)							= 0;
+				virtual void Write(bool val)					= 0;
+				virtual void Set(void)							= 0;
+				virtual void Reset(void)						= 0;
+				virtual void Toggle(void)						= 0;
+				virtual ::AlxIoPin_TriState Read_TriState(void)	= 0;
+				virtual ::AlxIoPin* GetCStructPtr(void)			= 0;
 		};
 		class AIoPin : public IIoPin
 		{
 			public:
 				AIoPin() {};
 				virtual ~AIoPin() {};
-				void Init(void) override					{ AlxIoPin_Init(&me); }
-				void DeInit(void) override					{ AlxIoPin_DeInit(&me); }
-				bool Read(void) override					{ return AlxIoPin_Read(&me); }
-				void Write(bool val) override				{ AlxIoPin_Write(&me, val); }
-				void Set(void) override						{ AlxIoPin_Set(&me); }
-				void Reset(void) override					{ AlxIoPin_Reset(&me); }
-				void Toggle(void) override					{ AlxIoPin_Toggle(&me); }
-				void Lock(void) override					{ AlxIoPin_Lock(&me); }
-				void IrqHandler(void) override				{ AlxIoPin_IrqHandler(&me); }
-				void Config_PullNone(void) override			{ AlxIoPin_Config_PullNone(&me); }
-				void Config_PullUp(void) override			{ AlxIoPin_Config_PullUp(&me); }
-				void Config_PullDown(void) override			{ AlxIoPin_Config_PullDown(&me); }
-				void Config_AssertOn(void) override			{ AlxIoPin_Config_AssertOn(&me); }
-				void Config_AssertOff(void) override		{ AlxIoPin_Config_AssertOff(&me); }
-				::AlxIoPin* GetCStructPtr(void) override	{ return &me; }
+				void Init(void) override							{ AlxIoPin_Init(&me); }
+				void DeInit(void) override							{ AlxIoPin_DeInit(&me); }
+				bool Read(void) override							{ return AlxIoPin_Read(&me); }
+				void Write(bool val) override						{ AlxIoPin_Write(&me, val); }
+				void Set(void) override								{ AlxIoPin_Set(&me); }
+				void Reset(void) override							{ AlxIoPin_Reset(&me); }
+				void Toggle(void) override							{ AlxIoPin_Toggle(&me); }
+				::AlxIoPin_TriState Read_TriState(void) override	{ return AlxIoPin_Read_TriState(&me); }
+				::AlxIoPin* GetCStructPtr(void) override			{ return &me; }
 			protected:
 				::AlxIoPin me = {};
 		};
@@ -86,24 +74,6 @@ namespace Alx
 					AlxIoPin_Ctor(&me, port, pin, mode, pull, speed, alternate, val);
 				};
 				virtual ~IoPin() {};
-		};
-		#endif
-		#if defined (ALX_GTEST)
-		class MockIoPin final : public IIoPin
-		{
-			public:
-				MOCK_METHOD(void, Init, (), (override));
-				MOCK_METHOD(void, DeInit, (), (override));
-				MOCK_METHOD(bool, Read, (), (override));
-				MOCK_METHOD(void, Write, (bool), (override));
-				MOCK_METHOD(void, Set, (), (override));
-				MOCK_METHOD(void, Reset, (), (override));
-				MOCK_METHOD(void, Toggle, (), (override));
-				MOCK_METHOD(void, Lock, (), (override));
-				MOCK_METHOD(void, IrqHandler, (), (override));
-				MOCK_METHOD(void, Config_PullNone, (), (override));
-				MOCK_METHOD(void, Config_PullUp, (), (override));
-				MOCK_METHOD(void, Config_PullDown, (), (override));
 		};
 		#endif
 	}
