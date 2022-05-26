@@ -145,11 +145,10 @@ namespace Alx
 				{
 					return AlxRtc_TuneTime_ms(&me, tuneTime_ms);
 				}
-				
 			protected:
 				::AlxRtc me = {};
 		};
-		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+		#if defined(ALX_STM32F4)
 		class Rtc : public ARtc
 		{
 			public:
