@@ -34,21 +34,21 @@ namespace Alx
 				virtual void Trace(void) = 0;
 				virtual uint8_t GetHwId(void) = 0;
 				virtual const char* GetUniqueIdStr(void) = 0;
-				virtual uint32_t GetSwAppVerDate(void) = 0;
-				virtual const char* GetSwAppVerStr(void) = 0;
+				virtual uint32_t GetFwAppVerDate(void) = 0;
+				virtual const char* GetFwAppVerStr(void) = 0;
 		};
 		class Id final : public IId
 		{
 			public:
 				Id
 				(
-					const char* swArtf,
-					const char* swName,
-					uint8_t swVerMajor,
-					uint8_t swVerMinor,
-					uint8_t swVerPatch,
-					bool swIsBuildJobUsed,
-					bool swIsBootloader,
+					const char* fwArtf,
+					const char* fwName,
+					uint8_t fwVerMajor,
+					uint8_t fwVerMinor,
+					uint8_t fwVerPatch,
+					bool fwIsBuildJobUsed,
+					bool fwIsBootloader,
 					AlxId_HwInstance* hwInstanceKnownArr,
 					uint8_t hwInstanceKnownArrLen,
 					uint8_t* hwInstanceHwIdSupportedArr,
@@ -67,13 +67,13 @@ namespace Alx
 					AlxId_Ctor
 					(
 						&me,
-						swArtf,
-						swName,
-						swVerMajor,
-						swVerMinor,
-						swVerPatch,
-						swIsBuildJobUsed,
-						swIsBootloader,
+						fwArtf,
+						fwName,
+						fwVerMajor,
+						fwVerMinor,
+						fwVerPatch,
+						fwIsBuildJobUsed,
+						fwIsBootloader,
 						hwInstanceKnownArr,
 						hwInstanceKnownArrLen,
 						hwInstanceHwIdSupportedArr,
@@ -85,13 +85,13 @@ namespace Alx
 				};
 				Id
 				(
-					const char* swArtf,
-					const char* swName,
-					uint8_t swVerMajor,
-					uint8_t swVerMinor,
-					uint8_t swVerPatch,
-					bool swIsBuildJobUsed,
-					bool swIsBootloader,
+					const char* fwArtf,
+					const char* fwName,
+					uint8_t fwVerMajor,
+					uint8_t fwVerMinor,
+					uint8_t fwVerPatch,
+					bool fwIsBuildJobUsed,
+					bool fwIsBootloader,
 					AlxId_HwInstance hwInstance,
 					const char* hwMcuName
 				)
@@ -99,13 +99,13 @@ namespace Alx
 					AlxId_Ctor_NoHwId
 					(
 						&me,
-						swArtf,
-						swName,
-						swVerMajor,
-						swVerMinor,
-						swVerPatch,
-						swIsBuildJobUsed,
-						swIsBootloader,
+						fwArtf,
+						fwName,
+						fwVerMajor,
+						fwVerMinor,
+						fwVerPatch,
+						fwIsBuildJobUsed,
+						fwIsBootloader,
 						hwInstance,
 						hwMcuName
 					);
@@ -136,13 +136,13 @@ namespace Alx
 				{
 					return AlxId_GetUniqueIdStr(&me);
 				}
-				uint32_t GetSwAppVerDate(void) override
+				uint32_t GetFwAppVerDate(void) override
 				{
-					return AlxId_GetSwAppVerDate(&me);
+					return AlxId_GetFwAppVerDate(&me);
 				}
-				const char* GetSwAppVerStr(void) override
+				const char* GetFwAppVerStr(void) override
 				{
-					return AlxId_GetSwAppVerStr(&me);
+					return AlxId_GetFwAppVerStr(&me);
 				}
 			private:
 				struct LangCpp
