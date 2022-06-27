@@ -184,7 +184,7 @@ namespace Alx
 				} langCppLib;
 			private:
 				::AlxId me = {};
-				::AlxIoPin* _hwIdIoPinArr[ALX_ID_HW_ID_IO_PIN_BUFF_LEN] = {};
+				::AlxIoPin* _hwIdIoPinArr[ALX_ID_HW_ID_IO_PIN_ARR_MAX_LEN] = {};
 		};
 	}
 }
