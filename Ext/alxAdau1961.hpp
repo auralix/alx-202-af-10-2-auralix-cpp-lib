@@ -46,8 +46,8 @@ namespace Alx
 			public:
 				Adau1961
 				(
-					Alx::AlxI2s::I2s* i2s,
-					Alx::AlxI2c::I2c* i2c,
+					Alx::AlxI2s::II2s* i2s,
+					Alx::AlxI2c::II2c* i2c,
 					uint8_t i2cAddr,
 					bool i2cCheckWithRead,
 					uint8_t i2cNumOfTries,
