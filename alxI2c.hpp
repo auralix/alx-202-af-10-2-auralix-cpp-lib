@@ -30,8 +30,8 @@ namespace Alx
 			public:
 				II2c() {};
 				virtual ~II2c() {};
-				virtual void Init								(void)																																															= 0;
-				virtual void DeInit								(void)																																															= 0;
+				virtual void Init (void) = 0;
+				virtual void DeInit	(void) = 0;
 				virtual ::Alx_Status Master_StartRead			(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10)																													= 0;
 				virtual ::Alx_Status Master_StartReadStop		(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10)																							= 0;
 				virtual ::Alx_Status Master_StartReadMemStop	(uint16_t slaveAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10)								= 0;
