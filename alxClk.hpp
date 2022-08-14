@@ -41,19 +41,18 @@ namespace Alx
 			public:
 				Clk
 				(
-					::AlxClk* me,
 					::AlxClk_Config config
-				) : me(me)
+				)
 				{
-					AlxClk_Ctor(me, config);
+					AlxClk_Ctor(&me, config);
 				};
 				virtual ~Clk() {};
-				::Alx_Status Init(void) override				{ return AlxClk_Init(me); }
-				uint32_t GetClk_Hz(::AlxClk_Clk clk) override	{ return AlxClk_GetClk_Hz(me, clk); }
-				void Irq_Handle(void) override					{ return AlxClk_Irq_Handle(me); }
-				::AlxClk* GetCStructPtr(void) override			{ return me; }
+				::Alx_Status Init(void) override				{ return AlxClk_Init(&me); }
+				uint32_t GetClk_Hz(::AlxClk_Clk clk) override	{ return AlxClk_GetClk_Hz(&me, clk); }
+				void Irq_Handle(void) override					{ return AlxClk_Irq_Handle(&me); }
+				::AlxClk* GetCStructPtr(void) override			{ return &me; }
 			private:
-				::AlxClk* me = nullptr;
+				::AlxClk me = {};
 		};
 		#endif
 	}

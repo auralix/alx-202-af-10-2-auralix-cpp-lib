@@ -189,12 +189,23 @@ namespace Alx
 					::AlxTrace* me
 				) : ATrace(me)
 				{
-					AlxTrace_Ctor(me);
+					(void)me;
 				};
 				virtual ~Trace() {};
 				void Init(void) override
 				{
 					mbed_trace_init();
+				}
+				void WriteFormat(const char* format, ...) override
+				{
+					char buff[256] = {};
+					va_list args = {};
+
+					va_start(args, format);
+					vsnprintf(buff, 256, format, args);
+					va_end(args);
+
+					mbed_tracef(TRACE_LEVEL_CMD, "alxTrace.hpp", buff);
 				}
 				void WriteStd(const char* file, uint32_t line, const char* fun, const char* format, ...) override
 				{
@@ -207,17 +218,6 @@ namespace Alx
 					va_end(args);
 					AlxGlobal_Uint64ToStr(AlxTick_Get_ms(&alxTick), buffTick);
 					WriteFormat("trace;%s;%s;%lu;%s;%s", buffTick, file, line, fun, buff);
-				}
-				void WriteFormat(const char* format, ...) override
-				{
-					char buff[256] = {};
-					va_list args = {};
-
-					va_start(args, format);
-					vsnprintf(buff, 256, format, args);
-					va_end(args);
-
-					mbed_tracef(TRACE_LEVEL_CMD, "alxTrace.hpp", buff);
 				}
 		};
 		#endif
