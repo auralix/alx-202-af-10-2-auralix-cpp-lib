@@ -58,7 +58,7 @@ namespace Alx
 {
 	namespace AlxGlobal
 	{
-		ALX_INLINE static inline void DisableIrq(void)
+		static inline void DisableIrq(void)
 		{
 			#if defined(ALX_MBED)
 				mbed::CriticalSectionLock::enable();
@@ -66,7 +66,7 @@ namespace Alx
 				AlxGlobal_DisableIrq();
 			#endif
 		}
-		ALX_INLINE static inline void EnableIrq(void)
+		static inline void EnableIrq(void)
 		{
 			#if defined(ALX_MBED)
 				mbed::CriticalSectionLock::disable();

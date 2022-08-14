@@ -39,7 +39,8 @@ namespace Alx
 						uint64_t val = AlxTick_Get_ns(me);
 						mbed::CriticalSectionLock::disable();
 						return val;
-					#else						return AlxTick_Get_ns(me);
+					#else
+						return AlxTick_Get_ns(me);
 					#endif
 				}
 				uint64_t Get_us(void) const volatile

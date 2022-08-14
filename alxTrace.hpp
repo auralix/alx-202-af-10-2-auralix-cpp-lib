@@ -1,20 +1,48 @@
 ﻿/**
   ******************************************************************************
-  * @file alxTrace.hpp
-  * @brief Auralix C++ Library - Trace Module
-  * @version $LastChangedRevision: 5968 $
-  * @date $LastChangedDate: 2021-09-07 15:15:09 +0200 (Tue, 07 Sep 2021) $
+  * @file		alxTrace.hpp
+  * @brief		Auralix C++ Library - ALX Trace Module
+  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  *
+  * @section License
+  *
+  * SPDX-License-Identifier: GPL-3.0-or-later
+  *
+  * This file is part of Auralix C++ Library.
+  *
+  * Auralix C++ Library is free software: you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+  * as published by the Free Software Foundation, either version 3
+  * of the License, or (at your option) any later version.
+  *
+  * Auralix C++ Library is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with Auralix C++ Library. If not, see <https://www.gnu.org/licenses/>.
   ******************************************************************************
-  */
+  **/
 
+//******************************************************************************
+// Include Guard
+//******************************************************************************
 #ifndef ALX_TRACE_HPP
 #define ALX_TRACE_HPP
+
 
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxTrace.h>
+#include "alxGlobal.hpp"
+#include "alxTrace.h"
+
+
+//******************************************************************************
+// Module Guard
+//******************************************************************************
+#if defined(ALX_CPP_LIB)
 
 
 //******************************************************************************
@@ -33,6 +61,9 @@ namespace Alx
 {
 	namespace AlxTrace
 	{
+		//******************************************************************************
+		// ITrace
+		//******************************************************************************
 		class ITrace
 		{
 			public:
@@ -45,6 +76,11 @@ namespace Alx
 				virtual void WriteStd(const char* file, uint32_t line, const char* fun, const char* format, ...) = 0;
 				virtual void WriteSm(uint8_t smLevel, const char* smName, const char* stName, const char* acName) = 0;
 		};
+
+
+		//******************************************************************************
+		// ATrace
+		//******************************************************************************
 		class ATrace : public ITrace
 		{
 			public:
@@ -103,6 +139,11 @@ namespace Alx
 			protected:
 				::AlxTrace* me = nullptr;
 		};
+
+
+		//******************************************************************************
+		// Trace - STM32
+		//******************************************************************************
 		#if (defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)) && (!defined(ALX_MBED))
 		class Trace : public ATrace
 		{
@@ -114,24 +155,31 @@ namespace Alx
 					uint16_t pin,
 					#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 					uint32_t alternate,
-					#endif // defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+					#endif	// defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 					USART_TypeDef* usart,
 					::AlxGlobal_BaudRate baudRate
 				) : ATrace(me)
 				{
-					AlxTrace_Ctor(	me,
-									port,
-									pin,
-									#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
-									alternate,
-									#endif // defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
-									usart,
-									baudRate
-									);
+					AlxTrace_Ctor
+					(
+						me,
+						port,
+						pin,
+						#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+						alternate,
+						#endif	// defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+						usart,
+						baudRate
+					);
 				};
 				virtual ~Trace() {};
 		};
 		#endif
+
+
+		//******************************************************************************
+		// Trace - Mbed OS
+		//******************************************************************************
 		#if defined(ALX_MBED)
 		class Trace : public ATrace
 		{
@@ -172,9 +220,19 @@ namespace Alx
 					mbed_tracef(TRACE_LEVEL_CMD, "alxTrace.hpp", buff);
 				}
 		};
+		#endif
+
+
+		//******************************************************************************
+		// Variables
+		//******************************************************************************
+		#if defined(ALX_MBED)
 		extern Trace alxTraceCpp;
 		#endif
 	}
 }
 
-#endif // ALIX_TRACE_HPP
+
+#endif	// #if defined(ALX_CPP_LIB)
+
+#endif	// #ifndef ALX_TRACE_HPP
