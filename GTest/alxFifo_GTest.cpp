@@ -1,11 +1,29 @@
 ﻿/**
   ******************************************************************************
-  * @file alxFifo_GTest.cpp
-  * @brief Auralix C++ Library - ALX FIFO Module - Test
-  * @version $LastChangedRevision: 4271 $
-  * @date $LastChangedDate: 2021-03-05 19:03:28 +0100 (Fri, 05 Mar 2021) $
+  * @file		alxFifo_GTest.cpp
+  * @brief		Auralix C++ Library - ALX FIFO Module - Test
+  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  *
+  * @section License
+  *
+  * SPDX-License-Identifier: GPL-3.0-or-later
+  *
+  * This file is part of Auralix C Library.
+  *
+  * Auralix C Library is free software: you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+  * as published by the Free Software Foundation, either version 3
+  * of the License, or (at your option) any later version.
+  *
+  * Auralix C Library is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with Auralix C Library. If not, see <https://www.gnu.org/licenses/>.
   ******************************************************************************
-  */
+  **/
 
 //******************************************************************************
 // Includes
@@ -946,7 +964,7 @@ namespace Alx
 				EXPECT_EQ(fifoTest->GetNumOfEntries(), 1);
 				EXPECT_EQ(fifoTest->IsFull(), false);
 				EXPECT_EQ(fifoTest->IsEmpty(),false);
-			
+
 				// ReadStrUntil "6"
 				for (uint32_t i = 0; i < 10; i++) data[i] = 0;
 				uint32_t numRead3;

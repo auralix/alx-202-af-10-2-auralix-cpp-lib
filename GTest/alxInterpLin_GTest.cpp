@@ -1,11 +1,29 @@
 ﻿/**
   ******************************************************************************
-  * @file alxInterpLin_GTest.cpp
-  * @brief Auralix C++ Library - ALX Linear Interpolation Module - Test
-  * @version $LastChangedRevision: 4271 $
-  * @date $LastChangedDate: 2021-03-05 19:03:28 +0100 (Fri, 05 Mar 2021) $
+  * @file		alxInterpLin_GTest.cpp
+  * @brief		Auralix C++ Library - ALX Linear Interpolation Module - Test
+  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  *
+  * @section License
+  *
+  * SPDX-License-Identifier: GPL-3.0-or-later
+  *
+  * This file is part of Auralix C Library.
+  *
+  * Auralix C Library is free software: you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+  * as published by the Free Software Foundation, either version 3
+  * of the License, or (at your option) any later version.
+  *
+  * Auralix C Library is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with Auralix C Library. If not, see <https://www.gnu.org/licenses/>.
   ******************************************************************************
-  */
+  **/
 
 //******************************************************************************
 // Includes
@@ -44,7 +62,7 @@ namespace Alx
 				bool isRising = true;
 				float dataX[10] = {1,2,3,4,5,6,7,8,9,10};
 				float dataY[10] = {1,2,3,4,5,6,7,8,9,10};
-				
+
 
 				Alx::AlxInterpLin::InterpLin interpLin = {
 					(float*)dataX,
@@ -95,7 +113,7 @@ namespace Alx
 					EXPECT_EQ(interpLin.GetY(7), 3);
 					EXPECT_EQ(interpLin.GetY(6.5), 2.5);
 			}
-			
+
 		}
 		#endif
 	}

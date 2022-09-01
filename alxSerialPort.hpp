@@ -1,12 +1,33 @@
 ﻿/**
   ******************************************************************************
-  * @file alxSerialPort.hpp
-  * @brief Auralix C++ Library - ALX Serial Port Module
-  * @version $LastChangedRevision: 4271 $
-  * @date $LastChangedDate: 2021-03-05 19:03:28 +0100 (Fri, 05 Mar 2021) $
+  * @file		alxSerialPort.hpp
+  * @brief		Auralix C++ Library - ALX Serial Port Module
+  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  *
+  * @section License
+  *
+  * SPDX-License-Identifier: GPL-3.0-or-later
+  *
+  * This file is part of Auralix C Library.
+  *
+  * Auralix C Library is free software: you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+  * as published by the Free Software Foundation, either version 3
+  * of the License, or (at your option) any later version.
+  *
+  * Auralix C Library is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with Auralix C Library. If not, see <https://www.gnu.org/licenses/>.
   ******************************************************************************
-  */
+  **/
 
+//******************************************************************************
+// Include Guard
+//******************************************************************************
 #ifndef ALX_SERIAL_PORT_HPP
 #define ALX_SERIAL_PORT_HPP
 
@@ -40,7 +61,7 @@ namespace Alx
 				virtual ::Alx_Status WriteStr(const char* str) = 0;
 				virtual void Foreground_Handle(void) = 0;
 		};
-		
+
 		template <uint32_t rxFifoBuffLen>
 		class ASerialPort : public ISerialPort
 		{
@@ -83,7 +104,7 @@ namespace Alx
 				::AlxSerialPort me = {};
 				AlxFifo::Fifo<rxFifoBuffLen> rxFifo = {};
 		};
-		
+
 		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 		template <uint32_t rxFifoBuffLen>
 		class SerialPort : public ASerialPort <rxFifoBuffLen>
@@ -121,7 +142,7 @@ namespace Alx
 				virtual ~SerialPort() {};
 		};
 		#endif
-		
+
 		#if defined (ALX_GTEST_TODO)
 		class MockSerialPort final : public ISerialPort
 		{

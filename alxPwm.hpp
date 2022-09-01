@@ -1,12 +1,33 @@
 ﻿/**
   ******************************************************************************
-  * @file alxPwm.hpp
-  * @brief Auralix C++ Library - ALX PWM Module
-  * @version $LastChangedRevision: 5255 $
-  * @date $LastChangedDate: 2021-05-28 00:29:47 +0200 (Fri, 28 May 2021) $
+  * @file		alxPwm.hpp
+  * @brief		Auralix C++ Library - ALX PWM Module
+  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  *
+  * @section License
+  *
+  * SPDX-License-Identifier: GPL-3.0-or-later
+  *
+  * This file is part of Auralix C Library.
+  *
+  * Auralix C Library is free software: you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+  * as published by the Free Software Foundation, either version 3
+  * of the License, or (at your option) any later version.
+  *
+  * Auralix C Library is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with Auralix C Library. If not, see <https://www.gnu.org/licenses/>.
   ******************************************************************************
-  */
+  **/
 
+//******************************************************************************
+// Include Guard
+//******************************************************************************
 #ifndef ALX_PWM_HPP
 #define ALX_PWM_HPP
 
@@ -75,7 +96,7 @@ namespace Alx
 						AlxIoPin::IIoPin* temp = *(ioPinArr + i);
 						pwmIoPinArr[i] = temp->GetCStructPtr();
 					}
-					
+
 					AlxPwm_Ctor(&me, tim, pwmIoPinArr, chArr, dutyDefaultArr_pct, numOfCh, clk->GetCStructPtr(), prescaler, period);
 				};
 				virtual ~Pwm() {};

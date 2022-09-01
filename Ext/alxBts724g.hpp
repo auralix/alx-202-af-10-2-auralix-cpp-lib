@@ -1,12 +1,33 @@
 ﻿/**
   ******************************************************************************
-  * @file bts724g.hpp
-  * @brief Auralix C++ Library - ALX HighSide Switch BTS724G Module
-  * @version $LastChangedRevision: 4584 $
-  * @date $LastChangedDate: 2021-04-03 03:11:01 +0200 (Sat, 03 Apr 2021) $
+  * @file		bts724g.hpp
+  * @brief		Auralix C++ Library - ALX HighSide Switch BTS724G Module
+  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  *
+  * @section License
+  *
+  * SPDX-License-Identifier: GPL-3.0-or-later
+  *
+  * This file is part of Auralix C Library.
+  *
+  * Auralix C Library is free software: you can redistribute it and/or
+  * modify it under the terms of the GNU General Public License
+  * as published by the Free Software Foundation, either version 3
+  * of the License, or (at your option) any later version.
+  *
+  * Auralix C Library is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with Auralix C Library. If not, see <https://www.gnu.org/licenses/>.
   ******************************************************************************
-  */
+  **/
 
+//******************************************************************************
+// Include Guard
+//******************************************************************************
 #ifndef ALX_BTS724G_HPP
 #define ALX_BTS724G_HPP
 
@@ -46,7 +67,7 @@ namespace Alx
 			public:
 				Bts724g
 				(
-					Alx::AlxIoPin::IIoPin* do_HS_IN, 
+					Alx::AlxIoPin::IIoPin* do_HS_IN,
 					Alx::AlxIoPin::IIoPin* di_HS_ST
 				)
 				{
@@ -60,7 +81,7 @@ namespace Alx
 				void ResetOut(void)override					{ AlxBts724g_ResetOut(&me); };
 				void WriteOut(bool state)override			{ AlxBts724g_WriteOut(&me, state); };
 				bool IsOpenLoadDetected(void)override		{ return AlxBts724g_IsOpenLoadDetected(&me); };
-				bool IsOverTempDetected(void)override		{ return AlxBts724g_IsOverTempDetected(&me); }; 
+				bool IsOverTempDetected(void)override		{ return AlxBts724g_IsOverTempDetected(&me); };
 				bool WasOpenLoadDetected(void)override		{ return AlxBts724g_WasOpenLoadDetected(&me); };
 				bool WasOverTempDetected(void)override		{ return AlxBts724g_WasOverTempDetected(&me); };
 			private:
