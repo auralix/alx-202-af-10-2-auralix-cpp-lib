@@ -57,6 +57,9 @@ namespace Alx
 		class IIoPin
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IIoPin() {};
 				virtual ~IIoPin() {};
 				virtual void Init(void)							= 0;
@@ -77,6 +80,9 @@ namespace Alx
 		class AIoPin : public IIoPin
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				AIoPin() {};
 				virtual ~AIoPin() {};
 				void Init(void) override							{ AlxIoPin_Init(&me); }
@@ -89,6 +95,9 @@ namespace Alx
 				::AlxIoPin_TriState Read_TriState(void) override	{ return AlxIoPin_Read_TriState(&me); }
 				::AlxIoPin* GetCStructPtr(void) override			{ return &me; }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxIoPin me = {};
 		};
 
@@ -100,6 +109,9 @@ namespace Alx
 		class IoPin : public AIoPin
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IoPin
 				(
 					GPIO_TypeDef* port,

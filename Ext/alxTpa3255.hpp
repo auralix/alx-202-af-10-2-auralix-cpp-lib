@@ -58,19 +58,22 @@ namespace Alx
 		class ITpa3255
 		{
 			public:
-			ITpa3255() {};
-			virtual ~ITpa3255() {};
-			virtual void Init()						= 0;
-			virtual void DeInit()					= 0;
-			virtual void Handle()					= 0;
-			virtual void Enable()					= 0;
-			virtual void Disable()					= 0;
-			virtual bool IsErrAsserted()			= 0;
-			virtual bool IsWarningAsserted()		= 0;
-			virtual bool WasErrAsserted()			= 0;
-			virtual bool WasWarningAsserted()		= 0;
-			virtual void ClearWasErrAsserted()		= 0;
-			virtual void ClearWasWarningAsserted()	= 0;
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				ITpa3255() {};
+				virtual ~ITpa3255() {};
+				virtual void Init()						= 0;
+				virtual void DeInit()					= 0;
+				virtual void Handle()					= 0;
+				virtual void Enable()					= 0;
+				virtual void Disable()					= 0;
+				virtual bool IsErrAsserted()			= 0;
+				virtual bool IsWarningAsserted()		= 0;
+				virtual bool WasErrAsserted()			= 0;
+				virtual bool WasWarningAsserted()		= 0;
+				virtual void ClearWasErrAsserted()		= 0;
+				virtual void ClearWasWarningAsserted()	= 0;
 		};
 
 
@@ -80,7 +83,10 @@ namespace Alx
 		class Tpa3255 final : public ITpa3255
 		{
 			public:
-			Tpa3255
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				Tpa3255
 				(
 					Alx::AlxIoPin::IIoPin* di_nRESET,
 					Alx::AlxIoPin::IIoPin* do_nFAULT,
@@ -110,7 +116,10 @@ namespace Alx
 				void ClearWasErrAsserted() override { AlxTpa3255_ClearWasErrAsserted(&me); }
 				void ClearWasWarningAsserted() override { AlxTpa3255_ClearWasWarningAsserted(&me); }
 			protected:
-			::AlxTpa3255 me = {};
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
+				::AlxTpa3255 me = {};
 		};
 	}
 }

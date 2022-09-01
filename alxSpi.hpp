@@ -59,6 +59,9 @@ namespace Alx
 		class ISpi
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ISpi() {};
 				virtual ~ISpi() {};
 				virtual ::Alx_Status Init(void) = 0;
@@ -78,6 +81,9 @@ namespace Alx
 		class ASpi : public ISpi
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ASpi() {};
 				virtual ~ASpi() {};
 				::Alx_Status Init(void) override
@@ -113,6 +119,9 @@ namespace Alx
 					return &me;
 				}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxSpi me = {};
 		};
 
@@ -124,6 +133,9 @@ namespace Alx
 		class Spi : public ASpi
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Spi
 				(
 					SPI_TypeDef* spi,
@@ -161,6 +173,9 @@ namespace Alx
 		class MockSpi final : public ISpi
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				MOCK_METHOD(::Alx_Status, Init,				(), (override));
 				MOCK_METHOD(::Alx_Status, DeInit,			(), (override));
 				MOCK_METHOD(::Alx_Status, Master_WriteRead,	(const uint8_t* writeData, uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));

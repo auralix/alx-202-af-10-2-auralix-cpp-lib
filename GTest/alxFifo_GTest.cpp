@@ -53,6 +53,9 @@ namespace Alx
 			class FifoG01Test : public testing::Test
 			{
 				protected:
+					//------------------------------------------------------------------------------
+					// Protected Functions
+					//------------------------------------------------------------------------------
 					FifoG01Test() {};
 					virtual ~FifoG01Test() {};
 

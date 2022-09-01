@@ -59,6 +59,9 @@ namespace Alx
 		class ISerialPort
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ISerialPort() {};
 				virtual ~ISerialPort() {};
 				virtual ::Alx_Status Init(void) = 0;
@@ -79,6 +82,9 @@ namespace Alx
 		class ASerialPort : public ISerialPort
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ASerialPort() {};
 				virtual ~ASerialPort() {};
 				::Alx_Status Init(void) override
@@ -114,6 +120,9 @@ namespace Alx
 					AlxSerialPort_Foreground_Handle(&me);
 				}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxSerialPort me = {};
 				AlxFifo::Fifo<rxFifoBuffLen> rxFifo = {};
 		};
@@ -127,6 +136,9 @@ namespace Alx
 		class SerialPort : public ASerialPort <rxFifoBuffLen>
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				SerialPort
 				(
 					USART_TypeDef* uart,
@@ -168,6 +180,9 @@ namespace Alx
 		class MockSerialPort final : public ISerialPort
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				MOCK_METHOD(::Alx_Status, Init, (), (override));
 				MOCK_METHOD(::Alx_Status, DeInit, (), (override));
 				MOCK_METHOD(::Alx_Status, Read, (uint8_t* data, uint32_t len), (override));

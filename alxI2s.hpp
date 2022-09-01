@@ -59,6 +59,9 @@ namespace Alx
 		class II2s
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				II2s() {};
 				virtual ~II2s() {};
 				virtual ::Alx_Status Init(void)			= 0;
@@ -74,6 +77,9 @@ namespace Alx
 		class AI2s : public II2s
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				AI2s() {};
 				virtual ~AI2s() {};
 				::Alx_Status Init(void) override		{ return AlxI2s_Init(&me); }
@@ -81,6 +87,9 @@ namespace Alx
 				void Foreground_Handle(void) override	{ return AlxI2s_Foreground_Handle(&me); }
 				::AlxI2s* GetCStructPtr(void) override	{ return &me; }
 			//protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxI2s me = {};
 		};
 
@@ -92,6 +101,9 @@ namespace Alx
 		class I2s : public AI2s
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				I2s
 				(
 					SAI_Block_TypeDef* i2s,

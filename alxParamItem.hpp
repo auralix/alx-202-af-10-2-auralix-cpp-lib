@@ -57,6 +57,9 @@ namespace Alx
 		class IParamItem
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IParamItem() {};
 				virtual ~IParamItem() {};
 				virtual const char* GetName(void) = 0;
@@ -107,6 +110,9 @@ namespace Alx
 		class ParamItem : public IParamItem
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				// #1 Uint8
 				ParamItem
 				(
@@ -320,6 +326,9 @@ namespace Alx
 
 				::AlxParamItem* GetCStructPtr(void) override		{ return &me; }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				uint8_t arrValBuff		[arrBuffLen] = {};
 				uint8_t arrValDefBuff	[arrBuffLen] = {};
 				char	strValBuff		[strMaxLen + 1]	 = {};	// JK: + 1 is for nullchar

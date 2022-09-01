@@ -57,6 +57,9 @@ namespace Alx
 		class IFiltGlitchUint32
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IFiltGlitchUint32() {};
 				virtual ~IFiltGlitchUint32() {};
 				virtual uint32_t Process(uint32_t in) = 0;
@@ -69,6 +72,9 @@ namespace Alx
 		class FiltGlitchUint32 final : public IFiltGlitchUint32
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				FiltGlitchUint32
 				(
 					uint32_t valInitial,
@@ -80,6 +86,9 @@ namespace Alx
 				virtual ~FiltGlitchUint32() {};
 				uint32_t Process(uint32_t in) override { return AlxFiltGlitchUint32_Process(&me, in); }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxFiltGlitchUint32 me = {};
 		};
 	}

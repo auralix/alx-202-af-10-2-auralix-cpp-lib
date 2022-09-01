@@ -59,11 +59,14 @@ namespace Alx
 		class ITmp1075
 		{
 			public:
-			ITmp1075() {};
-			virtual ~ITmp1075() {};
-			virtual Alx_Status Init(void) = 0;
-			virtual Alx_Status DeInit(void) = 0;
-			virtual float GetTemp_degC(void) = 0;
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				ITmp1075() {};
+				virtual ~ITmp1075() {};
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual float GetTemp_degC(void) = 0;
 		};
 
 
@@ -73,6 +76,9 @@ namespace Alx
 		class Tmp1075 final : public ITmp1075
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Tmp1075
 				(
 					Alx::AlxI2c::I2c* i2c,
@@ -97,6 +103,9 @@ namespace Alx
 				Alx_Status DeInit(void) override	{ return AlxTmp1075_DeInit(&me); }
 				float GetTemp_degC(void) override	{ return AlxTmp1075_GetTemp_degC(&me); }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxTmp1075 me = {};
 		};
 	}

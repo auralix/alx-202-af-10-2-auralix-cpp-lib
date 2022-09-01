@@ -59,6 +59,9 @@ namespace Alx
 		class IParamGroup
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IParamGroup() {};
 				virtual ~IParamGroup() {};
 				virtual Alx_Status Init(void) = 0;
@@ -80,6 +83,9 @@ namespace Alx
 		class ParamGroup : public IParamGroup
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ParamGroup
 				(
 					AlxMemSafe::IMemSafe* memSafe,
@@ -124,6 +130,9 @@ namespace Alx
 				void ParamItemsValToValBuff(void) override			{ AlxParamGroup_ParamItemsValToValBuff(&me); }
 				::AlxParamGroup* GetCStructPtr(void) override		{ return &me; }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				uint8_t valBuff[len];		// JK: User has to calculate. Safe way: 8bytes * numOfParamItems
 				uint8_t valStoredBuff[len];
 				uint8_t valToStoreBuff[len];

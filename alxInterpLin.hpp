@@ -57,6 +57,9 @@ namespace Alx
 		class IInterpLin
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IInterpLin() {};
 				virtual ~IInterpLin() {};
 				virtual Alx_Status GetY(float x, float* y) = 0;
@@ -71,6 +74,9 @@ namespace Alx
 		class InterpLin final : public IInterpLin
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				InterpLin
 				(
 					float *xPointArr,
@@ -86,6 +92,9 @@ namespace Alx
 				float GetY(float x) override					{ return AlxInterpLin_GetY				(&me, x	);	}
 				::AlxInterpLin* GetCStructPtr(void) override	{ return &me;	}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxInterpLin me = {};
 		};
 	}

@@ -58,6 +58,9 @@ namespace Alx
 		class IIoPinIrq
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IIoPinIrq() {};
 				virtual ~IIoPinIrq() {};
 				virtual void Init(void) = 0;
@@ -71,6 +74,9 @@ namespace Alx
 		class AIoPinIrq : public IIoPinIrq
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				AIoPinIrq() {};
 				virtual ~AIoPinIrq() {};
 				void Init(void) override
@@ -82,6 +88,9 @@ namespace Alx
 					return AlxIoPinIrq_DeInit(&me);
 				}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxIoPinIrq me = {};
 		};
 
@@ -93,6 +102,9 @@ namespace Alx
 		class IoPinIrq : public AIoPinIrq
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IoPinIrq
 				(
 					AlxIoPin::IIoPin** ioPinArr,
@@ -116,6 +128,9 @@ namespace Alx
 				};
 				virtual ~IoPinIrq() {};
 			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
 				::AlxIoPin* ioPinIrqIoPinArr[ALX_IO_PIN_IRQ_BUFF_LEN] = {};
 		};
 		#endif

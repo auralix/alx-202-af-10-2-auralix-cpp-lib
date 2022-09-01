@@ -61,6 +61,9 @@ namespace Alx
 		class ITempSens
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ITempSens() {};
 				virtual ~ITempSens() {};
 				virtual ::Alx_Status Init(void) = 0;
@@ -75,6 +78,9 @@ namespace Alx
 		class ATempSens : public ITempSens
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ATempSens() {};
 				virtual ~ATempSens() {};
 				::Alx_Status Init(void) override
@@ -90,6 +96,9 @@ namespace Alx
 					return AlxTempSens_GetTemp_degC(&tempSens, temp_degC);
 				}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxTempSens tempSens = {};
 		};
 
@@ -100,6 +109,9 @@ namespace Alx
 		class TempSensRtd : public ATempSens
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				TempSensRtd
 				(
 					AlxAdc::IAdc* adc,
@@ -129,7 +141,10 @@ namespace Alx
 				};
 				virtual ~TempSensRtd() {};
 			private:
-			::AlxTempSensRtdVdiv me = {};
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
+				::AlxTempSensRtdVdiv me = {};
 		};
 
 
@@ -140,6 +155,9 @@ namespace Alx
 		class MockTempSens final : public ITempSens
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				MOCK_METHOD(::Alx_Status, Init, (), (override));
 				MOCK_METHOD(::Alx_Status, DeInit, (), (override));
 				MOCK_METHOD(float, GetTemp_degC, (void), (override));

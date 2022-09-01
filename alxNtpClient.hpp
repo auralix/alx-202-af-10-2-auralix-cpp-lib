@@ -141,6 +141,9 @@ namespace Alx
 		class INtpClient
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				INtpClient() {};
 				virtual ~INtpClient() {};
 				virtual uint64_t GetUnixTime_ns(void) = 0;

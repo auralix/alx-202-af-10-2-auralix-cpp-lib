@@ -58,6 +58,9 @@ namespace Alx
 		class II2c
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				II2c() {};
 				virtual ~II2c() {};
 				virtual void Init (void) = 0;
@@ -81,6 +84,9 @@ namespace Alx
 		class AI2c : public II2c
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				AI2c() {};
 				virtual ~AI2c() {};
 				void Init(void) override
@@ -132,6 +138,9 @@ namespace Alx
 					return &me;
 				}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxI2c me = {};
 		};
 
@@ -143,6 +152,9 @@ namespace Alx
 		class I2c : public AI2c
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				I2c
 				(
 					I2C_TypeDef* i2c,
@@ -165,6 +177,9 @@ namespace Alx
 		class MockI2c final : public II2c
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				MOCK_METHOD(void, Init,								(), (override));
 				MOCK_METHOD(void, DeInit,							(), (override));
 				MOCK_METHOD(::Alx_Status, Master_StartRead,			(uint16_t slvAddr, uint8_t* data, uint16_t len, uint16_t timeout_ms), (override));

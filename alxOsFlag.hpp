@@ -80,6 +80,9 @@ namespace Alx
 		class IOsFlag
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IOsFlag() {};
 				virtual ~IOsFlag() {};
 				virtual void Assert(void) = 0;
@@ -97,6 +100,9 @@ namespace Alx
 		class OsFlag final : public IOsFlag
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				OsFlag
 				(
 					const char* name
@@ -135,6 +141,9 @@ namespace Alx
 					ALX_OS_FLAG_ASSERT(status == 0x00000001);
 				}
 			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
 				rtos::EventFlags eventFlags;
 		};
 		#endif

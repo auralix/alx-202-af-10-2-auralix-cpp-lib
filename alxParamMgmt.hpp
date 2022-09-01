@@ -58,6 +58,9 @@ namespace Alx
 		class IParamMgmt
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IParamMgmt() {};
 				virtual ~IParamMgmt() {};
 				virtual double Get(const char* name) = 0;
@@ -81,6 +84,9 @@ namespace Alx
 		class ParamMgmt : public IParamMgmt
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ParamMgmt
 				(
 					Alx::AlxParamItem::IParamItem** paramItemArr,
@@ -132,6 +138,9 @@ namespace Alx
 				{
 				}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxParamMgmt me = {};
 		};
 	}

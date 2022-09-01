@@ -58,6 +58,9 @@ namespace Alx
 		class IParamStore
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IParamStore() {};
 				virtual ~IParamStore() {};
 				virtual Alx_Status Init(Alx_Status* status, uint32_t numOfParamGroups) = 0;
@@ -74,6 +77,9 @@ namespace Alx
 		class ParamStore : public IParamStore
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ParamStore
 				(
 					Alx::AlxParamGroup::IParamGroup** paramGroupArr
@@ -103,6 +109,9 @@ namespace Alx
 				bool IsErr(void) override												{ return AlxParamStore_IsErr(&me); };
 				::AlxParamStore* GetCStructPtr(void) override							{ return &me; };
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxParamGroup* paramGroupArr[_numOfParamGroups] = {};
 				::AlxParamStore me = {};
 

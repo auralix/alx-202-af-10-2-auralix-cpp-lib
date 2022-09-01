@@ -57,6 +57,9 @@ namespace Alx
 		class IFiltGlitchBool
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IFiltGlitchBool() {};
 				virtual ~IFiltGlitchBool() {};
 				virtual bool Process(bool in) = 0;
@@ -69,6 +72,9 @@ namespace Alx
 		class FiltGlitchBool final : public IFiltGlitchBool
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				FiltGlitchBool
 				(
 					bool valFilteredInitial,
@@ -81,6 +87,9 @@ namespace Alx
 				virtual ~FiltGlitchBool() {};
 				bool Process(bool in) override { return AlxFiltGlitchBool_Process(&me, in); }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxFiltGlitchBool me = {};
 		};
 	}

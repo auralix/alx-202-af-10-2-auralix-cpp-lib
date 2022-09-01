@@ -57,6 +57,9 @@ namespace Alx
 		class ITimSw
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ITimSw() {};
 				virtual ~ITimSw() {};
 				virtual void Start(void) = 0;
@@ -83,6 +86,9 @@ namespace Alx
 		class TimSw final : public ITimSw
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				TimSw(bool start = false)
 				{
 					AlxTimSw_Ctor(&me, start);
@@ -104,6 +110,9 @@ namespace Alx
 				bool IsTimeout_min(uint64_t timeout_min) override	{ return AlxTimSw_IsTimeout_min(&me, timeout_min); }
 				bool IsTimeout_hr(uint64_t timeout_hr) override		{ return AlxTimSw_IsTimeout_hr(&me, timeout_hr); }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxTimSw me = {};
 		};
 
@@ -115,6 +124,9 @@ namespace Alx
 		class MockTimSw final : public ITimSw
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				MOCK_METHOD(void, Start, (), (override));
 				MOCK_METHOD(void, Stop, (), (override));
 				MOCK_METHOD(bool, IsRunning, (), (override));

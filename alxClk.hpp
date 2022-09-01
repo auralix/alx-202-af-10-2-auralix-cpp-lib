@@ -57,6 +57,9 @@ namespace Alx
 		class IClk
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IClk() {};
 				virtual ~IClk() {};
 				virtual ::Alx_Status Init(void)					= 0;
@@ -73,6 +76,9 @@ namespace Alx
 		class Clk final : public IClk
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Clk
 				(
 					::AlxClk_Config config
@@ -86,6 +92,9 @@ namespace Alx
 				void Irq_Handle(void) override					{ return AlxClk_Irq_Handle(&me); }
 				::AlxClk* GetCStructPtr(void) override			{ return &me; }
 			private:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxClk me = {};
 		};
 		#endif

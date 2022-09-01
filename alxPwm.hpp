@@ -59,6 +59,9 @@ namespace Alx
 		class IPwm
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IPwm() {};
 				virtual ~IPwm() {};
 				virtual ::Alx_Status Init(void) = 0;
@@ -73,6 +76,9 @@ namespace Alx
 		class APwm : public IPwm
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				APwm() {};
 				virtual ~APwm() {};
 				::Alx_Status Init(void) override
@@ -88,6 +94,9 @@ namespace Alx
 					return AlxPwm_SetDuty_pct(&me, ch, duty_pct);
 				}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxPwm me = {};
 		};
 
@@ -99,6 +108,9 @@ namespace Alx
 		class Pwm : public APwm
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Pwm
 				(
 					TIM_TypeDef* tim,
@@ -121,6 +133,9 @@ namespace Alx
 				};
 				virtual ~Pwm() {};
 			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
 				::AlxIoPin* pwmIoPinArr[ALX_PWM_BUFF_LEN] = {0};
 		};
 		#endif
@@ -133,6 +148,9 @@ namespace Alx
 		class MockPwm final : public IPwm
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				MOCK_METHOD(::Alx_Status, Init, (), (override));
 				MOCK_METHOD(::Alx_Status, DeInit, (), (override));
 				MOCK_METHOD(::Alx_Status, SetDuty_pct, (::Alx_Ch ch, float duty_pct), (override));

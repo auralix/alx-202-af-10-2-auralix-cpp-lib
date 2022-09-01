@@ -58,6 +58,9 @@ namespace Alx
 		class IBts724g
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IBts724g() {};
 				virtual ~IBts724g() {};
 				virtual void Init(void) = 0;
@@ -79,6 +82,9 @@ namespace Alx
 		class Bts724g : public IBts724g
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Bts724g
 				(
 					Alx::AlxIoPin::IIoPin* do_HS_IN,
@@ -99,6 +105,9 @@ namespace Alx
 				bool WasOpenLoadDetected(void)override		{ return AlxBts724g_WasOpenLoadDetected(&me); };
 				bool WasOverTempDetected(void)override		{ return AlxBts724g_WasOverTempDetected(&me); };
 			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
 				::AlxBts724g me = {};
 		};
 	}

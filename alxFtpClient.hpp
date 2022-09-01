@@ -80,6 +80,9 @@ namespace Alx
 		class IFtpClient
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IFtpClient() {};
 				virtual ~IFtpClient() {};
 				virtual ::Alx_Status Login(void) = 0;
@@ -96,6 +99,9 @@ namespace Alx
 		class FtpClient : public IFtpClient
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				FtpClient
 				(
 					NetworkInterface* net,
@@ -616,7 +622,7 @@ namespace Alx
 				// Info
 				bool isLogin = false;
 
-			private :
+			private:
 				//******************************************************************************
 				// Private Functions
 				//******************************************************************************

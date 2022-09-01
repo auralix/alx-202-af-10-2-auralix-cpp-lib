@@ -57,6 +57,9 @@ namespace Alx
 		class IAudioVol
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IAudioVol() {};
 				virtual ~IAudioVol() {};
 				virtual float Process(float inSample) = 0;
@@ -71,6 +74,9 @@ namespace Alx
 		class AudioVol final : public IAudioVol
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				AudioVol
 				(
 						float volMin_dB,
@@ -84,6 +90,9 @@ namespace Alx
 				void Set_pct(float vol_pct) override	{ AlxAudioVol_Set_pct(&me, vol_pct); }
 				void Set_dB(float gain_dB) override		{ AlxAudioVol_Set_dB(&me, gain_dB); }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxAudioVol me = {};
 		};
 	}

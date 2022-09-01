@@ -59,17 +59,20 @@ namespace Alx
 		class IAdau1961
 		{
 			public:
-			IAdau1961() {};
-			virtual ~IAdau1961() {};
-			virtual ::Alx_Status Init(void)								= 0;
-			virtual ::Alx_Status DeInit(void)							= 0;
-			virtual void Foreground_Handle(void)						= 0;
-			virtual ::Alx_Status InDiffL_SetGain(float gain_dB)			= 0;
-			virtual ::Alx_Status InDiffR_SetGain(float gain_dB)			= 0;
-			virtual ::Alx_Status InAuxL_SetGain_dB(int8_t gain_dB)		= 0;
-			virtual ::Alx_Status InAuxR_SetGain_dB(int8_t gain_dB)		= 0;
-			virtual ::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB)	= 0;
-			virtual ::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB)	= 0;
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				IAdau1961() {};
+				virtual ~IAdau1961() {};
+				virtual ::Alx_Status Init(void)								= 0;
+				virtual ::Alx_Status DeInit(void)							= 0;
+				virtual void Foreground_Handle(void)						= 0;
+				virtual ::Alx_Status InDiffL_SetGain(float gain_dB)			= 0;
+				virtual ::Alx_Status InDiffR_SetGain(float gain_dB)			= 0;
+				virtual ::Alx_Status InAuxL_SetGain_dB(int8_t gain_dB)		= 0;
+				virtual ::Alx_Status InAuxR_SetGain_dB(int8_t gain_dB)		= 0;
+				virtual ::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB)	= 0;
+				virtual ::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB)	= 0;
 		};
 
 
@@ -79,6 +82,9 @@ namespace Alx
 		class Adau1961 final : public IAdau1961
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Adau1961
 				(
 					Alx::AlxI2s::II2s* i2s,
@@ -111,6 +117,9 @@ namespace Alx
 				::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB) override	{ return AlxAdau1961_OutLineL_SetGain_dB(&me, gain_dB); }
 				::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB) override	{ return AlxAdau1961_OutLineR_SetGain_dB(&me, gain_dB); }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxAdau1961 me = {};
 		};
 	}

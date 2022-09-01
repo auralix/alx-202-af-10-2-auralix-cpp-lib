@@ -57,6 +57,9 @@ namespace Alx
 		class IBtn
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IBtn() {};
 				virtual ~IBtn() {};
 				virtual void Handle(bool in) = 0;
@@ -80,6 +83,9 @@ namespace Alx
 		class Btn final : public IBtn
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Btn
 				(
 					bool valInitial,
@@ -103,6 +109,9 @@ namespace Alx
 				void ClearWasPressedShort()			override { AlxBtn_ClearWasPressedShort(&me);		}
 				void ClearWasPressedLong()			override { AlxBtn_ClearWasPressedLong(&me);			}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxBtn me = {};
 		};
 	}

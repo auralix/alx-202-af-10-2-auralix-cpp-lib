@@ -59,6 +59,9 @@ namespace Alx
 		class IMemSafe
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IMemSafe() {};
 				virtual ~IMemSafe() {};
 				virtual ::Alx_Status Read(uint8_t* data, uint32_t len) = 0;
@@ -78,6 +81,9 @@ namespace Alx
 		class MemSafe : public IMemSafe
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				MemSafe
 				(
 					AlxMemRaw::MemRaw* memRaw,
@@ -118,6 +124,9 @@ namespace Alx
 				bool IsWriteErr(void) override								{ return AlxMemSafe_IsWriteErr(&me); }
 				::AlxMemSafe* GetCStructPtr(void) override					{ return &me; }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxMemSafe me = {};
 				uint8_t buff1[buff1Len] ={};
 				uint8_t buff2[buff2Len] ={};

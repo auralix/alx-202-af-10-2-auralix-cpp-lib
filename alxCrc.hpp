@@ -57,6 +57,9 @@ namespace Alx
 		class ICrc
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ICrc() {};
 				virtual ~ICrc() {};
 				virtual uint32_t Calc(uint8_t* data, uint32_t len) = 0;
@@ -72,6 +75,9 @@ namespace Alx
 		class Crc : public ICrc
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Crc
 				(
 					AlxCrc_Config config
@@ -85,6 +91,9 @@ namespace Alx
 				uint32_t GetLen(void) override															{ return AlxCrc_GetLen(&me); }
 				::AlxCrc* GetCStructPtr(void) override													{ return &me; }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxCrc me = {};
 		};
 	}

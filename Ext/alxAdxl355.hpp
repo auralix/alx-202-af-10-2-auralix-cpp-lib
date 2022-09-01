@@ -60,16 +60,19 @@ namespace Alx
 		class IAdxl355
 		{
 			public:
-			IAdxl355() {};
-			virtual ~IAdxl355() {};
-			virtual Alx_Status Init(void) = 0;
-			virtual Alx_Status DeInit(void) = 0;
-			virtual Alx_Status Enable(void) = 0;
-			virtual Alx_Status Disable(void) = 0;
-			virtual Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint32_t len) = 0;
-			virtual Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) = 0;
-			virtual float GetTemp_degC(void) = 0;
-			virtual Alx_Status Foreground_Handle(void) = 0;
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				IAdxl355() {};
+				virtual ~IAdxl355() {};
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Enable(void) = 0;
+				virtual Alx_Status Disable(void) = 0;
+				virtual Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint32_t len) = 0;
+				virtual Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) = 0;
+				virtual float GetTemp_degC(void) = 0;
+				virtual Alx_Status Foreground_Handle(void) = 0;
 		};
 
 
@@ -80,6 +83,9 @@ namespace Alx
 		class Adxl355 final : public IAdxl355
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Adxl355
 				(
 					Alx::AlxSpi::Spi* spi,
@@ -150,6 +156,9 @@ namespace Alx
 				float GetTemp_degC(void) override									{ return AlxAdxl355_GetTemp_degC(&me); }
 				Alx_Status Foreground_Handle(void) override							{ return AlxAdxl355_Foreground_Handle(&me); }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxAdxl355 me = {};
 				AlxFifo::Fifo<fifoBuffLen * sizeof(AlxAdxl355_Xyz_g)> fifo = {};
 		};

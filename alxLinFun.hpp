@@ -57,6 +57,9 @@ namespace Alx
 		class ILinFun
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ILinFun() {};
 				virtual ~ILinFun() {};
 				virtual Alx_Status GetY(float x, float* y) = 0;
@@ -72,6 +75,9 @@ namespace Alx
 		class LinFun final : public ILinFun
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				LinFun
 				(
 					float point1_x,
@@ -91,6 +97,9 @@ namespace Alx
 				float GetY (float x) override				{ return AlxLinFun_GetY				(&me, x);		}
 				float GetX (float y) override				{ return AlxLinFun_GetX				(&me, y);		}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxLinFun me = {};
 		};
 	}

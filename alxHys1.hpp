@@ -57,6 +57,9 @@ namespace Alx
 		class IHys1
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IHys1() {};
 				virtual ~IHys1() {};
 				virtual ::AlxHys1_St Process(float in) = 0;
@@ -69,6 +72,9 @@ namespace Alx
 		class Hys1 final : public IHys1
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Hys1
 				(
 					float high,
@@ -80,6 +86,9 @@ namespace Alx
 				virtual ~Hys1() {};
 				::AlxHys1_St Process(float in) override { return AlxHys1_Process(&me, in); }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxHys1 me = {};
 		};
 	}

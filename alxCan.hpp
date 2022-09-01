@@ -60,6 +60,9 @@ namespace Alx
 		class ICan
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ICan() {};
 				virtual ~ICan() {};
 				virtual ::Alx_Status Init(void) = 0;
@@ -81,6 +84,9 @@ namespace Alx
 		class ACan : public ICan
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ACan() {};
 				virtual ~ACan() {};
 				::Alx_Status Init(void) override
@@ -120,6 +126,9 @@ namespace Alx
 					return AlxCan_Foreground_Handle(&me);
 				}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxCan me = {};
 				AlxFifo::Fifo<txFifoMaxNumOfMsg * sizeof(AlxCan_Msg)> txFifo = {};
 				AlxFifo::Fifo<rxFifoMaxNumOfMsg * sizeof(AlxCan_Msg)> rxFifo = {};
@@ -134,6 +143,9 @@ namespace Alx
 		class Can : public ACan <txFifoMaxNumOfMsg, rxFifoMaxNumOfMsg>
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Can
 				(
 					#if defined(ALX_STM32F4)

@@ -59,6 +59,9 @@ namespace Alx
 		class IDac
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IDac() {};
 				virtual ~IDac() {};
 				virtual ::Alx_Status Init(void) = 0;
@@ -75,6 +78,9 @@ namespace Alx
 		class ADac : public IDac
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				ADac() {};
 				virtual ~ADac() {};
 				::Alx_Status Init(void) override
@@ -98,6 +104,9 @@ namespace Alx
 					return AlxDac_SetVoltage_V_CalibrateVref(&dac, ch, voltage_V, vref_V);
 				}
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxDac dac = {};
 		};
 
@@ -109,6 +118,9 @@ namespace Alx
 		class DacMcu : public ADac
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				DacMcu
 				(
 					DAC_TypeDef* dac,
@@ -131,6 +143,9 @@ namespace Alx
 				};
 				virtual ~DacMcu() {};
 			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
 				::AlxDac_Mcu dacMcu = {};
 				::AlxIoPin* dacIoPinArr[ALX_DAC_BUFF_LEN] = {0};
 		};
@@ -139,6 +154,9 @@ namespace Alx
 		class MockDac final : public IDac
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				MOCK_METHOD(::Alx_Status, Init, (), (override));
 				MOCK_METHOD(::Alx_Status, Init, (float voltage_V), (override));
 				MOCK_METHOD(::Alx_Status, DeInit, (), (override));

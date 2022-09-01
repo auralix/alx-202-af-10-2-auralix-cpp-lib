@@ -57,6 +57,9 @@ namespace Alx
 		class IMemRaw
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IMemRaw() {};
 				virtual ~IMemRaw() {};
 				virtual ::Alx_Status Init(void) = 0;
@@ -73,6 +76,9 @@ namespace Alx
 		class MemRaw : public IMemRaw
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				MemRaw()
 				{
 					AlxMemRaw_Ctor(&me);
@@ -84,6 +90,9 @@ namespace Alx
 				::Alx_Status Write(uint32_t addr, uint8_t* data, uint32_t len, bool checkWithReadEnable, uint8_t numOfTries, uint16_t timeout_ms) override	{ return AlxMemRaw_Write(&me, addr, data, len, checkWithReadEnable, numOfTries, timeout_ms); }
 				::AlxMemRaw* GetCStructPtr(void) override																									{ return &me; }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxMemRaw me = {};
 		};
 	}

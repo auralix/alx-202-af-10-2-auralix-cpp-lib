@@ -57,6 +57,9 @@ namespace Alx
 		class IAudioPlayer
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				IAudioPlayer() {};
 				virtual ~IAudioPlayer() {};
 				virtual void LoadTrack(const uint8_t* trackPtr, uint32_t len_Byte, uint32_t startOffset_Sample, ::AlxAudio_Encoding encoding, bool isMono) = 0;
@@ -81,6 +84,9 @@ namespace Alx
 		class AudioPlayer final : public IAudioPlayer
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				AudioPlayer
 				(
 					const uint8_t* defaultTrackPtr,
@@ -118,6 +124,9 @@ namespace Alx
 				void LoopConfig(bool isOn) override		{ AlxAudioPlayer_LoopConfig(&me, isOn); }
 				bool IsPlaying(void) override			{ return AlxAudioPlayer_IsPlaying(&me); }
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxAudioPlayer me = {};
 		};
 	}

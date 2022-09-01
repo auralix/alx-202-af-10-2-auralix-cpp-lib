@@ -53,6 +53,9 @@ namespace Alx
 			class InterpLinG01Test : public testing::Test
 			{
 				protected:
+					//------------------------------------------------------------------------------
+					// Protected Functions
+					//------------------------------------------------------------------------------
 					InterpLinG01Test() {};
 					virtual ~InterpLinG01Test() {};
 
