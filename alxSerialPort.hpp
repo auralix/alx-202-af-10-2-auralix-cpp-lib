@@ -34,10 +34,10 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxSerialPort.h>
-#include <alxIoPin.hpp>
-#include <alxFifo.hpp>
+#include "alxGlobal.hpp"
+#include "alxSerialPort.h"
+#include "alxIoPin.hpp"
+#include "alxFifo.hpp"
 
 
 //******************************************************************************

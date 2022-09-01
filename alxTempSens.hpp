@@ -34,12 +34,12 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxAdc.hpp>
-#include <alxInterpLin.hpp>
-#include <alxTempSens_Mcu.h>
-#include <alxTempSens.h>
-#include <alxTempSens_RtdVdiv.h>
+#include "alxGlobal.hpp"
+#include "alxAdc.hpp"
+#include "alxInterpLin.hpp"
+#include "alxTempSens_Mcu.h"
+#include "alxTempSens.h"
+#include "alxTempSens_RtdVdiv.h"
 
 //******************************************************************************
 // Code

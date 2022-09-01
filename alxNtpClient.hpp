@@ -34,9 +34,9 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxRtc.hpp>
-#include <alxOsCriticalSection.hpp>
+#include "alxGlobal.hpp"
+#include "alxRtc.hpp"
+#include "alxOsCriticalSection.hpp"
 
 
 //******************************************************************************

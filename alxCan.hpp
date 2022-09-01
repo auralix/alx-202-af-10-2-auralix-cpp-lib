@@ -34,11 +34,11 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxCan.h>
-#include <alxIoPin.hpp>
-#include <alxClk.hpp>
-#include <alxFifo.hpp>
+#include "alxGlobal.hpp"
+#include "alxCan.h"
+#include "alxIoPin.hpp"
+#include "alxClk.hpp"
+#include "alxFifo.hpp"
 
 
 //******************************************************************************

@@ -34,10 +34,10 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxAdau1961.h>
-#include <alxI2s.hpp>
-#include <alxI2c.hpp>
+#include "alxGlobal.hpp"
+#include "alxAdau1961.h"
+#include "alxI2s.hpp"
+#include "alxI2c.hpp"
 
 
 //******************************************************************************

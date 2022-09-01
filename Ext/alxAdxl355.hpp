@@ -34,11 +34,11 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxAdxl355.h>
-#include <alxIoPin.hpp>
-#include <alxSpi.hpp>
-#include <alxFifo.hpp>
+#include "alxGlobal.hpp"
+#include "alxAdxl355.h"
+#include "alxIoPin.hpp"
+#include "alxSpi.hpp"
+#include "alxFifo.hpp"
 
 
 //******************************************************************************

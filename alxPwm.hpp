@@ -34,10 +34,10 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxPwm.h>
-#include <alxIoPin.hpp>
-#include <alxClk.hpp>
+#include "alxGlobal.hpp"
+#include "alxPwm.h"
+#include "alxIoPin.hpp"
+#include "alxClk.hpp"
 
 //******************************************************************************
 // Code

@@ -34,10 +34,10 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxParamGroup.h>
-#include <alxParamItem.hpp>
-#include <alxMemSafe.hpp>
+#include "alxGlobal.hpp"
+#include "alxParamGroup.h"
+#include "alxParamItem.hpp"
+#include "alxMemSafe.hpp"
 
 
 //******************************************************************************

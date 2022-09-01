@@ -34,10 +34,10 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxTmp1075.h>
-#include <alxIoPin.hpp>
-#include <alxI2c.hpp>
+#include "alxGlobal.hpp"
+#include "alxTmp1075.h"
+#include "alxIoPin.hpp"
+#include "alxI2c.hpp"
 
 //******************************************************************************
 // Code

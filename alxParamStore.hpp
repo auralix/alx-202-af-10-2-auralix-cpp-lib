@@ -34,9 +34,9 @@
 //******************************************************************************
 // Includes
 //******************************************************************************
-#include <alxGlobal.hpp>
-#include <alxParamStore.h>
-#include <alxParamGroup.hpp>
+#include "alxGlobal.hpp"
+#include "alxParamStore.h"
+#include "alxParamGroup.hpp"
 
 
 //******************************************************************************
