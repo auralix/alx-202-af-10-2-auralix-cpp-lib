@@ -62,13 +62,16 @@ namespace Alx
 	namespace AlxTrace
 	{
 		//******************************************************************************
-		// ITrace
+		// Class - ITrace
 		//******************************************************************************
 		class ITrace
 		{
 			public:
-				ITrace() {};
-				virtual ~ITrace() {};
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				ITrace() {}
+				virtual ~ITrace() {}
 				virtual void Init(void) = 0;
 				virtual void DeInit(void) = 0;
 				virtual void WriteStr(const char* str) = 0;
@@ -79,13 +82,16 @@ namespace Alx
 
 
 		//******************************************************************************
-		// ATrace
+		// Class - ATrace
 		//******************************************************************************
 		class ATrace : public ITrace
 		{
 			public:
-				ATrace(::AlxTrace* me) : me(me) {};
-				virtual ~ATrace() {};
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				ATrace(::AlxTrace* me) : me(me) {}
+				virtual ~ATrace() {}
 				void Init(void) override
 				{
 					AlxTrace_Init(me);
@@ -136,18 +142,25 @@ namespace Alx
 						WriteFormat("traceSm;%s;%s%s_%s_%s\r\n", tickStr, smLevelStr, smName, stName, acName);
 					}
 				}
+
 			protected:
+				//------------------------------------------------------------------------------
+				// Protected Variables
+				//------------------------------------------------------------------------------
 				::AlxTrace* me = nullptr;
 		};
 
 
 		//******************************************************************************
-		// Trace - STM32
+		// Class - Trace - STM32
 		//******************************************************************************
 		#if (defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)) && (!defined(ALX_MBED))
 		class Trace : public ATrace
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Trace
 				(
 					::AlxTrace* me,
@@ -171,34 +184,41 @@ namespace Alx
 						usart,
 						baudRate
 					);
-				};
-				virtual ~Trace() {};
+				}
+				virtual ~Trace() {}
 		};
 		#endif
 
 
 		//******************************************************************************
-		// Trace - Mbed OS
+		// Class - Trace - Mbed OS
 		//******************************************************************************
 		#if defined(ALX_MBED)
 		class Trace : public ATrace
 		{
 			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
 				Trace
 				(
 					::AlxTrace* me
 				) : ATrace(me)
 				{
 					(void)me;
-				};
-				virtual ~Trace() {};
+				}
+				virtual ~Trace() {}
 				void WriteStr(const char* str) override
 				{
 					mutex.lock();
 					AlxTrace_WriteStr(me, str);
 					mutex.unlock();
 				}
+
 			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
 				Mutex mutex;
 		};
 		#endif

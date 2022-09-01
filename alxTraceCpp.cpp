@@ -44,6 +44,9 @@ namespace Alx
 {
 	namespace AlxTrace
 	{
+		//******************************************************************************
+		// Variables
+		//******************************************************************************
 		#if defined(ALX_MBED)
 		Trace alxTraceCpp = { &alxTrace };
 		#endif
