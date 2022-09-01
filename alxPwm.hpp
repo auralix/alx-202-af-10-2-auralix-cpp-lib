@@ -53,6 +53,9 @@ namespace Alx
 {
 	namespace AlxPwm
 	{
+		//******************************************************************************
+		// Class - IPwm
+		//******************************************************************************
 		class IPwm
 		{
 			public:
@@ -62,6 +65,11 @@ namespace Alx
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual ::Alx_Status SetDuty_pct(::Alx_Ch ch, float duty_pct) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - APwm
+		//******************************************************************************
 		class APwm : public IPwm
 		{
 			public:
@@ -82,6 +90,11 @@ namespace Alx
 			protected:
 				::AlxPwm me = {};
 		};
+
+
+		//******************************************************************************
+		// Class - Pwm
+		//******************************************************************************
 		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 		class Pwm : public APwm
 		{
@@ -111,6 +124,11 @@ namespace Alx
 				::AlxIoPin* pwmIoPinArr[ALX_PWM_BUFF_LEN] = {0};
 		};
 		#endif
+
+
+		//******************************************************************************
+		// Class - MockPwm
+		//******************************************************************************
 		#if defined(ALX_GTEST)
 		class MockPwm final : public IPwm
 		{

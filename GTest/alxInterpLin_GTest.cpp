@@ -47,6 +47,9 @@ namespace Alx
 		#if defined (ALX_GTEST)
 		namespace Gtest
 		{
+			//******************************************************************************
+			// Class - InterpLinG01Test
+			//******************************************************************************
 			class InterpLinG01Test : public testing::Test
 			{
 				protected:

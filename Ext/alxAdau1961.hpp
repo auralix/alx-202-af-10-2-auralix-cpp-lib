@@ -53,6 +53,9 @@ namespace Alx
 {
 	namespace AlxAdau1961
 	{
+		//******************************************************************************
+		// Class - IAdau1961
+		//******************************************************************************
 		class IAdau1961
 		{
 			public:
@@ -68,6 +71,11 @@ namespace Alx
 			virtual ::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB)	= 0;
 			virtual ::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB)	= 0;
 		};
+
+
+		//******************************************************************************
+		// Class - Adau1961
+		//******************************************************************************
 		class Adau1961 final : public IAdau1961
 		{
 			public:

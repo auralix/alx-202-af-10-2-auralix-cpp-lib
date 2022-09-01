@@ -51,6 +51,9 @@ namespace Alx
 {
 	namespace AlxTimSw
 	{
+		//******************************************************************************
+		// Class - ITimSw
+		//******************************************************************************
 		class ITimSw
 		{
 			public:
@@ -72,6 +75,11 @@ namespace Alx
 				virtual bool IsTimeout_min(uint64_t timeout_min) = 0;
 				virtual bool IsTimeout_hr(uint64_t timeout_hr) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - TimSw
+		//******************************************************************************
 		class TimSw final : public ITimSw
 		{
 			public:
@@ -98,6 +106,11 @@ namespace Alx
 			protected:
 				::AlxTimSw me = {};
 		};
+
+
+		//******************************************************************************
+		// Class - MockTimSw
+		//******************************************************************************
 		#if defined (ALX_GTEST)
 		class MockTimSw final : public ITimSw
 		{

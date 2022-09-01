@@ -53,6 +53,9 @@ namespace Alx
 {
 	namespace AlxParamGroup
 	{
+		//******************************************************************************
+		// Class - IParamGroup
+		//******************************************************************************
 		class IParamGroup
 		{
 			public:
@@ -68,6 +71,11 @@ namespace Alx
 				virtual void ParamItemsValToValBuff(void) = 0;
 				virtual::AlxParamGroup*	GetCStructPtr(void)	= 0;
 		};
+
+
+		//******************************************************************************
+		// Class - ParamGroup
+		//******************************************************************************
 		template<uint32_t numOfParamItems, uint32_t len>
 		class ParamGroup : public IParamGroup
 		{

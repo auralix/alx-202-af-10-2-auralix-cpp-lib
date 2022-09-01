@@ -53,6 +53,9 @@ namespace Alx
 {
 	namespace AlxSerialPort
 	{
+		//******************************************************************************
+		// Class - ISerialPort
+		//******************************************************************************
 		class ISerialPort
 		{
 			public:
@@ -68,6 +71,10 @@ namespace Alx
 				virtual void Foreground_Handle(void) = 0;
 		};
 
+
+		//******************************************************************************
+		// Class - ASerialPort
+		//******************************************************************************
 		template <uint32_t rxFifoBuffLen>
 		class ASerialPort : public ISerialPort
 		{
@@ -111,6 +118,10 @@ namespace Alx
 				AlxFifo::Fifo<rxFifoBuffLen> rxFifo = {};
 		};
 
+
+		//******************************************************************************
+		// Class - SerialPort
+		//******************************************************************************
 		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 		template <uint32_t rxFifoBuffLen>
 		class SerialPort : public ASerialPort <rxFifoBuffLen>
@@ -149,6 +160,10 @@ namespace Alx
 		};
 		#endif
 
+
+		//******************************************************************************
+		// Class - MockSerialPort
+		//******************************************************************************
 		#if defined (ALX_GTEST_TODO)
 		class MockSerialPort final : public ISerialPort
 		{

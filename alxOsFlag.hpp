@@ -74,6 +74,9 @@ namespace Alx
 {
 	namespace AlxOsFlag
 	{
+		//******************************************************************************
+		// Class - IOsFlag
+		//******************************************************************************
 		class IOsFlag
 		{
 			public:
@@ -85,6 +88,11 @@ namespace Alx
 				virtual bool IsDeAsserted(void) = 0;
 				virtual void OsWaitUntilDeAsserted(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - OsFlag
+		//******************************************************************************
 		#if defined(ALX_MBED)
 		class OsFlag final : public IOsFlag
 		{

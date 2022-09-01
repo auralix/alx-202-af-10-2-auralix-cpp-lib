@@ -55,6 +55,9 @@ namespace Alx
 {
 	namespace AlxTempSens
 	{
+		//******************************************************************************
+		// Class - ITempSens
+		//******************************************************************************
 		class ITempSens
 		{
 			public:
@@ -64,6 +67,11 @@ namespace Alx
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual ::Alx_Status GetTemp_degC(float *temp_degC) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - ATempSens
+		//******************************************************************************
 		class ATempSens : public ITempSens
 		{
 			public:
@@ -84,6 +92,11 @@ namespace Alx
 			protected:
 				::AlxTempSens tempSens = {};
 		};
+
+
+		//******************************************************************************
+		// Class - TempSensRtd
+		//******************************************************************************
 		class TempSensRtd : public ATempSens
 		{
 			public:
@@ -119,6 +132,10 @@ namespace Alx
 			::AlxTempSensRtdVdiv me = {};
 		};
 
+
+		//******************************************************************************
+		// Class - MockTempSens
+		//******************************************************************************
 		#if defined(ALX_GTEST)
 		class MockTempSens final : public ITempSens
 		{

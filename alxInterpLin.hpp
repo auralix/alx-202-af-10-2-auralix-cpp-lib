@@ -51,6 +51,9 @@ namespace Alx
 {
 	namespace AlxInterpLin
 	{
+		//******************************************************************************
+		// Class - IInterpLin
+		//******************************************************************************
 		class IInterpLin
 		{
 			public:
@@ -60,6 +63,11 @@ namespace Alx
 				virtual float GetY(float x) = 0;
 				virtual::AlxInterpLin* GetCStructPtr(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - InterpLin
+		//******************************************************************************
 		class InterpLin final : public IInterpLin
 		{
 			public:

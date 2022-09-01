@@ -51,6 +51,9 @@ namespace Alx
 {
 	namespace AlxFiltGlitchUint32
 	{
+		//******************************************************************************
+		// Class - IFiltGlitchUint32
+		//******************************************************************************
 		class IFiltGlitchUint32
 		{
 			public:
@@ -58,6 +61,11 @@ namespace Alx
 				virtual ~IFiltGlitchUint32() {};
 				virtual uint32_t Process(uint32_t in) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - FiltGlitchUint32
+		//******************************************************************************
 		class FiltGlitchUint32 final : public IFiltGlitchUint32
 		{
 			public:

@@ -52,6 +52,9 @@ namespace Alx
 {
 	namespace AlxParamMgmt
 	{
+		//******************************************************************************
+		// Class - IParamMgmt
+		//******************************************************************************
 		class IParamMgmt
 		{
 			public:
@@ -70,6 +73,11 @@ namespace Alx
 				virtual void SeToDefGroup(uint32_t groupId) = 0;
 				virtual void SeToDefAll(uint32_t groupId) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - ParamMgmt
+		//******************************************************************************
 		class ParamMgmt : public IParamMgmt
 		{
 			public:

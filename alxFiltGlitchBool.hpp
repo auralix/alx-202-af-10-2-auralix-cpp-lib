@@ -51,6 +51,9 @@ namespace Alx
 {
 	namespace AlxFiltGlitchBool
 	{
+		//******************************************************************************
+		// Class - IFiltGlitchBool
+		//******************************************************************************
 		class IFiltGlitchBool
 		{
 			public:
@@ -58,6 +61,11 @@ namespace Alx
 				virtual ~IFiltGlitchBool() {};
 				virtual bool Process(bool in) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - FiltGlitchBool
+		//******************************************************************************
 		class FiltGlitchBool final : public IFiltGlitchBool
 		{
 			public:

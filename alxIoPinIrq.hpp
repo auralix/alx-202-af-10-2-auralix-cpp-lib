@@ -52,6 +52,9 @@ namespace Alx
 {
 	namespace AlxIoPinIrq
 	{
+		//******************************************************************************
+		// Class - IIoPinIrq
+		//******************************************************************************
 		class IIoPinIrq
 		{
 			public:
@@ -60,6 +63,11 @@ namespace Alx
 				virtual void Init(void) = 0;
 				virtual void DeInit(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - AIoPinIrq
+		//******************************************************************************
 		class AIoPinIrq : public IIoPinIrq
 		{
 			public:
@@ -76,6 +84,11 @@ namespace Alx
 			protected:
 				::AlxIoPinIrq me = {};
 		};
+
+
+		//******************************************************************************
+		// Class - IoPinIrq
+		//******************************************************************************
 		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 		class IoPinIrq : public AIoPinIrq
 		{

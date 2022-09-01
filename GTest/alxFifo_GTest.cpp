@@ -47,6 +47,9 @@ namespace Alx
 		#if defined (ALX_GTEST)
 		namespace Gtest
 		{
+			//******************************************************************************
+			// Class - FifoG01Test
+			//******************************************************************************
 			class FifoG01Test : public testing::Test
 			{
 				protected:

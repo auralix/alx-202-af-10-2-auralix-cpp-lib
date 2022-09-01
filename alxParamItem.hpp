@@ -51,6 +51,9 @@ namespace Alx
 {
 	namespace AlxParamItem
 	{
+		//******************************************************************************
+		// Class - IParamItem
+		//******************************************************************************
 		class IParamItem
 		{
 			public:
@@ -95,6 +98,11 @@ namespace Alx
 
 				virtual::AlxParamItem* GetCStructPtr(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - ParamItem
+		//******************************************************************************
 		template<uint32_t arrBuffLen = 1, uint32_t strMaxLen = 1>
 		class ParamItem : public IParamItem
 		{

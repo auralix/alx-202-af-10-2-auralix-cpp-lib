@@ -53,6 +53,9 @@ namespace Alx
 {
 	namespace AlxMemSafe
 	{
+		//******************************************************************************
+		// Class - IMemSafe
+		//******************************************************************************
 		class IMemSafe
 		{
 			public:
@@ -66,6 +69,11 @@ namespace Alx
 				virtual bool IsWriteErr(void) = 0;
 				virtual ::AlxMemSafe* GetCStructPtr(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - MemSafe
+		//******************************************************************************
 		template <uint32_t buff1Len, uint32_t buff2Len>
 		class MemSafe : public IMemSafe
 		{

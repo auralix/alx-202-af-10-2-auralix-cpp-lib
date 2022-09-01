@@ -51,6 +51,9 @@ namespace Alx
 {
 	namespace AlxAudioPlayer
 	{
+		//******************************************************************************
+		// Class - IAudioPlayer
+		//******************************************************************************
 		class IAudioPlayer
 		{
 			public:
@@ -70,6 +73,11 @@ namespace Alx
 				virtual void LoopConfig(bool isOn) = 0;
 				virtual bool IsPlaying(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - AudioPlayer
+		//******************************************************************************
 		class AudioPlayer final : public IAudioPlayer
 		{
 			public:

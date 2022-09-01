@@ -51,6 +51,9 @@ namespace Alx
 {
 	namespace AlxAudioVol
 	{
+		//******************************************************************************
+		// Class - IAudioVol
+		//******************************************************************************
 		class IAudioVol
 		{
 			public:
@@ -60,6 +63,11 @@ namespace Alx
 				virtual void Set_pct(float vol_pct) = 0;
 				virtual void Set_dB(float gain_dB) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - AudioVol
+		//******************************************************************************
 		class AudioVol final : public IAudioVol
 		{
 			public:

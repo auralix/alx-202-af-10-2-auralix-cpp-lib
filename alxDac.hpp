@@ -53,6 +53,9 @@ namespace Alx
 {
 	namespace AlxDac
 	{
+		//******************************************************************************
+		// Class - IDac
+		//******************************************************************************
 		class IDac
 		{
 			public:
@@ -64,6 +67,11 @@ namespace Alx
 				virtual ::Alx_Status SetVoltage_V(::Alx_Ch ch, float voltage_V) = 0;
 				virtual ::Alx_Status SetVoltage_V(::Alx_Ch ch, float voltage_V, float vref_V) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - ADac
+		//******************************************************************************
 		class ADac : public IDac
 		{
 			public:
@@ -92,6 +100,11 @@ namespace Alx
 			protected:
 				::AlxDac dac = {};
 		};
+
+
+		//******************************************************************************
+		// Class - DacMcu
+		//******************************************************************************
 		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 		class DacMcu : public ADac
 		{

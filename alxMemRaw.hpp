@@ -51,6 +51,9 @@ namespace Alx
 {
 	namespace AlxMemRaw
 	{
+		//******************************************************************************
+		// Class - IMemRaw
+		//******************************************************************************
 		class IMemRaw
 		{
 			public:
@@ -62,6 +65,11 @@ namespace Alx
 				virtual ::Alx_Status Write(uint32_t addr, uint8_t* data, uint32_t len, bool checkWithReadEnable, uint8_t numOfTries, uint16_t timeout_ms) = 0;
 				virtual ::AlxMemRaw* GetCStructPtr(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - MemRaw
+		//******************************************************************************
 		class MemRaw : public IMemRaw
 		{
 			public:

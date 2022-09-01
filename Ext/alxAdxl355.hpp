@@ -54,6 +54,9 @@ namespace Alx
 {
 	namespace AlxAdxl355
 	{
+		//******************************************************************************
+		// Class - IAdxl355
+		//******************************************************************************
 		class IAdxl355
 		{
 			public:
@@ -68,6 +71,11 @@ namespace Alx
 			virtual float GetTemp_degC(void) = 0;
 			virtual Alx_Status Foreground_Handle(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - Adxl355
+		//******************************************************************************
 		template <uint32_t fifoBuffLen>
 		class Adxl355 final : public IAdxl355
 		{

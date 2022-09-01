@@ -74,6 +74,9 @@ namespace Alx
 {
 	namespace AlxFtpClient
 	{
+		//******************************************************************************
+		// Class - IFtpClient
+		//******************************************************************************
 		class IFtpClient
 		{
 			public:
@@ -83,6 +86,11 @@ namespace Alx
 				virtual ::Alx_Status Logout(void) = 0;
 				virtual ::Alx_Status SendFile(const char* rootDir, const char* filename) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - FtpClient
+		//******************************************************************************
 		#if defined(ALX_MBED)
 		template <uint32_t BUFF_LEN = 1460>
 		class FtpClient : public IFtpClient

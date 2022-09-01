@@ -52,6 +52,9 @@ namespace Alx
 {
 	namespace AlxParamStore
 	{
+		//******************************************************************************
+		// Class - IParamStore
+		//******************************************************************************
 		class IParamStore
 		{
 			public:
@@ -62,6 +65,11 @@ namespace Alx
 				virtual bool IsErr(void) = 0;
 				virtual::AlxParamStore*	GetCStructPtr(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - ParamStore
+		//******************************************************************************
 		template<uint32_t _numOfParamGroups>
 		class ParamStore : public IParamStore
 		{

@@ -53,6 +53,9 @@ namespace Alx
 {
 	namespace AlxAdc
 	{
+		//******************************************************************************
+		// Class - IAdc
+		//******************************************************************************
 		class IAdc
 		{
 			public:
@@ -64,6 +67,11 @@ namespace Alx
 				virtual float TempSens_GetTemp_degC(void) = 0;
 				virtual ::AlxAdc* GetCStructPtr(void) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - AAdc
+		//******************************************************************************
 		class AAdc : public IAdc
 		{
 			public:
@@ -92,6 +100,11 @@ namespace Alx
 			protected:
 				::AlxAdc me = {};
 		};
+
+
+		//******************************************************************************
+		// Class - Adc
+		//******************************************************************************
 		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 		class Adc : public AAdc
 		{

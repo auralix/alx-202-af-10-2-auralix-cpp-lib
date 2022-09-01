@@ -52,6 +52,9 @@ namespace Alx
 {
 	namespace AlxI2c
 	{
+		//******************************************************************************
+		// Class - II2c
+		//******************************************************************************
 		class II2c
 		{
 			public:
@@ -70,6 +73,11 @@ namespace Alx
 				virtual ::Alx_Status Master_IsSlaveReady		(uint16_t slaveAddr, uint8_t numOfTries = 3, uint16_t timeout_ms = 10)																															= 0;
 				virtual ::AlxI2c* GetCStructPtr					(void)																																															= 0;
 		};
+
+
+		//******************************************************************************
+		// Class - AI2c
+		//******************************************************************************
 		class AI2c : public II2c
 		{
 			public:
@@ -126,6 +134,11 @@ namespace Alx
 			protected:
 				::AlxI2c me = {};
 		};
+
+
+		//******************************************************************************
+		// Class - I2c
+		//******************************************************************************
 		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 		class I2c : public AI2c
 		{
@@ -143,6 +156,11 @@ namespace Alx
 				virtual ~I2c() {};
 		};
 		#endif
+
+
+		//******************************************************************************
+		// Class - MockI2c
+		//******************************************************************************
 		#if defined (ALX_GTEST)
 		class MockI2c final : public II2c
 		{

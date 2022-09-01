@@ -51,6 +51,9 @@ namespace Alx
 {
 	namespace AlxIoPin
 	{
+		//******************************************************************************
+		// Class - IIoPin
+		//******************************************************************************
 		class IIoPin
 		{
 			public:
@@ -66,6 +69,11 @@ namespace Alx
 				virtual ::AlxIoPin_TriState Read_TriState(void)	= 0;
 				virtual ::AlxIoPin* GetCStructPtr(void)			= 0;
 		};
+
+
+		//******************************************************************************
+		// Class - AIoPin
+		//******************************************************************************
 		class AIoPin : public IIoPin
 		{
 			public:
@@ -83,6 +91,11 @@ namespace Alx
 			protected:
 				::AlxIoPin me = {};
 		};
+
+
+		//******************************************************************************
+		// Class - IoPin
+		//******************************************************************************
 		#if defined (ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 		class IoPin : public AIoPin
 		{

@@ -134,6 +134,10 @@ namespace Alx
 			uint32_t transTimestamp_fractSec;
 		};
 
+
+		//******************************************************************************
+		// Class - INtpClient
+		//******************************************************************************
 		class INtpClient
 		{
 			public:
@@ -148,6 +152,11 @@ namespace Alx
 				virtual Alx_Status GetRtcUnixTimeOffset_ms(int64_t* rtcUnixTimeOffset_ms) = 0;
 				virtual Alx_Status GetRtcUnixTimeOffset_sec(int64_t* rtcUnixTimeOffset_sec) = 0;
 		};
+
+
+		//******************************************************************************
+		// Class - NtpClient
+		//******************************************************************************
 		#if defined(ALX_MBED)
 		class NtpClient final : public INtpClient
 		{
