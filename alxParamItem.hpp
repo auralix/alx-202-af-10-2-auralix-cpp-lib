@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IParamItem() {};
-				virtual ~IParamItem() {};
+				IParamItem() {}
+				virtual ~IParamItem() {}
 				virtual const char* GetName(void) = 0;
 				virtual uint32_t GetId(void) = 0;
 				virtual uint32_t GetGroupId(void) = 0;
@@ -126,7 +126,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorUint8(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #2 Uint16
 				ParamItem
 				(
@@ -140,7 +140,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorUint16(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #3 Uint32
 				ParamItem
 				(
@@ -154,7 +154,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorUint32(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #4 Uint64
 				ParamItem
 				(
@@ -168,7 +168,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorUint64(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #5 Int8
 				ParamItem
 				(
@@ -182,7 +182,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorInt8(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #6 Int16
 				ParamItem
 				(
@@ -196,7 +196,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorInt16(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #7 Int32
 				ParamItem
 				(
@@ -210,7 +210,7 @@ namespace Alx
 					)
 				{
 					AlxParamItem_CtorInt32(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #8 Int64
 				ParamItem
 				(
@@ -224,7 +224,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorInt64(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #9 Float
 				ParamItem
 				(
@@ -238,7 +238,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorFloat(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #10 Double
 				ParamItem
 				(
@@ -252,7 +252,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorDouble(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
-				};
+				}
 				// #11 Bool
 				ParamItem
 				(
@@ -263,7 +263,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorBool(&me, name, id, groupId, valDef);
-				};
+				}
 				// #12 Arr
 				ParamItem
 				(
@@ -274,7 +274,7 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorArr(&me, name, id, groupId, valDefBuff, arrValBuff, arrValDefBuff, arrBuffLen, AlxParamItem_ValOutOfRangeHandle_Ignore);
-				};
+				}
 				// #13 Str
 				ParamItem
 				(
@@ -285,8 +285,8 @@ namespace Alx
 				)
 				{
 					AlxParamItem_CtorStr(&me, name, id, groupId, valDef, strValBuff, strValDefBuff, strMaxLen, AlxParamItem_ValOutOfRangeHandle_Ignore);
-				};
-				virtual ~ParamItem() {};
+				}
+				virtual ~ParamItem() {}
 				const char* GetName(void) override					{ return AlxParamItem_GetName(&me); }
 				uint32_t GetId(void) override						{ return AlxParamItem_GetId(&me); }
 				uint32_t GetGroupId(void) override					{ return AlxParamItem_GetGroupId(&me); }

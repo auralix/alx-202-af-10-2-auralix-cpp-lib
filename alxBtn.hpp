@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IBtn() {};
-				virtual ~IBtn() {};
+				IBtn() {}
+				virtual ~IBtn() {}
 				virtual void Handle(bool in) = 0;
 				virtual bool IsPressed()					= 0;
 				virtual bool WasPressed()					= 0;
@@ -94,8 +94,8 @@ namespace Alx
 				)
 				{
 					AlxBtn_Ctor(&me, valInitial, longTime_ms, debounceTime_ms);
-				};
-				virtual ~Btn() {};
+				}
+				virtual ~Btn() {}
 				void Handle(bool in) override { return AlxBtn_Handle(&me, in); }
 				bool IsPressed()					override { return AlxBtn_IsPressed(&me);			}
 				bool WasPressed()					override { return AlxBtn_WasPressed(&me);			}

@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ICrc() {};
-				virtual ~ICrc() {};
+				ICrc() {}
+				virtual ~ICrc() {}
 				virtual uint32_t Calc(uint8_t* data, uint32_t len) = 0;
 				virtual bool IsOk(uint8_t* dataWithCrc, uint32_t lenWithCrc, uint32_t* validatedCrc) = 0;
 				virtual uint32_t GetLen(void) = 0;
@@ -84,8 +84,8 @@ namespace Alx
 				)
 				{
 					AlxCrc_Ctor(&me, config);
-				};
-				virtual ~Crc() {};
+				}
+				virtual ~Crc() {}
 				uint32_t Calc(uint8_t* data, uint32_t len) override										{ return AlxCrc_Calc(&me, data, len); }
 				bool IsOk(uint8_t* dataWithCrc, uint32_t lenWithCrc, uint32_t* validatedCrc) override	{ return AlxCrc_IsOk(&me, dataWithCrc, lenWithCrc, validatedCrc); }
 				uint32_t GetLen(void) override															{ return AlxCrc_GetLen(&me); }

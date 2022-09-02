@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IPwm() {};
-				virtual ~IPwm() {};
+				IPwm() {}
+				virtual ~IPwm() {}
 				virtual ::Alx_Status Init(void) = 0;
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual ::Alx_Status SetDuty_pct(::Alx_Ch ch, float duty_pct) = 0;
@@ -79,8 +79,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				APwm() {};
-				virtual ~APwm() {};
+				APwm() {}
+				virtual ~APwm() {}
 				::Alx_Status Init(void) override
 				{
 					return AlxPwm_Init(&me);
@@ -130,8 +130,8 @@ namespace Alx
 					}
 
 					AlxPwm_Ctor(&me, tim, pwmIoPinArr, chArr, dutyDefaultArr_pct, numOfCh, clk->GetCStructPtr(), prescaler, period);
-				};
-				virtual ~Pwm() {};
+				}
+				virtual ~Pwm() {}
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

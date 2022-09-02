@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IInterpLin() {};
-				virtual ~IInterpLin() {};
+				IInterpLin() {}
+				virtual ~IInterpLin() {}
 				virtual Alx_Status GetY(float x, float* y) = 0;
 				virtual float GetY(float x) = 0;
 				virtual::AlxInterpLin* GetCStructPtr(void) = 0;
@@ -86,8 +86,8 @@ namespace Alx
 				)
 				{
 					AlxInterpLin_Ctor(&me, xPointArr, yPointArr, numOfArrPoints, isXpointArrRising);
-				};
-			virtual ~InterpLin() {};
+				}
+				virtual ~InterpLin() {}
 				Alx_Status GetY(float x, float* y) override		{ return AlxInterpLin_GetY_WithStatus	(&me, x, y);}
 				float GetY(float x) override					{ return AlxInterpLin_GetY				(&me, x	);	}
 				::AlxInterpLin* GetCStructPtr(void) override	{ return &me;	}

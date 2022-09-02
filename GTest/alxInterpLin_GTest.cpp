@@ -56,8 +56,8 @@ namespace Alx
 					//------------------------------------------------------------------------------
 					// Protected Functions
 					//------------------------------------------------------------------------------
-					InterpLinG01Test() {};
-					virtual ~InterpLinG01Test() {};
+					InterpLinG01Test() {}
+					virtual ~InterpLinG01Test() {}
 
 					//Alx::AlxInterpLin::InterpLin *interpLin = nullptr;
 

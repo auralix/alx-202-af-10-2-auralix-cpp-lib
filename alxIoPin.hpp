@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IIoPin() {};
-				virtual ~IIoPin() {};
+				IIoPin() {}
+				virtual ~IIoPin() {}
 				virtual void Init(void)							= 0;
 				virtual void DeInit(void)						= 0;
 				virtual bool Read(void)							= 0;
@@ -83,8 +83,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AIoPin() {};
-				virtual ~AIoPin() {};
+				AIoPin() {}
+				virtual ~AIoPin() {}
 				void Init(void) override							{ AlxIoPin_Init(&me); }
 				void DeInit(void) override							{ AlxIoPin_DeInit(&me); }
 				bool Read(void) override							{ return AlxIoPin_Read(&me); }
@@ -124,8 +124,8 @@ namespace Alx
 				)
 				{
 					AlxIoPin_Ctor(&me, port, pin, mode, pull, speed, alternate, val);
-				};
-				virtual ~IoPin() {};
+				}
+				virtual ~IoPin() {}
 		};
 		#endif
 	}

@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IMemSafe() {};
-				virtual ~IMemSafe() {};
+				IMemSafe() {}
+				virtual ~IMemSafe() {}
 				virtual ::Alx_Status Read(uint8_t* data, uint32_t len) = 0;
 				virtual ::Alx_Status Write(uint8_t* data, uint32_t len) = 0;
 				virtual bool IsReadDone(void) = 0;
@@ -114,8 +114,8 @@ namespace Alx
 						buff2,
 						buff2Len
 					);
-				};
-				virtual ~MemSafe() {};
+				}
+				virtual ~MemSafe() {}
 				::Alx_Status Read(uint8_t* data, uint32_t len) override		{ return AlxMemSafe_Read(&me, data, len); }
 				::Alx_Status Write(uint8_t* data, uint32_t len) override	{ return AlxMemSafe_Write(&me, data, len); }
 				bool IsReadDone(void) override								{ return AlxMemSafe_IsReadDone(&me); }

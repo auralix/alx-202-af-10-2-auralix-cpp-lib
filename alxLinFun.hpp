@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ILinFun() {};
-				virtual ~ILinFun() {};
+				ILinFun() {}
+				virtual ~ILinFun() {}
 				virtual Alx_Status GetY(float x, float* y) = 0;
 				virtual Alx_Status GetX(float y, float* x) = 0;
 				virtual float GetY(float x) = 0;
@@ -90,8 +90,8 @@ namespace Alx
 				)
 				{
 					AlxLinFun_Ctor(&me, point1_x, point1_y, point2_x, point2_y, min, max, isLimitOnX);
-				};
-			virtual ~LinFun() {};
+				}
+				virtual ~LinFun() {}
 				Alx_Status GetY(float x, float* y) override	{ return AlxLinFun_GetY_WithStatus	(&me, x, y);	}
 				Alx_Status GetX(float y, float* x) override	{ return AlxLinFun_GetX_WithStatus	(&me, y, x);	}
 				float GetY (float x) override				{ return AlxLinFun_GetY				(&me, x);		}

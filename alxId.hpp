@@ -61,8 +61,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IId() {};
-				virtual ~IId() {};
+				IId() {}
+				virtual ~IId() {}
 				virtual void Init(void) = 0;
 				virtual void Trace(void) = 0;
 				virtual uint8_t GetHwId(void) = 0;
@@ -123,7 +123,7 @@ namespace Alx
 						hwIdIoPinArrLen,
 						hwMcuName
 					);
-				};
+				}
 				Id
 				(
 					const char* fwArtf,
@@ -150,8 +150,8 @@ namespace Alx
 						hwInstance,
 						hwMcuName
 					);
-				};
-				virtual ~Id() {};
+				}
+				virtual ~Id() {}
 				void Init(void) override
 				{
 					AlxId_Init(&me);

@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAudioVol() {};
-				virtual ~IAudioVol() {};
+				IAudioVol() {}
+				virtual ~IAudioVol() {}
 				virtual float Process(float inSample) = 0;
 				virtual void Set_pct(float vol_pct) = 0;
 				virtual void Set_dB(float gain_dB) = 0;

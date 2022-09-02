@@ -61,8 +61,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IBts724g() {};
-				virtual ~IBts724g() {};
+				IBts724g() {}
+				virtual ~IBts724g() {}
 				virtual void Init(void) = 0;
 				virtual void DeInit(void) = 0;
 				virtual void Handle(void) = 0;
@@ -92,8 +92,8 @@ namespace Alx
 				)
 				{
 					AlxBts724g_Ctor(&me, do_HS_IN->GetCStructPtr(), di_HS_ST->GetCStructPtr());
-				};
-				virtual ~Bts724g() {};
+				}
+				virtual ~Bts724g() {}
 				void Init(void)override						{ AlxBts724g_Init(&me); };
 				void DeInit(void)override					{ AlxBts724g_DeInit(&me); };
 				void Handle(void)override					{ AlxBts724g_Handle(&me); };

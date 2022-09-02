@@ -61,8 +61,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IParamStore() {};
-				virtual ~IParamStore() {};
+				IParamStore() {}
+				virtual ~IParamStore() {}
 				virtual Alx_Status Init(Alx_Status* status, uint32_t numOfParamGroups) = 0;
 				virtual void Handle(void) = 0;
 				virtual bool IsErr(void) = 0;
@@ -102,8 +102,8 @@ namespace Alx
 						this->paramGroupArr,
 						_numOfParamGroups
 					);
-				};
-				virtual ~ParamStore() {};
+				}
+				virtual ~ParamStore() {}
 				Alx_Status Init(Alx_Status* status, uint32_t numOfParamGroups) override	{ return AlxParamStore_Init(&me, status, numOfParamGroups); };
 				void Handle(void) override												{ AlxParamStore_Handle(&me); };
 				bool IsErr(void) override												{ return AlxParamStore_IsErr(&me); };

@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ITmp1075() {};
-				virtual ~ITmp1075() {};
+				ITmp1075() {}
+				virtual ~ITmp1075() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
 				virtual float GetTemp_degC(void) = 0;
@@ -97,8 +97,8 @@ namespace Alx
 						i2cNumOfTries,
 						i2cTimeout_ms
 					);
-				};
-				virtual ~Tmp1075() {};
+				}
+				virtual ~Tmp1075() {}
 				Alx_Status Init(void) override		{ return AlxTmp1075_Init(&me); }
 				Alx_Status DeInit(void) override	{ return AlxTmp1075_DeInit(&me); }
 				float GetTemp_degC(void) override	{ return AlxTmp1075_GetTemp_degC(&me); }

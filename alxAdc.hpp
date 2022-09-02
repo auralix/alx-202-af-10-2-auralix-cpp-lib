@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAdc() {};
-				virtual ~IAdc() {};
+				IAdc() {}
+				virtual ~IAdc() {}
 				virtual ::Alx_Status Init(void) = 0;
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual float GetVoltage_V(::Alx_Ch ch) = 0;
@@ -81,8 +81,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AAdc() {};
-				virtual ~AAdc() {};
+				AAdc() {}
+				virtual ~AAdc() {}
 				::Alx_Status Init(void) override
 				{
 					return AlxAdc_Init(&me);
@@ -142,8 +142,8 @@ namespace Alx
 					}
 
 					AlxAdc_Ctor(&me, adc, adcIoPinArr, numOfIoPins, chArr, numOfCh, clk->GetCStructPtr(), adcClk, samplingTime, isVrefInt_V, vrefExt_V);
-				};
-				virtual ~Adc() {};
+				}
+				virtual ~Adc() {}
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

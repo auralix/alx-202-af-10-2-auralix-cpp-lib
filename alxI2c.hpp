@@ -61,8 +61,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				II2c() {};
-				virtual ~II2c() {};
+				II2c() {}
+				virtual ~II2c() {}
 				virtual void Init (void) = 0;
 				virtual void DeInit	(void) = 0;
 				virtual ::Alx_Status Master_StartRead			(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10)																													= 0;
@@ -87,8 +87,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AI2c() {};
-				virtual ~AI2c() {};
+				AI2c() {}
+				virtual ~AI2c() {}
 				void Init(void) override
 				{
 					AlxI2c_Init(&me);
@@ -164,8 +164,8 @@ namespace Alx
 				)
 				{
 					AlxI2c_Ctor(&me, i2c, io_SCL->GetCStructPtr(), io_SDA->GetCStructPtr(), clk);
-				};
-				virtual ~I2c() {};
+				}
+				virtual ~I2c() {}
 		};
 		#endif
 

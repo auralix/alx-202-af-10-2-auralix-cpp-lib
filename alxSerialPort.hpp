@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ISerialPort() {};
-				virtual ~ISerialPort() {};
+				ISerialPort() {}
+				virtual ~ISerialPort() {}
 				virtual ::Alx_Status Init(void) = 0;
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual ::Alx_Status Read(uint8_t* data, uint32_t len) = 0;
@@ -85,8 +85,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ASerialPort() {};
-				virtual ~ASerialPort() {};
+				ASerialPort() {}
+				virtual ~ASerialPort() {}
 				::Alx_Status Init(void) override
 				{
 					return AlxSerialPort_Init(&me);
@@ -167,8 +167,8 @@ namespace Alx
 						rxFifoBuffLen,
 						rxIrqPriority
 					 );
-				};
-				virtual ~SerialPort() {};
+				}
+				virtual ~SerialPort() {}
 		};
 		#endif
 

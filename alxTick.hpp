@@ -63,8 +63,8 @@ namespace Alx
 				Tick(volatile ::AlxTick* me) : me(me)
 				{
 					AlxTick_Ctor(me);
-				};
-				virtual ~Tick() {};
+				}
+				virtual ~Tick() {}
 				uint64_t Get_ns(void) const volatile
 				{
 					#if defined(ALX_MBED)

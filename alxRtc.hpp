@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IRtc() {};
-				virtual ~IRtc() {};
+				IRtc() {}
+				virtual ~IRtc() {}
 				virtual ::Alx_Status Init(void) = 0;
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual ::Alx_Status SetDateTime(::AlxRtc_DateTime dateTime) = 0;
@@ -96,8 +96,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ARtc() {};
-				virtual ~ARtc() {};
+				ARtc() {}
+				virtual ~ARtc() {}
 				::Alx_Status Init(void) override
 				{
 					return AlxRtc_Init(&me);
@@ -214,8 +214,8 @@ namespace Alx
 						&me,
 						rtcClk
 					);
-				};
-				virtual ~Rtc() {};
+				}
+				virtual ~Rtc() {}
 		};
 		#endif
 	}

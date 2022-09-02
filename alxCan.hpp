@@ -63,8 +63,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ICan() {};
-				virtual ~ICan() {};
+				ICan() {}
+				virtual ~ICan() {}
 				virtual ::Alx_Status Init(void) = 0;
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual ::Alx_Status ReInit(void) = 0;
@@ -87,8 +87,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ACan() {};
-				virtual ~ACan() {};
+				ACan() {}
+				virtual ~ACan() {}
 				::Alx_Status Init(void) override
 				{
 					return AlxCan_Init(&me);
@@ -177,8 +177,8 @@ namespace Alx
 						txIrqPriority,
 						rxIrqPriority
 					);
-				};
-				virtual ~Can() {};
+				}
+				virtual ~Can() {}
 		};
 		#endif
 	}

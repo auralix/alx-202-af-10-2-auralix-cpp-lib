@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IFiltGlitchUint32() {};
-				virtual ~IFiltGlitchUint32() {};
+				IFiltGlitchUint32() {}
+				virtual ~IFiltGlitchUint32() {}
 				virtual uint32_t Process(uint32_t in) = 0;
 		};
 
@@ -82,8 +82,8 @@ namespace Alx
 				)
 				{
 					AlxFiltGlitchUint32_Ctor(&me, valInitial, stableTime_ms);
-				};
-				virtual ~FiltGlitchUint32() {};
+				}
+				virtual ~FiltGlitchUint32() {}
 				uint32_t Process(uint32_t in) override { return AlxFiltGlitchUint32_Process(&me, in); }
 			protected:
 				//------------------------------------------------------------------------------

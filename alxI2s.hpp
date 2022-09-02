@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				II2s() {};
-				virtual ~II2s() {};
+				II2s() {}
+				virtual ~II2s() {}
 				virtual ::Alx_Status Init(void)			= 0;
 				virtual ::Alx_Status DeInit(void)		= 0;
 				virtual void Foreground_Handle(void)	= 0;
@@ -80,8 +80,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AI2s() {};
-				virtual ~AI2s() {};
+				AI2s() {}
+				virtual ~AI2s() {}
 				::Alx_Status Init(void) override		{ return AlxI2s_Init(&me); }
 				::Alx_Status DeInit(void) override		{ return AlxI2s_DeInit(&me); }
 				void Foreground_Handle(void) override	{ return AlxI2s_Foreground_Handle(&me); }
@@ -158,8 +158,8 @@ namespace Alx
 							irqPriority
 						);
 					}
-				};
-				virtual ~I2s() {};
+				}
+				virtual ~I2s() {}
 		};
 		#endif
 	}

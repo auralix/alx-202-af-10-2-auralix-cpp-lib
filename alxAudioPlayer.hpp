@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAudioPlayer() {};
-				virtual ~IAudioPlayer() {};
+				IAudioPlayer() {}
+				virtual ~IAudioPlayer() {}
 				virtual void LoadTrack(const uint8_t* trackPtr, uint32_t len_Byte, uint32_t startOffset_Sample, ::AlxAudio_Encoding encoding, bool isMono) = 0;
 				virtual float GetSampleL(void) = 0;
 				virtual float GetSampleR(void) = 0;
@@ -105,7 +105,7 @@ namespace Alx
 						defaultTrackEncoding,
 						isDefaultTrackMono
 					);
-				};
+				}
 				virtual ~AudioPlayer() {}
 				void LoadTrack(const uint8_t* trackPtr, uint32_t len_Byte, uint32_t startOffset_Sample, AlxAudio_Encoding encoding, bool isMono) override
 				{

@@ -64,8 +64,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ITempSens() {};
-				virtual ~ITempSens() {};
+				ITempSens() {}
+				virtual ~ITempSens() {}
 				virtual ::Alx_Status Init(void) = 0;
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual ::Alx_Status GetTemp_degC(float *temp_degC) = 0;
@@ -81,8 +81,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ATempSens() {};
-				virtual ~ATempSens() {};
+				ATempSens() {}
+				virtual ~ATempSens() {}
 				::Alx_Status Init(void) override
 				{
 					return AlxTempSens_Init(&tempSens);
@@ -138,8 +138,8 @@ namespace Alx
 						AlxTempSens_Submodule_Rtd_Vdiv,
 						&me
 					);
-				};
-				virtual ~TempSensRtd() {};
+				}
+				virtual ~TempSensRtd() {}
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

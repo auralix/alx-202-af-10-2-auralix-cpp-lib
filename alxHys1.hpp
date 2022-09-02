@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IHys1() {};
-				virtual ~IHys1() {};
+				IHys1() {}
+				virtual ~IHys1() {}
 				virtual ::AlxHys1_St Process(float in) = 0;
 		};
 
@@ -82,8 +82,8 @@ namespace Alx
 				)
 				{
 					AlxHys1_Ctor(&me, high, low);
-				};
-				virtual ~Hys1() {};
+				}
+				virtual ~Hys1() {}
 				::AlxHys1_St Process(float in) override { return AlxHys1_Process(&me, in); }
 			protected:
 				//------------------------------------------------------------------------------

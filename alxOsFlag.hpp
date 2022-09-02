@@ -83,8 +83,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IOsFlag() {};
-				virtual ~IOsFlag() {};
+				IOsFlag() {}
+				virtual ~IOsFlag() {}
 				virtual void Assert(void) = 0;
 				virtual void DeAssert(void) = 0;
 				virtual bool IsAsserted(void) = 0;
@@ -110,8 +110,8 @@ namespace Alx
 					eventFlags(name)
 				{
 					DeAssert();
-				};
-				virtual ~OsFlag() {};
+				}
+				virtual ~OsFlag() {}
 				void Assert(void) override
 				{
 					uint32_t status = eventFlags.clear(0x00000001);	// We have active low logic

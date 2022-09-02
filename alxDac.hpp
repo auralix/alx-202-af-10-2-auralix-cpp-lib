@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IDac() {};
-				virtual ~IDac() {};
+				IDac() {}
+				virtual ~IDac() {}
 				virtual ::Alx_Status Init(void) = 0;
 				virtual ::Alx_Status Init(float vref_V) = 0;
 				virtual ::Alx_Status DeInit(void) = 0;
@@ -81,8 +81,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ADac() {};
-				virtual ~ADac() {};
+				ADac() {}
+				virtual ~ADac() {}
 				::Alx_Status Init(void) override
 				{
 					return AlxDac_Init(&dac);
@@ -140,8 +140,8 @@ namespace Alx
 
 					AlxDacMcu_Ctor(&dacMcu, dac, dacIoPinArr, chArr, setVoltageDefaultArr_V, numOfCh, isVrefInt_V, vrefExt_V);
 					AlxDac_Ctor(&this->dac, AlxDac_Submodule_Mcu, &dacMcu);
-				};
-				virtual ~DacMcu() {};
+				}
+				virtual ~DacMcu() {}
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

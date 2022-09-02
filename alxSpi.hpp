@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ISpi() {};
-				virtual ~ISpi() {};
+				ISpi() {}
+				virtual ~ISpi() {}
 				virtual ::Alx_Status Init(void) = 0;
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual ::Alx_Status Master_WriteRead(uint8_t* writeData, uint8_t* readData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
@@ -84,8 +84,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ASpi() {};
-				virtual ~ASpi() {};
+				ASpi() {}
+				virtual ~ASpi() {}
 				::Alx_Status Init(void) override
 				{
 					return AlxSpi_Init(&me);
@@ -160,8 +160,8 @@ namespace Alx
 						clk->GetCStructPtr(),
 						spiClk
 					);
-				};
-				virtual ~Spi() {};
+				}
+				virtual ~Spi() {}
 		};
 		#endif
 

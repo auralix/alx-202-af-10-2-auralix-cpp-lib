@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ITimSw() {};
-				virtual ~ITimSw() {};
+				ITimSw() {}
+				virtual ~ITimSw() {}
 				virtual void Start(void) = 0;
 				virtual void Stop(void) = 0;
 				virtual bool IsRunning(void) = 0;
@@ -92,8 +92,8 @@ namespace Alx
 				TimSw(bool start = false)
 				{
 					AlxTimSw_Ctor(&me, start);
-				};
-				virtual ~TimSw() {};
+				}
+				virtual ~TimSw() {}
 				void Start(void) override							{ AlxTimSw_Start(&me); }
 				void Stop(void) override							{ AlxTimSw_Stop(&me); }
 				bool IsRunning (void) override						{ return AlxTimSw_IsRunning(&me); }

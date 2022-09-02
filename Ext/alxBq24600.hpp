@@ -61,8 +61,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IBq24600() {};
-				virtual ~IBq24600() {};
+				IBq24600() {}
+				virtual ~IBq24600() {}
 				virtual void Init(void) = 0;
 				virtual void DeInit(void) = 0;
 				virtual void Handle(void) = 0;
@@ -92,8 +92,8 @@ namespace Alx
 				)
 				{
 					AlxBq24600_Ctor(&me, di_EN->GetCStructPtr(), do_nPG->GetCStructPtr(), do_STAT->GetCStructPtr());
-				};
-				virtual ~Bq24600() {};
+				}
+				virtual ~Bq24600() {}
 				virtual void Init(void)				{ AlxBq24600_Init(&me); };
 				virtual void DeInit(void)			{ AlxBq24600_DeInit(&me); };
 				virtual void Handle(void)			{ AlxBq24600_Handle(&me); };

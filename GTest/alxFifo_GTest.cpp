@@ -56,8 +56,8 @@ namespace Alx
 					//------------------------------------------------------------------------------
 					// Protected Functions
 					//------------------------------------------------------------------------------
-					FifoG01Test() {};
-					virtual ~FifoG01Test() {};
+					FifoG01Test() {}
+					virtual ~FifoG01Test() {}
 
 					AlxFifo::FifoTest<10>* fifoTest = nullptr;
 

@@ -61,8 +61,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IParamMgmt() {};
-				virtual ~IParamMgmt() {};
+				IParamMgmt() {}
+				virtual ~IParamMgmt() {}
 				virtual double Get(const char* name) = 0;
 				virtual double Get(uint32_t id) = 0;
 				virtual ::Alx_Status Set(const char* name, double val) = 0;
@@ -99,8 +99,8 @@ namespace Alx
 //						paramItemArr,
 //						numOfParamItems
 //					);
-				};
-				virtual ~ParamMgmt() {};
+				}
+				virtual ~ParamMgmt() {}
 				double Get(const char* name) override
 				{
 				}

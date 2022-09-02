@@ -63,8 +63,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAdxl355() {};
-				virtual ~IAdxl355() {};
+				IAdxl355() {}
+				virtual ~IAdxl355() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status Enable(void) = 0;
@@ -102,8 +102,8 @@ namespace Alx
 						this->fifo.GetBuffPtr(),
 						fifoBuffLen * sizeof(AlxAdxl355_Xyz_g)
 					);
-				};
-				virtual ~Adxl355() {};
+				}
+				virtual ~Adxl355() {}
 				Alx_Status Init(void) override										{ return AlxAdxl355_Init(&me); }
 				Alx_Status DeInit(void) override									{ return AlxAdxl355_DeInit(&me); }
 				Alx_Status Enable(void) override									{ return AlxAdxl355_Enable(&me); }

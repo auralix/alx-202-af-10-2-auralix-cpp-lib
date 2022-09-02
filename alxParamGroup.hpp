@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IParamGroup() {};
-				virtual ~IParamGroup() {};
+				IParamGroup() {}
+				virtual ~IParamGroup() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual void Write(void) = 0;
 				virtual bool IsWriteDone(void) = 0;
@@ -118,8 +118,8 @@ namespace Alx
 						numOfParamItems,
 						initNumOfTries
 					);
-				};
-				virtual ~ParamGroup() {};
+				}
+				virtual ~ParamGroup() {}
 				Alx_Status Init(void) override						{ return AlxParamGroup_Init(&me); }
 				void Write(void) override							{ AlxParamGroup_Write(&me); }
 				bool IsWriteDone(void) override						{ return AlxParamGroup_IsWriteDone(&me); }

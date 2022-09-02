@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IMemRaw() {};
-				virtual ~IMemRaw() {};
+				IMemRaw() {}
+				virtual ~IMemRaw() {}
 				virtual ::Alx_Status Init(void) = 0;
 				virtual ::Alx_Status DeInit(void) = 0;
 				virtual ::Alx_Status Read(uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t timeout_ms) = 0;
@@ -82,8 +82,8 @@ namespace Alx
 				MemRaw()
 				{
 					AlxMemRaw_Ctor(&me);
-				};
-				virtual ~MemRaw() {};
+				}
+				virtual ~MemRaw() {}
 				::Alx_Status Init(void) override																											{ return AlxMemRaw_Init(&me); }
 				::Alx_Status DeInit(void) override																											{ return AlxMemRaw_DeInit(&me); }
 				::Alx_Status Read(uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t timeout_ms) override								{ return AlxMemRaw_Read(&me, addr, data, len, numOfTries, timeout_ms); }

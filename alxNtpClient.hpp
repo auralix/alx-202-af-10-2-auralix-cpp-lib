@@ -144,8 +144,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				INtpClient() {};
-				virtual ~INtpClient() {};
+				INtpClient() {}
+				virtual ~INtpClient() {}
 				virtual uint64_t GetUnixTime_ns(void) = 0;
 				virtual uint64_t GetUnixTime_us(void) = 0;
 				virtual uint64_t GetUnixTime_ms(void) = 0;
@@ -180,8 +180,8 @@ namespace Alx
 					serverIp(serverIp),
 					serverPort(serverPort),
 					isServerIpHostnameFormat(isServerIpHostnameFormat)
-				{};
-				virtual ~NtpClient() {};
+				{}
+				virtual ~NtpClient() {}
 				uint64_t GetUnixTime_ns(void) override
 				{
 					ALX_NTP_CLIENT_ASSERT(false);
@@ -435,7 +435,7 @@ namespace Alx
 
 					// #5 Sleep for RESET_WAIT_TIME
 					ThisThread::sleep_for(RESET_WAIT_TIME_ms);
-				};
+				}
 		};
 		#endif
 	}

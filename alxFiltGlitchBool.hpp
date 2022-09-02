@@ -60,8 +60,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IFiltGlitchBool() {};
-				virtual ~IFiltGlitchBool() {};
+				IFiltGlitchBool() {}
+				virtual ~IFiltGlitchBool() {}
 				virtual bool Process(bool in) = 0;
 		};
 
@@ -83,8 +83,8 @@ namespace Alx
 				)
 				{
 					AlxFiltGlitchBool_Ctor(&me, valFilteredInitial, stableTrueTime_ms, stableFalseTime_ms);
-				};
-				virtual ~FiltGlitchBool() {};
+				}
+				virtual ~FiltGlitchBool() {}
 				bool Process(bool in) override { return AlxFiltGlitchBool_Process(&me, in); }
 			protected:
 				//------------------------------------------------------------------------------

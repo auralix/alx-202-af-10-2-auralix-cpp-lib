@@ -61,8 +61,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IIoPinIrq() {};
-				virtual ~IIoPinIrq() {};
+				IIoPinIrq() {}
+				virtual ~IIoPinIrq() {}
 				virtual void Init(void) = 0;
 				virtual void DeInit(void) = 0;
 		};
@@ -77,8 +77,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AIoPinIrq() {};
-				virtual ~AIoPinIrq() {};
+				AIoPinIrq() {}
+				virtual ~AIoPinIrq() {}
 				void Init(void) override
 				{
 					return AlxIoPinIrq_Init(&me);
@@ -125,8 +125,8 @@ namespace Alx
 						numOfIoPins,
 						irqPriorityArr
 					);
-				};
-				virtual ~IoPinIrq() {};
+				}
+				virtual ~IoPinIrq() {}
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

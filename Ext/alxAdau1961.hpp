@@ -62,8 +62,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAdau1961() {};
-				virtual ~IAdau1961() {};
+				IAdau1961() {}
+				virtual ~IAdau1961() {}
 				virtual ::Alx_Status Init(void)								= 0;
 				virtual ::Alx_Status DeInit(void)							= 0;
 				virtual void Foreground_Handle(void)						= 0;
@@ -105,8 +105,8 @@ namespace Alx
 						i2cNumOfTries,
 						i2cTimeout_ms
 					);
-				};
-				virtual ~Adau1961() {};
+				}
+				virtual ~Adau1961() {}
 				::Alx_Status Init(void) override							{ return AlxAdau1961_Init(&me); }
 				::Alx_Status DeInit(void) override							{ return AlxAdau1961_DeInit(&me); }
 				void Foreground_Handle(void) override						{ return AlxAdau1961_Foreground_Handle(&me); }

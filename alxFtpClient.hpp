@@ -83,8 +83,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IFtpClient() {};
-				virtual ~IFtpClient() {};
+				IFtpClient() {}
+				virtual ~IFtpClient() {}
 				virtual ::Alx_Status Login(void) = 0;
 				virtual ::Alx_Status Logout(void) = 0;
 				virtual ::Alx_Status SendFile(const char* rootDir, const char* filename) = 0;
@@ -117,8 +117,8 @@ namespace Alx
 					username(username),
 					password(password),
 					isServerIpHostnameFormat(isServerIpHostnameFormat)
-				{};
-				virtual ~FtpClient() {};
+				{}
+				virtual ~FtpClient() {}
 				::Alx_Status Login(void) override
 				{
 					// #1 Lock mutex

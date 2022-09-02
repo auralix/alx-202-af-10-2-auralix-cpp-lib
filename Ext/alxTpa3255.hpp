@@ -61,8 +61,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ITpa3255() {};
-				virtual ~ITpa3255() {};
+				ITpa3255() {}
+				virtual ~ITpa3255() {}
 				virtual void Init()						= 0;
 				virtual void DeInit()					= 0;
 				virtual void Handle()					= 0;
@@ -102,8 +102,8 @@ namespace Alx
 						do_nCLIP_OTW->GetCStructPtr(),
 						waitTime_ReEnable_ms
 					);
-				};
-				virtual ~Tpa3255() {};
+				}
+				virtual ~Tpa3255() {}
 				void Init() override { AlxTpa3255_Init(&me); }
 				void DeInit() override { AlxTpa3255_DeInit(&me); }
 				void Handle() override { AlxTpa3255_Handle(&me); }
