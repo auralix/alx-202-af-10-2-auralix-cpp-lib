@@ -91,18 +91,51 @@ namespace Alx
 				 	Alx::AlxIoPin::IIoPin* do_STAT
 				)
 				{
-					AlxBq24600_Ctor(&me, di_EN->GetCStructPtr(), do_nPG->GetCStructPtr(), do_STAT->GetCStructPtr());
+					AlxBq24600_Ctor
+					(
+						&me,
+						di_EN->GetCStructPtr(),
+						do_nPG->GetCStructPtr(),
+						do_STAT->GetCStructPtr()
+					);
 				}
 				virtual ~Bq24600() {}
-				virtual void Init(void)				{ AlxBq24600_Init(&me); };
-				virtual void DeInit(void)			{ AlxBq24600_DeInit(&me); };
-				virtual void Handle(void)			{ AlxBq24600_Handle(&me); };
-				virtual void Enable(void)			{ AlxBq24600_Enable(&me); };
-				virtual void Disable(void)			{ AlxBq24600_Disable(&me); };
-				virtual bool IsBatCharging(void)	{ return AlxBq24600_IsBatCharging(&me); };
-				virtual bool IsBatFull(void)		{ return AlxBq24600_IsBatFull(&me); };
-				virtual bool IsSleep(void)			{ return AlxBq24600_IsSleep(&me); };
-				virtual bool IsErr(void)			{ return AlxBq24600_IsErr(&me); };
+				virtual void Init(void)
+				{
+					AlxBq24600_Init(&me);
+				}
+				virtual void DeInit(void)
+				{
+					AlxBq24600_DeInit(&me);
+				}
+				virtual void Handle(void)
+				{
+					AlxBq24600_Handle(&me);
+				}
+				virtual void Enable(void)
+				{
+					AlxBq24600_Enable(&me);
+				}
+				virtual void Disable(void)
+				{
+					AlxBq24600_Disable(&me);
+				}
+				virtual bool IsBatCharging(void)
+				{
+					return AlxBq24600_IsBatCharging(&me);
+				}
+				virtual bool IsBatFull(void)
+				{
+					return AlxBq24600_IsBatFull(&me);
+				}
+				virtual bool IsSleep(void)
+				{
+					return AlxBq24600_IsSleep(&me);
+				}
+				virtual bool IsErr(void)
+				{
+					return AlxBq24600_IsErr(&me);
+				}
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

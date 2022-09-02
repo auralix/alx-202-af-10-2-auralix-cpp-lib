@@ -88,9 +88,18 @@ namespace Alx
 					AlxInterpLin_Ctor(&me, xPointArr, yPointArr, numOfArrPoints, isXpointArrRising);
 				}
 				virtual ~InterpLin() {}
-				Alx_Status GetY(float x, float* y) override		{ return AlxInterpLin_GetY_WithStatus	(&me, x, y);}
-				float GetY(float x) override					{ return AlxInterpLin_GetY				(&me, x	);	}
-				::AlxInterpLin* GetCStructPtr(void) override	{ return &me;	}
+				Alx_Status GetY(float x, float* y) override
+				{
+					return AlxInterpLin_GetY_WithStatus(&me, x, y);
+				}
+				float GetY(float x) override
+				{
+					return AlxInterpLin_GetY(&me, x	);
+				}
+				::AlxInterpLin* GetCStructPtr(void) override
+				{
+					return &me;
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

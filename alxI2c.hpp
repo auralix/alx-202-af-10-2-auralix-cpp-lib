@@ -163,7 +163,14 @@ namespace Alx
 					::AlxI2c_Clk clk = AlxI2c_Clk_400kHz
 				)
 				{
-					AlxI2c_Ctor(&me, i2c, io_SCL->GetCStructPtr(), io_SDA->GetCStructPtr(), clk);
+					AlxI2c_Ctor
+					(
+						&me,
+						i2c,
+						io_SCL->GetCStructPtr(),
+						io_SDA->GetCStructPtr(),
+						clk
+					);
 				}
 				virtual ~I2c() {}
 		};

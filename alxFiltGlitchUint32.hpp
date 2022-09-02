@@ -81,10 +81,18 @@ namespace Alx
 					float stableTime_ms
 				)
 				{
-					AlxFiltGlitchUint32_Ctor(&me, valInitial, stableTime_ms);
+					AlxFiltGlitchUint32_Ctor
+					(
+						&me,
+						valInitial,
+						stableTime_ms
+					);
 				}
 				virtual ~FiltGlitchUint32() {}
-				uint32_t Process(uint32_t in) override { return AlxFiltGlitchUint32_Process(&me, in); }
+				uint32_t Process(uint32_t in) override
+				{
+					return AlxFiltGlitchUint32_Process(&me, in);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

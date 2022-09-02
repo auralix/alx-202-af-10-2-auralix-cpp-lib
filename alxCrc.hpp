@@ -86,10 +86,22 @@ namespace Alx
 					AlxCrc_Ctor(&me, config);
 				}
 				virtual ~Crc() {}
-				uint32_t Calc(uint8_t* data, uint32_t len) override										{ return AlxCrc_Calc(&me, data, len); }
-				bool IsOk(uint8_t* dataWithCrc, uint32_t lenWithCrc, uint32_t* validatedCrc) override	{ return AlxCrc_IsOk(&me, dataWithCrc, lenWithCrc, validatedCrc); }
-				uint32_t GetLen(void) override															{ return AlxCrc_GetLen(&me); }
-				::AlxCrc* GetCStructPtr(void) override													{ return &me; }
+				uint32_t Calc(uint8_t* data, uint32_t len) override
+				{
+					return AlxCrc_Calc(&me, data, len);
+				}
+				bool IsOk(uint8_t* dataWithCrc, uint32_t lenWithCrc, uint32_t* validatedCrc) override
+				{
+					return AlxCrc_IsOk(&me, dataWithCrc, lenWithCrc, validatedCrc);
+				}
+				uint32_t GetLen(void) override
+				{
+					return AlxCrc_GetLen(&me);
+				}
+				::AlxCrc* GetCStructPtr(void) override
+				{
+					return &me;
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

@@ -287,44 +287,142 @@ namespace Alx
 					AlxParamItem_CtorStr(&me, name, id, groupId, valDef, strValBuff, strValDefBuff, strMaxLen, AlxParamItem_ValOutOfRangeHandle_Ignore);
 				}
 				virtual ~ParamItem() {}
-				const char* GetName(void) override					{ return AlxParamItem_GetName(&me); }
-				uint32_t GetId(void) override						{ return AlxParamItem_GetId(&me); }
-				uint32_t GetGroupId(void) override					{ return AlxParamItem_GetGroupId(&me); }
-				AlxParamItem_Type GetType(void) override			{ return AlxParamItem_GetType(&me); }
-				void* GetValPtr(void) override						{ return AlxParamItem_GetValPtr(&me); }
-				uint32_t GetValLen(void) override					{ return AlxParamItem_GetValLen(&me); }
-				void SetValToDef(void) override						{ AlxParamItem_SetValToDef(&me); }
-
-				uint8_t GetValUint8(void) override					{ return AlxParamItem_GetValUint8(&me); }
-				uint16_t GetValUint16(void) override				{ return AlxParamItem_GetValUint16(&me); }
-				uint32_t GetValUint32(void) override				{ return AlxParamItem_GetValUint32(&me); }
-				uint64_t GetValUint64(void) override				{ return AlxParamItem_GetValUint64(&me); }
-				int8_t GetValInt8(void) override					{ return AlxParamItem_GetValInt8(&me); }
-				int16_t GetValInt16(void) override					{ return AlxParamItem_GetValInt16(&me); }
-				int32_t GetValInt32(void) override					{ return AlxParamItem_GetValInt32(&me); }
-				int64_t GetValInt64(void) override					{ return AlxParamItem_GetValInt64(&me); }
-				float GetValFloat(void) override					{ return AlxParamItem_GetValFloat(&me); }
-				double GetValDouble(void) override					{ return AlxParamItem_GetValDouble(&me); }
-				bool GetValBool(void) override						{ return AlxParamItem_GetValBool(&me); }
-
-				::Alx_Status SetValUint8(uint8_t val) override		{ return AlxParamItem_SetValUint8(&me, val); }
-				::Alx_Status SetValUint16(uint16_t val) override	{ return AlxParamItem_SetValUint16(&me, val); }
-				::Alx_Status SetValUint32(uint32_t val) override	{ return AlxParamItem_SetValUint32(&me, val); }
-				::Alx_Status SetValUint64(uint64_t val) override	{ return AlxParamItem_SetValUint64(&me, val); }
-				::Alx_Status SetValInt8(int8_t val) override		{ return AlxParamItem_SetValInt8(&me, val); }
-				::Alx_Status SetValInt16(int16_t val) override		{ return AlxParamItem_SetValInt16(&me, val); }
-				::Alx_Status SetValInt32(int32_t val) override		{ return AlxParamItem_SetValInt32(&me, val); }
-				::Alx_Status SetValInt64(int64_t val) override		{ return AlxParamItem_SetValInt64(&me, val); }
-				::Alx_Status SetValFloat(float val) override		{ return AlxParamItem_SetValFloat(&me, val); }
-				::Alx_Status SetValDouble(double val) override		{ return AlxParamItem_SetValDouble(&me, val); }
-				::Alx_Status SetValBool(bool val) override			{ return AlxParamItem_SetValBool(&me, val); }
-
-				void GetValArr(void* val) override					{ AlxParamItem_GetValArr(&me, val); }
-				void SetValArr(void* val) override					{ AlxParamItem_SetValArr(&me, val); }
-				void GetValStr(char* val) override					{ AlxParamItem_GetValStr(&me, val); }
-				::Alx_Status SetValStr(char* val) override			{ return AlxParamItem_SetValStr(&me, val); }
-
-				::AlxParamItem* GetCStructPtr(void) override		{ return &me; }
+				const char* GetName(void) override
+				{
+					return AlxParamItem_GetName(&me);
+				}
+				uint32_t GetId(void) override
+				{
+					return AlxParamItem_GetId(&me);
+				}
+				uint32_t GetGroupId(void) override
+				{
+					return AlxParamItem_GetGroupId(&me);
+				}
+				AlxParamItem_Type GetType(void) override
+				{
+					return AlxParamItem_GetType(&me);
+				}
+				void* GetValPtr(void) override
+				{
+					return AlxParamItem_GetValPtr(&me);
+				}
+				uint32_t GetValLen(void) override
+				{
+					return AlxParamItem_GetValLen(&me);
+				}
+				void SetValToDef(void) override
+				{
+					AlxParamItem_SetValToDef(&me);
+				}
+				uint8_t GetValUint8(void) override
+				{
+					return AlxParamItem_GetValUint8(&me);
+				}
+				uint16_t GetValUint16(void) override
+				{
+					return AlxParamItem_GetValUint16(&me);
+				}
+				uint32_t GetValUint32(void) override
+				{
+					return AlxParamItem_GetValUint32(&me);
+				}
+				uint64_t GetValUint64(void) override
+				{
+					return AlxParamItem_GetValUint64(&me);
+				}
+				int8_t GetValInt8(void) override
+				{
+					return AlxParamItem_GetValInt8(&me);
+				}
+				int16_t GetValInt16(void) override
+				{
+					return AlxParamItem_GetValInt16(&me);
+				}
+				int32_t GetValInt32(void) override
+				{
+					return AlxParamItem_GetValInt32(&me);
+				}
+				int64_t GetValInt64(void) override
+				{
+					return AlxParamItem_GetValInt64(&me);
+				}
+				float GetValFloat(void) override
+				{
+					return AlxParamItem_GetValFloat(&me);
+				}
+				double GetValDouble(void) override
+				{
+					return AlxParamItem_GetValDouble(&me);
+				}
+				bool GetValBool(void) override
+				{
+					return AlxParamItem_GetValBool(&me);
+				}
+				::Alx_Status SetValUint8(uint8_t val) override
+				{
+					return AlxParamItem_SetValUint8(&me, val);
+				}
+				::Alx_Status SetValUint16(uint16_t val) override
+				{
+					return AlxParamItem_SetValUint16(&me, val);
+				}
+				::Alx_Status SetValUint32(uint32_t val) override
+				{
+					return AlxParamItem_SetValUint32(&me, val);
+				}
+				::Alx_Status SetValUint64(uint64_t val) override
+				{
+					return AlxParamItem_SetValUint64(&me, val);
+				}
+				::Alx_Status SetValInt8(int8_t val) override
+				{
+					return AlxParamItem_SetValInt8(&me, val);
+				}
+				::Alx_Status SetValInt16(int16_t val) override
+				{
+					return AlxParamItem_SetValInt16(&me, val);
+				}
+				::Alx_Status SetValInt32(int32_t val) override
+				{
+					return AlxParamItem_SetValInt32(&me, val);
+				}
+				::Alx_Status SetValInt64(int64_t val) override
+				{
+					return AlxParamItem_SetValInt64(&me, val);
+				}
+				::Alx_Status SetValFloat(float val) override
+				{
+					return AlxParamItem_SetValFloat(&me, val);
+				}
+				::Alx_Status SetValDouble(double val) override
+				{
+					return AlxParamItem_SetValDouble(&me, val);
+				}
+				::Alx_Status SetValBool(bool val) override
+				{
+					return AlxParamItem_SetValBool(&me, val);
+				}
+				void GetValArr(void* val) override
+				{
+					AlxParamItem_GetValArr(&me, val);
+				}
+				void SetValArr(void* val) override
+				{
+					AlxParamItem_SetValArr(&me, val);
+				}
+				void GetValStr(char* val) override
+				{
+					AlxParamItem_GetValStr(&me, val);
+				}
+				::Alx_Status SetValStr(char* val) override
+				{
+					return AlxParamItem_SetValStr(&me, val);
+				}
+				::AlxParamItem* GetCStructPtr(void) override
+				{
+					return &me;
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

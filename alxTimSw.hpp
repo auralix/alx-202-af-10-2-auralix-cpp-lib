@@ -94,21 +94,66 @@ namespace Alx
 					AlxTimSw_Ctor(&me, start);
 				}
 				virtual ~TimSw() {}
-				void Start(void) override							{ AlxTimSw_Start(&me); }
-				void Stop(void) override							{ AlxTimSw_Stop(&me); }
-				bool IsRunning (void) override						{ return AlxTimSw_IsRunning(&me); }
-				uint64_t Get_ns(void) override						{ return AlxTimSw_Get_ns(&me); }
-				uint64_t Get_us(void) override						{ return AlxTimSw_Get_us(&me); }
-				uint64_t Get_ms(void) override						{ return AlxTimSw_Get_ms(&me); }
-				uint64_t Get_sec(void) override						{ return AlxTimSw_Get_sec(&me); }
-				uint64_t Get_min(void) override						{ return AlxTimSw_Get_min(&me); }
-				uint64_t Get_hr(void) override						{ return AlxTimSw_Get_hr(&me); }
-				bool IsTimeout_ns(uint64_t timeout_ns) override		{ return AlxTimSw_IsTimeout_ns(&me, timeout_ns); }
-				bool IsTimeout_us(uint64_t timeout_us) override		{ return AlxTimSw_IsTimeout_us(&me, timeout_us); }
-				bool IsTimeout_ms(uint64_t timeout_ms) override		{ return AlxTimSw_IsTimeout_ms(&me, timeout_ms); }
-				bool IsTimeout_sec(uint64_t timeout_sec) override	{ return AlxTimSw_IsTimeout_sec(&me, timeout_sec); }
-				bool IsTimeout_min(uint64_t timeout_min) override	{ return AlxTimSw_IsTimeout_min(&me, timeout_min); }
-				bool IsTimeout_hr(uint64_t timeout_hr) override		{ return AlxTimSw_IsTimeout_hr(&me, timeout_hr); }
+				void Start(void) override
+				{
+					AlxTimSw_Start(&me);
+				}
+				void Stop(void) override
+				{
+					AlxTimSw_Stop(&me);
+				}
+				bool IsRunning (void) override
+				{
+					return AlxTimSw_IsRunning(&me);
+				}
+				uint64_t Get_ns(void) override
+				{
+					return AlxTimSw_Get_ns(&me);
+				}
+				uint64_t Get_us(void) override
+				{
+					return AlxTimSw_Get_us(&me);
+				}
+				uint64_t Get_ms(void) override
+				{
+					return AlxTimSw_Get_ms(&me);
+				}
+				uint64_t Get_sec(void) override
+				{
+					return AlxTimSw_Get_sec(&me);
+				}
+				uint64_t Get_min(void) override
+				{
+					return AlxTimSw_Get_min(&me);
+				}
+				uint64_t Get_hr(void) override
+				{
+					return AlxTimSw_Get_hr(&me);
+				}
+				bool IsTimeout_ns(uint64_t timeout_ns) override
+				{
+					return AlxTimSw_IsTimeout_ns(&me, timeout_ns);
+				}
+				bool IsTimeout_us(uint64_t timeout_us) override
+				{
+					return AlxTimSw_IsTimeout_us(&me, timeout_us);
+				}
+				bool IsTimeout_ms(uint64_t timeout_ms) override
+				{
+					return AlxTimSw_IsTimeout_ms(&me, timeout_ms);
+				}
+				bool IsTimeout_sec(uint64_t timeout_sec) override
+				{
+					return AlxTimSw_IsTimeout_sec(&me, timeout_sec);
+				}
+				bool IsTimeout_min(uint64_t timeout_min) override
+				{
+					return AlxTimSw_IsTimeout_min(&me, timeout_min);
+				}
+				bool IsTimeout_hr(uint64_t timeout_hr) override
+				{
+					return AlxTimSw_IsTimeout_hr(&me, timeout_hr);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

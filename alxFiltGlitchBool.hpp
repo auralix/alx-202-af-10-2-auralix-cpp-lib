@@ -82,10 +82,19 @@ namespace Alx
 					float stableFalseTime_ms
 				)
 				{
-					AlxFiltGlitchBool_Ctor(&me, valFilteredInitial, stableTrueTime_ms, stableFalseTime_ms);
+					AlxFiltGlitchBool_Ctor
+					(
+						&me,
+						valFilteredInitial,
+						stableTrueTime_ms,
+						stableFalseTime_ms
+					);
 				}
 				virtual ~FiltGlitchBool() {}
-				bool Process(bool in) override { return AlxFiltGlitchBool_Process(&me, in); }
+				bool Process(bool in) override
+				{
+					return AlxFiltGlitchBool_Process(&me, in);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

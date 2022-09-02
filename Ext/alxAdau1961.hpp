@@ -107,15 +107,42 @@ namespace Alx
 					);
 				}
 				virtual ~Adau1961() {}
-				::Alx_Status Init(void) override							{ return AlxAdau1961_Init(&me); }
-				::Alx_Status DeInit(void) override							{ return AlxAdau1961_DeInit(&me); }
-				void Foreground_Handle(void) override						{ return AlxAdau1961_Foreground_Handle(&me); }
-				::Alx_Status InDiffL_SetGain(float gain_dB) override		{ return AlxAdau1961_InDiffL_SetGain_dB(&me, gain_dB); }
-				::Alx_Status InDiffR_SetGain(float gain_dB) override		{ return AlxAdau1961_InDiffR_SetGain_dB(&me, gain_dB); }
-				::Alx_Status InAuxL_SetGain_dB(int8_t gain_dB) override		{ return AlxAdau1961_InAuxL_SetGain_dB(&me, gain_dB); }
-				::Alx_Status InAuxR_SetGain_dB(int8_t gain_dB) override		{ return AlxAdau1961_InAuxR_SetGain_dB(&me, gain_dB); }
-				::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB) override	{ return AlxAdau1961_OutLineL_SetGain_dB(&me, gain_dB); }
-				::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB) override	{ return AlxAdau1961_OutLineR_SetGain_dB(&me, gain_dB); }
+				::Alx_Status Init(void) override
+				{
+					return AlxAdau1961_Init(&me);
+				}
+				::Alx_Status DeInit(void) override
+				{
+					return AlxAdau1961_DeInit(&me);
+				}
+				void Foreground_Handle(void) override
+				{
+					return AlxAdau1961_Foreground_Handle(&me);
+				}
+				::Alx_Status InDiffL_SetGain(float gain_dB) override
+				{
+					return AlxAdau1961_InDiffL_SetGain_dB(&me, gain_dB);
+				}
+				::Alx_Status InDiffR_SetGain(float gain_dB) override
+				{
+					return AlxAdau1961_InDiffR_SetGain_dB(&me, gain_dB);
+				}
+				::Alx_Status InAuxL_SetGain_dB(int8_t gain_dB) override
+				{
+					return AlxAdau1961_InAuxL_SetGain_dB(&me, gain_dB);
+				}
+				::Alx_Status InAuxR_SetGain_dB(int8_t gain_dB) override
+				{
+					return AlxAdau1961_InAuxR_SetGain_dB(&me, gain_dB);
+				}
+				::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB) override
+				{
+					return AlxAdau1961_OutLineL_SetGain_dB(&me, gain_dB);
+				}
+				::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB) override
+				{
+					return AlxAdau1961_OutLineR_SetGain_dB(&me, gain_dB);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

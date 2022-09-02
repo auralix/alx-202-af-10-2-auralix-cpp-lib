@@ -93,21 +93,63 @@ namespace Alx
 					float debounceTime_ms	// time of stable button status to change it's state [ms]
 				)
 				{
-					AlxBtn_Ctor(&me, valInitial, longTime_ms, debounceTime_ms);
+					AlxBtn_Ctor
+					(
+						&me,
+						valInitial,
+						longTime_ms,
+						debounceTime_ms
+					);
 				}
 				virtual ~Btn() {}
-				void Handle(bool in) override { return AlxBtn_Handle(&me, in); }
-				bool IsPressed()					override { return AlxBtn_IsPressed(&me);			}
-				bool WasPressed()					override { return AlxBtn_WasPressed(&me);			}
-				bool WasReleased()					override { return AlxBtn_WasReleased(&me);			}
-				bool IsPressedShort()				override { return AlxBtn_IsPressedShort(&me);		}
-				bool WasPressedShort()				override { return AlxBtn_WasPressedShort(&me);		}
-				bool IsPressedLong()				override { return AlxBtn_IsPressedLong(&me);		}
-				bool WasPressedLong()				override { return AlxBtn_WasPressedLong(&me);		}
-				void ClearWasPressed()				override { AlxBtn_ClearWasPressed(&me);				}
-				void ClearWasReleased()				override { AlxBtn_ClearWasReleased(&me);			}
-				void ClearWasPressedShort()			override { AlxBtn_ClearWasPressedShort(&me);		}
-				void ClearWasPressedLong()			override { AlxBtn_ClearWasPressedLong(&me);			}
+				void Handle(bool in) override
+				{
+					return AlxBtn_Handle(&me, in);
+				}
+				bool IsPressed() override
+				{
+					return AlxBtn_IsPressed(&me);
+				}
+				bool WasPressed() override
+				{
+					return AlxBtn_WasPressed(&me);
+				}
+				bool WasReleased() override
+				{
+					return AlxBtn_WasReleased(&me);
+				}
+				bool IsPressedShort() override
+				{
+					return AlxBtn_IsPressedShort(&me);
+				}
+				bool WasPressedShort() override
+				{
+					return AlxBtn_WasPressedShort(&me);
+				}
+				bool IsPressedLong() override
+				{
+					return AlxBtn_IsPressedLong(&me);
+				}
+				bool WasPressedLong() override
+				{
+					return AlxBtn_WasPressedLong(&me);
+				}
+				void ClearWasPressed() override
+				{
+					AlxBtn_ClearWasPressed(&me);
+				}
+				void ClearWasReleased() override
+				{
+					AlxBtn_ClearWasReleased(&me);
+				}
+				void ClearWasPressedShort() override
+				{
+					AlxBtn_ClearWasPressedShort(&me);
+				}
+				void ClearWasPressedLong() override
+				{
+					AlxBtn_ClearWasPressedLong(&me);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

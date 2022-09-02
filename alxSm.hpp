@@ -139,8 +139,15 @@ namespace Alx
 					_4 = 4,
 					_5 = 5
 				};
-				Sm(St* st, Level level) : st(st), level((uint32_t)level) {};
-				virtual ~Sm() {};
+				Sm
+				(
+					St* st,
+					Level level
+				) :
+				st(st),
+				level((uint32_t)level)
+				{}
+				virtual ~Sm() {}
 				void Exit(St* st)
 				{
 					st->Exit();

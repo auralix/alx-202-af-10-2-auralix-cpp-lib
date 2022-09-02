@@ -89,13 +89,35 @@ namespace Alx
 					bool isLimitOnX
 				)
 				{
-					AlxLinFun_Ctor(&me, point1_x, point1_y, point2_x, point2_y, min, max, isLimitOnX);
+					AlxLinFun_Ctor
+					(
+						&me,
+						point1_x,
+						point1_y,
+						point2_x,
+						point2_y,
+						min,
+						max,
+						isLimitOnX
+					);
 				}
 				virtual ~LinFun() {}
-				Alx_Status GetY(float x, float* y) override	{ return AlxLinFun_GetY_WithStatus	(&me, x, y);	}
-				Alx_Status GetX(float y, float* x) override	{ return AlxLinFun_GetX_WithStatus	(&me, y, x);	}
-				float GetY (float x) override				{ return AlxLinFun_GetY				(&me, x);		}
-				float GetX (float y) override				{ return AlxLinFun_GetX				(&me, y);		}
+				Alx_Status GetY(float x, float* y) override
+				{
+					return AlxLinFun_GetY_WithStatus(&me, x, y);
+				}
+				Alx_Status GetX(float y, float* x) override
+				{
+					return AlxLinFun_GetX_WithStatus(&me, y, x);
+				}
+				float GetY (float x) override
+				{
+					return AlxLinFun_GetY(&me, x);
+				}
+				float GetX (float y) override
+				{
+					return AlxLinFun_GetX(&me, y);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

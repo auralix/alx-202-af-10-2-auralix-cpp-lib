@@ -83,12 +83,26 @@ namespace Alx
 						float volMax_dB
 				)
 				{
-					AlxAudioVol_Ctor(&me, volMin_dB, volMax_dB);
+					AlxAudioVol_Ctor
+					(
+						&me,
+						volMin_dB,
+						volMax_dB
+					);
 				}
 				virtual ~AudioVol() {}
-				float Process(float inSample) override	{ return AlxAudioVol_Process(&me, inSample); }
-				void Set_pct(float vol_pct) override	{ AlxAudioVol_Set_pct(&me, vol_pct); }
-				void Set_dB(float gain_dB) override		{ AlxAudioVol_Set_dB(&me, gain_dB); }
+				float Process(float inSample) override
+				{
+					return AlxAudioVol_Process(&me, inSample);
+				}
+				void Set_pct(float vol_pct) override
+				{
+					AlxAudioVol_Set_pct(&me, vol_pct);
+				}
+				void Set_dB(float gain_dB) override
+				{
+					AlxAudioVol_Set_dB(&me, gain_dB);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

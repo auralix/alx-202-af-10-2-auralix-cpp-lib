@@ -81,10 +81,18 @@ namespace Alx
 					float low
 				)
 				{
-					AlxHys1_Ctor(&me, high, low);
+					AlxHys1_Ctor
+					(
+						&me,
+						high,
+						low
+					);
 				}
 				virtual ~Hys1() {}
-				::AlxHys1_St Process(float in) override { return AlxHys1_Process(&me, in); }
+				::AlxHys1_St Process(float in) override
+				{
+					return AlxHys1_Process(&me, in);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

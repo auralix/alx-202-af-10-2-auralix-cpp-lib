@@ -99,9 +99,18 @@ namespace Alx
 					);
 				}
 				virtual ~Tmp1075() {}
-				Alx_Status Init(void) override		{ return AlxTmp1075_Init(&me); }
-				Alx_Status DeInit(void) override	{ return AlxTmp1075_DeInit(&me); }
-				float GetTemp_degC(void) override	{ return AlxTmp1075_GetTemp_degC(&me); }
+				Alx_Status Init(void) override
+				{
+					return AlxTmp1075_Init(&me);
+				}
+				Alx_Status DeInit(void) override
+				{
+					return AlxTmp1075_DeInit(&me);
+				}
+				float GetTemp_degC(void) override
+				{
+					return AlxTmp1075_GetTemp_degC(&me);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

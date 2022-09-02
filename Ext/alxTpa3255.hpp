@@ -104,17 +104,50 @@ namespace Alx
 					);
 				}
 				virtual ~Tpa3255() {}
-				void Init() override { AlxTpa3255_Init(&me); }
-				void DeInit() override { AlxTpa3255_DeInit(&me); }
-				void Handle() override { AlxTpa3255_Handle(&me); }
-				void Enable() override { AlxTpa3255_Enable(&me); }
-				void Disable() override { AlxTpa3255_Disable(&me); }
-				bool IsErrAsserted() override { return AlxTpa3255_IsErrAsserted(&me); }
-				bool IsWarningAsserted() override { return AlxTpa3255_IsWarningAsserted(&me); }
-				bool WasErrAsserted() override { return AlxTpa3255_WasErrAsserted(&me); }
-				bool WasWarningAsserted() override { return AlxTpa3255_WasWarningAsserted(&me); }
-				void ClearWasErrAsserted() override { AlxTpa3255_ClearWasErrAsserted(&me); }
-				void ClearWasWarningAsserted() override { AlxTpa3255_ClearWasWarningAsserted(&me); }
+				void Init() override
+				{
+					AlxTpa3255_Init(&me);
+				}
+				void DeInit() override
+				{
+					AlxTpa3255_DeInit(&me);
+				}
+				void Handle() override
+				{
+					AlxTpa3255_Handle(&me);
+				}
+				void Enable() override
+				{
+					AlxTpa3255_Enable(&me);
+				}
+				void Disable() override
+				{
+					AlxTpa3255_Disable(&me);
+				}
+				bool IsErrAsserted() override
+				{
+					return AlxTpa3255_IsErrAsserted(&me);
+				}
+				bool IsWarningAsserted() override
+				{
+					return AlxTpa3255_IsWarningAsserted(&me);
+				}
+				bool WasErrAsserted() override
+				{
+					return AlxTpa3255_WasErrAsserted(&me);
+				}
+				bool WasWarningAsserted() override
+				{
+					return AlxTpa3255_WasWarningAsserted(&me);
+				}
+				void ClearWasErrAsserted() override
+				{
+					AlxTpa3255_ClearWasErrAsserted(&me);
+				}
+				void ClearWasWarningAsserted() override
+				{
+					AlxTpa3255_ClearWasWarningAsserted(&me);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

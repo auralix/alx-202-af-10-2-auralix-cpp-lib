@@ -83,10 +83,20 @@ namespace Alx
 					float botLow
 				)
 				{
-					AlxHys2_Ctor(&me, topHigh, topLow, botHigh, botLow);
+					AlxHys2_Ctor
+					(
+						&me,
+						topHigh,
+						topLow,
+						botHigh,
+						botLow
+					);
 				}
 				virtual ~Hys2() {}
-				::AlxHys2_St Process(float in) override { return AlxHys2_Process(&me, in); }
+				::AlxHys2_St Process(float in) override
+				{
+					return AlxHys2_Process(&me, in);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

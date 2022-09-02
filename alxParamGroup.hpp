@@ -120,15 +120,42 @@ namespace Alx
 					);
 				}
 				virtual ~ParamGroup() {}
-				Alx_Status Init(void) override						{ return AlxParamGroup_Init(&me); }
-				void Write(void) override							{ AlxParamGroup_Write(&me); }
-				bool IsWriteDone(void) override						{ return AlxParamGroup_IsWriteDone(&me); }
-				bool IsWriteErr(void) override						{ return AlxParamGroup_IsWriteErr(&me); }
-				bool IsValStoredBuffDiff(void) override				{ return AlxParamGroup_IsValStoredBuffDiff(&me); }
-				void ValBuffToValToStoreBuff(void) override			{ AlxParamGroup_ValBuffToValToStoreBuff(&me); }
-				void ValToStoreBuffToValStoredBuff(void) override	{ AlxParamGroup_ValToStoreBuffToValStoredBuff(&me); }
-				void ParamItemsValToValBuff(void) override			{ AlxParamGroup_ParamItemsValToValBuff(&me); }
-				::AlxParamGroup* GetCStructPtr(void) override		{ return &me; }
+				Alx_Status Init(void) override
+				{
+					return AlxParamGroup_Init(&me);
+				}
+				void Write(void) override
+				{
+					AlxParamGroup_Write(&me);
+				}
+				bool IsWriteDone(void) override
+				{
+					return AlxParamGroup_IsWriteDone(&me);
+				}
+				bool IsWriteErr(void) override
+				{
+					return AlxParamGroup_IsWriteErr(&me);
+				}
+				bool IsValStoredBuffDiff(void) override
+				{
+					return AlxParamGroup_IsValStoredBuffDiff(&me);
+				}
+				void ValBuffToValToStoreBuff(void) override
+				{
+					AlxParamGroup_ValBuffToValToStoreBuff(&me);
+				}
+				void ValToStoreBuffToValStoredBuff(void) override
+				{
+					AlxParamGroup_ValToStoreBuffToValStoredBuff(&me);
+				}
+				void ParamItemsValToValBuff(void) override
+				{
+					AlxParamGroup_ParamItemsValToValBuff(&me);
+				}
+				::AlxParamGroup* GetCStructPtr(void) override
+				{
+					return &me;
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

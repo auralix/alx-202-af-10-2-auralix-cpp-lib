@@ -141,7 +141,20 @@ namespace Alx
 						adcIoPinArr[i] = temp->GetCStructPtr();
 					}
 
-					AlxAdc_Ctor(&me, adc, adcIoPinArr, numOfIoPins, chArr, numOfCh, clk->GetCStructPtr(), adcClk, samplingTime, isVrefInt_V, vrefExt_V);
+					AlxAdc_Ctor
+					(
+						&me,
+						adc,
+						adcIoPinArr,
+						numOfIoPins,
+						chArr,
+						numOfCh,
+						clk->GetCStructPtr(),
+						adcClk,
+						samplingTime,
+						isVrefInt_V,
+						vrefExt_V
+					);
 				}
 				virtual ~Adc() {}
 			private:

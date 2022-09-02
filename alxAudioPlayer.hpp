@@ -111,18 +111,54 @@ namespace Alx
 				{
 					AlxAudioPlayer_LoadTrack(&me, trackPtr, len_Byte, startOffset_Sample, encoding, isMono);
 				}
-				float GetSampleL(void) override			{ return AlxAudioPlayer_GetSampleL(&me); }
-				float GetSampleR(void) override			{ return AlxAudioPlayer_GetSampleR(&me); }
-				float GetSampleMono(void) override		{ return AlxAudioPlayer_GetSampleMono(&me); }
-				void IncSampleOffset(void) override		{ AlxAudioPlayer_IncSampleOffset(&me); }
-				void Play(void) override				{ AlxAudioPlayer_Play(&me); }
-				void Stop(void) override				{ AlxAudioPlayer_Stop(&me); }
-				void Pause(void) override				{ AlxAudioPlayer_Pause(&me); }
-				void Replay(void) override				{ AlxAudioPlayer_Replay(&me); }
-				void LoopOn(void) override				{ AlxAudioPlayer_LoopOn(&me); }
-				void LoopOff(void) override				{ AlxAudioPlayer_LoopOff(&me); }
-				void LoopConfig(bool isOn) override		{ AlxAudioPlayer_LoopConfig(&me, isOn); }
-				bool IsPlaying(void) override			{ return AlxAudioPlayer_IsPlaying(&me); }
+				float GetSampleL(void) override
+				{
+					return AlxAudioPlayer_GetSampleL(&me);
+				}
+				float GetSampleR(void) override
+				{
+					return AlxAudioPlayer_GetSampleR(&me);
+				}
+				float GetSampleMono(void) override
+				{
+					return AlxAudioPlayer_GetSampleMono(&me);
+				}
+				void IncSampleOffset(void) override
+				{
+					AlxAudioPlayer_IncSampleOffset(&me);
+				}
+				void Play(void) override
+				{
+					AlxAudioPlayer_Play(&me);
+				}
+				void Stop(void) override
+				{
+					AlxAudioPlayer_Stop(&me);
+				}
+				void Pause(void) override
+				{
+					AlxAudioPlayer_Pause(&me);
+				}
+				void Replay(void) override
+				{
+					AlxAudioPlayer_Replay(&me);
+				}
+				void LoopOn(void) override
+				{
+					AlxAudioPlayer_LoopOn(&me);
+				}
+				void LoopOff(void) override
+				{
+					AlxAudioPlayer_LoopOff(&me);
+				}
+				void LoopConfig(bool isOn) override
+				{
+					AlxAudioPlayer_LoopConfig(&me, isOn);
+				}
+				bool IsPlaying(void) override
+				{
+					return AlxAudioPlayer_IsPlaying(&me);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

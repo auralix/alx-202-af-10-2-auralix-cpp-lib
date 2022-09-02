@@ -138,8 +138,23 @@ namespace Alx
 						dacIoPinArr[i] = temp->GetCStructPtr();
 					}
 
-					AlxDacMcu_Ctor(&dacMcu, dac, dacIoPinArr, chArr, setVoltageDefaultArr_V, numOfCh, isVrefInt_V, vrefExt_V);
-					AlxDac_Ctor(&this->dac, AlxDac_Submodule_Mcu, &dacMcu);
+					AlxDacMcu_Ctor
+					(
+						&dacMcu,
+						dac,
+						dacIoPinArr,
+						chArr,
+						setVoltageDefaultArr_V,
+						numOfCh,
+						isVrefInt_V,
+						vrefExt_V
+					);
+					AlxDac_Ctor
+					(
+						&this->dac,
+						AlxDac_Submodule_Mcu,
+						&dacMcu
+					);
 				}
 				virtual ~DacMcu() {}
 			private:

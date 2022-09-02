@@ -91,19 +91,54 @@ namespace Alx
 					Alx::AlxIoPin::IIoPin* di_HS_ST
 				)
 				{
-					AlxBts724g_Ctor(&me, do_HS_IN->GetCStructPtr(), di_HS_ST->GetCStructPtr());
+					AlxBts724g_Ctor
+					(
+						&me,
+						do_HS_IN->GetCStructPtr(),
+						di_HS_ST->GetCStructPtr()
+					);
 				}
 				virtual ~Bts724g() {}
-				void Init(void)override						{ AlxBts724g_Init(&me); };
-				void DeInit(void)override					{ AlxBts724g_DeInit(&me); };
-				void Handle(void)override					{ AlxBts724g_Handle(&me); };
-				void SetOut(void)override					{ AlxBts724g_SetOut(&me); };
-				void ResetOut(void)override					{ AlxBts724g_ResetOut(&me); };
-				void WriteOut(bool state)override			{ AlxBts724g_WriteOut(&me, state); };
-				bool IsOpenLoadDetected(void)override		{ return AlxBts724g_IsOpenLoadDetected(&me); };
-				bool IsOverTempDetected(void)override		{ return AlxBts724g_IsOverTempDetected(&me); };
-				bool WasOpenLoadDetected(void)override		{ return AlxBts724g_WasOpenLoadDetected(&me); };
-				bool WasOverTempDetected(void)override		{ return AlxBts724g_WasOverTempDetected(&me); };
+				void Init(void)override
+				{
+					AlxBts724g_Init(&me);
+				}
+				void DeInit(void)override
+				{
+					AlxBts724g_DeInit(&me);
+				}
+				void Handle(void)override
+				{
+					AlxBts724g_Handle(&me);
+				}
+				void SetOut(void)override
+				{
+					AlxBts724g_SetOut(&me);
+				}
+				void ResetOut(void)override
+				{
+					AlxBts724g_ResetOut(&me);
+				}
+				void WriteOut(bool state)override
+				{
+					AlxBts724g_WriteOut(&me, state);
+				}
+				bool IsOpenLoadDetected(void)override
+				{
+					return AlxBts724g_IsOpenLoadDetected(&me);
+				}
+				bool IsOverTempDetected(void)override
+				{
+					return AlxBts724g_IsOverTempDetected(&me);
+				}
+				bool WasOpenLoadDetected(void)override
+				{
+					return AlxBts724g_WasOpenLoadDetected(&me);
+				}
+				bool WasOverTempDetected(void)override
+				{
+					return AlxBts724g_WasOverTempDetected(&me);
+				}
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

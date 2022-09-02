@@ -129,7 +129,18 @@ namespace Alx
 						pwmIoPinArr[i] = temp->GetCStructPtr();
 					}
 
-					AlxPwm_Ctor(&me, tim, pwmIoPinArr, chArr, dutyDefaultArr_pct, numOfCh, clk->GetCStructPtr(), prescaler, period);
+					AlxPwm_Ctor
+					(
+						&me,
+						tim,
+						pwmIoPinArr,
+						chArr,
+						dutyDefaultArr_pct,
+						numOfCh,
+						clk->GetCStructPtr(),
+						prescaler,
+						period
+					);
 				}
 				virtual ~Pwm() {}
 			private:

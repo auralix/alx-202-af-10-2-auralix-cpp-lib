@@ -104,10 +104,22 @@ namespace Alx
 					);
 				}
 				virtual ~Adxl355() {}
-				Alx_Status Init(void) override										{ return AlxAdxl355_Init(&me); }
-				Alx_Status DeInit(void) override									{ return AlxAdxl355_DeInit(&me); }
-				Alx_Status Enable(void) override									{ return AlxAdxl355_Enable(&me); }
-				Alx_Status Disable(void) override									{ return AlxAdxl355_Disable(&me); }
+				Alx_Status Init(void) override
+				{
+					return AlxAdxl355_Init(&me);
+				}
+				Alx_Status DeInit(void) override
+				{
+					return AlxAdxl355_DeInit(&me);
+				}
+				Alx_Status Enable(void) override
+				{
+					return AlxAdxl355_Enable(&me);
+				}
+				Alx_Status Disable(void) override
+				{
+					return AlxAdxl355_Disable(&me);
+				}
 				Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint32_t len) override
 				{
 					#if defined(ALX_MBED)
@@ -153,8 +165,14 @@ namespace Alx
 						return AlxAdxl355_GetXyz_g(&me, xyz_g);
 					#endif
 				}
-				float GetTemp_degC(void) override									{ return AlxAdxl355_GetTemp_degC(&me); }
-				Alx_Status Foreground_Handle(void) override							{ return AlxAdxl355_Foreground_Handle(&me); }
+				float GetTemp_degC(void) override
+				{
+					return AlxAdxl355_GetTemp_degC(&me);
+				}
+				Alx_Status Foreground_Handle(void) override
+				{
+					return AlxAdxl355_Foreground_Handle(&me);
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

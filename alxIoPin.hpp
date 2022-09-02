@@ -85,15 +85,42 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				AIoPin() {}
 				virtual ~AIoPin() {}
-				void Init(void) override							{ AlxIoPin_Init(&me); }
-				void DeInit(void) override							{ AlxIoPin_DeInit(&me); }
-				bool Read(void) override							{ return AlxIoPin_Read(&me); }
-				void Write(bool val) override						{ AlxIoPin_Write(&me, val); }
-				void Set(void) override								{ AlxIoPin_Set(&me); }
-				void Reset(void) override							{ AlxIoPin_Reset(&me); }
-				void Toggle(void) override							{ AlxIoPin_Toggle(&me); }
-				::AlxIoPin_TriState Read_TriState(void) override	{ return AlxIoPin_Read_TriState(&me); }
-				::AlxIoPin* GetCStructPtr(void) override			{ return &me; }
+				void Init(void) override
+				{
+					AlxIoPin_Init(&me);
+				}
+				void DeInit(void) override
+				{
+					AlxIoPin_DeInit(&me);
+				}
+				bool Read(void) override
+				{
+					return AlxIoPin_Read(&me);
+				}
+				void Write(bool val) override
+				{
+					AlxIoPin_Write(&me, val);
+				}
+				void Set(void) override
+				{
+					AlxIoPin_Set(&me);
+				}
+				void Reset(void) override
+				{
+					AlxIoPin_Reset(&me);
+				}
+				void Toggle(void) override
+				{
+					AlxIoPin_Toggle(&me);
+				}
+				::AlxIoPin_TriState Read_TriState(void) override
+				{
+					return AlxIoPin_Read_TriState(&me);
+				}
+				::AlxIoPin* GetCStructPtr(void) override
+				{
+					return &me;
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
@@ -123,7 +150,17 @@ namespace Alx
 					bool val
 				)
 				{
-					AlxIoPin_Ctor(&me, port, pin, mode, pull, speed, alternate, val);
+					AlxIoPin_Ctor
+					(
+						&me,
+						port,
+						pin,
+						mode,
+						pull,
+						speed,
+						alternate,
+						val
+					);
 				}
 				virtual ~IoPin() {}
 		};

@@ -104,10 +104,22 @@ namespace Alx
 					);
 				}
 				virtual ~ParamStore() {}
-				Alx_Status Init(Alx_Status* status, uint32_t numOfParamGroups) override	{ return AlxParamStore_Init(&me, status, numOfParamGroups); };
-				void Handle(void) override												{ AlxParamStore_Handle(&me); };
-				bool IsErr(void) override												{ return AlxParamStore_IsErr(&me); };
-				::AlxParamStore* GetCStructPtr(void) override							{ return &me; };
+				Alx_Status Init(Alx_Status* status, uint32_t numOfParamGroups) override
+				{
+					return AlxParamStore_Init(&me, status, numOfParamGroups);
+				}
+				void Handle(void) override
+				{
+					AlxParamStore_Handle(&me);
+				}
+				bool IsErr(void) override
+				{
+					return AlxParamStore_IsErr(&me);
+				}
+				::AlxParamStore* GetCStructPtr(void) override
+				{
+					return &me;
+				}
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

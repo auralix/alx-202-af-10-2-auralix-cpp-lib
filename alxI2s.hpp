@@ -82,10 +82,22 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				AI2s() {}
 				virtual ~AI2s() {}
-				::Alx_Status Init(void) override		{ return AlxI2s_Init(&me); }
-				::Alx_Status DeInit(void) override		{ return AlxI2s_DeInit(&me); }
-				void Foreground_Handle(void) override	{ return AlxI2s_Foreground_Handle(&me); }
-				::AlxI2s* GetCStructPtr(void) override	{ return &me; }
+				::Alx_Status Init(void) override
+				{
+					return AlxI2s_Init(&me);
+				}
+				::Alx_Status DeInit(void) override
+				{
+					return AlxI2s_DeInit(&me);
+				}
+				void Foreground_Handle(void) override
+				{
+					return AlxI2s_Foreground_Handle(&me);
+				}
+				::AlxI2s* GetCStructPtr(void) override
+				{
+					return &me;
+				}
 			//protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

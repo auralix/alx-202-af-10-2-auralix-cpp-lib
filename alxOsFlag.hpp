@@ -103,11 +103,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				OsFlag
-				(
-					const char* name
-				) :
-					eventFlags(name)
+				OsFlag(const char* name) : eventFlags(name)
 				{
 					DeAssert();
 				}
