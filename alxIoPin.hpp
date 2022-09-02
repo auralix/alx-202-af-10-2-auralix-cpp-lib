@@ -62,15 +62,15 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IIoPin() {}
 				virtual ~IIoPin() {}
-				virtual void Init(void)							= 0;
-				virtual void DeInit(void)						= 0;
-				virtual bool Read(void)							= 0;
-				virtual void Write(bool val)					= 0;
-				virtual void Set(void)							= 0;
-				virtual void Reset(void)						= 0;
-				virtual void Toggle(void)						= 0;
-				virtual ::AlxIoPin_TriState Read_TriState(void)	= 0;
-				virtual ::AlxIoPin* GetCStructPtr(void)			= 0;
+				virtual void Init(void) = 0;
+				virtual void DeInit(void) = 0;
+				virtual bool Read(void) = 0;
+				virtual void Write(bool val) = 0;
+				virtual void Set(void) = 0;
+				virtual void Reset(void) = 0;
+				virtual void Toggle(void) = 0;
+				virtual ::AlxIoPin_TriState Read_TriState(void) = 0;
+				virtual ::AlxIoPin* GetCStructPtr(void) = 0;
 		};
 
 

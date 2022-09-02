@@ -79,8 +79,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				AudioVol
 				(
-						float volMin_dB,
-						float volMax_dB
+					float volMin_dB,
+					float volMax_dB
 				)
 				{
 					AlxAudioVol_Ctor

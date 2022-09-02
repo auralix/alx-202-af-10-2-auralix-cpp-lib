@@ -64,10 +64,10 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				II2s() {}
 				virtual ~II2s() {}
-				virtual ::Alx_Status Init(void)			= 0;
-				virtual ::Alx_Status DeInit(void)		= 0;
-				virtual void Foreground_Handle(void)	= 0;
-				virtual ::AlxI2s* GetCStructPtr(void)	= 0;
+				virtual ::Alx_Status Init(void) = 0;
+				virtual ::Alx_Status DeInit(void) = 0;
+				virtual void Foreground_Handle(void) = 0;
+				virtual ::AlxI2s* GetCStructPtr(void) = 0;
 		};
 
 

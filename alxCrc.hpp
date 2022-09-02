@@ -83,7 +83,11 @@ namespace Alx
 					AlxCrc_Config config
 				)
 				{
-					AlxCrc_Ctor(&me, config);
+					AlxCrc_Ctor
+					(
+						&me,
+						config
+					);
 				}
 				virtual ~Crc() {}
 				uint32_t Calc(uint8_t* data, uint32_t len) override

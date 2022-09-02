@@ -63,17 +63,17 @@ namespace Alx
 				IBtn() {}
 				virtual ~IBtn() {}
 				virtual void Handle(bool in) = 0;
-				virtual bool IsPressed()					= 0;
-				virtual bool WasPressed()					= 0;
-				virtual bool WasReleased()					= 0;
-				virtual bool IsPressedShort()				= 0;
-				virtual bool WasPressedShort()				= 0;
-				virtual bool IsPressedLong()				= 0;
-				virtual bool WasPressedLong()				= 0;
-				virtual void ClearWasPressed()				= 0;
-				virtual void ClearWasReleased()				= 0;
-				virtual void ClearWasPressedShort()			= 0;
-				virtual void ClearWasPressedLong()			= 0;
+				virtual bool IsPressed() = 0;
+				virtual bool WasPressed() = 0;
+				virtual bool WasReleased() = 0;
+				virtual bool IsPressedShort() = 0;
+				virtual bool WasPressedShort() = 0;
+				virtual bool IsPressedLong() = 0;
+				virtual bool WasPressedLong() = 0;
+				virtual void ClearWasPressed() = 0;
+				virtual void ClearWasReleased() = 0;
+				virtual void ClearWasPressedShort() = 0;
+				virtual void ClearWasPressedLong() = 0;
 		};
 
 

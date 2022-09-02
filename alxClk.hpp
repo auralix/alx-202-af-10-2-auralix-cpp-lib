@@ -62,10 +62,10 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IClk() {}
 				virtual ~IClk() {}
-				virtual ::Alx_Status Init(void)					= 0;
-				virtual uint32_t GetClk_Hz(::AlxClk_Clk clk)	= 0;
-				virtual void Irq_Handle(void)					= 0;
-				virtual ::AlxClk* GetCStructPtr(void)			= 0;
+				virtual ::Alx_Status Init(void) = 0;
+				virtual uint32_t GetClk_Hz(::AlxClk_Clk clk) = 0;
+				virtual void Irq_Handle(void) = 0;
+				virtual ::AlxClk* GetCStructPtr(void) = 0;
 		};
 
 
@@ -84,7 +84,11 @@ namespace Alx
 					::AlxClk_Config config
 				)
 				{
-					AlxClk_Ctor(&me, config);
+					AlxClk_Ctor
+					(
+						&me,
+						config
+					);
 				}
 				virtual ~Clk() {}
 				::Alx_Status Init(void) override

@@ -63,17 +63,17 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ITpa3255() {}
 				virtual ~ITpa3255() {}
-				virtual void Init()						= 0;
-				virtual void DeInit()					= 0;
-				virtual void Handle()					= 0;
-				virtual void Enable()					= 0;
-				virtual void Disable()					= 0;
-				virtual bool IsErrAsserted()			= 0;
-				virtual bool IsWarningAsserted()		= 0;
-				virtual bool WasErrAsserted()			= 0;
-				virtual bool WasWarningAsserted()		= 0;
-				virtual void ClearWasErrAsserted()		= 0;
-				virtual void ClearWasWarningAsserted()	= 0;
+				virtual void Init() = 0;
+				virtual void DeInit() = 0;
+				virtual void Handle() = 0;
+				virtual void Enable() = 0;
+				virtual void Disable() = 0;
+				virtual bool IsErrAsserted() = 0;
+				virtual bool IsWarningAsserted() = 0;
+				virtual bool WasErrAsserted() = 0;
+				virtual bool WasWarningAsserted() = 0;
+				virtual void ClearWasErrAsserted() = 0;
+				virtual void ClearWasWarningAsserted() = 0;
 		};
 
 

@@ -64,15 +64,15 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IAdau1961() {}
 				virtual ~IAdau1961() {}
-				virtual ::Alx_Status Init(void)								= 0;
-				virtual ::Alx_Status DeInit(void)							= 0;
-				virtual void Foreground_Handle(void)						= 0;
-				virtual ::Alx_Status InDiffL_SetGain(float gain_dB)			= 0;
-				virtual ::Alx_Status InDiffR_SetGain(float gain_dB)			= 0;
-				virtual ::Alx_Status InAuxL_SetGain_dB(int8_t gain_dB)		= 0;
-				virtual ::Alx_Status InAuxR_SetGain_dB(int8_t gain_dB)		= 0;
-				virtual ::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB)	= 0;
-				virtual ::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB)	= 0;
+				virtual ::Alx_Status Init(void) = 0;
+				virtual ::Alx_Status DeInit(void) = 0;
+				virtual void Foreground_Handle(void) = 0;
+				virtual ::Alx_Status InDiffL_SetGain(float gain_dB) = 0;
+				virtual ::Alx_Status InDiffR_SetGain(float gain_dB) = 0;
+				virtual ::Alx_Status InAuxL_SetGain_dB(int8_t gain_dB) = 0;
+				virtual ::Alx_Status InAuxR_SetGain_dB(int8_t gain_dB) = 0;
+				virtual ::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB) = 0;
+				virtual ::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB) = 0;
 		};
 
 

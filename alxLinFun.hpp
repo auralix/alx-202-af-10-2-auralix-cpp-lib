@@ -110,11 +110,11 @@ namespace Alx
 				{
 					return AlxLinFun_GetX_WithStatus(&me, y, x);
 				}
-				float GetY (float x) override
+				float GetY(float x) override
 				{
 					return AlxLinFun_GetY(&me, x);
 				}
-				float GetX (float y) override
+				float GetX(float y) override
 				{
 					return AlxLinFun_GetX(&me, y);
 				}
