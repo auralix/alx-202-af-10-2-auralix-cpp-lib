@@ -671,7 +671,7 @@ namespace Alx
 
 					// #6 Sleep for RESET_WAIT_TIME
 					ThisThread::sleep_for(RESET_WAIT_TIME_min);
-				};
+				}
 		};
 		#endif
 	}
