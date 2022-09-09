@@ -187,6 +187,7 @@ namespace Alx
 				{
 					return AlxRtc_TuneTime_ms(&me, tuneTime_ms);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

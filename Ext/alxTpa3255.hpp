@@ -149,6 +149,7 @@ namespace Alx
 				{
 					AlxTpa3255_ClearWasWarningAsserted(&me);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

@@ -174,6 +174,7 @@ namespace Alx
 				{
 					return AlxAdxl355_Foreground_Handle(&me);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

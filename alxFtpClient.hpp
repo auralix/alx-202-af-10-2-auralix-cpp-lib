@@ -581,6 +581,7 @@ namespace Alx
 					// #22 Return OK
 					return Alx_Ok;
 				}
+
 			private:
 				//******************************************************************************
 				// Private Variables

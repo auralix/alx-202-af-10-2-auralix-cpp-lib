@@ -87,11 +87,13 @@ namespace Alx
 				{
 					void();
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
 				//------------------------------------------------------------------------------
 				const char* name = nullptr;
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
@@ -113,6 +115,7 @@ namespace Alx
 				{
 					st->Do();
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Functions
@@ -127,6 +130,7 @@ namespace Alx
 					ALX_SM_TRACE(level, name, this->st->name, "Entry");
 					this->st->Entry(); // Enter new state, execute entry action
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Enum
@@ -154,6 +158,7 @@ namespace Alx
 					st->Exit();
 					ALX_SM_TRACE(level, name, st->name, "Exit");
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

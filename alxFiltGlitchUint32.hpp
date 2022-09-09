@@ -94,6 +94,7 @@ namespace Alx
 				{
 					return AlxFiltGlitchUint32_Process(&me, in);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

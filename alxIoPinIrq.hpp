@@ -88,6 +88,7 @@ namespace Alx
 				{
 					return AlxIoPinIrq_DeInit(&me);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
@@ -128,6 +129,7 @@ namespace Alx
 					);
 				}
 				virtual ~IoPinIrq() {}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

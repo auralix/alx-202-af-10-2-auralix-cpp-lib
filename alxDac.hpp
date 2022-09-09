@@ -104,6 +104,7 @@ namespace Alx
 				{
 					return AlxDac_SetVoltage_V_CalibrateVref(&dac, ch, voltage_V, vref_V);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
@@ -158,6 +159,7 @@ namespace Alx
 					);
 				}
 				virtual ~DacMcu() {}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

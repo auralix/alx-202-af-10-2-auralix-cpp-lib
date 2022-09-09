@@ -155,6 +155,7 @@ namespace Alx
 				{
 					return AlxTimSw_IsTimeout_hr(&me, timeout_hr);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

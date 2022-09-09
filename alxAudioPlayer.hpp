@@ -160,6 +160,7 @@ namespace Alx
 				{
 					return AlxAudioPlayer_IsPlaying(&me);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

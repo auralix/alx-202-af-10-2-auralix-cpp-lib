@@ -126,6 +126,7 @@ namespace Alx
 				{
 					return AlxCan_Foreground_Handle(&me);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

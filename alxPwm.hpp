@@ -94,6 +94,7 @@ namespace Alx
 				{
 					return AlxPwm_SetDuty_pct(&me, ch, duty_pct);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
@@ -144,6 +145,7 @@ namespace Alx
 					);
 				}
 				virtual ~Pwm() {}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

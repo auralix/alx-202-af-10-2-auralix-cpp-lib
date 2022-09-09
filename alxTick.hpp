@@ -190,6 +190,7 @@ namespace Alx
 						AlxTick_Reset(me);
 					#endif
 				}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

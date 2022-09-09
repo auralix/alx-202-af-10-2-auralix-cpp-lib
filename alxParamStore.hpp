@@ -121,6 +121,7 @@ namespace Alx
 				{
 					return &me;
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

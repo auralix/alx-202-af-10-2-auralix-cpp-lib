@@ -151,6 +151,7 @@ namespace Alx
 				{
 					AlxBtn_ClearWasPressedLong(&me);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

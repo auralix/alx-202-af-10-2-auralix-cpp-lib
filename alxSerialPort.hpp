@@ -120,6 +120,7 @@ namespace Alx
 				{
 					AlxSerialPort_Foreground_Handle(&me);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

@@ -144,6 +144,7 @@ namespace Alx
 				{
 					return AlxAdau1961_OutLineR_SetGain_dB(&me, gain_dB);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

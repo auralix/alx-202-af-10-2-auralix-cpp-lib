@@ -140,6 +140,7 @@ namespace Alx
 				{
 					return AlxBts724g_WasOverTempDetected(&me);
 				}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

@@ -104,6 +104,7 @@ namespace Alx
 				{
 					return &me;
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
@@ -158,6 +159,7 @@ namespace Alx
 					);
 				}
 				virtual ~Adc() {}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

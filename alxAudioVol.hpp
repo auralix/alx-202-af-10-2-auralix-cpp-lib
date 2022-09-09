@@ -104,6 +104,7 @@ namespace Alx
 				{
 					AlxAudioVol_Set_dB(&me, gain_dB);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

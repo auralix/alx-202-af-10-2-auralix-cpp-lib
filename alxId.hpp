@@ -186,6 +186,7 @@ namespace Alx
 				{
 					return AlxId_GetFwAppVerStr(&me);
 				}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Structures
@@ -227,6 +228,7 @@ namespace Alx
 						static constexpr uint32_t verMinRequired = ALX_LANG_CPP_LIB_VER_MIN_REQUIRED;
 					#endif
 				} langCppLib;
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

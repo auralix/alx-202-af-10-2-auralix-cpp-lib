@@ -119,6 +119,7 @@ namespace Alx
 				{
 					return AlxLinFun_GetX(&me, y);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

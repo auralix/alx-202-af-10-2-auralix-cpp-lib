@@ -112,6 +112,7 @@ namespace Alx
 				{
 					return AlxTmp1075_GetTemp_degC(&me);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

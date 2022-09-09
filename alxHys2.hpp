@@ -98,6 +98,7 @@ namespace Alx
 				{
 					return AlxHys2_Process(&me, in);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables

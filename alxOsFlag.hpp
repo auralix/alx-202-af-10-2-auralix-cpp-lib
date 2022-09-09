@@ -137,6 +137,7 @@ namespace Alx
 					uint32_t status = eventFlags.wait_all(0x00000001, osWaitForever, false);
 					ALX_OS_FLAG_ASSERT(status == 0x00000001);
 				}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

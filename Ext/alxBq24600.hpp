@@ -137,6 +137,7 @@ namespace Alx
 				{
 					return AlxBq24600_IsErr(&me);
 				}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

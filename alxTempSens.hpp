@@ -96,6 +96,7 @@ namespace Alx
 				{
 					return AlxTempSens_GetTemp_degC(&tempSens, temp_degC);
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
@@ -141,6 +142,7 @@ namespace Alx
 					);
 				}
 				virtual ~TempSensRtd() {}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

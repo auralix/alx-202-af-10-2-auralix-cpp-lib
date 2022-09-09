@@ -138,6 +138,7 @@ namespace Alx
 				void SeToDefAll(uint32_t groupId) override
 				{
 				}
+
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
