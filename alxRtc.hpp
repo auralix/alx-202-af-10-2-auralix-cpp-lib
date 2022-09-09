@@ -225,4 +225,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_RTC_HPP
+#endif	// ALX_RTC_HPP

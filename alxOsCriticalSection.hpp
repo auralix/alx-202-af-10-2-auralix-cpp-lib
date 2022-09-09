@@ -93,4 +93,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_OS_CRITICAL_SECTION_HPP
+#endif	// ALX_OS_CRITICAL_SECTION_HPP

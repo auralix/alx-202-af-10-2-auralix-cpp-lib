@@ -207,4 +207,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_I2C_HPP
+#endif	// ALX_I2C_HPP

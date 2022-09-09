@@ -113,4 +113,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_INTERP_LIN_HPP
+#endif	// ALX_INTERP_LIN_HPP

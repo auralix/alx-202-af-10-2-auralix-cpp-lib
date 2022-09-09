@@ -152,4 +152,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_BTS724G_HPP
+#endif	// ALX_BTS724G_HPP

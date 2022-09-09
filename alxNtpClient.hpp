@@ -445,4 +445,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_NTP_CLIENT_HPP
+#endif	// ALX_NTP_CLIENT_HPP

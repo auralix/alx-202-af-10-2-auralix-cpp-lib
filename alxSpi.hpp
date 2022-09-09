@@ -190,4 +190,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_SPI_HPP
+#endif	// ALX_SPI_HPP

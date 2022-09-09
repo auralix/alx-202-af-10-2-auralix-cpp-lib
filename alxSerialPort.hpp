@@ -200,4 +200,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_SERIAL_PORT_HPP
+#endif	// ALX_SERIAL_PORT_HPP

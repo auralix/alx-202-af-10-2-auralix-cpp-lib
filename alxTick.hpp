@@ -202,4 +202,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_TICK_HPP
+#endif	// ALX_TICK_HPP

@@ -116,4 +116,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_AUDIO_VOL_HPP
+#endif	// ALX_AUDIO_VOL_HPP

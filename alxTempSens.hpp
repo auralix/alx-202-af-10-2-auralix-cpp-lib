@@ -170,4 +170,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_TEMP_SENS_HPP
+#endif	// ALX_TEMP_SENS_HPP

@@ -188,4 +188,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_CAN_HPP
+#endif	// ALX_CAN_HPP

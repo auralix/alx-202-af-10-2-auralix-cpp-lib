@@ -110,4 +110,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_HYS2_HPP
+#endif	// ALX_HYS2_HPP

@@ -186,4 +186,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_DAC_HPP
+#endif	// ALX_DAC_HPP

@@ -172,4 +172,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_IO_PIN_HPP
+#endif	// ALX_IO_PIN_HPP

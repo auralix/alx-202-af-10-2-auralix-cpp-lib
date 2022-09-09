@@ -108,4 +108,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_FILT_GLITCH_BOOL_HPP
+#endif	// ALX_FILT_GLITCH_BOOL_HPP

@@ -161,4 +161,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_TPA3255_HPP
+#endif	// ALX_TPA3255_HPP

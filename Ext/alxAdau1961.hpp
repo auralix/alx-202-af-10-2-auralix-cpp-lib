@@ -156,4 +156,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif // ALX_ADAU1961_HPP
+#endif	// ALX_ADAU1961_HPP
