@@ -83,24 +83,24 @@ namespace Alx
 				virtual double GetValDouble(void) = 0;
 				virtual bool GetValBool(void) = 0;
 
-				virtual ::Alx_Status SetValUint8(uint8_t val) = 0;
-				virtual ::Alx_Status SetValUint16(uint16_t val) = 0;
-				virtual ::Alx_Status SetValUint32(uint32_t val) = 0;
-				virtual ::Alx_Status SetValUint64(uint64_t val) = 0;
-				virtual ::Alx_Status SetValInt8(int8_t val) = 0;
-				virtual ::Alx_Status SetValInt16(int16_t val) = 0;
-				virtual ::Alx_Status SetValInt32(int32_t val) = 0;
-				virtual ::Alx_Status SetValInt64(int64_t val) = 0;
-				virtual ::Alx_Status SetValFloat(float val) = 0;
-				virtual ::Alx_Status SetValDouble(double val) = 0;
-				virtual ::Alx_Status SetValBool(bool val) = 0;
+				virtual Alx_Status SetValUint8(uint8_t val) = 0;
+				virtual Alx_Status SetValUint16(uint16_t val) = 0;
+				virtual Alx_Status SetValUint32(uint32_t val) = 0;
+				virtual Alx_Status SetValUint64(uint64_t val) = 0;
+				virtual Alx_Status SetValInt8(int8_t val) = 0;
+				virtual Alx_Status SetValInt16(int16_t val) = 0;
+				virtual Alx_Status SetValInt32(int32_t val) = 0;
+				virtual Alx_Status SetValInt64(int64_t val) = 0;
+				virtual Alx_Status SetValFloat(float val) = 0;
+				virtual Alx_Status SetValDouble(double val) = 0;
+				virtual Alx_Status SetValBool(bool val) = 0;
 
 				virtual void GetValArr(void* val) = 0;
 				virtual void SetValArr(void* val) = 0;
 				virtual void GetValStr(char* val) = 0;
-				virtual ::Alx_Status SetValStr(char* val) = 0;
+				virtual Alx_Status SetValStr(char* val) = 0;
 
-				virtual::AlxParamItem* GetCStructPtr(void) = 0;
+				virtual ::AlxParamItem* GetCStructPtr(void) = 0;
 		};
 
 
@@ -360,47 +360,47 @@ namespace Alx
 				{
 					return AlxParamItem_GetValBool(&me);
 				}
-				::Alx_Status SetValUint8(uint8_t val) override
+				Alx_Status SetValUint8(uint8_t val) override
 				{
 					return AlxParamItem_SetValUint8(&me, val);
 				}
-				::Alx_Status SetValUint16(uint16_t val) override
+				Alx_Status SetValUint16(uint16_t val) override
 				{
 					return AlxParamItem_SetValUint16(&me, val);
 				}
-				::Alx_Status SetValUint32(uint32_t val) override
+				Alx_Status SetValUint32(uint32_t val) override
 				{
 					return AlxParamItem_SetValUint32(&me, val);
 				}
-				::Alx_Status SetValUint64(uint64_t val) override
+				Alx_Status SetValUint64(uint64_t val) override
 				{
 					return AlxParamItem_SetValUint64(&me, val);
 				}
-				::Alx_Status SetValInt8(int8_t val) override
+				Alx_Status SetValInt8(int8_t val) override
 				{
 					return AlxParamItem_SetValInt8(&me, val);
 				}
-				::Alx_Status SetValInt16(int16_t val) override
+				Alx_Status SetValInt16(int16_t val) override
 				{
 					return AlxParamItem_SetValInt16(&me, val);
 				}
-				::Alx_Status SetValInt32(int32_t val) override
+				Alx_Status SetValInt32(int32_t val) override
 				{
 					return AlxParamItem_SetValInt32(&me, val);
 				}
-				::Alx_Status SetValInt64(int64_t val) override
+				Alx_Status SetValInt64(int64_t val) override
 				{
 					return AlxParamItem_SetValInt64(&me, val);
 				}
-				::Alx_Status SetValFloat(float val) override
+				Alx_Status SetValFloat(float val) override
 				{
 					return AlxParamItem_SetValFloat(&me, val);
 				}
-				::Alx_Status SetValDouble(double val) override
+				Alx_Status SetValDouble(double val) override
 				{
 					return AlxParamItem_SetValDouble(&me, val);
 				}
-				::Alx_Status SetValBool(bool val) override
+				Alx_Status SetValBool(bool val) override
 				{
 					return AlxParamItem_SetValBool(&me, val);
 				}
@@ -416,7 +416,7 @@ namespace Alx
 				{
 					AlxParamItem_GetValStr(&me, val);
 				}
-				::Alx_Status SetValStr(char* val) override
+				Alx_Status SetValStr(char* val) override
 				{
 					return AlxParamItem_SetValStr(&me, val);
 				}
@@ -425,14 +425,14 @@ namespace Alx
 					return &me;
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
-				uint8_t arrValBuff		[arrBuffLen] = {};
-				uint8_t arrValDefBuff	[arrBuffLen] = {};
-				char	strValBuff		[strMaxLen + 1]	 = {};	// JK: + 1 is for nullchar
-				char	strValDefBuff	[strMaxLen + 1]	 = {};
+				uint8_t arrValBuff [arrBuffLen] = {};
+				uint8_t arrValDefBuff [arrBuffLen] = {};
+				char strValBuff [strMaxLen + 1]	 = {};	// JK: + 1 is for nullchar
+				char strValDefBuff [strMaxLen + 1] = {};
 				::AlxParamItem me = {};
 		};
 	}
@@ -441,4 +441,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_PARAM_ITEM_HPP
+#endif	// #ifndef ALX_PARAM_ITEM_HPP

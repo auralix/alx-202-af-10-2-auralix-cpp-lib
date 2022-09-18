@@ -37,9 +37,9 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxCan.h"
-#include "alxIoPin.hpp"
 #include "alxClk.hpp"
 #include "alxFifo.hpp"
+#include "alxIoPin.hpp"
 
 
 //******************************************************************************
@@ -66,13 +66,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ICan() {}
 				virtual ~ICan() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
-				virtual ::Alx_Status ReInit(void) = 0;
-				virtual ::Alx_Status TxMsg(::AlxCan_Msg msg) = 0;
-				virtual ::Alx_Status TxMsg(::AlxCan_Msg* msg, uint32_t numOfMsg) = 0;
-				virtual ::Alx_Status RxMsg(::AlxCan_Msg* msg) = 0;
-				virtual ::Alx_Status RxMsg(::AlxCan_Msg* msg, uint32_t numOfMsg) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status ReInit(void) = 0;
+				virtual Alx_Status TxMsg(AlxCan_Msg msg) = 0;
+				virtual Alx_Status TxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) = 0;
+				virtual Alx_Status RxMsg(AlxCan_Msg* msg) = 0;
+				virtual Alx_Status RxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) = 0;
 				virtual bool IsErr(void) = 0;
 				virtual void Foreground_Handle(void) = 0;
 		};
@@ -90,31 +90,31 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ACan() {}
 				virtual ~ACan() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxCan_Init(&me);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxCan_DeInit(&me);
 				}
-				::Alx_Status ReInit(void) override
+				Alx_Status ReInit(void) override
 				{
 					return AlxCan_ReInit(&me);
 				}
-				::Alx_Status TxMsg(::AlxCan_Msg msg) override
+				Alx_Status TxMsg(AlxCan_Msg msg) override
 				{
 					return AlxCan_TxMsg(&me, msg);
 				}
-				::Alx_Status TxMsg(::AlxCan_Msg* msg, uint32_t numOfMsg) override
+				Alx_Status TxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) override
 				{
 					return AlxCan_TxMsgMulti(&me, msg, numOfMsg);
 				}
-				::Alx_Status RxMsg(::AlxCan_Msg* msg) override
+				Alx_Status RxMsg(AlxCan_Msg* msg) override
 				{
 					return AlxCan_RxMsg(&me, msg);
 				}
-				::Alx_Status RxMsg(::AlxCan_Msg* msg, uint32_t numOfMsg) override
+				Alx_Status RxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) override
 				{
 					return AlxCan_RxMsgMulti(&me, msg, numOfMsg);
 				}
@@ -189,4 +189,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_CAN_HPP
+#endif	// #ifndef ALX_CAN_HPP

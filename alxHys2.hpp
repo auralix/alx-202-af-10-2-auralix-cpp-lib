@@ -63,14 +63,14 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IHys2() {}
 				virtual ~IHys2() {}
-				virtual ::AlxHys2_St Process(float in) = 0;
+				virtual AlxHys2_St Process(float in) = 0;
 		};
 
 
 		//******************************************************************************
 		// Class - Hys2
 		//******************************************************************************
-		class Hys2 final : public IHys2
+		class Hys2 : public IHys2
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -94,14 +94,14 @@ namespace Alx
 					);
 				}
 				virtual ~Hys2() {}
-				::AlxHys2_St Process(float in) override
+				AlxHys2_St Process(float in) override
 				{
 					return AlxHys2_Process(&me, in);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxHys2 me = {};
 		};
@@ -111,4 +111,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_HYS2_HPP
+#endif	// #ifndef ALX_HYS2_HPP

@@ -63,28 +63,28 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IRtc() {}
 				virtual ~IRtc() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
-				virtual ::Alx_Status SetDateTime(::AlxRtc_DateTime dateTime) = 0;
-				virtual ::Alx_Status GetDateTime(::AlxRtc_DateTime* dateTime) = 0;
-				virtual ::AlxRtc_DateTime GetDateTime(void) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status SetDateTime(AlxRtc_DateTime dateTime) = 0;
+				virtual Alx_Status GetDateTime(AlxRtc_DateTime* dateTime) = 0;
+				virtual AlxRtc_DateTime GetDateTime(void) = 0;
 				virtual bool IsDateTimeConfigured(void) = 0;
-				virtual ::Alx_Status SetUnixTime_ns(uint64_t unixTime_ns) = 0;
-				virtual ::Alx_Status SetUnixTime_us(uint64_t unixTime_us) = 0;
-				virtual ::Alx_Status SetUnixTime_ms(uint64_t unixTime_ms) = 0;
-				virtual ::Alx_Status SetUnixTime_sec(uint64_t unixTime_sec) = 0;
-				virtual ::Alx_Status GetUnixTime_ns(uint64_t* unixTime_ns) = 0;
-				virtual ::Alx_Status GetUnixTime_us(uint64_t* unixTime_us) = 0;
-				virtual ::Alx_Status GetUnixTime_ms(uint64_t* unixTime_ms) = 0;
-				virtual ::Alx_Status GetUnixTime_sec(uint64_t* unixTime_sec) = 0;
+				virtual Alx_Status SetUnixTime_ns(uint64_t unixTime_ns) = 0;
+				virtual Alx_Status SetUnixTime_us(uint64_t unixTime_us) = 0;
+				virtual Alx_Status SetUnixTime_ms(uint64_t unixTime_ms) = 0;
+				virtual Alx_Status SetUnixTime_sec(uint64_t unixTime_sec) = 0;
+				virtual Alx_Status GetUnixTime_ns(uint64_t* unixTime_ns) = 0;
+				virtual Alx_Status GetUnixTime_us(uint64_t* unixTime_us) = 0;
+				virtual Alx_Status GetUnixTime_ms(uint64_t* unixTime_ms) = 0;
+				virtual Alx_Status GetUnixTime_sec(uint64_t* unixTime_sec) = 0;
 				virtual uint64_t GetUnixTime_ns(void) = 0;
 				virtual uint64_t GetUnixTime_us(void) = 0;
 				virtual uint64_t GetUnixTime_ms(void) = 0;
 				virtual uint64_t GetUnixTime_sec(void) = 0;
 				virtual ::AlxRtc* GetCStructPtr(void) = 0;
-				virtual ::Alx_Status TuneTime_ns(int64_t tuneTime_ns) = 0;
-				virtual ::Alx_Status TuneTime_us(int64_t tuneTime_ns) = 0;
-				virtual ::Alx_Status TuneTime_ms(int64_t tuneTime_ns) = 0;
+				virtual Alx_Status TuneTime_ns(int64_t tuneTime_ns) = 0;
+				virtual Alx_Status TuneTime_us(int64_t tuneTime_ns) = 0;
+				virtual Alx_Status TuneTime_ms(int64_t tuneTime_ns) = 0;
 		};
 
 
@@ -99,23 +99,23 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ARtc() {}
 				virtual ~ARtc() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxRtc_Init(&me);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxRtc_DeInit(&me);
 				}
-				::Alx_Status SetDateTime(::AlxRtc_DateTime dateTime) override
+				Alx_Status SetDateTime(AlxRtc_DateTime dateTime) override
 				{
 					return AlxRtc_SetDateTime(&me, dateTime);
 				}
-				::Alx_Status GetDateTime(::AlxRtc_DateTime* dateTime) override
+				Alx_Status GetDateTime(AlxRtc_DateTime* dateTime) override
 				{
 					return AlxRtc_GetDateTimeWithStatus(&me, dateTime);
 				}
-				::AlxRtc_DateTime GetDateTime(void) override
+				AlxRtc_DateTime GetDateTime(void) override
 				{
 					return AlxRtc_GetDateTime(&me);
 				}
@@ -123,35 +123,35 @@ namespace Alx
 				{
 					return AlxRtc_IsDateTimeConfigured(&me);
 				}
-				::Alx_Status SetUnixTime_ns(uint64_t unixTime_ns) override
+				Alx_Status SetUnixTime_ns(uint64_t unixTime_ns) override
 				{
 					return AlxRtc_SetUnixTime_ns(&me, unixTime_ns);
 				}
-				::Alx_Status SetUnixTime_us(uint64_t unixTime_us) override
+				Alx_Status SetUnixTime_us(uint64_t unixTime_us) override
 				{
 					return AlxRtc_SetUnixTime_us(&me, unixTime_us);
 				}
-				::Alx_Status SetUnixTime_ms(uint64_t unixTime_ms) override
+				Alx_Status SetUnixTime_ms(uint64_t unixTime_ms) override
 				{
 					return AlxRtc_SetUnixTime_ms(&me, unixTime_ms);
 				}
-				::Alx_Status SetUnixTime_sec(uint64_t unixTime_sec) override
+				Alx_Status SetUnixTime_sec(uint64_t unixTime_sec) override
 				{
 					return AlxRtc_SetUnixTime_sec(&me, unixTime_sec);
 				}
-				::Alx_Status GetUnixTime_ns(uint64_t* unixTime_ns) override
+				Alx_Status GetUnixTime_ns(uint64_t* unixTime_ns) override
 				{
 					return AlxRtc_GetUnixTimeWithStatus_ns(&me, unixTime_ns);
 				}
-				::Alx_Status GetUnixTime_us(uint64_t* unixTime_us) override
+				Alx_Status GetUnixTime_us(uint64_t* unixTime_us) override
 				{
 					return AlxRtc_GetUnixTimeWithStatus_us(&me, unixTime_us);
 				}
-				::Alx_Status GetUnixTime_ms(uint64_t* unixTime_ms) override
+				Alx_Status GetUnixTime_ms(uint64_t* unixTime_ms) override
 				{
 					return AlxRtc_GetUnixTimeWithStatus_ms(&me, unixTime_ms);
 				}
-				::Alx_Status GetUnixTime_sec(uint64_t* unixTime_sec) override
+				Alx_Status GetUnixTime_sec(uint64_t* unixTime_sec) override
 				{
 					return AlxRtc_GetUnixTimeWithStatus_sec(&me, unixTime_sec);
 				}
@@ -175,15 +175,15 @@ namespace Alx
 				{
 					return &me;
 				}
-				::Alx_Status TuneTime_ns(int64_t tuneTime_ns) override
+				Alx_Status TuneTime_ns(int64_t tuneTime_ns) override
 				{
 					return AlxRtc_TuneTime_ns(&me, tuneTime_ns);
 				}
-				::Alx_Status TuneTime_us(int64_t tuneTime_us) override
+				Alx_Status TuneTime_us(int64_t tuneTime_us) override
 				{
 					return AlxRtc_TuneTime_us(&me, tuneTime_us);
 				}
-				::Alx_Status TuneTime_ms(int64_t tuneTime_ms) override
+				Alx_Status TuneTime_ms(int64_t tuneTime_ms) override
 				{
 					return AlxRtc_TuneTime_ms(&me, tuneTime_ms);
 				}
@@ -226,4 +226,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_RTC_HPP
+#endif	// #ifndef ALX_RTC_HPP

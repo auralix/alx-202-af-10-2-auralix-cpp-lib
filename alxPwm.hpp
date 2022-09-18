@@ -37,8 +37,8 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxPwm.h"
-#include "alxIoPin.hpp"
 #include "alxClk.hpp"
+#include "alxIoPin.hpp"
 
 
 //******************************************************************************
@@ -65,9 +65,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IPwm() {}
 				virtual ~IPwm() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
-				virtual ::Alx_Status SetDuty_pct(::Alx_Ch ch, float duty_pct) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status SetDuty_pct(Alx_Ch ch, float duty_pct) = 0;
 		};
 
 
@@ -82,15 +82,15 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				APwm() {}
 				virtual ~APwm() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxPwm_Init(&me);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxPwm_DeInit(&me);
 				}
-				::Alx_Status SetDuty_pct(::Alx_Ch ch, float duty_pct) override
+				Alx_Status SetDuty_pct(Alx_Ch ch, float duty_pct) override
 				{
 					return AlxPwm_SetDuty_pct(&me, ch, duty_pct);
 				}
@@ -150,7 +150,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxIoPin* pwmIoPinArr[ALX_PWM_BUFF_LEN] = {0};
+				::AlxIoPin* pwmIoPinArr[ALX_PWM_BUFF_LEN] = {};
 		};
 		#endif
 
@@ -159,15 +159,15 @@ namespace Alx
 		// Class - MockPwm
 		//******************************************************************************
 		#if defined(ALX_GTEST)
-		class MockPwm final : public IPwm
+		class MockPwm : public IPwm
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				MOCK_METHOD(::Alx_Status, Init, (), (override));
-				MOCK_METHOD(::Alx_Status, DeInit, (), (override));
-				MOCK_METHOD(::Alx_Status, SetDuty_pct, (::Alx_Ch ch, float duty_pct), (override));
+				MOCK_METHOD(Alx_Status, Init, (), (override));
+				MOCK_METHOD(Alx_Status, DeInit, (), (override));
+				MOCK_METHOD(Alx_Status, SetDuty_pct, (Alx_Ch ch, float duty_pct), (override));
 		};
 		#endif
 	}
@@ -176,4 +176,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_PWM_HPP
+#endif	// #ifndef ALX_PWM_HPP

@@ -82,7 +82,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - AudioPlayer
 		//******************************************************************************
-		class AudioPlayer final : public IAudioPlayer
+		class AudioPlayer : public IAudioPlayer
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -161,9 +161,9 @@ namespace Alx
 					return AlxAudioPlayer_IsPlaying(&me);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxAudioPlayer me = {};
 		};
@@ -173,4 +173,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_AUDIO_PLAYER_HPP
+#endif	// #ifndef ALX_AUDIO_PLAYER_HPP

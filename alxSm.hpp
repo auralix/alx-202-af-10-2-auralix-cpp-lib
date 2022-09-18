@@ -118,22 +118,7 @@ namespace Alx
 
 			protected:
 				//------------------------------------------------------------------------------
-				// Protected Functions
-				//------------------------------------------------------------------------------
-				void SetSt(St* st)
-				{
-					this->st->Exit(); // Exit current state, execute exit action
-					ALX_SM_TRACE(level, name, this->st->name, "Exit");
-
-					this->st = st; // Change state
-
-					ALX_SM_TRACE(level, name, this->st->name, "Entry");
-					this->st->Entry(); // Enter new state, execute entry action
-				}
-
-			protected:
-				//------------------------------------------------------------------------------
-				// Protected Enum
+				// Protected Types
 				//------------------------------------------------------------------------------
 				enum class Level : uint32_t
 				{
@@ -144,19 +129,34 @@ namespace Alx
 					_4 = 4,
 					_5 = 5
 				};
+
+			protected:
+				//------------------------------------------------------------------------------
+				// Protected Functions
+				//------------------------------------------------------------------------------
 				Sm
 				(
 					St* st,
 					Level level
 				) :
-				st(st),
-				level((uint32_t)level)
+					st(st),
+					level((uint32_t)level)
 				{}
 				virtual ~Sm() {}
 				void Exit(St* st)
 				{
 					st->Exit();
 					ALX_SM_TRACE(level, name, st->name, "Exit");
+				}
+				void SetSt(St* st)
+				{
+					this->st->Exit(); // Exit current state, execute exit action
+					ALX_SM_TRACE(level, name, this->st->name, "Exit");
+
+					this->st = st; // Change state
+
+					ALX_SM_TRACE(level, name, this->st->name, "Entry");
+					this->st->Entry(); // Enter new state, execute entry action
 				}
 
 			protected:
@@ -173,4 +173,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_SM_HPP
+#endif	// #ifndef ALX_SM_HPP

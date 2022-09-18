@@ -65,8 +65,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IMemSafe() {}
 				virtual ~IMemSafe() {}
-				virtual ::Alx_Status Read(uint8_t* data, uint32_t len) = 0;
-				virtual ::Alx_Status Write(uint8_t* data, uint32_t len) = 0;
+				virtual Alx_Status Read(uint8_t* data, uint32_t len) = 0;
+				virtual Alx_Status Write(uint8_t* data, uint32_t len) = 0;
 				virtual bool IsReadDone(void) = 0;
 				virtual bool IsReadErr(void) = 0;
 				virtual bool IsWriteDone(void) = 0;
@@ -117,11 +117,11 @@ namespace Alx
 					);
 				}
 				virtual ~MemSafe() {}
-				::Alx_Status Read(uint8_t* data, uint32_t len) override
+				Alx_Status Read(uint8_t* data, uint32_t len) override
 				{
 					return AlxMemSafe_Read(&me, data, len);
 				}
-				::Alx_Status Write(uint8_t* data, uint32_t len) override
+				Alx_Status Write(uint8_t* data, uint32_t len) override
 				{
 					return AlxMemSafe_Write(&me, data, len);
 				}
@@ -146,9 +146,9 @@ namespace Alx
 					return &me;
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxMemSafe me = {};
 				uint8_t buff1[buff1Len] ={};

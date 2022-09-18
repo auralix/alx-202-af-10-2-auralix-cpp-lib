@@ -70,7 +70,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - FiltGlitchUint32
 		//******************************************************************************
-		class FiltGlitchUint32 final : public IFiltGlitchUint32
+		class FiltGlitchUint32 : public IFiltGlitchUint32
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -95,9 +95,9 @@ namespace Alx
 					return AlxFiltGlitchUint32_Process(&me, in);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxFiltGlitchUint32 me = {};
 		};
@@ -107,4 +107,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_FILT_GLITCH_UINT32_HPP
+#endif	// #ifndef ALX_FILT_GLITCH_UINT32_HPP

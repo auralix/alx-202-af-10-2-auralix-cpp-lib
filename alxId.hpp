@@ -76,7 +76,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Id
 		//******************************************************************************
-		class Id final : public IId
+		class Id : public IId
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -189,8 +189,10 @@ namespace Alx
 
 			private:
 				//------------------------------------------------------------------------------
-				// Private Structures
+				// Private Variables
 				//------------------------------------------------------------------------------
+				::AlxId me = {};
+				::AlxIoPin* _hwIdIoPinArr[ALX_ID_HW_ID_IO_PIN_ARR_MAX_LEN] = {};
 				struct LangCpp
 				{
 					#ifdef ALX_GCC
@@ -228,13 +230,6 @@ namespace Alx
 						static constexpr uint32_t verMinRequired = ALX_LANG_CPP_LIB_VER_MIN_REQUIRED;
 					#endif
 				} langCppLib;
-
-			private:
-				//------------------------------------------------------------------------------
-				// Private Variables
-				//------------------------------------------------------------------------------
-				::AlxId me = {};
-				::AlxIoPin* _hwIdIoPinArr[ALX_ID_HW_ID_IO_PIN_ARR_MAX_LEN] = {};
 		};
 	}
 }
@@ -242,4 +237,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_ID_HPP
+#endif	// #ifndef ALX_ID_HPP

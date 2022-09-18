@@ -70,7 +70,7 @@ namespace Alx
 				virtual void Set(void) = 0;
 				virtual void Reset(void) = 0;
 				virtual void Toggle(void) = 0;
-				virtual ::AlxIoPin_TriState Read_TriState(void) = 0;
+				virtual AlxIoPin_TriState Read_TriState(void) = 0;
 				virtual ::AlxIoPin* GetCStructPtr(void) = 0;
 		};
 
@@ -114,7 +114,7 @@ namespace Alx
 				{
 					AlxIoPin_Toggle(&me);
 				}
-				::AlxIoPin_TriState Read_TriState(void) override
+				AlxIoPin_TriState Read_TriState(void) override
 				{
 					return AlxIoPin_Read_TriState(&me);
 				}
@@ -173,4 +173,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_IO_PIN_HPP
+#endif	// #ifndef ALX_IO_PIN_HPP

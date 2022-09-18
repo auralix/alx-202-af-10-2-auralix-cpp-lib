@@ -65,13 +65,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ISerialPort() {}
 				virtual ~ISerialPort() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
-				virtual ::Alx_Status Read(uint8_t* data, uint32_t len) = 0;
-				virtual ::Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t* numRead) = 0;
-				virtual ::Alx_Status Write(uint8_t data) = 0;
-				virtual ::Alx_Status Write(const uint8_t* data, uint32_t len) = 0;
-				virtual ::Alx_Status WriteStr(const char* str) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Read(uint8_t* data, uint32_t len) = 0;
+				virtual Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t* numRead) = 0;
+				virtual Alx_Status Write(uint8_t data) = 0;
+				virtual Alx_Status Write(const uint8_t* data, uint32_t len) = 0;
+				virtual Alx_Status WriteStr(const char* str) = 0;
 				virtual void Foreground_Handle(void) = 0;
 		};
 
@@ -88,31 +88,31 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ASerialPort() {}
 				virtual ~ASerialPort() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxSerialPort_Init(&me);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxSerialPort_DeInit(&me);
 				}
-				::Alx_Status Read(uint8_t* data, uint32_t len) override
+				Alx_Status Read(uint8_t* data, uint32_t len) override
 				{
 					return AlxSerialPort_Read(&me, data, len);
 				}
-				::Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t* numRead) override
+				Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t* numRead) override
 				{
 					return AlxSerialPort_ReadStrUntil(&me, str, delim, maxLen, numRead);
 				}
-				::Alx_Status Write(uint8_t data) override
+				Alx_Status Write(uint8_t data) override
 				{
 					return AlxSerialPort_Write(&me, data);
 				}
-				::Alx_Status Write(const uint8_t* data, uint32_t len) override
+				Alx_Status Write(const uint8_t* data, uint32_t len) override
 				{
 					return AlxSerialPort_WriteMulti(&me, data, len);
 				}
-				::Alx_Status WriteStr(const char* str) override
+				Alx_Status WriteStr(const char* str) override
 				{
 					return AlxSerialPort_WriteStr(&me, str);
 				}
@@ -178,21 +178,21 @@ namespace Alx
 		//******************************************************************************
 		// Class - MockSerialPort
 		//******************************************************************************
-		#if defined (ALX_GTEST_TODO)
-		class MockSerialPort final : public ISerialPort
+		#if defined(ALX_GTEST)
+		class MockSerialPort : public ISerialPort
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				MOCK_METHOD(::Alx_Status, Init, (), (override));
-				MOCK_METHOD(::Alx_Status, DeInit, (), (override));
-				MOCK_METHOD(::Alx_Status, Read, (uint8_t* data, uint32_t len), (override));
-				MOCK_METHOD(::Alx_Status, ReadStrUntil, (char* str, const char* delim, uint32_t maxLen, uint32_t* numRead), (override));
-				MOCK_METHOD(::Alx_Status, Write, (uint8_t data), (override));
-				MOCK_METHOD(::Alx_Status, Write, (const uint8_t* data, uint32_t len), (override));
-				MOCK_METHOD(::Alx_Status, WriteStr, (const char* str), (override));
-				MOCK_METHOD(::Alx_Status, Foreground_Handle, (), (override));
+				MOCK_METHOD(Alx_Status, Init, (), (override));
+				MOCK_METHOD(Alx_Status, DeInit, (), (override));
+				MOCK_METHOD(Alx_Status, Read, (uint8_t* data, uint32_t len), (override));
+				MOCK_METHOD(Alx_Status, ReadStrUntil, (char* str, const char* delim, uint32_t maxLen, uint32_t* numRead), (override));
+				MOCK_METHOD(Alx_Status, Write, (uint8_t data), (override));
+				MOCK_METHOD(Alx_Status, Write, (const uint8_t* data, uint32_t len), (override));
+				MOCK_METHOD(Alx_Status, WriteStr, (const char* str), (override));
+				MOCK_METHOD(Alx_Status, Foreground_Handle, (), (override));
 		};
 		#endif
 	}
@@ -201,4 +201,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_SERIAL_PORT_HPP
+#endif	// #ifndef ALX_SERIAL_PORT_HPP

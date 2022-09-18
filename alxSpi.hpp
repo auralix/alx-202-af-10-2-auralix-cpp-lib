@@ -65,11 +65,11 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ISpi() {}
 				virtual ~ISpi() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
-				virtual ::Alx_Status Master_WriteRead(uint8_t* writeData, uint8_t* readData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_Write(uint8_t* writeData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_Read(uint8_t* readData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Master_WriteRead(uint8_t* writeData, uint8_t* readData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_Write(uint8_t* writeData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_Read(uint8_t* readData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
 				virtual void Master_AssertCs(void) = 0;
 				virtual void Master_DeAssertCs(void) = 0;
 				virtual ::AlxSpi* GetCStructPtr(void) = 0;
@@ -87,23 +87,23 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ASpi() {}
 				virtual ~ASpi() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxSpi_Init(&me);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxSpi_DeInit(&me);
 				}
-				::Alx_Status Master_WriteRead(uint8_t* writeData, uint8_t* readData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
+				Alx_Status Master_WriteRead(uint8_t* writeData, uint8_t* readData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
 				{
 					return AlxSpi_Master_WriteRead(&me, writeData, readData, len, numOfTries, timeout_ms);
 				}
-				::Alx_Status Master_Write(uint8_t* writeData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
+				Alx_Status Master_Write(uint8_t* writeData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
 				{
 					return AlxSpi_Master_Write(&me, writeData, len, numOfTries, timeout_ms);
 				}
-				::Alx_Status Master_Read(uint8_t* readData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
+				Alx_Status Master_Read(uint8_t* readData, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
 				{
 					return AlxSpi_Master_Read(&me, readData, len, numOfTries, timeout_ms);
 				}
@@ -171,18 +171,18 @@ namespace Alx
 		//******************************************************************************
 		// Class - MockSpi
 		//******************************************************************************
-		#if defined (ALX_GTEST)
-		class MockSpi final : public ISpi
+		#if defined(ALX_GTEST)
+		class MockSpi : public ISpi
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				MOCK_METHOD(::Alx_Status, Init,				(), (override));
-				MOCK_METHOD(::Alx_Status, DeInit,			(), (override));
-				MOCK_METHOD(::Alx_Status, Master_WriteRead,	(const uint8_t* writeData, uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
-				MOCK_METHOD(void, Master_AssertCs,			(), (override));
-				MOCK_METHOD(void, Master_DeAssertCs,		(), (override));
+				MOCK_METHOD(Alx_Status, Init, (), (override));
+				MOCK_METHOD(Alx_Status, DeInit, (), (override));
+				MOCK_METHOD(Alx_Status, Master_WriteRead, (const uint8_t* writeData, uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
+				MOCK_METHOD(void, Master_AssertCs, (), (override));
+				MOCK_METHOD(void, Master_DeAssertCs, (), (override));
 		};
 		#endif
 	}
@@ -191,4 +191,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_SPI_HPP
+#endif	// #ifndef ALX_SPI_HPP

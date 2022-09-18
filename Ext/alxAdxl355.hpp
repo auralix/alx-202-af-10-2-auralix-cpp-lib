@@ -81,7 +81,7 @@ namespace Alx
 		// Class - Adxl355
 		//******************************************************************************
 		template <uint32_t fifoBuffLen>
-		class Adxl355 final : public IAdxl355
+		class Adxl355 : public IAdxl355
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -124,46 +124,46 @@ namespace Alx
 				Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint32_t len) override
 				{
 					#if defined(ALX_MBED)
-						ALX_ADXL355_ASSERT(me.isInit == true);
-						ALX_ADXL355_ASSERT(me.wasCtorCalled == true);
-						ALX_ADXL355_ASSERT((0 < len) && (len <= me.fifoBuffLen));
+					ALX_ADXL355_ASSERT(me.isInit == true);
+					ALX_ADXL355_ASSERT(me.wasCtorCalled == true);
+					ALX_ADXL355_ASSERT((0 < len) && (len <= me.fifoBuffLen));
 
-						// #1 Prepare variables
-						Alx_Status status = Alx_Err;
+					// #1 Prepare variables
+					Alx_Status status = Alx_Err;
 
-						// #2 Read acceleration from FIFO
-						for (uint32_t i = 0; i < len; i++)
+					// #2 Read acceleration from FIFO
+					for (uint32_t i = 0; i < len; i++)
+					{
+						uint32_t xyzLen = sizeof(AlxAdxl355_Xyz_g);
+						uint8_t* ptr = (uint8_t*)&xyz_g[i * xyzLen];
+
+						mbed::CriticalSectionLock::enable();
+						status = AlxFifo_Read(&me.fifo, ptr, xyzLen);
+						mbed::CriticalSectionLock::disable();
+
+						if(status == AlxFifo_ErrEmpty)
 						{
-							uint32_t xyzLen = sizeof(AlxAdxl355_Xyz_g);
-							uint8_t* ptr = (uint8_t*)&xyz_g[i * xyzLen];
-
-							mbed::CriticalSectionLock::enable();
-							status = AlxFifo_Read(&me.fifo, ptr, xyzLen);
-							mbed::CriticalSectionLock::disable();
-
-							if(status == AlxFifo_ErrEmpty)
-							{
-								break;	// We break if there are no more messages in ALX RX FIFO
-							}
-							else if(status != Alx_Ok)
-							{
-								ALX_ADXL355_ASSERT(false);	// We should never get here
-								break;
-							}
+							break;	// We break if there are no more messages in ALX RX FIFO
 						}
+						else if(status != Alx_Ok)
+						{
+							ALX_ADXL355_ASSERT(false);	// We should never get here
+							break;
+						}
+					}
 
-						// #3 Return status
-						return status;
+					// #3 Return status
+					return status;
 					#else
-						return AlxAdxl355_GetXyzMulti_g(&me, xyz_g, len);
+					return AlxAdxl355_GetXyzMulti_g(&me, xyz_g, len);
 					#endif
 				}
 				Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) override
 				{
 					#if defined(ALX_MBED)
-						return GetXyz_g(xyz_g, 1);
+					return GetXyz_g(xyz_g, 1);
 					#else
-						return AlxAdxl355_GetXyz_g(&me, xyz_g);
+					return AlxAdxl355_GetXyz_g(&me, xyz_g);
 					#endif
 				}
 				float GetTemp_degC(void) override
@@ -175,9 +175,9 @@ namespace Alx
 					return AlxAdxl355_Foreground_Handle(&me);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxAdxl355 me = {};
 				AlxFifo::Fifo<fifoBuffLen * sizeof(AlxAdxl355_Xyz_g)> fifo = {};
@@ -188,4 +188,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_ADXL355_HPP
+#endif	// #ifndef ALX_ADXL355_HPP

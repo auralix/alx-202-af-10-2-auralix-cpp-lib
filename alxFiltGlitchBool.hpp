@@ -70,7 +70,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - FiltGlitchBool
 		//******************************************************************************
-		class FiltGlitchBool final : public IFiltGlitchBool
+		class FiltGlitchBool : public IFiltGlitchBool
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -97,9 +97,9 @@ namespace Alx
 					return AlxFiltGlitchBool_Process(&me, in);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxFiltGlitchBool me = {};
 		};
@@ -109,4 +109,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_FILT_GLITCH_BOOL_HPP
+#endif	// #ifndef ALX_FILT_GLITCH_BOOL_HPP

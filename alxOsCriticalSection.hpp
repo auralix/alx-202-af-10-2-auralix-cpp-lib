@@ -75,15 +75,18 @@ namespace Alx
 {
 	namespace AlxOsCriticalSection
 	{
-		ALX_STATIC_INLINE void Enter(void)
+		//******************************************************************************
+		// Functions
+		//******************************************************************************
+		static inline void Enter(void)
 		{
-			#ifdef ALX_MBED
+			#if defined(ALX_MBED)
 			mbed::CriticalSectionLock::enable();
 			#endif
 		}
-		ALX_STATIC_INLINE void Exit(void)
+		static inline void Exit(void)
 		{
-			#ifdef ALX_MBED
+			#if defined(ALX_MBED)
 			mbed::CriticalSectionLock::disable();
 			#endif
 		}
@@ -93,4 +96,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_OS_CRITICAL_SECTION_HPP
+#endif	// #ifndef ALX_OS_CRITICAL_SECTION_HPP

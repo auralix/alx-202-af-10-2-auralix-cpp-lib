@@ -72,7 +72,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - AudioVol
 		//******************************************************************************
-		class AudioVol final : public IAudioVol
+		class AudioVol : public IAudioVol
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -105,9 +105,9 @@ namespace Alx
 					AlxAudioVol_Set_dB(&me, gain_dB);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxAudioVol me = {};
 		};
@@ -117,4 +117,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_AUDIO_VOL_HPP
+#endif	// #ifndef ALX_AUDIO_VOL_HPP

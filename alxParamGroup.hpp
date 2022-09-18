@@ -37,8 +37,8 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxParamGroup.h"
-#include "alxParamItem.hpp"
 #include "alxMemSafe.hpp"
+#include "alxParamItem.hpp"
 
 
 //******************************************************************************
@@ -73,7 +73,7 @@ namespace Alx
 				virtual void ValBuffToValToStoreBuff(void) = 0;
 				virtual void ValToStoreBuffToValStoredBuff(void) = 0;
 				virtual void ParamItemsValToValBuff(void) = 0;
-				virtual::AlxParamGroup*	GetCStructPtr(void)	= 0;
+				virtual ::AlxParamGroup* GetCStructPtr(void)	= 0;
 		};
 
 
@@ -158,9 +158,9 @@ namespace Alx
 					return &me;
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				uint8_t valBuff[len];		// JK: User has to calculate. Safe way: 8bytes * numOfParamItems
 				uint8_t valStoredBuff[len];

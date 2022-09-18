@@ -37,8 +37,8 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxI2s.h"
-#include "alxIoPin.hpp"
 #include "alxClk.hpp"
+#include "alxIoPin.hpp"
 
 
 //******************************************************************************
@@ -65,8 +65,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				II2s() {}
 				virtual ~II2s() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
 				virtual void Foreground_Handle(void) = 0;
 				virtual ::AlxI2s* GetCStructPtr(void) = 0;
 		};
@@ -83,11 +83,11 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				AI2s() {}
 				virtual ~AI2s() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxI2s_Init(&me);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxI2s_DeInit(&me);
 				}
@@ -182,28 +182,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_I2S_HPP
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//				virtual void AlxI2s_Start_Write(uint8_t* data, uint16_t len = 1)	= 0;
-//				virtual void AlxI2s_Stop_Write(void)								= 0;
-//				virtual void AlxI2s_Foreground_Handle(void)							= 0;
-
-//				void AlxI2s_Start_Write(uint8_t* data, uint16_t len) override		{ ::AlxI2s_Start_Write(&me, data, len); }
-//				void AlxI2s_Stop_Write(void) override								{ ::AlxI2s_Stop_Write(&me); }
-//				void AlxI2s_Foreground_Handle(void) override						{ ::AlxI2s_Foreground_Handle(&me); }
-
-
-
+#endif	// #ifndef ALX_I2S_HPP

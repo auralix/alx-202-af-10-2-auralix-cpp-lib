@@ -63,10 +63,10 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IMemRaw() {}
 				virtual ~IMemRaw() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
-				virtual ::Alx_Status Read(uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t timeout_ms) = 0;
-				virtual ::Alx_Status Write(uint32_t addr, uint8_t* data, uint32_t len, bool checkWithReadEnable, uint8_t numOfTries, uint16_t timeout_ms) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Read(uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t timeout_ms) = 0;
+				virtual Alx_Status Write(uint32_t addr, uint8_t* data, uint32_t len, bool checkWithReadEnable, uint8_t numOfTries, uint16_t timeout_ms) = 0;
 				virtual ::AlxMemRaw* GetCStructPtr(void) = 0;
 		};
 
@@ -85,16 +85,19 @@ namespace Alx
 					AlxMemRaw_Ctor(&me);
 				}
 				virtual ~MemRaw() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxMemRaw_Init(&me);
 				}
-				::Alx_Status DeInit(void) override																											{ return AlxMemRaw_DeInit(&me); }
-				::Alx_Status Read(uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t timeout_ms) override
+				Alx_Status DeInit(void) override
+				{
+					return AlxMemRaw_DeInit(&me);
+				}
+				Alx_Status Read(uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t timeout_ms) override
 				{
 					return AlxMemRaw_Read(&me, addr, data, len, numOfTries, timeout_ms);
 				}
-				::Alx_Status Write(uint32_t addr, uint8_t* data, uint32_t len, bool checkWithReadEnable, uint8_t numOfTries, uint16_t timeout_ms) override
+				Alx_Status Write(uint32_t addr, uint8_t* data, uint32_t len, bool checkWithReadEnable, uint8_t numOfTries, uint16_t timeout_ms) override
 				{
 					return AlxMemRaw_Write(&me, addr, data, len, checkWithReadEnable, numOfTries, timeout_ms);
 				}
@@ -103,9 +106,9 @@ namespace Alx
 					return &me;
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxMemRaw me = {};
 		};

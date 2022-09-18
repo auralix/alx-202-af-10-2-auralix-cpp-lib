@@ -65,11 +65,11 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IDac() {}
 				virtual ~IDac() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status Init(float vref_V) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
-				virtual ::Alx_Status SetVoltage_V(::Alx_Ch ch, float voltage_V) = 0;
-				virtual ::Alx_Status SetVoltage_V(::Alx_Ch ch, float voltage_V, float vref_V) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status Init(float vref_V) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V) = 0;
+				virtual Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V, float vref_V) = 0;
 		};
 
 
@@ -84,23 +84,23 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ADac() {}
 				virtual ~ADac() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxDac_Init(&dac);
 				}
-				::Alx_Status Init(float vref_V) override
+				Alx_Status Init(float vref_V) override
 				{
 					return AlxDac_Init_CalibrateVref(&dac, vref_V);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxDac_DeInit(&dac);
 				}
-				::Alx_Status SetVoltage_V(::Alx_Ch ch, float voltage_V) override
+				Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V) override
 				{
 					return AlxDac_SetVoltage_V(&dac, ch, voltage_V);
 				}
-				::Alx_Status SetVoltage_V(::Alx_Ch ch, float voltage_V, float vref_V) override
+				Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V, float vref_V) override
 				{
 					return AlxDac_SetVoltage_V_CalibrateVref(&dac, ch, voltage_V, vref_V);
 				}
@@ -127,7 +127,7 @@ namespace Alx
 				(
 					DAC_TypeDef* dac,
 					AlxIoPin::IIoPin** ioPinArr,
-					::Alx_Ch* chArr,
+					Alx_Ch* chArr,
 					float* setVoltageDefaultArr_V,
 					uint8_t numOfCh,
 					bool isVrefInt_V,
@@ -164,22 +164,27 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxDac_Mcu dacMcu = {};
-				::AlxIoPin* dacIoPinArr[ALX_DAC_BUFF_LEN] = {0};
+				AlxDac_Mcu dacMcu = {};
+				::AlxIoPin* dacIoPinArr[ALX_DAC_BUFF_LEN] = {};
 		};
 		#endif
+
+
+		//******************************************************************************
+		// Class - MockDac
+		//******************************************************************************
 		#if defined(ALX_GTEST)
-		class MockDac final : public IDac
+		class MockDac : public IDac
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				MOCK_METHOD(::Alx_Status, Init, (), (override));
-				MOCK_METHOD(::Alx_Status, Init, (float voltage_V), (override));
-				MOCK_METHOD(::Alx_Status, DeInit, (), (override));
-				MOCK_METHOD(::Alx_Status, SetVoltage_V, (::Alx_Ch ch, float voltage_V), (override));
-				MOCK_METHOD(::Alx_Status, SetVoltage_V, (::Alx_Ch ch, float voltage_V, float vref_V), (override));
+				MOCK_METHOD(Alx_Status, Init, (), (override));
+				MOCK_METHOD(Alx_Status, Init, (float voltage_V), (override));
+				MOCK_METHOD(Alx_Status, DeInit, (), (override));
+				MOCK_METHOD(Alx_Status, SetVoltage_V, (Alx_Ch ch, float voltage_V), (override));
+				MOCK_METHOD(Alx_Status, SetVoltage_V, (Alx_Ch ch, float voltage_V, float vref_V), (override));
 		};
 		#endif
 	}
@@ -188,4 +193,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_DAC_HPP
+#endif	// #ifndef ALX_DAC_HPP

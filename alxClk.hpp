@@ -63,8 +63,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IClk() {}
 				virtual ~IClk() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual uint32_t GetClk_Hz(::AlxClk_Clk clk) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual uint32_t GetClk_Hz(AlxClk_Clk clk) = 0;
 				virtual void Irq_Handle(void) = 0;
 				virtual ::AlxClk* GetCStructPtr(void) = 0;
 		};
@@ -73,8 +73,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Clk
 		//******************************************************************************
-		#ifndef ALX_GTEST
-		class Clk final : public IClk
+		class Clk : public IClk
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -92,11 +91,11 @@ namespace Alx
 					);
 				}
 				virtual ~Clk() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxClk_Init(&me);
 				}
-				uint32_t GetClk_Hz(::AlxClk_Clk clk) override
+				uint32_t GetClk_Hz(AlxClk_Clk clk) override
 				{
 					return AlxClk_GetClk_Hz(&me, clk);
 				}
@@ -111,15 +110,14 @@ namespace Alx
 
 			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxClk me = {};
 		};
-		#endif
 	}
 }
 
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_CLK_HPP
+#endif	// #ifndef ALX_CLK_HPP

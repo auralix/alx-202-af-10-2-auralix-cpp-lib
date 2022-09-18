@@ -67,7 +67,7 @@ namespace Alx
 				virtual Alx_Status Init(Alx_Status* status, uint32_t numOfParamGroups) = 0;
 				virtual void Handle(void) = 0;
 				virtual bool IsErr(void) = 0;
-				virtual::AlxParamStore*	GetCStructPtr(void) = 0;
+				virtual ::AlxParamStore* GetCStructPtr(void) = 0;
 		};
 
 
@@ -122,13 +122,12 @@ namespace Alx
 					return &me;
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxParamGroup* paramGroupArr[_numOfParamGroups] = {};
 				::AlxParamStore me = {};
-
 		};
 	}
 }

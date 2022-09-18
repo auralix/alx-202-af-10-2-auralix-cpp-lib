@@ -98,7 +98,7 @@ namespace Alx
 		// Class - OsFlag
 		//******************************************************************************
 		#if defined(ALX_MBED)
-		class OsFlag final : public IOsFlag
+		class OsFlag : public IOsFlag
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -151,4 +151,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_OS_FLAG_HPP
+#endif	// #ifndef ALX_OS_FLAG_HPP

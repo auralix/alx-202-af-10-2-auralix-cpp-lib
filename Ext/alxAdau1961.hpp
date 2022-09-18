@@ -37,8 +37,8 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxAdau1961.h"
-#include "alxI2s.hpp"
 #include "alxI2c.hpp"
+#include "alxI2s.hpp"
 
 
 //******************************************************************************
@@ -65,22 +65,22 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IAdau1961() {}
 				virtual ~IAdau1961() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
 				virtual void Foreground_Handle(void) = 0;
-				virtual ::Alx_Status InDiffL_SetGain(float gain_dB) = 0;
-				virtual ::Alx_Status InDiffR_SetGain(float gain_dB) = 0;
-				virtual ::Alx_Status InAuxL_SetGain_dB(int8_t gain_dB) = 0;
-				virtual ::Alx_Status InAuxR_SetGain_dB(int8_t gain_dB) = 0;
-				virtual ::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB) = 0;
-				virtual ::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB) = 0;
+				virtual Alx_Status InDiffL_SetGain(float gain_dB) = 0;
+				virtual Alx_Status InDiffR_SetGain(float gain_dB) = 0;
+				virtual Alx_Status InAuxL_SetGain_dB(int8_t gain_dB) = 0;
+				virtual Alx_Status InAuxR_SetGain_dB(int8_t gain_dB) = 0;
+				virtual Alx_Status OutLineL_SetGain_dB(int8_t gain_dB) = 0;
+				virtual Alx_Status OutLineR_SetGain_dB(int8_t gain_dB) = 0;
 		};
 
 
 		//******************************************************************************
 		// Class - Adau1961
 		//******************************************************************************
-		class Adau1961 final : public IAdau1961
+		class Adau1961 : public IAdau1961
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -108,11 +108,11 @@ namespace Alx
 					);
 				}
 				virtual ~Adau1961() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxAdau1961_Init(&me);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxAdau1961_DeInit(&me);
 				}
@@ -120,34 +120,34 @@ namespace Alx
 				{
 					return AlxAdau1961_Foreground_Handle(&me);
 				}
-				::Alx_Status InDiffL_SetGain(float gain_dB) override
+				Alx_Status InDiffL_SetGain(float gain_dB) override
 				{
 					return AlxAdau1961_InDiffL_SetGain_dB(&me, gain_dB);
 				}
-				::Alx_Status InDiffR_SetGain(float gain_dB) override
+				Alx_Status InDiffR_SetGain(float gain_dB) override
 				{
 					return AlxAdau1961_InDiffR_SetGain_dB(&me, gain_dB);
 				}
-				::Alx_Status InAuxL_SetGain_dB(int8_t gain_dB) override
+				Alx_Status InAuxL_SetGain_dB(int8_t gain_dB) override
 				{
 					return AlxAdau1961_InAuxL_SetGain_dB(&me, gain_dB);
 				}
-				::Alx_Status InAuxR_SetGain_dB(int8_t gain_dB) override
+				Alx_Status InAuxR_SetGain_dB(int8_t gain_dB) override
 				{
 					return AlxAdau1961_InAuxR_SetGain_dB(&me, gain_dB);
 				}
-				::Alx_Status OutLineL_SetGain_dB(int8_t gain_dB) override
+				Alx_Status OutLineL_SetGain_dB(int8_t gain_dB) override
 				{
 					return AlxAdau1961_OutLineL_SetGain_dB(&me, gain_dB);
 				}
-				::Alx_Status OutLineR_SetGain_dB(int8_t gain_dB) override
+				Alx_Status OutLineR_SetGain_dB(int8_t gain_dB) override
 				{
 					return AlxAdau1961_OutLineR_SetGain_dB(&me, gain_dB);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxAdau1961 me = {};
 		};
@@ -157,4 +157,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_ADAU1961_HPP
+#endif	// #ifndef ALX_ADAU1961_HPP

@@ -86,9 +86,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IFtpClient() {}
 				virtual ~IFtpClient() {}
-				virtual ::Alx_Status Login(void) = 0;
-				virtual ::Alx_Status Logout(void) = 0;
-				virtual ::Alx_Status SendFile(const char* rootDir, const char* filename) = 0;
+				virtual Alx_Status Login(void) = 0;
+				virtual Alx_Status Logout(void) = 0;
+				virtual Alx_Status SendFile(const char* rootDir, const char* filename) = 0;
 		};
 
 
@@ -120,7 +120,7 @@ namespace Alx
 					isServerIpHostnameFormat(isServerIpHostnameFormat)
 				{}
 				virtual ~FtpClient() {}
-				::Alx_Status Login(void) override
+				Alx_Status Login(void) override
 				{
 					// #1 Lock mutex
 					mutex.lock();
@@ -296,7 +296,7 @@ namespace Alx
 					// #22 Retutn OK
 					return Alx_Ok;
 				}
-				::Alx_Status Logout(void) override
+				Alx_Status Logout(void) override
 				{
 					// #1 Lock mutex
 					mutex.lock();
@@ -355,7 +355,7 @@ namespace Alx
 					// #10 Return OK
 					return Alx_Ok;
 				}
-				::Alx_Status SendFile(const char *rootDir, const char* filename) override
+				Alx_Status SendFile(const char *rootDir, const char* filename) override
 				{
 					// #1 Lock mutex
 					mutex.lock();
@@ -583,9 +583,10 @@ namespace Alx
 				}
 
 			private:
-				//******************************************************************************
+				//------------------------------------------------------------------------------
 				// Private Variables
-				//******************************************************************************
+				//------------------------------------------------------------------------------
+
 				// Parameters - Const
 				const Kernel::Clock::duration_u32 RESET_WAIT_TIME_min = 5min;
 				const int CTRL_SOCK_TIMEOUT_ms = 30000;
@@ -625,9 +626,9 @@ namespace Alx
 				bool isLogin = false;
 
 			private:
-				//******************************************************************************
+				//------------------------------------------------------------------------------
 				// Private Functions
-				//******************************************************************************
+				//------------------------------------------------------------------------------
 				void Reset(void)
 				{
 					// #1 Prepare variables
@@ -680,4 +681,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_FTP_CLIENT_HPP
+#endif	// #ifndef ALX_FTP_CLIENT_HPP

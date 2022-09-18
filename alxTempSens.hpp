@@ -67,9 +67,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ITempSens() {}
 				virtual ~ITempSens() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
-				virtual ::Alx_Status GetTemp_degC(float *temp_degC) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status GetTemp_degC(float *temp_degC) = 0;
 		};
 
 
@@ -84,15 +84,15 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ATempSens() {}
 				virtual ~ATempSens() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxTempSens_Init(&tempSens);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxTempSens_DeInit(&tempSens);
 				}
-				::Alx_Status GetTemp_degC(float *temp_degC) override
+				Alx_Status GetTemp_degC(float *temp_degC) override
 				{
 					return AlxTempSens_GetTemp_degC(&tempSens, temp_degC);
 				}
@@ -155,14 +155,14 @@ namespace Alx
 		// Class - MockTempSens
 		//******************************************************************************
 		#if defined(ALX_GTEST)
-		class MockTempSens final : public ITempSens
+		class MockTempSens : public ITempSens
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				MOCK_METHOD(::Alx_Status, Init, (), (override));
-				MOCK_METHOD(::Alx_Status, DeInit, (), (override));
+				MOCK_METHOD(Alx_Status, Init, (), (override));
+				MOCK_METHOD(Alx_Status, DeInit, (), (override));
 				MOCK_METHOD(float, GetTemp_degC, (void), (override));
 		};
 		#endif
@@ -172,4 +172,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_TEMP_SENS_HPP
+#endif	// #ifndef ALX_TEMP_SENS_HPP

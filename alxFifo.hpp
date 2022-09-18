@@ -64,11 +64,11 @@ namespace Alx
 				IFifo() {}
 				virtual ~IFifo() {}
 				virtual void Flush(void) = 0;
-				virtual ::Alx_Status Read(uint8_t* data, uint32_t len = 1) = 0;
-				virtual ::Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t *numRead = nullptr) = 0;
-				virtual ::Alx_Status Write(uint8_t data) = 0;
-				virtual ::Alx_Status Write(const uint8_t* data, uint32_t len) = 0;
-				virtual ::Alx_Status WriteStr(const char* str) = 0;
+				virtual Alx_Status Read(uint8_t* data, uint32_t len = 1) = 0;
+				virtual Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t *numRead = nullptr) = 0;
+				virtual Alx_Status Write(uint8_t data) = 0;
+				virtual Alx_Status Write(const uint8_t* data, uint32_t len) = 0;
+				virtual Alx_Status WriteStr(const char* str) = 0;
 				virtual uint32_t GetNumOfEntries(void) = 0;
 				virtual uint8_t* GetBuffPtr(void) = 0;
 		};
@@ -101,23 +101,23 @@ namespace Alx
 				{
 					AlxFifo_Flush(&me);
 				}
-				::Alx_Status Read(uint8_t* data, uint32_t len = 1) override
+				Alx_Status Read(uint8_t* data, uint32_t len = 1) override
 				{
 					return AlxFifo_Read(&me, data, len);
 				}
-				::Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t *numRead = nullptr) override
+				Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t *numRead = nullptr) override
 				{
 					return AlxFifo_ReadStrUntil(&me, str, delim, maxLen, numRead);
 				}
-				::Alx_Status Write(uint8_t data) override
+				Alx_Status Write(uint8_t data) override
 				{
 					return AlxFifo_Write(&me, data);
 				}
-				::Alx_Status Write(const uint8_t* data, uint32_t len) override
+				Alx_Status Write(const uint8_t* data, uint32_t len) override
 				{
 					return AlxFifo_WriteMulti(&me, data, len);
 				}
-				::Alx_Status WriteStr(const char* str) override
+				Alx_Status WriteStr(const char* str) override
 				{
 					return AlxFifo_WriteStr(&me, str);
 				}

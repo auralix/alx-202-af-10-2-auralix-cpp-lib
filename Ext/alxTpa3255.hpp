@@ -81,7 +81,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Tpa3255
 		//******************************************************************************
-		class Tpa3255 final : public ITpa3255
+		class Tpa3255 : public ITpa3255
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -150,9 +150,9 @@ namespace Alx
 					AlxTpa3255_ClearWasWarningAsserted(&me);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxTpa3255 me = {};
 		};
@@ -162,4 +162,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_TPA3255_HPP
+#endif	// #ifndef ALX_TPA3255_HPP

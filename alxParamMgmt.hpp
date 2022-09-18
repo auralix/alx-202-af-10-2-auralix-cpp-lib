@@ -66,12 +66,12 @@ namespace Alx
 				virtual ~IParamMgmt() {}
 				virtual double Get(const char* name) = 0;
 				virtual double Get(uint32_t id) = 0;
-				virtual ::Alx_Status Set(const char* name, double val) = 0;
-				virtual ::Alx_Status Set(uint32_t id, double val) = 0;
+				virtual Alx_Status Set(const char* name, double val) = 0;
+				virtual Alx_Status Set(uint32_t id, double val) = 0;
 				virtual void Get(const char* name, char* val, uint32_t len) = 0;
 				virtual void Get(uint32_t id, char* val, uint32_t len) = 0;
-				virtual ::Alx_Status Set(const char* name, char* val, uint32_t len) = 0;
-				virtual ::Alx_Status Set(uint32_t id, char* val, uint32_t len) = 0;
+				virtual Alx_Status Set(const char* name, char* val, uint32_t len) = 0;
+				virtual Alx_Status Set(uint32_t id, char* val, uint32_t len) = 0;
 				virtual void SeToDef(const char* name) = 0;
 				virtual void SeToDef(uint32_t id) = 0;
 				virtual void SeToDefGroup(uint32_t groupId) = 0;
@@ -88,62 +88,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ParamMgmt
-				(
-					Alx::AlxParamItem::IParamItem** paramItemArr,
-					uint32_t numOfParamItems
-				)
-				{
-//					AlxParamMgmt_Ctor
-//					(
-//						&me,
-//						paramItemArr,
-//						numOfParamItems
-//					);
-				}
+				ParamMgmt() {}
 				virtual ~ParamMgmt() {}
-				double Get(const char* name) override
-				{
-				}
-				double Get(uint32_t id) override
-				{
-				}
-				::Alx_Status Set(const char* name, double val) override
-				{
-				}
-				::Alx_Status Set(uint32_t id, double val) override
-				{
-				}
-				void Get(const char* name, char* val, uint32_t len) override
-				{
-				}
-				void Get(uint32_t id, char* val, uint32_t len) override
-				{
-				}
-				::Alx_Status Set(const char* name, char* val, uint32_t len) override
-				{
-				}
-				::Alx_Status Set(uint32_t id, char* val, uint32_t len) override
-				{
-				}
-				void SeToDef(const char* name) override
-				{
-				}
-				void SeToDef(uint32_t id) override
-				{
-				}
-				void SeToDefGroup(uint32_t groupId) override
-				{
-				}
-				void SeToDefAll(uint32_t groupId) override
-				{
-				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxParamMgmt me = {};
 		};
 	}
 }
@@ -151,4 +102,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_PARAM_MGMT_HPP
+#endif	// #ifndef ALX_PARAM_MGMT_HPP

@@ -65,14 +65,14 @@ namespace Alx
 				virtual ~IInterpLin() {}
 				virtual Alx_Status GetY(float x, float* y) = 0;
 				virtual float GetY(float x) = 0;
-				virtual::AlxInterpLin* GetCStructPtr(void) = 0;
+				virtual ::AlxInterpLin* GetCStructPtr(void) = 0;
 		};
 
 
 		//******************************************************************************
 		// Class - InterpLin
 		//******************************************************************************
-		class InterpLin final : public IInterpLin
+		class InterpLin : public IInterpLin
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -102,9 +102,9 @@ namespace Alx
 					return &me;
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxInterpLin me = {};
 		};
@@ -114,4 +114,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_INTERP_LIN_HPP
+#endif	// #ifndef ALX_INTERP_LIN_HPP

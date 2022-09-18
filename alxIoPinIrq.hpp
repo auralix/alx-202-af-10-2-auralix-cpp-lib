@@ -143,4 +143,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_IO_PIN_IRQ_HPP
+#endif	// #ifndef ALX_IO_PIN_IRQ_HPP

@@ -37,8 +37,8 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxAdc.h"
-#include "alxIoPin.hpp"
 #include "alxClk.hpp"
+#include "alxIoPin.hpp"
 
 
 //******************************************************************************
@@ -65,9 +65,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IAdc() {}
 				virtual ~IAdc() {}
-				virtual ::Alx_Status Init(void) = 0;
-				virtual ::Alx_Status DeInit(void) = 0;
-				virtual float GetVoltage_V(::Alx_Ch ch) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual float GetVoltage_V(Alx_Ch ch) = 0;
 				virtual float TempSens_GetTemp_degC(void) = 0;
 				virtual ::AlxAdc* GetCStructPtr(void) = 0;
 		};
@@ -84,15 +84,15 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				AAdc() {}
 				virtual ~AAdc() {}
-				::Alx_Status Init(void) override
+				Alx_Status Init(void) override
 				{
 					return AlxAdc_Init(&me);
 				}
-				::Alx_Status DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
 					return AlxAdc_DeInit(&me);
 				}
-				float GetVoltage_V(::Alx_Ch ch) override
+				float GetVoltage_V(Alx_Ch ch) override
 				{
 					return AlxAdc_GetVoltage_V(&me, ch);
 				}
@@ -128,10 +128,10 @@ namespace Alx
 					ADC_TypeDef* adc,
 					AlxIoPin::IIoPin** ioPinArr,
 					uint8_t numOfIoPins,
-					::Alx_Ch* chArr,
+					Alx_Ch* chArr,
 					uint8_t numOfCh,
 					AlxClk::IClk* clk,
-					::AlxAdc_Clk adcClk,
+					AlxAdc_Clk adcClk,
 					uint32_t samplingTime,
 				 	bool isVrefInt_V,
 					float vrefExt_V
@@ -167,13 +167,21 @@ namespace Alx
 				::AlxIoPin* adcIoPinArr[ALX_ADC_BUFF_LEN] = {};
 		};
 		#endif
+
+
+		//******************************************************************************
+		// Class - MockAdc
+		//******************************************************************************
 		#if defined(ALX_GTEST)
-		class MockAdc final : public IAdc
+		class MockAdc : public IAdc
 		{
 			public:
-				MOCK_METHOD(::Alx_Status, Init, (), (override));
-				MOCK_METHOD(::Alx_Status, DeInit, (), (override));
-				MOCK_METHOD(float, GetVoltage_V, (::Alx_Ch ch), (override));
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				MOCK_METHOD(Alx_Status, Init, (), (override));
+				MOCK_METHOD(Alx_Status, DeInit, (), (override));
+				MOCK_METHOD(float, GetVoltage_V, (Alx_Ch ch), (override));
 				MOCK_METHOD(float, TempSens_GetTemp_degC, (), (override));
 		};
 		#endif
@@ -183,4 +191,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_ADC_HPP
+#endif	// #ifndef ALX_ADC_HPP

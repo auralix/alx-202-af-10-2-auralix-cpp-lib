@@ -66,15 +66,15 @@ namespace Alx
 				virtual ~II2c() {}
 				virtual void Init (void) = 0;
 				virtual void DeInit	(void) = 0;
-				virtual ::Alx_Status Master_StartRead(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_StartReadStop(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_StartReadMemStop(uint16_t slaveAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_StartWrite(uint16_t slaveAddr, const uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_StartWriteStop(uint16_t slaveAddr, const uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_StartWriteMemStop(uint16_t slaveAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, uint8_t data, bool checkWithRead = false, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_StartWriteMemStop(uint16_t slaveAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, const uint8_t* data, uint16_t len, bool checkWithRead = false, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_Stop(uint16_t timeout_ms = 10) = 0;
-				virtual ::Alx_Status Master_IsSlaveReady(uint16_t slaveAddr, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_StartRead(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_StartReadStop(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_StartReadMemStop(uint16_t slaveAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_StartWrite(uint16_t slaveAddr, const uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_StartWriteStop(uint16_t slaveAddr, const uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_StartWriteMemStop(uint16_t slaveAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, uint8_t data, bool checkWithRead = false, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_StartWriteMemStop(uint16_t slaveAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, const uint8_t* data, uint16_t len, bool checkWithRead = false, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_Stop(uint16_t timeout_ms = 10) = 0;
+				virtual Alx_Status Master_IsSlaveReady(uint16_t slaveAddr, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
 				virtual ::AlxI2c* GetCStructPtr(void) = 0;
 		};
 
@@ -98,39 +98,39 @@ namespace Alx
 				{
 					AlxI2c_DeInit(&me);
 				}
-				::Alx_Status Master_StartRead(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) override
+				Alx_Status Master_StartRead(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) override
 				{
 					return AlxI2c_Master_StartRead(&me, slaveAddr, data, len, timeout_ms);
 				}
-				::Alx_Status Master_StartReadStop(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
+				Alx_Status Master_StartReadStop(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
 				{
 					return AlxI2c_Master_StartReadStop(&me, slaveAddr, data, len, numOfTries, timeout_ms);
 				}
-				::Alx_Status Master_StartReadMemStop(uint16_t slaveAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
+				Alx_Status Master_StartReadMemStop(uint16_t slaveAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
 				{
 					return AlxI2c_Master_StartReadMemStop(&me, slaveAddr, memAddr, memAddrLen, data, len, numOfTries, timeout_ms);
 				}
-				::Alx_Status Master_StartWrite(uint16_t slaveAddr, const uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) override
+				Alx_Status Master_StartWrite(uint16_t slaveAddr, const uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) override
 				{
 					return AlxI2c_Master_StartWrite(&me, slaveAddr, data, len, timeout_ms);
 				}
-				::Alx_Status Master_StartWriteStop(uint16_t slaveAddr, const uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
+				Alx_Status Master_StartWriteStop(uint16_t slaveAddr, const uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
 				{
 					return AlxI2c_Master_StartWriteStop(&me, slaveAddr, data, len, numOfTries, timeout_ms);
 				}
-				::Alx_Status Master_StartWriteMemStop(uint16_t slaveAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, uint8_t data, bool checkWithRead = false, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
+				Alx_Status Master_StartWriteMemStop(uint16_t slaveAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, uint8_t data, bool checkWithRead = false, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
 				{
 					return AlxI2c_Master_StartWriteMemStop_Single(&me, slaveAddr, memAddr, memAddrLen, data, checkWithRead, numOfTries, timeout_ms);
 				}
-				::Alx_Status Master_StartWriteMemStop(uint16_t slaveAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, const uint8_t* data, uint16_t len, bool checkWithRead = false, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
+				Alx_Status Master_StartWriteMemStop(uint16_t slaveAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, const uint8_t* data, uint16_t len, bool checkWithRead = false, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) override
 				{
 					return AlxI2c_Master_StartWriteMemStop_Multi(&me, slaveAddr, memAddr, memAddrLen, data, len, checkWithRead, numOfTries, timeout_ms);
 				}
-				::Alx_Status Master_Stop(uint16_t timeout_ms = 10) override
+				Alx_Status Master_Stop(uint16_t timeout_ms = 10) override
 				{
 					return AlxI2c_Master_Stop(&me, timeout_ms);
 				}
-				::Alx_Status Master_IsSlaveReady(uint16_t slaveAddr, uint8_t numOfTries = 3, uint16_t timeout_ms = 10)override
+				Alx_Status Master_IsSlaveReady(uint16_t slaveAddr, uint8_t numOfTries = 3, uint16_t timeout_ms = 10)override
 				{
 					return AlxI2c_Master_IsSlaveReady(&me, slaveAddr, numOfTries, timeout_ms);
 				}
@@ -162,7 +162,7 @@ namespace Alx
 					I2C_TypeDef* i2c,
 					AlxIoPin::IIoPin* io_SCL,
 					AlxIoPin::IIoPin* io_SDA,
-					::AlxI2c_Clk clk = AlxI2c_Clk_400kHz
+					AlxI2c_Clk clk = AlxI2c_Clk_400kHz
 				)
 				{
 					AlxI2c_Ctor
@@ -182,24 +182,24 @@ namespace Alx
 		//******************************************************************************
 		// Class - MockI2c
 		//******************************************************************************
-		#if defined (ALX_GTEST)
-		class MockI2c final : public II2c
+		#if defined(ALX_GTEST)
+		class MockI2c : public II2c
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				MOCK_METHOD(void, Init,								(), (override));
-				MOCK_METHOD(void, DeInit,							(), (override));
-				MOCK_METHOD(::Alx_Status, Master_StartRead,			(uint16_t slvAddr, uint8_t* data, uint16_t len, uint16_t timeout_ms), (override));
-				MOCK_METHOD(::Alx_Status, Master_StartReadStop,		(uint16_t slvAddr, uint8_t* data, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
-				MOCK_METHOD(::Alx_Status, Master_StartReadMemStop,	(uint16_t slvAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, uint8_t* data, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
-				MOCK_METHOD(::Alx_Status, Master_StartWrite,		(uint16_t slvAddr, const uint8_t* data, uint16_t len, uint16_t timeout_ms), (override));
-				MOCK_METHOD(::Alx_Status, Master_StartWriteStop,	(uint16_t slvAddr, const uint8_t* data, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
-				MOCK_METHOD(::Alx_Status, Master_StartWriteMemStop,	(uint16_t slvAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, uint8_t data, bool checkWithRead, uint8_t numOfTries, uint16_t timeout_ms), (override));
-				MOCK_METHOD(::Alx_Status, Master_StartWriteMemStop,	(uint16_t slvAddr, uint16_t memAddr, ::AlxI2c_Master_MemAddrLen memAddrLen, const uint8_t* data, uint16_t len, bool checkWithRead, uint8_t numOfTries, uint16_t timeout_ms), (override));
-				MOCK_METHOD(::Alx_Status, Master_Stop,				(uint16_t timeout_ms), (override));
-				MOCK_METHOD(::Alx_Status, Master_IsSlaveReady,		(uint16_t slvAddr, uint8_t numOfTries, uint16_t timeout_ms), (override));
+				MOCK_METHOD(void, Init, (), (override));
+				MOCK_METHOD(void, DeInit, (), (override));
+				MOCK_METHOD(Alx_Status, Master_StartRead, (uint16_t slvAddr, uint8_t* data, uint16_t len, uint16_t timeout_ms), (override));
+				MOCK_METHOD(Alx_Status, Master_StartReadStop, (uint16_t slvAddr, uint8_t* data, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
+				MOCK_METHOD(Alx_Status, Master_StartReadMemStop, (uint16_t slvAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, uint8_t* data, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
+				MOCK_METHOD(Alx_Status, Master_StartWrite, (uint16_t slvAddr, const uint8_t* data, uint16_t len, uint16_t timeout_ms), (override));
+				MOCK_METHOD(Alx_Status, Master_StartWriteStop, (uint16_t slvAddr, const uint8_t* data, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
+				MOCK_METHOD(Alx_Status, Master_StartWriteMemStop, (uint16_t slvAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, uint8_t data, bool checkWithRead, uint8_t numOfTries, uint16_t timeout_ms), (override));
+				MOCK_METHOD(Alx_Status, Master_StartWriteMemStop, (uint16_t slvAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, const uint8_t* data, uint16_t len, bool checkWithRead, uint8_t numOfTries, uint16_t timeout_ms), (override));
+				MOCK_METHOD(Alx_Status, Master_Stop, (uint16_t timeout_ms), (override));
+				MOCK_METHOD(Alx_Status, Master_IsSlaveReady, (uint16_t slvAddr, uint8_t numOfTries, uint16_t timeout_ms), (override));
 		};
 		#endif
 	}
@@ -208,4 +208,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_I2C_HPP
+#endif	// #ifndef ALX_I2C_HPP

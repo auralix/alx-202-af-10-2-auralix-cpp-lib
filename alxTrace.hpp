@@ -170,7 +170,7 @@ namespace Alx
 					uint32_t alternate,
 					#endif	// defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
 					USART_TypeDef* usart,
-					::AlxGlobal_BaudRate baudRate
+					AlxGlobal_BaudRate baudRate
 				) : ATrace(me)
 				{
 					AlxTrace_Ctor

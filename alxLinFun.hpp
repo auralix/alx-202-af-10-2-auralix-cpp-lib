@@ -73,7 +73,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - LinFun
 		//******************************************************************************
-		class LinFun final : public ILinFun
+		class LinFun : public ILinFun
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -120,9 +120,9 @@ namespace Alx
 					return AlxLinFun_GetX(&me, y);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxLinFun me = {};
 		};
@@ -132,4 +132,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_LIN_FUN_HPP
+#endif	// #ifndef ALX_LIN_FUN_HPP

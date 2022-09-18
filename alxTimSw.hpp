@@ -84,7 +84,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - TimSw
 		//******************************************************************************
-		class TimSw final : public ITimSw
+		class TimSw : public ITimSw
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -156,9 +156,9 @@ namespace Alx
 					return AlxTimSw_IsTimeout_hr(&me, timeout_hr);
 				}
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxTimSw me = {};
 		};
@@ -167,8 +167,8 @@ namespace Alx
 		//******************************************************************************
 		// Class - MockTimSw
 		//******************************************************************************
-		#if defined (ALX_GTEST)
-		class MockTimSw final : public ITimSw
+		#if defined(ALX_GTEST)
+		class MockTimSw : public ITimSw
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -197,4 +197,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_TIM_SW_HPP
+#endif	// #ifndef ALX_TIM_SW_HPP

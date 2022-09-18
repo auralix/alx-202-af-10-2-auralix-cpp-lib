@@ -41,7 +41,7 @@
 //******************************************************************************
 // Includes - Google Test
 //******************************************************************************
-#if defined (ALX_GTEST)
+#if defined(ALX_GTEST)
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #endif
@@ -70,7 +70,7 @@
 //******************************************************************************
 // Includes - Auralix C Library Globals
 //******************************************************************************
-#include <alxGlobal.h>
+#include "alxGlobal.h"
 
 
 //******************************************************************************
@@ -86,20 +86,23 @@ namespace Alx
 {
 	namespace AlxGlobal
 	{
+		//******************************************************************************
+		// Functions
+		//******************************************************************************
 		static inline void DisableIrq(void)
 		{
 			#if defined(ALX_MBED)
-				mbed::CriticalSectionLock::enable();
+			mbed::CriticalSectionLock::enable();
 			#else
-				AlxGlobal_DisableIrq();
+			AlxGlobal_DisableIrq();
 			#endif
 		}
 		static inline void EnableIrq(void)
 		{
 			#if defined(ALX_MBED)
-				mbed::CriticalSectionLock::disable();
+			mbed::CriticalSectionLock::disable();
 			#else
-				AlxGlobal_EnableIrq();
+			AlxGlobal_EnableIrq();
 			#endif
 		}
 	}
@@ -108,4 +111,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// ALX_GLOBAL_HPP
+#endif	// #ifndef ALX_GLOBAL_HPP
