@@ -67,6 +67,7 @@ namespace Alx
 				virtual void Init(void) = 0;
 				virtual void Trace(void) = 0;
 				virtual uint8_t GetHwId(void) = 0;
+				virtual void GetUniqueIdUint8(uint8_t* uniqueIdUint8, uint8_t len) = 0;
 				virtual const char* GetUniqueIdStr(void) = 0;
 				virtual uint32_t GetFwAppVerDate(void) = 0;
 				virtual const char* GetFwAppVerStr(void) = 0;
@@ -173,6 +174,10 @@ namespace Alx
 				uint8_t GetHwId(void) override
 				{
 					return AlxId_GetHwId(&me);
+				}
+				void GetUniqueIdUint8(uint8_t* uniqueIdUint8, uint8_t len) override
+				{
+					AlxId_GetUniqueIdUint8(&me, uniqueIdUint8, len);
 				}
 				const char* GetUniqueIdStr(void) override
 				{
