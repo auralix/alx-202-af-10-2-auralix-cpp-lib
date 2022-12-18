@@ -137,9 +137,9 @@ namespace Alx
 						tim,
 						pwmIoPinArr,
 						chArr,
-						dutyDefaultArr_pct,
 						numOfCh,
 						clk->GetCStructPtr(),
+						dutyDefaultArr_pct,
 						prescaler,
 						period
 					);

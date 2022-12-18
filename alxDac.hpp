@@ -36,7 +36,6 @@
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxDac_Mcu.h"
 #include "alxDac.h"
 #include "alxIoPin.hpp"
 
@@ -86,30 +85,30 @@ namespace Alx
 				virtual ~ADac() {}
 				Alx_Status Init(void) override
 				{
-					return AlxDac_Init(&dac);
+					return AlxDac_Init(&me);
 				}
 				Alx_Status Init(float vref_V) override
 				{
-					return AlxDac_Init_CalibrateVref(&dac, vref_V);
+					return AlxDac_Init_CalibrateVref(&me, vref_V);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxDac_DeInit(&dac);
+					return AlxDac_DeInit(&me);
 				}
 				Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V) override
 				{
-					return AlxDac_SetVoltage_V(&dac, ch, voltage_V);
+					return AlxDac_SetVoltage_V(&me, ch, voltage_V);
 				}
 				Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V, float vref_V) override
 				{
-					return AlxDac_SetVoltage_V_CalibrateVref(&dac, ch, voltage_V, vref_V);
+					return AlxDac_SetVoltage_V_CalibrateVref(&me, ch, voltage_V, vref_V);
 				}
 
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
 				//------------------------------------------------------------------------------
-				::AlxDac dac = {};
+				::AlxDac me = {};
 		};
 
 
@@ -140,9 +139,9 @@ namespace Alx
 						dacIoPinArr[i] = temp->GetCStructPtr();
 					}
 
-					AlxDacMcu_Ctor
+					AlxDac_Ctor
 					(
-						&dacMcu,
+						&me,
 						dac,
 						dacIoPinArr,
 						chArr,
@@ -151,12 +150,6 @@ namespace Alx
 						isVrefInt_V,
 						vrefExt_V
 					);
-					AlxDac_Ctor
-					(
-						&this->dac,
-						AlxDac_Submodule_Mcu,
-						&dacMcu
-					);
 				}
 				virtual ~DacMcu() {}
 
@@ -164,7 +157,6 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				AlxDac_Mcu dacMcu = {};
 				::AlxIoPin* dacIoPinArr[ALX_DAC_BUFF_LEN] = {};
 		};
 		#endif

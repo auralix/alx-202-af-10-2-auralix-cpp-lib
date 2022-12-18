@@ -28,8 +28,8 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_TEMP_SENS_HPP
-#define ALX_TEMP_SENS_HPP
+#ifndef ALX_TEMP_SENS_RTD_VDIV_HPP
+#define ALX_TEMP_SENS_RTD_VDIV_HPP
 
 
 //******************************************************************************
@@ -38,9 +38,7 @@
 #include "alxGlobal.hpp"
 #include "alxAdc.hpp"
 #include "alxInterpLin.hpp"
-#include "alxTempSens_Mcu.h"
-#include "alxTempSens.h"
-#include "alxTempSens_RtdVdiv.h"
+#include "alxTempSensRtdVdiv.h"
 
 
 //******************************************************************************
@@ -54,19 +52,19 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxTempSens
+	namespace AlxTempSensRtdVdiv
 	{
 		//******************************************************************************
-		// Class - ITempSens
+		// Class - ITempSensRtdVdiv
 		//******************************************************************************
-		class ITempSens
+		class ITempSensRtdVdiv
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ITempSens() {}
-				virtual ~ITempSens() {}
+				ITempSensRtdVdiv() {}
+				virtual ~ITempSensRtdVdiv() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status GetTemp_degC(float *temp_degC) = 0;
@@ -74,47 +72,15 @@ namespace Alx
 
 
 		//******************************************************************************
-		// Class - ATempSens
+		// Class - TempSensRtdVdiv
 		//******************************************************************************
-		class ATempSens : public ITempSens
+		class TempSensRtdVdiv : public ITempSensRtdVdiv
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ATempSens() {}
-				virtual ~ATempSens() {}
-				Alx_Status Init(void) override
-				{
-					return AlxTempSens_Init(&tempSens);
-				}
-				Alx_Status DeInit(void) override
-				{
-					return AlxTempSens_DeInit(&tempSens);
-				}
-				Alx_Status GetTemp_degC(float *temp_degC) override
-				{
-					return AlxTempSens_GetTemp_degC(&tempSens, temp_degC);
-				}
-
-			protected:
-				//------------------------------------------------------------------------------
-				// Protected Variables
-				//------------------------------------------------------------------------------
-				::AlxTempSens tempSens = {};
-		};
-
-
-		//******************************************************************************
-		// Class - TempSensRtd
-		//******************************************************************************
-		class TempSensRtd : public ATempSens
-		{
-			public:
-				//------------------------------------------------------------------------------
-				// Public Functions
-				//------------------------------------------------------------------------------
-				TempSensRtd
+				TempSensRtdVdiv
 				(
 					AlxAdc::IAdc* adc,
 					AlxInterpLin::IInterpLin* interpLin,
@@ -134,14 +100,20 @@ namespace Alx
 						isResRtdLow,
 						resOther_kOhm
 					);
-					AlxTempSens_Ctor
-					(
-						&tempSens,
-						AlxTempSens_Submodule_Rtd_Vdiv,
-						&me
-					);
 				}
-				virtual ~TempSensRtd() {}
+				virtual ~TempSensRtdVdiv() {}
+				Alx_Status Init(void) override
+				{
+					return AlxTempSensRtdVdiv_Init(&me);
+				}
+				Alx_Status DeInit(void) override
+				{
+					return AlxTempSensRtdVdiv_DeInit(&me);
+				}
+				Alx_Status GetTemp_degC(float *temp_degC) override
+				{
+					return AlxTempSensRtdVdiv_GetTemp_degC(&me, temp_degC);
+				}
 
 			private:
 				//------------------------------------------------------------------------------
@@ -172,4 +144,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_TEMP_SENS_HPP
+#endif	// #ifndef ALX_TEMP_SENS_RTD_VDIV_HPP
