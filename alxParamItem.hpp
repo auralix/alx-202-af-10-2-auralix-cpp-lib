@@ -95,9 +95,17 @@ namespace Alx
 				virtual Alx_Status SetValDouble(double val) = 0;
 				virtual Alx_Status SetValBool(bool val) = 0;
 
+				virtual Alx_Status GetValUint16_StrFormat(char* val, uint32_t maxLenWithNullTerm) = 0;
+				virtual Alx_Status GetValFloat_StrFormat(char* val, uint32_t maxLenWithNullTerm) = 0;
+				virtual Alx_Status GetValBool_StrFormat(char* val, uint32_t maxLenWithNullTerm) = 0;
+
+				virtual Alx_Status SetValUint16_StrFormat(char* val) = 0;
+				virtual Alx_Status SetValFloat_StrFormat(char* val) = 0;
+				virtual Alx_Status SetValBool_StrFormat(char* val) = 0;
+
 				virtual void GetValArr(void* val) = 0;
 				virtual void SetValArr(void* val) = 0;
-				virtual void GetValStr(char* val) = 0;
+				virtual Alx_Status GetValStr(char* val, uint32_t maxLenWithNullTerm) = 0;
 				virtual Alx_Status SetValStr(char* val) = 0;
 
 				virtual ::AlxParamItem* GetCStructPtr(void) = 0;
@@ -107,14 +115,15 @@ namespace Alx
 		//******************************************************************************
 		// Class - ParamItem
 		//******************************************************************************
-		template<uint32_t arrBuffLen = 1, uint32_t strMaxLen = 1>
+		template <uint32_t buffLen = 1>
 		class ParamItem : public IParamItem
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				// #1 Uint8
+
+				// Uint8
 				ParamItem
 				(
 					const char* name,
@@ -128,7 +137,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorUint8(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #2 Uint16
+				// Uint16
 				ParamItem
 				(
 					const char* name,
@@ -142,7 +151,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorUint16(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #3 Uint32
+				// Uint32
 				ParamItem
 				(
 					const char* name,
@@ -156,7 +165,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorUint32(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #4 Uint64
+				// Uint64
 				ParamItem
 				(
 					const char* name,
@@ -170,7 +179,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorUint64(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #5 Int8
+				// Int8
 				ParamItem
 				(
 					const char* name,
@@ -184,7 +193,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorInt8(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #6 Int16
+				// Int16
 				ParamItem
 				(
 					const char* name,
@@ -198,7 +207,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorInt16(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #7 Int32
+				// Int32
 				ParamItem
 				(
 					const char* name,
@@ -212,7 +221,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorInt32(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #8 Int64
+				// Int64
 				ParamItem
 				(
 					const char* name,
@@ -226,7 +235,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorInt64(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #9 Float
+				// Float
 				ParamItem
 				(
 					const char* name,
@@ -240,7 +249,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorFloat(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #10 Double
+				// Double
 				ParamItem
 				(
 					const char* name,
@@ -254,7 +263,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorDouble(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
 				}
-				// #11 Bool
+				// Bool
 				ParamItem
 				(
 					const char* name,
@@ -265,7 +274,7 @@ namespace Alx
 				{
 					AlxParamItem_CtorBool(&me, name, id, groupId, valDef);
 				}
-				// #12 Arr
+				// Arr
 				ParamItem
 				(
 					const char* name,
@@ -274,18 +283,19 @@ namespace Alx
 					void* valDefBuff
 				)
 				{
-					AlxParamItem_CtorArr(&me, name, id, groupId, valDefBuff, arrValBuff, arrValDefBuff, arrBuffLen, AlxParamItem_ValOutOfRangeHandle_Ignore);
+					//AlxParamItem_CtorArr(&me, name, id, groupId, valDefBuff, arrValBuff, arrValDefBuff, arrBuffLen, AlxParamItem_ValOutOfRangeHandle_Ignore);	// TODO!!!
 				}
-				// #13 Str
+				// Str
 				ParamItem
 				(
 					const char* name,
 					uint32_t id,
 					uint32_t groupId,
-					const char* valDef
+					const char* valDef,
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
 				)
 				{
-					AlxParamItem_CtorStr(&me, name, id, groupId, valDef, strValBuff, strValDefBuff, strMaxLen, AlxParamItem_ValOutOfRangeHandle_Ignore);
+					AlxParamItem_CtorStr(&me, name, id, groupId, valDef, valOutOfRangeHandle, buff, buffLen);
 				}
 				virtual ~ParamItem() {}
 				const char* GetName(void) override
@@ -404,6 +414,30 @@ namespace Alx
 				{
 					return AlxParamItem_SetValBool(&me, val);
 				}
+				Alx_Status GetValUint16_StrFormat(char* val, uint32_t maxLenWithNullTerm) override
+				{
+					return AlxParamItem_GetValUint16_StrFormat(&me, val, maxLenWithNullTerm);
+				}
+				Alx_Status GetValFloat_StrFormat(char* val, uint32_t maxLenWithNullTerm) override
+				{
+					return AlxParamItem_GetValFloat_StrFormat(&me, val, maxLenWithNullTerm);
+				}
+				Alx_Status GetValBool_StrFormat(char* val, uint32_t maxLenWithNullTerm) override
+				{
+					return AlxParamItem_GetValBool_StrFormat(&me, val, maxLenWithNullTerm);
+				}
+				Alx_Status SetValUint16_StrFormat(char* val) override
+				{
+					return AlxParamItem_SetValUint16_StrFormat(&me, val);
+				}
+				Alx_Status SetValFloat_StrFormat(char* val) override
+				{
+					return AlxParamItem_SetValFloat_StrFormat(&me, val);
+				}
+				Alx_Status SetValBool_StrFormat(char* val) override
+				{
+					return AlxParamItem_SetValBool_StrFormat(&me, val);
+				}
 				void GetValArr(void* val) override
 				{
 					AlxParamItem_GetValArr(&me, val);
@@ -412,9 +446,9 @@ namespace Alx
 				{
 					AlxParamItem_SetValArr(&me, val);
 				}
-				void GetValStr(char* val) override
+				Alx_Status GetValStr(char* val, uint32_t maxLenWithNullTerm) override
 				{
-					AlxParamItem_GetValStr(&me, val);
+					return AlxParamItem_GetValStr(&me, val, maxLenWithNullTerm);
 				}
 				Alx_Status SetValStr(char* val) override
 				{
@@ -429,11 +463,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				uint8_t arrValBuff [arrBuffLen] = {};
-				uint8_t arrValDefBuff [arrBuffLen] = {};
-				char strValBuff [strMaxLen + 1]	 = {};	// JK: + 1 is for nullchar
-				char strValDefBuff [strMaxLen + 1] = {};
 				::AlxParamItem me = {};
+				uint8_t buff[buffLen] = {};
 		};
 	}
 }
