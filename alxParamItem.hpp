@@ -63,7 +63,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IParamItem() {}
 				virtual ~IParamItem() {}
-				virtual const char* GetName(void) = 0;
+				virtual const char* GetKey(void) = 0;
 				virtual uint32_t GetId(void) = 0;
 				virtual uint32_t GetGroupId(void) = 0;
 				virtual AlxParamItem_Type GetType(void) = 0;
@@ -244,10 +244,12 @@ namespace Alx
 					float valDef,
 					float valMin,
 					float valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					float* enumArr,
+					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorFloat(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorFloat(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle, enumArr, numOfEnums);
 				}
 				// Double
 				ParamItem
@@ -298,9 +300,9 @@ namespace Alx
 					AlxParamItem_CtorStr(&me, name, id, groupId, valDef, valOutOfRangeHandle, buff, buffLen);
 				}
 				virtual ~ParamItem() {}
-				const char* GetName(void) override
+				const char* GetKey(void) override
 				{
-					return AlxParamItem_GetName(&me);
+					return AlxParamItem_GetKey(&me);
 				}
 				uint32_t GetId(void) override
 				{
