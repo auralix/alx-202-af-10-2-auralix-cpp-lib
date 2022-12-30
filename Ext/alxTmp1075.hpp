@@ -67,6 +67,7 @@ namespace Alx
 				virtual ~ITmp1075() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
+				virtual bool IsInit(void) = 0;
 				virtual float GetTemp_degC(void) = 0;
 		};
 
@@ -107,6 +108,10 @@ namespace Alx
 				Alx_Status DeInit(void) override
 				{
 					return AlxTmp1075_DeInit(&me);
+				}
+				bool IsInit(void) override
+				{
+					return AlxTmp1075_IsInit(&me);
 				}
 				float GetTemp_degC(void) override
 				{

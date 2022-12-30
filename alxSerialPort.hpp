@@ -69,10 +69,9 @@ namespace Alx
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status Read(uint8_t* data, uint32_t len) = 0;
 				virtual Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t* numRead) = 0;
-				virtual Alx_Status Write(uint8_t data) = 0;
 				virtual Alx_Status Write(const uint8_t* data, uint32_t len) = 0;
 				virtual Alx_Status WriteStr(const char* str) = 0;
-				virtual void Foreground_Handle(void) = 0;
+				virtual void IrqHandler(void) = 0;
 		};
 
 
@@ -104,21 +103,17 @@ namespace Alx
 				{
 					return AlxSerialPort_ReadStrUntil(&me, str, delim, maxLen, numRead);
 				}
-				Alx_Status Write(uint8_t data) override
-				{
-					return AlxSerialPort_Write(&me, data);
-				}
 				Alx_Status Write(const uint8_t* data, uint32_t len) override
 				{
-					return AlxSerialPort_WriteMulti(&me, data, len);
+					return AlxSerialPort_Write(&me, data, len);
 				}
 				Alx_Status WriteStr(const char* str) override
 				{
 					return AlxSerialPort_WriteStr(&me, str);
 				}
-				void Foreground_Handle(void) override
+				void IrqHandler(void) override
 				{
-					AlxSerialPort_Foreground_Handle(&me);
+					AlxSerialPort_IrqHandler(&me);
 				}
 
 			protected:
