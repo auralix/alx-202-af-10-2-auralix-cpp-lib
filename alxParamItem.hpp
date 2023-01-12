@@ -146,10 +146,12 @@ namespace Alx
 					uint16_t valDef,
 					uint16_t valMin,
 					uint16_t valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					uint16_t* enumArr,
+					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorUint16(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorUint16(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle, enumArr, numOfEnums);
 				}
 				// Uint32
 				ParamItem
