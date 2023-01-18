@@ -177,11 +177,11 @@ namespace Alx
 				}
 				void GetUniqueIdUint8(uint8_t* uniqueIdUint8, uint8_t len) override
 				{
-					AlxId_GetUniqueIdUint8(&me, uniqueIdUint8, len);
+					AlxId_GetHwMcuUniqueIdUint8(&me, uniqueIdUint8, len);
 				}
 				const char* GetUniqueIdStr(void) override
 				{
-					return AlxId_GetUniqueIdStr(&me);
+					return AlxId_GetHwMcuUniqueIdStr(&me);
 				}
 				uint32_t GetFwAppVerDate(void) override
 				{
@@ -197,7 +197,7 @@ namespace Alx
 				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxId me = {};
-				::AlxIoPin* _hwIdIoPinArr[ALX_ID_HW_ID_IO_PIN_ARR_MAX_LEN] = {};
+				::AlxIoPin* _hwIdIoPinArr[ALX_ID_HW_ID_IO_PIN_ARR_LEN] = {};
 				struct LangCpp
 				{
 					#ifdef ALX_GCC
