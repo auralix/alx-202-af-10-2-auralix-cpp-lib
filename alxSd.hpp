@@ -64,10 +64,10 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ISd() {}
 				virtual ~ISd() {}
-				virtual Alx_Status Init(void) = 0;
-				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status ReadBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries) = 0;
-				virtual Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries) = 0;
+				virtual Alx_Status Init(uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
+				virtual Alx_Status DeInit(uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
+				virtual Alx_Status ReadBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
+				virtual Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
 		};
 
 
@@ -85,13 +85,11 @@ namespace Alx
 					AlxSpi::ISpi* alxSpi,
 					uint8_t spiNumOfTries,
 					uint16_t spiTimeout_ms,
-					uint8_t initDeInitNumOfTries,
-					uint16_t initDeInitInitialAndNewTryWaitTime_ms,
-					uint16_t cmdRespTimeout_ms,
+					uint16_t cmdRespR1Timeout_ms,
 					uint16_t acmd41Timeout_ms,
-					uint16_t blockReadTokenFeTimeout_ms,
-					uint16_t blockWriteDataAcceptedTokenTimeout_ms,
-					uint16_t blockWriteSdBusyTimeout_ms
+					uint16_t blockReadStartTokenTimeout_ms,
+					uint16_t blockWriteStartTokenTimeout_ms,
+					uint16_t blockWriteStopTokenTimeout_ms
 				)
 				{
 					AlxSd_Ctor
@@ -100,31 +98,29 @@ namespace Alx
 						alxSpi->GetCStructPtr(),
 						spiNumOfTries,
 						spiTimeout_ms,
-						initDeInitNumOfTries,
-						initDeInitInitialAndNewTryWaitTime_ms,
-						cmdRespTimeout_ms,
+						cmdRespR1Timeout_ms,
 						acmd41Timeout_ms,
-						blockReadTokenFeTimeout_ms,
-						blockWriteDataAcceptedTokenTimeout_ms,
-						blockWriteSdBusyTimeout_ms
+						blockReadStartTokenTimeout_ms,
+						blockWriteStartTokenTimeout_ms,
+						blockWriteStopTokenTimeout_ms
 					);
 				}
 				virtual ~Sd() {}
-				Alx_Status Init(void) override
+				Alx_Status Init(uint8_t numOfTries, uint16_t newTryWaitTime_ms) override
 				{
-					return AlxSd_Init(&me);
+					return AlxSd_Init(&me, numOfTries, newTryWaitTime_ms);
 				}
-				Alx_Status DeInit(void) override
+				Alx_Status DeInit(uint8_t numOfTries, uint16_t newTryWaitTime_ms) override
 				{
-					return AlxSd_DeInit(&me);
+					return AlxSd_DeInit(&me, numOfTries, newTryWaitTime_ms);
 				}
-				Alx_Status ReadBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries) override
+				Alx_Status ReadBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) override
 				{
-					return AlxSd_ReadBlock(&me, numOfBlocks, addr, data, len, numOfTries);
+					return AlxSd_ReadBlock(&me, numOfBlocks, addr, data, len, numOfTries, newTryWaitTime_ms);
 				}
-				Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries) override
+				Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) override
 				{
-					return AlxSd_WriteBlock(&me, numOfBlocks, addr, data, len, numOfTries);
+					return AlxSd_WriteBlock(&me, numOfBlocks, addr, data, len, numOfTries, newTryWaitTime_ms);
 				}
 
 			private:
