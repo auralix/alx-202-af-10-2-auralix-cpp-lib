@@ -66,11 +66,34 @@ namespace Alx
 				virtual ~IId() {}
 				virtual void Init(void) = 0;
 				virtual void Trace(void) = 0;
-				virtual uint8_t GetHwId(void) = 0;
-				virtual void GetUniqueIdUint8(uint8_t* uniqueIdUint8, uint8_t len) = 0;
-				virtual const char* GetUniqueIdStr(void) = 0;
+				virtual const char* GetFwAppArtf(void) = 0;
+				virtual const char* GetFwAppName(void) = 0;
+				virtual uint8_t GetFwAppVerMajor(void) = 0;
+				virtual uint8_t GetFwAppVerMinor(void) = 0;
+				virtual uint8_t GetFwAppVerPatch(void) = 0;
 				virtual uint32_t GetFwAppVerDate(void) = 0;
+				virtual uint64_t GetFwAppVer(void) = 0;
 				virtual const char* GetFwAppVerStr(void) = 0;
+				virtual const char* GetFwAppBinStr(void) = 0;
+				virtual const char* GetHwPcbArtf(void) = 0;
+				virtual const char* GetHwPcbName(void) = 0;
+				virtual uint8_t GetHwPcbVerMajor(void) = 0;
+				virtual uint8_t GetHwPcbVerMinor(void) = 0;
+				virtual uint8_t GetHwPcbVerPatch(void) = 0;
+				virtual uint32_t GetHwPcbVerDate(void) = 0;
+				virtual uint64_t GetHwPcbVer(void) = 0;
+				virtual const char* GetHwPcbVerStr(void) = 0;
+				virtual const char* GetHwBomArtf(void) = 0;
+				virtual const char* GetHwBomName(void) = 0;
+				virtual uint8_t GetHwBomVerMajor(void) = 0;
+				virtual uint8_t GetHwBomVerMinor(void) = 0;
+				virtual uint8_t GetHwBomVerPatch(void) = 0;
+				virtual uint32_t GetHwBomVerDate(void) = 0;
+				virtual uint64_t GetHwBomVer(void) = 0;
+				virtual const char* GetHwBomVerStr(void) = 0;
+				virtual uint8_t GetHwId(void) = 0;
+				virtual void GetHwMcuUniqueIdUint8(uint8_t* uniqueIdUint8, uint8_t len) = 0;
+				virtual const char* GetHwMcuUniqueIdStr(void) = 0;
 		};
 
 
@@ -171,25 +194,117 @@ namespace Alx
 					ALX_ID_TRACE_FORMAT("- name: %s, ver: %lu\r\n", langCppLib.name, langCppLib.ver);
 					ALX_ID_TRACE_FORMAT("\r\n");
 				}
-				uint8_t GetHwId(void) override
+				const char* GetFwAppArtf(void) override
 				{
-					return AlxId_GetHwId(&me);
+					return AlxId_GetFwAppArtf(&me);
 				}
-				void GetUniqueIdUint8(uint8_t* uniqueIdUint8, uint8_t len) override
+				const char* GetFwAppName(void) override
 				{
-					AlxId_GetHwMcuUniqueIdUint8(&me, uniqueIdUint8, len);
+					return AlxId_GetFwAppName(&me);
 				}
-				const char* GetUniqueIdStr(void) override
+				uint8_t GetFwAppVerMajor(void) override
 				{
-					return AlxId_GetHwMcuUniqueIdStr(&me);
+					return AlxId_GetFwAppVerMajor(&me);
+				}
+				uint8_t GetFwAppVerMinor(void) override
+				{
+					return AlxId_GetFwAppVerMinor(&me);
+				}
+				uint8_t GetFwAppVerPatch(void) override
+				{
+					return AlxId_GetFwAppVerPatch(&me);
 				}
 				uint32_t GetFwAppVerDate(void) override
 				{
 					return AlxId_GetFwAppVerDate(&me);
 				}
+				uint64_t GetFwAppVer(void) override
+				{
+					return AlxId_GetFwAppVer(&me);
+				}
 				const char* GetFwAppVerStr(void) override
 				{
 					return AlxId_GetFwAppVerStr(&me);
+				}
+				const char* GetFwAppBinStr(void) override
+				{
+					return AlxId_GetFwAppBinStr(&me);
+				}
+				const char* GetHwPcbArtf(void) override
+				{
+					return AlxId_GetHwPcbArtf(&me);
+				}
+				const char* GetHwPcbName(void) override
+				{
+					return AlxId_GetHwPcbName(&me);
+				}
+				uint8_t GetHwPcbVerMajor(void) override
+				{
+					return AlxId_GetHwPcbVerMajor(&me);
+				}
+				uint8_t GetHwPcbVerMinor(void) override
+				{
+					return AlxId_GetHwPcbVerMinor(&me);
+				}
+				uint8_t GetHwPcbVerPatch(void) override
+				{
+					return AlxId_GetHwPcbVerPatch(&me);
+				}
+				uint32_t GetHwPcbVerDate(void) override
+				{
+					return AlxId_GetHwPcbVerDate(&me);
+				}
+				uint64_t GetHwPcbVer(void) override
+				{
+					return AlxId_GetHwPcbVer(&me);
+				}
+				const char* GetHwPcbVerStr(void) override
+				{
+					return AlxId_GetHwPcbVerStr(&me);
+				}
+				const char* GetHwBomArtf(void) override
+				{
+					return AlxId_GetHwBomArtf(&me);
+				}
+				const char* GetHwBomName(void) override
+				{
+					return AlxId_GetHwBomName(&me);
+				}
+				uint8_t GetHwBomVerMajor(void) override
+				{
+					return AlxId_GetHwBomVerMajor(&me);
+				}
+				uint8_t GetHwBomVerMinor(void) override
+				{
+					return AlxId_GetHwBomVerMinor(&me);
+				}
+				uint8_t GetHwBomVerPatch(void) override
+				{
+					return AlxId_GetHwBomVerPatch(&me);
+				}
+				uint32_t GetHwBomVerDate(void) override
+				{
+					return AlxId_GetHwBomVerDate(&me);
+				}
+				uint64_t GetHwBomVer(void) override
+				{
+					return AlxId_GetHwBomVer(&me);
+				}
+				const char* GetHwBomVerStr(void) override
+				{
+					return AlxId_GetHwBomVerStr(&me);
+				}
+				uint8_t GetHwId(void) override
+				{
+					return AlxId_GetHwId(&me);
+				}
+				void GetHwMcuUniqueIdUint8(uint8_t* uniqueIdUint8, uint8_t len) override
+				{
+					AlxId_GetHwMcuUniqueIdUint8(&me, uniqueIdUint8, len);
+				}
+				const char* GetHwMcuUniqueIdStr(void) override
+				{
+					return AlxId_GetHwMcuUniqueIdStr(&me);
 				}
 
 			private:
