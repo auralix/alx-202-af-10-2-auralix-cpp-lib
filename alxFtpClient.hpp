@@ -134,6 +134,9 @@ namespace Alx
 					nsapi_connection_status_t nsapiConnectionStatus = NSAPI_STATUS_ERROR_UNSUPPORTED;
 					uint32_t len = 0;
 
+					// Allocate memory
+					buff = (char*)calloc(BUFF_LEN, sizeof(char));
+
 					// #4 Check if network is UP
 					nsapiConnectionStatus = net->get_connection_status();
 					if
@@ -308,6 +311,9 @@ namespace Alx
 					nsapi_error_t nsapiError = NSAPI_ERROR_NO_CONNECTION;
 					nsapi_size_or_error_t  nsapiSizeOrError = NSAPI_ERROR_NO_CONNECTION;
 					uint32_t len = 0;
+
+					// Free memory
+					free(buff);
 
 					// #4 Send command to Quit
 					sprintf(buff, "quit\r\n");
@@ -611,7 +617,7 @@ namespace Alx
 				bool* isServerIpHostnameFormat = nullptr;
 
 				// Variables
-				char buff[BUFF_LEN] = {};
+				char* buff = nullptr;
 				uint8_t dataSockIpArr[4] = {};
 				char dataSockIpStr[20] = {};
 				uint16_t dataSockPort = 0;

@@ -64,8 +64,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				II2c() {}
 				virtual ~II2c() {}
-				virtual void Init (void) = 0;
-				virtual void DeInit	(void) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status Master_StartRead(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) = 0;
 				virtual Alx_Status Master_StartReadStop(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
 				virtual Alx_Status Master_StartReadMemStop(uint16_t slaveAddr, uint16_t memAddr, AlxI2c_Master_MemAddrLen memAddrLen, uint8_t* data, uint16_t len = 1, uint8_t numOfTries = 3, uint16_t timeout_ms = 10) = 0;
@@ -90,13 +90,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				AI2c() {}
 				virtual ~AI2c() {}
-				void Init(void) override
+				Alx_Status Init(void) override
 				{
-					AlxI2c_Init(&me);
+					return AlxI2c_Init(&me);
 				}
-				void DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
-					AlxI2c_DeInit(&me);
+					return AlxI2c_DeInit(&me);
 				}
 				Alx_Status Master_StartRead(uint16_t slaveAddr, uint8_t* data, uint16_t len = 1, uint16_t timeout_ms = 10) override
 				{
