@@ -71,6 +71,8 @@ namespace Alx
 				virtual Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t* numRead) = 0;
 				virtual Alx_Status Write(const uint8_t* data, uint32_t len) = 0;
 				virtual Alx_Status WriteStr(const char* str) = 0;
+				virtual void FlushRxFifo(void) = 0;
+				virtual uint32_t GetRxFifoNumOfEntries(void) = 0;
 				virtual void IrqHandler(void) = 0;
 		};
 
@@ -111,6 +113,14 @@ namespace Alx
 				{
 					return AlxSerialPort_WriteStr(&me, str);
 				}
+				void FlushRxFifo(void) override
+				{
+					AlxSerialPort_FlushRxFifo(&me);
+				}
+				uint32_t GetRxFifoNumOfEntries(void) override
+				{
+					return AlxSerialPort_GetRxFifoNumOfEntries(&me);
+				}
 				void IrqHandler(void) override
 				{
 					AlxSerialPort_IrqHandler(&me);
@@ -146,7 +156,8 @@ namespace Alx
 					uint32_t stopBits,
 					uint32_t parity,
 					uint16_t txTimeout_ms,
-					Alx_IrqPriority rxIrqPriority
+					Alx_IrqPriority rxIrqPriority,
+					AlxSerialPort_Lin lin
 				) : ASerialPort<rxFifoBuffLen>()
 				{
 					AlxSerialPort_Ctor
@@ -162,7 +173,8 @@ namespace Alx
 						txTimeout_ms,
 						this->rxFifo.GetBuffPtr(),
 						rxFifoBuffLen,
-						rxIrqPriority
+						rxIrqPriority,
+						lin
 					 );
 				}
 				virtual ~SerialPort() {}
