@@ -48,10 +48,10 @@
 //******************************************************************************
 // Preprocessor
 //******************************************************************************
-#define ALX_TRACE_STR_CPP(str) do								{ Alx::AlxTrace::alxTraceCpp.WriteStr(str, true); } while(false)
-#define ALX_TRACE_FORMAT_CPP(...) do							{ Alx::AlxTrace::alxTraceCpp.WriteFormat(true, __VA_ARGS__); } while(false)
-#define ALX_TRACE_STD_CPP(file, ...) do							{ Alx::AlxTrace::alxTraceCpp.WriteStd(file, __LINE__, __func__, true, __VA_ARGS__); } while(false)
-#define ALX_TRACE_SM_CPP(smLevel, smName, stName, acName) do	{ Alx::AlxTrace::alxTraceCpp.WriteSm(smLevel, smName, stName, acName, true); } while(false)
+#define ALX_TRACE_STR_CPP(str) do								{ Alx::AlxTrace::alxTraceCpp.WriteStr(str); } while(false)
+#define ALX_TRACE_FORMAT_CPP(...) do							{ Alx::AlxTrace::alxTraceCpp.WriteFormat(__VA_ARGS__); } while(false)
+#define ALX_TRACE_STD_CPP(file, ...) do							{ Alx::AlxTrace::alxTraceCpp.WriteStd(file, __LINE__, __func__, __VA_ARGS__); } while(false)
+#define ALX_TRACE_SM_CPP(smLevel, smName, stName, acName) do	{ Alx::AlxTrace::alxTraceCpp.WriteSm(smLevel, smName, stName, acName); } while(false)
 
 
 //******************************************************************************
@@ -72,12 +72,12 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ITrace() {}
 				virtual ~ITrace() {}
-				virtual void Init(bool threadSafe) = 0;
-				virtual void DeInit(bool threadSafe) = 0;
-				virtual void WriteStr(const char* str, bool threadSafe) = 0;
-				virtual void WriteFormat(bool threadSafe, const char* format, ...) = 0;
-				virtual void WriteStd(const char* file, uint32_t line, const char* fun, bool threadSafe, const char* format, ...) = 0;
-				virtual void WriteSm(uint8_t smLevel, const char* smName, const char* stName, const char* acName, bool threadSafe) = 0;
+				virtual void Init(void) = 0;
+				virtual void DeInit(void) = 0;
+				virtual void WriteStr(const char* str) = 0;
+				virtual void WriteFormat(const char* format, ...) = 0;
+				virtual void WriteStd(const char* file, uint32_t line, const char* fun, const char* format, ...) = 0;
+				virtual void WriteSm(uint8_t smLevel, const char* smName, const char* stName, const char* acName) = 0;
 		};
 
 
@@ -92,19 +92,19 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ATrace(::AlxTrace* me) : me(me) {}
 				virtual ~ATrace() {}
-				void Init(bool threadSafe) override
+				void Init(void) override
 				{
-					AlxTrace_Init(me, threadSafe);
+					AlxTrace_Init(me);
 				}
-				void DeInit(bool threadSafe) override
+				void DeInit(void) override
 				{
-					AlxTrace_DeInit(me, threadSafe);
+					AlxTrace_DeInit(me);
 				}
-				void WriteStr(const char* str, bool threadSafe) override
+				void WriteStr(const char* str) override
 				{
-					AlxTrace_WriteStr(me, str, threadSafe);
+					AlxTrace_WriteStr(me, str);
 				}
-				void WriteFormat(bool threadSafe, const char* format, ...) override
+				void WriteFormat(const char* format, ...) override
 				{
 					char buff[256] = {};
 					va_list args = {};
@@ -113,23 +113,23 @@ namespace Alx
 					vsnprintf(buff, 256, format, args);
 					va_end(args);
 
-					WriteStr(buff, threadSafe);
+					WriteStr(buff);
 				}
-				void WriteStd(const char* file, uint32_t line, const char* fun, bool threadSafe, const char* format, ...) override
+				void WriteStd(const char* file, uint32_t line, const char* fun, const char* format, ...) override
 				{
 					char buff[256] = {};
 					va_list args = {};
 
 					AlxGlobal_Uint64ToStr(AlxTick_Get_ms(&alxTick), buff);
-					WriteFormat(threadSafe, "trace;%s;%s;%lu;%s;", buff, file, line, fun);
+					WriteFormat("trace;%s;%s;%lu;%s;", buff, file, line, fun);
 
 					va_start(args, format);
 					vsnprintf(buff, 256, format, args);
 					va_end(args);
 
-					WriteFormat(threadSafe, "%s\r\n", buff);
+					WriteFormat("%s\r\n", buff);
 				}
-				void WriteSm(uint8_t smLevel, const char* smName, const char* stName, const char* acName, bool threadSafe) override
+				void WriteSm(uint8_t smLevel, const char* smName, const char* stName, const char* acName) override
 				{
 					if ((smName != NULL) && (stName != NULL) && (acName != NULL))
 					{
@@ -139,7 +139,7 @@ namespace Alx
 						char tickStr[50] = {};
 						AlxGlobal_Uint64ToStr(AlxTick_Get_ms(&alxTick), tickStr);
 
-						WriteFormat(threadSafe, "traceSm;%s;%s%s_%s_%s\r\n", tickStr, smLevelStr, smName, stName, acName);
+						WriteFormat("traceSm;%s;%s%s_%s_%s\r\n", tickStr, smLevelStr, smName, stName, acName);
 					}
 				}
 
@@ -208,11 +208,11 @@ namespace Alx
 					(void)me;
 				}
 				virtual ~Trace() {}
-				void WriteStr(const char* str, bool threadSafe) override
+				void WriteStr(const char* str) override
 				{
-					if (threadSafe) mutex.lock();
+					mutex.lock();
 					AlxTrace_WriteStr(me, str, ALX_NULL);
-					if (threadSafe) mutex.unlock();
+					mutex.unlock();
 				}
 
 			private:
