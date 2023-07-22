@@ -211,7 +211,7 @@ namespace Alx
 				void WriteStr(const char* str) override
 				{
 					mutex.lock();
-					AlxTrace_WriteStr(me, str, ALX_NULL);
+					AlxTrace_WriteStr(me, str);
 					mutex.unlock();
 				}
 
