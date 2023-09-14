@@ -147,7 +147,8 @@ namespace Alx
 					AlxIoPin::IIoPin* do_nCS,
 					AlxSpi_Mode mode,
 					AlxClk::IClk* clk,
-					AlxSpi_Clk spiClk
+					AlxSpi_Clk spiClk,
+					bool isWriteReadLowLevel
 				)
 				{
 					AlxSpi_Ctor
@@ -160,7 +161,8 @@ namespace Alx
 						do_nCS->GetCStructPtr(),
 						mode,
 						clk->GetCStructPtr(),
-						spiClk
+						spiClk,
+						isWriteReadLowLevel
 					);
 				}
 				virtual ~Spi() {}
