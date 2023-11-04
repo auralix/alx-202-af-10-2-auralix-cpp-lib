@@ -38,6 +38,7 @@
 #include "alxGlobal.hpp"
 #include "alxI2c.h"
 #include "alxIoPin.hpp"
+#include "alxClk.hpp"
 
 
 //******************************************************************************
@@ -162,7 +163,8 @@ namespace Alx
 					I2C_TypeDef* i2c,
 					AlxIoPin::IIoPin* io_SCL,
 					AlxIoPin::IIoPin* io_SDA,
-					AlxI2c_Clk clk = AlxI2c_Clk_400kHz
+					AlxClk::IClk* clk,
+					AlxI2c_Clk i2cClk
 				)
 				{
 					AlxI2c_Ctor
@@ -171,7 +173,8 @@ namespace Alx
 						i2c,
 						io_SCL->GetCStructPtr(),
 						io_SDA->GetCStructPtr(),
-						clk
+						clk->GetCStructPtr(),
+						i2cClk
 					);
 				}
 				virtual ~I2c() {}

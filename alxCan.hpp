@@ -74,7 +74,7 @@ namespace Alx
 				virtual Alx_Status RxMsg(AlxCan_Msg* msg) = 0;
 				virtual Alx_Status RxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) = 0;
 				virtual bool IsErr(void) = 0;
-				virtual void Foreground_Handle(void) = 0;
+				virtual void IrqHandler(void) = 0;
 		};
 
 
@@ -122,9 +122,9 @@ namespace Alx
 				{
 					return AlxCan_IsErr(&me);
 				}
-				void Foreground_Handle(void) override
+				void IrqHandler(void) override
 				{
-					return AlxCan_Foreground_Handle(&me);
+					return AlxCan_IrqHandler(&me);
 				}
 
 			protected:

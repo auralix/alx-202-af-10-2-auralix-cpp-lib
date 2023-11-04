@@ -208,13 +208,15 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				Rtc
 				(
-					AlxRtc_Clk rtcClk
+					AlxRtc_Clk rtcClk,
+					AlxRtc_LseDrive lseDrive
 				)
 				{
 					AlxRtc_Ctor
 					(
 						&me,
-						rtcClk
+						rtcClk,
+						lseDrive
 					);
 				}
 				virtual ~Rtc() {}

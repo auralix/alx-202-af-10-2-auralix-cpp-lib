@@ -61,16 +61,30 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
+
+
+				//------------------------------------------------------------------------------
+				// Constructor
+				//------------------------------------------------------------------------------
 				IParamItem() {}
 				virtual ~IParamItem() {}
+				virtual ::AlxParamItem* GetCStructPtr(void) = 0;
+
+
+				//------------------------------------------------------------------------------
+				// General
+				//------------------------------------------------------------------------------
 				virtual const char* GetKey(void) = 0;
 				virtual uint32_t GetId(void) = 0;
 				virtual uint32_t GetGroupId(void) = 0;
 				virtual AlxParamItem_Type GetType(void) = 0;
 				virtual void* GetValPtr(void) = 0;
 				virtual uint32_t GetValLen(void) = 0;
-				virtual void SetValToDef(void) = 0;
 
+
+				//------------------------------------------------------------------------------
+				// Get
+				//------------------------------------------------------------------------------
 				virtual uint8_t GetValUint8(void) = 0;
 				virtual uint16_t GetValUint16(void) = 0;
 				virtual uint32_t GetValUint32(void) = 0;
@@ -82,7 +96,13 @@ namespace Alx
 				virtual float GetValFloat(void) = 0;
 				virtual double GetValDouble(void) = 0;
 				virtual bool GetValBool(void) = 0;
+				virtual void GetValArr(void* val) = 0;
+				virtual Alx_Status GetValStr(char* val, uint32_t maxLenWithNullTerm) = 0;
 
+
+				//------------------------------------------------------------------------------
+				// Set
+				//------------------------------------------------------------------------------
 				virtual Alx_Status SetValUint8(uint8_t val) = 0;
 				virtual Alx_Status SetValUint16(uint16_t val) = 0;
 				virtual Alx_Status SetValUint32(uint32_t val) = 0;
@@ -94,21 +114,28 @@ namespace Alx
 				virtual Alx_Status SetValFloat(float val) = 0;
 				virtual Alx_Status SetValDouble(double val) = 0;
 				virtual Alx_Status SetValBool(bool val) = 0;
-
-				virtual Alx_Status GetValUint16_StrFormat(char* val, uint32_t maxLenWithNullTerm) = 0;
-				virtual Alx_Status GetValFloat_StrFormat(char* val, uint32_t maxLenWithNullTerm) = 0;
-				virtual Alx_Status GetValBool_StrFormat(char* val, uint32_t maxLenWithNullTerm) = 0;
-
-				virtual Alx_Status SetValUint16_StrFormat(char* val) = 0;
-				virtual Alx_Status SetValFloat_StrFormat(char* val) = 0;
-				virtual Alx_Status SetValBool_StrFormat(char* val) = 0;
-
-				virtual void GetValArr(void* val) = 0;
 				virtual void SetValArr(void* val) = 0;
-				virtual Alx_Status GetValStr(char* val, uint32_t maxLenWithNullTerm) = 0;
 				virtual Alx_Status SetValStr(char* val) = 0;
 
-				virtual ::AlxParamItem* GetCStructPtr(void) = 0;
+
+				//------------------------------------------------------------------------------
+				// Set Default
+				//------------------------------------------------------------------------------
+				virtual void SetValToDef(void) = 0;
+
+
+				//------------------------------------------------------------------------------
+				// Get & Set String Format
+				//------------------------------------------------------------------------------
+				virtual Alx_Status GetVal_StrFormat(char* val, uint32_t maxLenWithNullTerm) = 0;
+				virtual Alx_Status SetVal_StrFormat(char* val) = 0;
+
+
+				//------------------------------------------------------------------------------
+				// Load & Store
+				//------------------------------------------------------------------------------
+				virtual Alx_Status LoadVal(void) = 0;
+				virtual Alx_Status StoreVal(void) = 0;
 		};
 
 
@@ -123,24 +150,45 @@ namespace Alx
 				// Public Functions
 				//------------------------------------------------------------------------------
 
+				//------------------------------------------------------------------------------
+				// Constructor
+				//------------------------------------------------------------------------------
+
 				// Uint8
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					uint8_t valDef,
 					uint8_t valMin,
 					uint8_t valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					uint8_t* enumArr,
+					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorUint8(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorUint8
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Uint16
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					uint16_t valDef,
@@ -151,96 +199,206 @@ namespace Alx
 					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorUint16(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle, enumArr, numOfEnums);
+					AlxParamItem_CtorUint16
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Uint32
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					uint32_t valDef,
 					uint32_t valMin,
 					uint32_t valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					uint32_t* enumArr,
+					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorUint32(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorUint32
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Uint64
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					uint64_t valDef,
 					uint64_t valMin,
 					uint64_t valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					uint64_t* enumArr,
+					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorUint64(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorUint64
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Int8
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					int8_t valDef,
 					int8_t valMin,
 					int8_t valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					int8_t* enumArr,
+					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorInt8(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorInt8
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Int16
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					int16_t valDef,
 					int16_t valMin,
 					int16_t valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					int16_t* enumArr,
+					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorInt16(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorInt16
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Int32
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					int32_t valDef,
 					int32_t valMin,
 					int32_t valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
-					)
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					int32_t* enumArr,
+					uint8_t numOfEnums
+				)
 				{
-					AlxParamItem_CtorInt32(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorInt32
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Int64
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					int64_t valDef,
 					int64_t valMin,
 					int64_t valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					int64_t* enumArr,
+					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorInt64(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorInt64
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Float
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					float valDef,
@@ -251,57 +409,115 @@ namespace Alx
 					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorFloat(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle, enumArr, numOfEnums);
+					AlxParamItem_CtorFloat
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Double
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					double valDef,
 					double valMin,
 					double valMax,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					double* enumArr,
+					uint8_t numOfEnums
 				)
 				{
-					AlxParamItem_CtorDouble(&me, name, id, groupId, valDef, valMin, valMax, valOutOfRangeHandle);
+					AlxParamItem_CtorDouble
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valMin,
+						valMax,
+						valOutOfRangeHandle,
+						enumArr,
+						numOfEnums
+					);
 				}
 				// Bool
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					bool valDef
 				)
 				{
-					AlxParamItem_CtorBool(&me, name, id, groupId, valDef);
+					AlxParamItem_CtorBool
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef
+					);
 				}
 				// Arr
 				ParamItem
 				(
 					const char* name,
 					uint32_t id,
-					uint32_t groupId,
-					void* valDefBuff
+					uint32_t groupId
 				)
 				{
-					//AlxParamItem_CtorArr(&me, name, id, groupId, valDefBuff, arrValBuff, arrValDefBuff, arrBuffLen, AlxParamItem_ValOutOfRangeHandle_Ignore);	// TODO
+					// TODO
 				}
 				// Str
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore* paramKvStore,
+					const char* key,
 					uint32_t id,
 					uint32_t groupId,
 					const char* valDef,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
 				)
 				{
-					AlxParamItem_CtorStr(&me, name, id, groupId, valDef, valOutOfRangeHandle, buff, buffLen);
+					AlxParamItem_CtorStr
+					(
+						&me,
+						paramKvStore,
+						key,
+						id,
+						groupId,
+						valDef,
+						valOutOfRangeHandle,
+						buff,
+						buffLen
+					);
 				}
 				virtual ~ParamItem() {}
+				::AlxParamItem* GetCStructPtr(void) override
+				{
+					return &me;
+				}
+
+
+				//------------------------------------------------------------------------------
+				// General
+				//------------------------------------------------------------------------------
 				const char* GetKey(void) override
 				{
 					return AlxParamItem_GetKey(&me);
@@ -326,10 +542,11 @@ namespace Alx
 				{
 					return AlxParamItem_GetValLen(&me);
 				}
-				void SetValToDef(void) override
-				{
-					AlxParamItem_SetValToDef(&me);
-				}
+
+
+				//------------------------------------------------------------------------------
+				// Get
+				//------------------------------------------------------------------------------
 				uint8_t GetValUint8(void) override
 				{
 					return AlxParamItem_GetValUint8(&me);
@@ -374,6 +591,19 @@ namespace Alx
 				{
 					return AlxParamItem_GetValBool(&me);
 				}
+				void GetValArr(void* val) override
+				{
+					AlxParamItem_GetValArr(&me, val);
+				}
+				Alx_Status GetValStr(char* val, uint32_t maxLenWithNullTerm) override
+				{
+					return AlxParamItem_GetValStr(&me, val, maxLenWithNullTerm);
+				}
+
+
+				//------------------------------------------------------------------------------
+				// Set
+				//------------------------------------------------------------------------------
 				Alx_Status SetValUint8(uint8_t val) override
 				{
 					return AlxParamItem_SetValUint8(&me, val);
@@ -418,49 +648,48 @@ namespace Alx
 				{
 					return AlxParamItem_SetValBool(&me, val);
 				}
-				Alx_Status GetValUint16_StrFormat(char* val, uint32_t maxLenWithNullTerm) override
-				{
-					return AlxParamItem_GetValUint16_StrFormat(&me, val, maxLenWithNullTerm);
-				}
-				Alx_Status GetValFloat_StrFormat(char* val, uint32_t maxLenWithNullTerm) override
-				{
-					return AlxParamItem_GetValFloat_StrFormat(&me, val, maxLenWithNullTerm);
-				}
-				Alx_Status GetValBool_StrFormat(char* val, uint32_t maxLenWithNullTerm) override
-				{
-					return AlxParamItem_GetValBool_StrFormat(&me, val, maxLenWithNullTerm);
-				}
-				Alx_Status SetValUint16_StrFormat(char* val) override
-				{
-					return AlxParamItem_SetValUint16_StrFormat(&me, val);
-				}
-				Alx_Status SetValFloat_StrFormat(char* val) override
-				{
-					return AlxParamItem_SetValFloat_StrFormat(&me, val);
-				}
-				Alx_Status SetValBool_StrFormat(char* val) override
-				{
-					return AlxParamItem_SetValBool_StrFormat(&me, val);
-				}
-				void GetValArr(void* val) override
-				{
-					AlxParamItem_GetValArr(&me, val);
-				}
 				void SetValArr(void* val) override
 				{
 					AlxParamItem_SetValArr(&me, val);
-				}
-				Alx_Status GetValStr(char* val, uint32_t maxLenWithNullTerm) override
-				{
-					return AlxParamItem_GetValStr(&me, val, maxLenWithNullTerm);
 				}
 				Alx_Status SetValStr(char* val) override
 				{
 					return AlxParamItem_SetValStr(&me, val);
 				}
-				::AlxParamItem* GetCStructPtr(void) override
+
+
+				//------------------------------------------------------------------------------
+				// Set Default
+				//------------------------------------------------------------------------------
+				void SetValToDef(void) override
 				{
-					return &me;
+					AlxParamItem_SetValToDef(&me);
+				}
+
+
+				//------------------------------------------------------------------------------
+				// Get & Set String Format
+				//------------------------------------------------------------------------------
+				Alx_Status GetVal_StrFormat(char* val, uint32_t maxLenWithNullTerm) override
+				{
+					return AlxParamItem_GetVal_StrFormat(&me, val, maxLenWithNullTerm);
+				}
+				Alx_Status SetVal_StrFormat(char* val) override
+				{
+					return AlxParamItem_SetVal_StrFormat(&me, val);
+				}
+
+
+				//------------------------------------------------------------------------------
+				// Load & Store
+				//------------------------------------------------------------------------------
+				Alx_Status LoadVal(void) override
+				{
+					return AlxParamItem_LoadVal(&me);
+				}
+				Alx_Status StoreVal(void) override
+				{
+					return AlxParamItem_StoreVal(&me);
 				}
 
 			private:
