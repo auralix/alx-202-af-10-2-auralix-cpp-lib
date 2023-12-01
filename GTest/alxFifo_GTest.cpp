@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file		alxFifo_GTest.cpp
   * @brief		Auralix C++ Library - ALX FIFO Module - Test
-  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
   *
