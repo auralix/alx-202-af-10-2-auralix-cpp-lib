@@ -131,7 +131,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Spi
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4)
 		class Spi : public ASpi
 		{
 			public:
