@@ -140,7 +140,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Can
 		//******************************************************************************
-		#if (defined(ALX_STM32F4) && defined(HAL_CAN_MODULE_ENABLED)) || (defined(ALX_STM32G4) && defined(HAL_FDCAN_MODULE_ENABLED))
+		#if ((defined(ALX_STM32F4) || defined(ALX_STM32L4)) && defined(HAL_CAN_MODULE_ENABLED)) || (defined(ALX_STM32G4) && defined(HAL_FDCAN_MODULE_ENABLED))
 		template <uint32_t txFifoMaxNumOfMsg, uint32_t rxFifoMaxNumOfMsg>
 		class Can : public ACan <txFifoMaxNumOfMsg, rxFifoMaxNumOfMsg>
 		{
@@ -150,7 +150,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				Can
 				(
-					#if defined(ALX_STM32F4)
+					#if defined(ALX_STM32F4) || defined(ALX_STM32L4)
 				 	CAN_TypeDef* can,
 					#endif
 				 	#if defined(ALX_STM32G4)

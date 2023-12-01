@@ -199,7 +199,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Rtc
 		//******************************************************************************
-		#if defined(ALX_STM32F4)
+		#if defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32L4)
 		class Rtc : public ARtc
 		{
 			public:

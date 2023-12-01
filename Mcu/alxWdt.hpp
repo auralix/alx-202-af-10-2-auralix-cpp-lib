@@ -99,7 +99,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Wdt
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32F7)
+		#if defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
 		class Wdt : public AWdt
 		{
 			public:

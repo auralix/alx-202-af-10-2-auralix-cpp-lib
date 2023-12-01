@@ -151,7 +151,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - I2c
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+		#if defined(ALX_STM32F0) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
 		class I2c : public AI2c
 		{
 			public:

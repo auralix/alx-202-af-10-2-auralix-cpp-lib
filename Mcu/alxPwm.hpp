@@ -106,7 +106,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Pwm
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+		#if defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4)
 		class Pwm : public APwm
 		{
 			public:

@@ -154,7 +154,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Trace - STM32
 		//******************************************************************************
-		#if (defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)) && (!defined(ALX_MBED))
+		#if (defined(ALX_STM32F0) || defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)) && (!defined(ALX_MBED))
 		class Trace : public ATrace
 		{
 			public:
@@ -166,9 +166,9 @@ namespace Alx
 					::AlxTrace* me,
 					GPIO_TypeDef* port,
 					uint16_t pin,
-					#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+					#if defined(ALX_STM32F0) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
 					uint32_t alternate,
-					#endif	// defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+					#endif
 					USART_TypeDef* usart,
 					AlxGlobal_BaudRate baudRate
 				) : ATrace(me)
@@ -178,9 +178,9 @@ namespace Alx
 						me,
 						port,
 						pin,
-						#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+						#if defined(ALX_STM32F0) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
 						alternate,
-						#endif	// defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+						#endif
 						usart,
 						baudRate
 					);
