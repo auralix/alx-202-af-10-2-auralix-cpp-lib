@@ -72,9 +72,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ITrace() {}
 				virtual ~ITrace() {}
-				virtual void Init(void) = 0;
-				virtual void DeInit(void) = 0;
-				virtual void WriteStr(const char* str) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status WriteStr(const char* str) = 0;
 				virtual void WriteFormat(const char* format, ...) = 0;
 				virtual void WriteStd(const char* file, uint32_t line, const char* fun, const char* format, ...) = 0;
 				virtual void WriteSm(uint8_t smLevel, const char* smName, const char* stName, const char* acName) = 0;
@@ -92,17 +92,17 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ATrace(::AlxTrace* me) : me(me) {}
 				virtual ~ATrace() {}
-				void Init(void) override
+				Alx_Status Init(void) override
 				{
-					AlxTrace_Init(me);
+					return AlxTrace_Init(me);
 				}
-				void DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
-					AlxTrace_DeInit(me);
+					return AlxTrace_DeInit(me);
 				}
-				void WriteStr(const char* str) override
+				Alx_Status WriteStr(const char* str) override
 				{
-					AlxTrace_WriteStr(me, str);
+					return AlxTrace_WriteStr(me, str);
 				}
 				void WriteFormat(const char* format, ...) override
 				{
@@ -191,7 +191,7 @@ namespace Alx
 
 
 		//******************************************************************************
-		// Class - Trace - Mbed OS
+		// Class - Trace - MBED
 		//******************************************************************************
 		#if defined(ALX_MBED)
 		class Trace : public ATrace
@@ -208,11 +208,15 @@ namespace Alx
 					(void)me;
 				}
 				virtual ~Trace() {}
-				void WriteStr(const char* str) override
+				Alx_Status WriteStr(const char* str) override
 				{
+					Alx_Status status = Alx_Err;
+
 					mutex.lock();
-					AlxTrace_WriteStr(me, str);
+					status = AlxTrace_WriteStr(me, str);
 					mutex.unlock();
+
+					return status;
 				}
 
 			private:
