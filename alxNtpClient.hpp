@@ -164,7 +164,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - NtpClient
 		//******************************************************************************
-		#if defined(ALX_MBED)
+		#if defined(ALX_MBED) && defined(ALX_STM32F4)
 		class NtpClient : public INtpClient
 		{
 			public:

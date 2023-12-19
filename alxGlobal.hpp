@@ -52,14 +52,16 @@
 //******************************************************************************
 #if defined(ALX_MBED)
 #include <mbed.h>
+#include <mbed_trace.h>
+#include <DeviceKey.h>
+#endif
+#if defined(ALX_MBED) && defined(ALX_STM32F4)
 #include <EthernetInterface.h>
 #include <SDBlockDevice.h>
 #include <FATFileSystem.h>
-#include <DeviceKey.h>
 #include <kv_config.h>
 #include "KVStore.h"
 #include "kvstore_global_api.h"
-#include <mbed_trace.h>
 #endif
 #if defined(ALX_MBED_CLOUD_CLIENT)
 #include <mbed-cloud-client/MbedCloudClient.h>
