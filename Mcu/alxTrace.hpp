@@ -46,15 +46,6 @@
 
 
 //******************************************************************************
-// Preprocessor
-//******************************************************************************
-#define ALX_TRACE_STR_CPP(str) do								{ Alx::AlxTrace::alxTraceCpp.WriteStr(str); } while(false)
-#define ALX_TRACE_FORMAT_CPP(...) do							{ Alx::AlxTrace::alxTraceCpp.WriteFormat(__VA_ARGS__); } while(false)
-#define ALX_TRACE_STD_CPP(file, ...) do							{ Alx::AlxTrace::alxTraceCpp.WriteStd(file, __LINE__, __func__, __VA_ARGS__); } while(false)
-#define ALX_TRACE_SM_CPP(smLevel, smName, stName, acName) do	{ Alx::AlxTrace::alxTraceCpp.WriteSm(smLevel, smName, stName, acName); } while(false)
-
-
-//******************************************************************************
 // Code
 //******************************************************************************
 namespace Alx
@@ -154,7 +145,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Trace - STM32
 		//******************************************************************************
-		#if (defined(ALX_STM32F0) || defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)) && (!defined(ALX_MBED))
+		#if defined(ALX_STM32F0) || defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
 		class Trace : public ATrace
 		{
 			public:
@@ -187,52 +178,6 @@ namespace Alx
 				}
 				virtual ~Trace() {}
 		};
-		#endif
-
-
-		//******************************************************************************
-		// Class - Trace - MBED
-		//******************************************************************************
-		#if defined(ALX_MBED)
-		class Trace : public ATrace
-		{
-			public:
-				//------------------------------------------------------------------------------
-				// Public Functions
-				//------------------------------------------------------------------------------
-				Trace
-				(
-					::AlxTrace* me
-				) : ATrace(me)
-				{
-					(void)me;
-				}
-				virtual ~Trace() {}
-				Alx_Status WriteStr(const char* str) override
-				{
-					Alx_Status status = Alx_Err;
-
-					mutex.lock();
-					status = AlxTrace_WriteStr(me, str);
-					mutex.unlock();
-
-					return status;
-				}
-
-			private:
-				//------------------------------------------------------------------------------
-				// Private Variables
-				//------------------------------------------------------------------------------
-				Mutex mutex;
-		};
-		#endif
-
-
-		//******************************************************************************
-		// Variables
-		//******************************************************************************
-		#if defined(ALX_MBED)
-		extern Trace alxTraceCpp;
 		#endif
 	}
 }
