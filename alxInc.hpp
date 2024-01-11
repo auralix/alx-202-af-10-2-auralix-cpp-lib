@@ -90,7 +90,6 @@
 #include "alxMemSafe.hpp"
 #include "alxNtpClient.hpp"
 #include "alxOsCriticalSection.hpp"
-#include "alxOsFlag.hpp"
 #include "alxParamGroup.hpp"
 #include "alxParamItem.hpp"
 #include "alxParamKvStore.hpp"
