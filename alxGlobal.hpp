@@ -88,25 +88,6 @@ namespace Alx
 {
 	namespace AlxGlobal
 	{
-		//******************************************************************************
-		// Functions
-		//******************************************************************************
-		static inline void DisableIrq(void)
-		{
-			#if defined(ALX_MBED)
-			mbed::CriticalSectionLock::enable();
-			#else
-			AlxGlobal_DisableIrq();
-			#endif
-		}
-		static inline void EnableIrq(void)
-		{
-			#if defined(ALX_MBED)
-			mbed::CriticalSectionLock::disable();
-			#else
-			AlxGlobal_EnableIrq();
-			#endif
-		}
 	}
 }
 
