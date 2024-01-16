@@ -95,7 +95,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - FtpClient
 		//******************************************************************************
-		#if defined(ALX_MBED) && defined(ALX_STM32F4)
+		#if defined(ALX_MBED)
 		template <uint32_t BUFF_LEN = 1460>
 		class FtpClient : public IFtpClient
 		{

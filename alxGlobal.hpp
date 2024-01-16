@@ -54,9 +54,9 @@
 #include <mbed.h>
 #include <mbed_trace.h>
 #include <DeviceKey.h>
+#include <EthernetInterface.h>
 #endif
 #if defined(ALX_MBED) && defined(ALX_STM32F4)
-#include <EthernetInterface.h>
 #include <SDBlockDevice.h>
 #include <FATFileSystem.h>
 #include <kv_config.h>
@@ -73,6 +73,8 @@
 // Includes - Auralix C Library Globals
 //******************************************************************************
 #include "alxGlobal.h"
+#include "alxTrace.h"
+#include "alxAssert.h"
 
 
 //******************************************************************************

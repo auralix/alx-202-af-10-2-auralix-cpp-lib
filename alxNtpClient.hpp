@@ -36,7 +36,6 @@
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxOsCriticalSection.hpp"
 #include "alxRtc.hpp"
 
 
@@ -164,7 +163,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - NtpClient
 		//******************************************************************************
-		#if defined(ALX_MBED) && defined(ALX_STM32F4)
+		#if defined(ALX_MBED)
 		class NtpClient : public INtpClient
 		{
 			public:
