@@ -111,7 +111,7 @@ namespace Alx
 					char buff[256] = {};
 					va_list args = {};
 
-					AlxGlobal_Uint64ToStr(AlxTick_Get_ms(&alxTick), buff);
+					AlxGlobal_Ulltoa(AlxTick_Get_ms(&alxTick), buff);
 					WriteFormat("trace;%s;%s;%lu;%s;", buff, file, line, fun);
 
 					va_start(args, format);
@@ -128,7 +128,7 @@ namespace Alx
 						AlxTrace_GetSmLevelStr(smLevel, smLevelStr);
 
 						char tickStr[50] = {};
-						AlxGlobal_Uint64ToStr(AlxTick_Get_ms(&alxTick), tickStr);
+						AlxGlobal_Ulltoa(AlxTick_Get_ms(&alxTick), tickStr);
 
 						WriteFormat("traceSm;%s;%s%s_%s_%s\r\n", tickStr, smLevelStr, smName, stName, acName);
 					}
