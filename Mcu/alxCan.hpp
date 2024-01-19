@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxPwm.hpp
-  * @brief		Auralix C++ Library - ALX PWM Module
+  * @file		alxCan.hpp
+  * @brief		Auralix C++ Library - ALX CAN Module
   * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,16 +28,17 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_PWM_HPP
-#define ALX_PWM_HPP
+#ifndef ALX_CAN_HPP
+#define ALX_CAN_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxPwm.h"
+#include "alxCan.h"
 #include "alxClk.hpp"
+#include "alxFifo.hpp"
 #include "alxIoPin.hpp"
 
 
@@ -52,122 +53,134 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxPwm
+	namespace AlxCan
 	{
 		//******************************************************************************
-		// Class - IPwm
+		// Class - ICan
 		//******************************************************************************
-		class IPwm
+		class ICan
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IPwm() {}
-				virtual ~IPwm() {}
+				ICan() {}
+				virtual ~ICan() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status SetDuty_pct(Alx_Ch ch, float duty_pct) = 0;
+				virtual Alx_Status ReInit(void) = 0;
+				virtual Alx_Status TxMsg(AlxCan_Msg msg) = 0;
+				virtual Alx_Status TxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) = 0;
+				virtual Alx_Status RxMsg(AlxCan_Msg* msg) = 0;
+				virtual Alx_Status RxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) = 0;
+				virtual bool IsErr(void) = 0;
+				virtual void IrqHandler(void) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - APwm
+		// Class - ACan
 		//******************************************************************************
-		class APwm : public IPwm
+		template <uint32_t txFifoMaxNumOfMsg, uint32_t rxFifoMaxNumOfMsg>
+		class ACan : public ICan
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				APwm() {}
-				virtual ~APwm() {}
+				ACan() {}
+				virtual ~ACan() {}
 				Alx_Status Init(void) override
 				{
-					return AlxPwm_Init(&me);
+					return AlxCan_Init(&me);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxPwm_DeInit(&me);
+					return AlxCan_DeInit(&me);
 				}
-				Alx_Status SetDuty_pct(Alx_Ch ch, float duty_pct) override
+				Alx_Status ReInit(void) override
 				{
-					return AlxPwm_SetDuty_pct(&me, ch, duty_pct);
+					return AlxCan_ReInit(&me);
+				}
+				Alx_Status TxMsg(AlxCan_Msg msg) override
+				{
+					return AlxCan_TxMsg(&me, msg);
+				}
+				Alx_Status TxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) override
+				{
+					return AlxCan_TxMsgMulti(&me, msg, numOfMsg);
+				}
+				Alx_Status RxMsg(AlxCan_Msg* msg) override
+				{
+					return AlxCan_RxMsg(&me, msg);
+				}
+				Alx_Status RxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) override
+				{
+					return AlxCan_RxMsgMulti(&me, msg, numOfMsg);
+				}
+				bool IsErr(void) override
+				{
+					return AlxCan_IsErr(&me);
+				}
+				void IrqHandler(void) override
+				{
+					return AlxCan_IrqHandler(&me);
 				}
 
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
 				//------------------------------------------------------------------------------
-				::AlxPwm me = {};
+				::AlxCan me = {};
+				AlxFifo::Fifo<txFifoMaxNumOfMsg * sizeof(AlxCan_Msg)> txFifo = {};
+				AlxFifo::Fifo<rxFifoMaxNumOfMsg * sizeof(AlxCan_Msg)> rxFifo = {};
 		};
 
 
 		//******************************************************************************
-		// Class - Pwm
+		// Class - Can
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
-		class Pwm : public APwm
+		#if ((defined(ALX_STM32F4) || defined(ALX_STM32L4)) && defined(HAL_CAN_MODULE_ENABLED)) || (defined(ALX_STM32G4) && defined(HAL_FDCAN_MODULE_ENABLED))
+		template <uint32_t txFifoMaxNumOfMsg, uint32_t rxFifoMaxNumOfMsg>
+		class Can : public ACan <txFifoMaxNumOfMsg, rxFifoMaxNumOfMsg>
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Pwm
+				Can
 				(
-					TIM_TypeDef* tim,
-					AlxIoPin::IIoPin** ioPinArr,
-					Alx_Ch* chArr,
-					float* dutyDefaultArr_pct,
-					uint8_t numOfCh,
- 					AlxClk::IClk* clk,
-					uint32_t prescaler,
-					uint32_t period
+					#if defined(ALX_STM32F4) || defined(ALX_STM32L4)
+				 	CAN_TypeDef* can,
+					#endif
+				 	#if defined(ALX_STM32G4)
+					FDCAN_GlobalTypeDef* can,
+					#endif
+					AlxIoPin::IIoPin* do_CAN_TX,
+					AlxIoPin::IIoPin* di_CAN_RX,
+					AlxClk::IClk* clk,
+					AlxCan_Clk canClk,
+					Alx_IrqPriority txIrqPriority,
+					Alx_IrqPriority rxIrqPriority
 				)
 				{
-					for (uint32_t i = 0; i < numOfCh; i++)
-					{
-						AlxIoPin::IIoPin* temp = *(ioPinArr + i);
-						pwmIoPinArr[i] = temp->GetCStructPtr();
-					}
-
-					AlxPwm_Ctor
+					AlxCan_Ctor
 					(
-						&me,
-						tim,
-						pwmIoPinArr,
-						chArr,
-						numOfCh,
+						&this->me,
+						can,
+						do_CAN_TX->GetCStructPtr(),
+						di_CAN_RX->GetCStructPtr(),
 						clk->GetCStructPtr(),
-						dutyDefaultArr_pct,
-						prescaler,
-						period
+						canClk,
+						this->txFifo.GetBuffPtr(),
+						txFifoMaxNumOfMsg * sizeof(AlxCan_Msg),
+						this->rxFifo.GetBuffPtr(),
+						txFifoMaxNumOfMsg * sizeof(AlxCan_Msg),
+						txIrqPriority,
+						rxIrqPriority
 					);
 				}
-				virtual ~Pwm() {}
-
-			private:
-				//------------------------------------------------------------------------------
-				// Private Variables
-				//------------------------------------------------------------------------------
-				::AlxIoPin* pwmIoPinArr[ALX_PWM_BUFF_LEN] = {};
-		};
-		#endif
-
-
-		//******************************************************************************
-		// Class - MockPwm
-		//******************************************************************************
-		#if defined(ALX_GTEST)
-		class MockPwm : public IPwm
-		{
-			public:
-				//------------------------------------------------------------------------------
-				// Public Functions
-				//------------------------------------------------------------------------------
-				MOCK_METHOD(Alx_Status, Init, (), (override));
-				MOCK_METHOD(Alx_Status, DeInit, (), (override));
-				MOCK_METHOD(Alx_Status, SetDuty_pct, (Alx_Ch ch, float duty_pct), (override));
+				virtual ~Can() {}
 		};
 		#endif
 	}
@@ -176,4 +189,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_PWM_HPP
+#endif	// #ifndef ALX_CAN_HPP

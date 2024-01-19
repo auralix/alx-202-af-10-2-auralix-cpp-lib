@@ -1,8 +1,8 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxIoPin.hpp
-  * @brief		Auralix C++ Library - ALX IO Pin Module
-  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  * @file		alxFs.hpp
+  * @brief		Auralix C++ Library - ALX File System Module
+  * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
   *
@@ -28,15 +28,15 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_IO_PIN_HPP
-#define ALX_IO_PIN_HPP
+#ifndef ALX_FS_HPP
+#define ALX_FS_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxIoPin.h"
+#include "alxFs.h"
 
 
 //******************************************************************************
@@ -50,127 +50,52 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxIoPin
+	namespace AlxFs
 	{
 		//******************************************************************************
-		// Class - IIoPin
+		// Class - IFs
 		//******************************************************************************
-		class IIoPin
+		class IFs
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IIoPin() {}
-				virtual ~IIoPin() {}
-				virtual void Init(void) = 0;
-				virtual void DeInit(void) = 0;
-				virtual bool Read(void) = 0;
-				virtual void Write(bool val) = 0;
-				virtual void Set(void) = 0;
-				virtual void Reset(void) = 0;
-				virtual void Toggle(void) = 0;
-				virtual AlxIoPin_TriState Read_TriState(void) = 0;
-				virtual ::AlxIoPin* GetCStructPtr(void) = 0;
+				IFs() {}
+				virtual ~IFs() {}
+				virtual int32_t Mount(void) = 0;
+				virtual int32_t UnMount(void) = 0;
+				virtual int32_t Format(void) = 0;
+				virtual int32_t Remove(const char* path) = 0;
+//				virtual int32_t FileOpen(AlxFs_File* file, const char* path, int32_t flags) = 0;	// TODO
+//				virtual int32_t FileClose(AlxFs_File* file) = 0;
+//				virtual int32_t FileRead(AlxFs_File* file, void* buff, uint32_t len) = 0;
+//				virtual int32_t FileWrite(AlxFs_File* file, void* buff, uint32_t len) = 0;
+				virtual ::AlxFs* GetCStructPtr(void) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - AIoPin
+		// Class - Fs
 		//******************************************************************************
-		class AIoPin : public IIoPin
+		class Fs : public IFs
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AIoPin() {}
-				virtual ~AIoPin() {}
-				void Init(void) override
-				{
-					AlxIoPin_Init(&me);
-				}
-				void DeInit(void) override
-				{
-					AlxIoPin_DeInit(&me);
-				}
-				bool Read(void) override
-				{
-					return AlxIoPin_Read(&me);
-				}
-				void Write(bool val) override
-				{
-					AlxIoPin_Write(&me, val);
-				}
-				void Set(void) override
-				{
-					AlxIoPin_Set(&me);
-				}
-				void Reset(void) override
-				{
-					AlxIoPin_Reset(&me);
-				}
-				void Toggle(void) override
-				{
-					AlxIoPin_Toggle(&me);
-				}
-				AlxIoPin_TriState Read_TriState(void) override
-				{
-					return AlxIoPin_Read_TriState(&me);
-				}
-				::AlxIoPin* GetCStructPtr(void) override
-				{
-					return &me;
-				}
+				// TODO
 
-			protected:
+			private:
 				//------------------------------------------------------------------------------
-				// Protected Variables
+				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxIoPin me = {};
+				::AlxFs me = {};
 		};
-
-
-		//******************************************************************************
-		// Class - IoPin
-		//******************************************************************************
-		#if defined (ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
-		class IoPin : public AIoPin
-		{
-			public:
-				//------------------------------------------------------------------------------
-				// Public Functions
-				//------------------------------------------------------------------------------
-				IoPin
-				(
-					GPIO_TypeDef* port,
-					uint16_t pin,
-					uint32_t mode,
-					uint32_t pull,
-					uint32_t speed,
-					uint32_t alternate,
-					bool val
-				)
-				{
-					AlxIoPin_Ctor
-					(
-						&me,
-						port,
-						pin,
-						mode,
-						pull,
-						speed,
-						alternate,
-						val
-					);
-				}
-				virtual ~IoPin() {}
-		};
-		#endif
 	}
 }
 
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_IO_PIN_HPP
+#endif	// #ifndef ALX_FS_HPP

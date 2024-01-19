@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file		alxAdxl355.hpp
   * @brief		Auralix C++ Library - ALX Accelerometer ADXL355 Module
-  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
   *
@@ -123,48 +123,11 @@ namespace Alx
 				}
 				Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint32_t len) override
 				{
-					#if defined(ALX_MBED)
-					ALX_ADXL355_ASSERT(me.isInit == true);
-					ALX_ADXL355_ASSERT(me.wasCtorCalled == true);
-					ALX_ADXL355_ASSERT((0 < len) && (len <= me.fifoBuffLen));
-
-					// #1 Prepare variables
-					Alx_Status status = Alx_Err;
-
-					// #2 Read acceleration from FIFO
-					for (uint32_t i = 0; i < len; i++)
-					{
-						uint32_t xyzLen = sizeof(AlxAdxl355_Xyz_g);
-						uint8_t* ptr = (uint8_t*)&xyz_g[i * xyzLen];
-
-						mbed::CriticalSectionLock::enable();
-						status = AlxFifo_Read(&me.fifo, ptr, xyzLen);
-						mbed::CriticalSectionLock::disable();
-
-						if(status == AlxFifo_ErrEmpty)
-						{
-							break;	// We break if there are no more messages in ALX RX FIFO
-						}
-						else if(status != Alx_Ok)
-						{
-							ALX_ADXL355_ASSERT(false);	// We should never get here
-							break;
-						}
-					}
-
-					// #3 Return status
-					return status;
-					#else
 					return AlxAdxl355_GetXyzMulti_g(&me, xyz_g, len);
-					#endif
 				}
 				Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) override
 				{
-					#if defined(ALX_MBED)
-					return GetXyz_g(xyz_g, 1);
-					#else
 					return AlxAdxl355_GetXyz_g(&me, xyz_g);
-					#endif
 				}
 				float GetTemp_degC(void) override
 				{

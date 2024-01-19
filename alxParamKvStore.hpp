@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxMemSafe.hpp
-  * @brief		Auralix C++ Library - ALX Memory Safe Module
+  * @file		alxParamKvStore.hpp
+  * @brief		Auralix C++ Library - ALX Parameter Key-Value Store Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,17 +28,16 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_MEM_SAFE_HPP
-#define ALX_MEM_SAFE_HPP
+#ifndef ALX_PARAM_KV_STORE_HPP
+#define ALX_PARAM_KV_STORE_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxMemSafe.h"
-#include "alxCrc.hpp"
-#include "alxMemRaw.hpp"
+#include "alxParamKvStore.h"
+#include "alxFs.hpp"
 
 
 //******************************************************************************
@@ -52,96 +51,70 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxMemSafe
+	namespace AlxParamKvStore
 	{
 		//******************************************************************************
-		// Class - IMemSafe
+		// Class - IParamKvStore
 		//******************************************************************************
-		class IMemSafe
+		class IParamKvStore
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IMemSafe() {}
-				virtual ~IMemSafe() {}
-				virtual Alx_Status Read(uint8_t* data, uint32_t len) = 0;
-				virtual Alx_Status Write(uint8_t* data, uint32_t len) = 0;
-				virtual bool IsReadDone(void) = 0;
-				virtual bool IsReadErr(void) = 0;
-				virtual bool IsWriteDone(void) = 0;
-				virtual bool IsWriteErr(void) = 0;
-				virtual ::AlxMemSafe* GetCStructPtr(void) = 0;
+				IParamKvStore() {}
+				virtual ~IParamKvStore() {}
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Get(const char* key, void* buff, uint32_t len, uint32_t* actualLen) = 0;
+				virtual Alx_Status Set(const char* key, void* buff, uint32_t len) = 0;
+				virtual Alx_Status Remove(const char* key) = 0;
+				virtual ::AlxParamKvStore* GetCStructPtr(void) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - MemSafe
+		// Class - ParamKvStore
 		//******************************************************************************
-		template <uint32_t buff1Len, uint32_t buff2Len>
-		class MemSafe : public IMemSafe
+		class ParamKvStore : public IParamKvStore
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				MemSafe
+				ParamKvStore
 				(
-					AlxMemRaw::MemRaw* memRaw,
-					AlxCrc::Crc* crc,
-					uint32_t copyAddrA,
-					uint32_t copyAddrB,
-					uint32_t copyLen,
-					bool nonBlockingEnable,
-					uint8_t memSafeReadWriteNumOfTries,
-					uint8_t memRawReadWriteNumOfTries,
-					uint16_t memRawReadWriteTimeout_ms
+					AlxFs::IFs* fs
 				)
 				{
-					AlxMemSafe_Ctor
+					AlxParamKvStore_Ctor
 					(
 						&me,
-						memRaw->GetCStructPtr(),
-						crc->GetCStructPtr(),
-						copyAddrA,
-						copyAddrB,
-						copyLen,
-						nonBlockingEnable,
-						memSafeReadWriteNumOfTries,
-						memRawReadWriteNumOfTries,
-						memRawReadWriteTimeout_ms,
-						buff1,
-						buff1Len,
-						buff2,
-						buff2Len
+						fs->GetCStructPtr()
 					);
 				}
-				virtual ~MemSafe() {}
-				Alx_Status Read(uint8_t* data, uint32_t len) override
+				virtual ~ParamKvStore() {}
+				Alx_Status Init(void) override
 				{
-					return AlxMemSafe_Read(&me, data, len);
+					return AlxParamKvStore_Init(&me);
 				}
-				Alx_Status Write(uint8_t* data, uint32_t len) override
+				Alx_Status DeInit(void) override
 				{
-					return AlxMemSafe_Write(&me, data, len);
+					return AlxParamKvStore_DeInit(&me);
 				}
-				bool IsReadDone(void) override
+				Alx_Status Get(const char* key, void* buff, uint32_t len, uint32_t* actualLen) override
 				{
-					return AlxMemSafe_IsReadDone(&me);
+					return AlxParamKvStore_Get(&me, key, buff, len, actualLen);
 				}
-				bool IsReadErr(void) override
+				Alx_Status Set(const char* key, void* buff, uint32_t len) override
 				{
-					return AlxMemSafe_IsReadErr(&me);
+					return AlxParamKvStore_Set(&me, key, buff, len);
 				}
-				bool IsWriteDone(void) override
+				Alx_Status Remove(const char* key) override
 				{
-					return AlxMemSafe_IsWriteDone(&me);
+					return AlxParamKvStore_Remove(&me, key);
 				}
-				bool IsWriteErr(void) override
-				{
-					return AlxMemSafe_IsWriteErr(&me);
-				}
-				::AlxMemSafe* GetCStructPtr(void) override
+				::AlxParamKvStore* GetCStructPtr(void) override
 				{
 					return &me;
 				}
@@ -150,9 +123,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxMemSafe me = {};
-				uint8_t buff1[buff1Len] ={};
-				uint8_t buff2[buff2Len] ={};
+				::AlxParamKvStore me = {};
 		};
 	}
 }
@@ -160,4 +131,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_MEM_SAFE_HPP
+#endif	// #ifndef ALX_PARAM_KV_STORE_HPP

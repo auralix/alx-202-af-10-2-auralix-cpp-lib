@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file		alxGlobal.hpp
   * @brief		Auralix C++ Library - ALX Global Module
-  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
   *
@@ -52,14 +52,16 @@
 //******************************************************************************
 #if defined(ALX_MBED)
 #include <mbed.h>
+#include <mbed_trace.h>
+#include <DeviceKey.h>
 #include <EthernetInterface.h>
+#endif
+#if defined(ALX_MBED) && defined(ALX_STM32F4)
 #include <SDBlockDevice.h>
 #include <FATFileSystem.h>
-#include <DeviceKey.h>
 #include <kv_config.h>
 #include "KVStore.h"
 #include "kvstore_global_api.h"
-#include <mbed_trace.h>
 #endif
 #if defined(ALX_MBED_CLOUD_CLIENT)
 #include <mbed-cloud-client/MbedCloudClient.h>
@@ -71,6 +73,8 @@
 // Includes - Auralix C Library Globals
 //******************************************************************************
 #include "alxGlobal.h"
+#include "alxTrace.h"
+#include "alxAssert.h"
 
 
 //******************************************************************************
@@ -86,25 +90,6 @@ namespace Alx
 {
 	namespace AlxGlobal
 	{
-		//******************************************************************************
-		// Functions
-		//******************************************************************************
-		static inline void DisableIrq(void)
-		{
-			#if defined(ALX_MBED)
-			mbed::CriticalSectionLock::enable();
-			#else
-			AlxGlobal_DisableIrq();
-			#endif
-		}
-		static inline void EnableIrq(void)
-		{
-			#if defined(ALX_MBED)
-			mbed::CriticalSectionLock::disable();
-			#else
-			AlxGlobal_EnableIrq();
-			#endif
-		}
 	}
 }
 

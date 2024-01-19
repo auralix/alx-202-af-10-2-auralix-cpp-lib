@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file		alxNtpClient.hpp
   * @brief		Auralix C++ Library - ALX NTP Client Module
-  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
   *
@@ -36,7 +36,6 @@
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxOsCriticalSection.hpp"
 #include "alxRtc.hpp"
 
 
@@ -277,9 +276,9 @@ namespace Alx
 					}
 
 					// #10 Send request to server to get time
-					Alx::AlxOsCriticalSection::Enter();
+					AlxGlobal_DisableIrq();
 					ut.T1_ns = rtc->GetUnixTime_ns();
-					Alx::AlxOsCriticalSection::Exit();
+					AlxGlobal_EnableIrq();
 					nsapiSizeOrError = sock.send(txPacket, sizeof(txPacket));
 					if (nsapiSizeOrError != sizeof(txPacket))
 					{
@@ -296,9 +295,9 @@ namespace Alx
 						Reset();
 						return Alx_Err;
 					}
-					Alx::AlxOsCriticalSection::Enter();
+					AlxGlobal_DisableIrq();
 					ut.T4_ns = rtc->GetUnixTime_ns();
-					Alx::AlxOsCriticalSection::Exit();
+					AlxGlobal_EnableIrq();
 
 					// #12 Close Socket
 					nsapiError = sock.close();

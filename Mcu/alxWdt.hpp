@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxOsFlag.hpp
-  * @brief		Auralix C++ Library - ALX OS Flag Module
+  * @file		alxWdt.hpp
+  * @brief		Auralix C++ Library - ALX Watchdog Timer Module
   * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,14 +28,15 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_OS_FLAG_HPP
-#define ALX_OS_FLAG_HPP
+#ifndef ALX_WDT_HPP
+#define ALX_WDT_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
+#include "alxWdt.h"
 
 
 //******************************************************************************
@@ -45,104 +46,78 @@
 
 
 //******************************************************************************
-// Preprocessor
-//******************************************************************************
-#define ALX_OS_FLAG_FILE "alxOsFlag.hpp"
-
-// Assert //
-#if defined(_ALX_OS_FLAG_ASSERT_BKPT) || defined(_ALX_ASSERT_BKPT_ALL)
-	#define ALX_OS_FLAG_ASSERT(expr) ALX_ASSERT_BKPT(ALX_OS_FLAG_FILE, expr)
-#elif defined(_ALX_OS_FLAG_ASSERT_TRACE) || defined(_ALX_ASSERT_TRACE_ALL)
-	#define ALX_OS_FLAG_ASSERT(expr) ALX_ASSERT_TRACE(ALX_OS_FLAG_FILE, expr)
-#elif defined(_ALX_OS_FLAG_ASSERT_RST) || defined(_ALX_ASSERT_RST_ALL)
-	#define ALX_OS_FLAG_ASSERT(expr) ALX_ASSERT_RST(ALX_OS_FLAG_FILE, expr)
-#else
-	#define ALX_OS_FLAG_ASSERT(expr) do{} while (false)
-#endif
-
-// Trace //
-#if defined(_ALX_OS_FLAG_TRACE) || defined(_ALX_TRACE_ALL)
-	#define ALX_OS_FLAG_TRACE(...) ALX_TRACE_STD(ALX_OS_FLAG_FILE, __VA_ARGS__)
-#else
-	#define ALX_OS_FLAG_TRACE(...) do{} while (false)
-#endif
-
-
-//******************************************************************************
 // Code
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxOsFlag
+	namespace AlxWdt
 	{
 		//******************************************************************************
-		// Class - IOsFlag
+		// Class - IWdt
 		//******************************************************************************
-		class IOsFlag
+		class IWdt
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IOsFlag() {}
-				virtual ~IOsFlag() {}
-				virtual void Assert(void) = 0;
-				virtual void DeAssert(void) = 0;
-				virtual bool IsAsserted(void) = 0;
-				virtual bool IsDeAsserted(void) = 0;
-				virtual void OsWaitUntilDeAsserted(void) = 0;
+				IWdt() {}
+				virtual ~IWdt() {}
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status Refresh(void) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - OsFlag
+		// Class - AWdt
 		//******************************************************************************
-		#if defined(ALX_MBED)
-		class OsFlag : public IOsFlag
+		class AWdt : public IWdt
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				OsFlag(const char* name) : eventFlags(name)
+				AWdt() {}
+				virtual ~AWdt() {}
+				Alx_Status Init(void) override
 				{
-					DeAssert();
+					return AlxWdt_Init(&me);
 				}
-				virtual ~OsFlag() {}
-				void Assert(void) override
+				Alx_Status Refresh(void) override
 				{
-					uint32_t status = eventFlags.clear(0x00000001);	// We have active low logic
-					ALX_OS_FLAG_ASSERT(status == 0x00000001);
-				}
-				void DeAssert(void) override
-				{
-					uint32_t status = eventFlags.set(0x00000001);	// We have active low logic
-					ALX_OS_FLAG_ASSERT(status == 0x00000001);
-				}
-				bool IsAsserted(void) override
-				{
-					uint32_t flags = eventFlags.get();
-
-					if (flags == 0x00000000)	// Flag is asserted if low
-						return true;
-					else
-						return false;
-				}
-				bool IsDeAsserted(void) override
-				{
-					return !IsAsserted();
-				}
-				void OsWaitUntilDeAsserted(void) override
-				{
-					uint32_t status = eventFlags.wait_all(0x00000001, osWaitForever, false);
-					ALX_OS_FLAG_ASSERT(status == 0x00000001);
+					return AlxWdt_Refresh(&me);
 				}
 
-			private:
+			protected:
 				//------------------------------------------------------------------------------
-				// Private Variables
+				// Protected Variables
 				//------------------------------------------------------------------------------
-				rtos::EventFlags eventFlags;
+				::AlxWdt me = {};
+		};
+
+
+		//******************************************************************************
+		// Class - Wdt
+		//******************************************************************************
+		#if defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
+		class Wdt : public AWdt
+		{
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				Wdt
+				(
+					AlxWdt_Config config
+				)
+				{
+					AlxWdt_Ctor
+					(
+						&me,
+						config
+					);
+				}
+				virtual ~Wdt() {}
 		};
 		#endif
 	}
@@ -151,4 +126,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_OS_FLAG_HPP
+#endif	// #ifndef ALX_WDT_HPP

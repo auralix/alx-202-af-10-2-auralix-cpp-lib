@@ -46,15 +46,6 @@
 
 
 //******************************************************************************
-// Preprocessor
-//******************************************************************************
-#define ALX_TRACE_STR_CPP(str) do								{ Alx::AlxTrace::alxTraceCpp.WriteStr(str); } while(false)
-#define ALX_TRACE_FORMAT_CPP(...) do							{ Alx::AlxTrace::alxTraceCpp.WriteFormat(__VA_ARGS__); } while(false)
-#define ALX_TRACE_STD_CPP(file, ...) do							{ Alx::AlxTrace::alxTraceCpp.WriteStd(file, __LINE__, __func__, __VA_ARGS__); } while(false)
-#define ALX_TRACE_SM_CPP(smLevel, smName, stName, acName) do	{ Alx::AlxTrace::alxTraceCpp.WriteSm(smLevel, smName, stName, acName); } while(false)
-
-
-//******************************************************************************
 // Code
 //******************************************************************************
 namespace Alx
@@ -72,9 +63,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ITrace() {}
 				virtual ~ITrace() {}
-				virtual void Init(void) = 0;
-				virtual void DeInit(void) = 0;
-				virtual void WriteStr(const char* str) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status WriteStr(const char* str) = 0;
 				virtual void WriteFormat(const char* format, ...) = 0;
 				virtual void WriteStd(const char* file, uint32_t line, const char* fun, const char* format, ...) = 0;
 				virtual void WriteSm(uint8_t smLevel, const char* smName, const char* stName, const char* acName) = 0;
@@ -92,17 +83,17 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ATrace(::AlxTrace* me) : me(me) {}
 				virtual ~ATrace() {}
-				void Init(void) override
+				Alx_Status Init(void) override
 				{
-					AlxTrace_Init(me);
+					return AlxTrace_Init(me);
 				}
-				void DeInit(void) override
+				Alx_Status DeInit(void) override
 				{
-					AlxTrace_DeInit(me);
+					return AlxTrace_DeInit(me);
 				}
-				void WriteStr(const char* str) override
+				Alx_Status WriteStr(const char* str) override
 				{
-					AlxTrace_WriteStr(me, str);
+					return AlxTrace_WriteStr(me, str);
 				}
 				void WriteFormat(const char* format, ...) override
 				{
@@ -120,7 +111,7 @@ namespace Alx
 					char buff[256] = {};
 					va_list args = {};
 
-					AlxGlobal_Uint64ToStr(AlxTick_Get_ms(&alxTick), buff);
+					AlxGlobal_Ulltoa(AlxTick_Get_ms(&alxTick), buff);
 					WriteFormat("trace;%s;%s;%lu;%s;", buff, file, line, fun);
 
 					va_start(args, format);
@@ -137,7 +128,7 @@ namespace Alx
 						AlxTrace_GetSmLevelStr(smLevel, smLevelStr);
 
 						char tickStr[50] = {};
-						AlxGlobal_Uint64ToStr(AlxTick_Get_ms(&alxTick), tickStr);
+						AlxGlobal_Ulltoa(AlxTick_Get_ms(&alxTick), tickStr);
 
 						WriteFormat("traceSm;%s;%s%s_%s_%s\r\n", tickStr, smLevelStr, smName, stName, acName);
 					}
@@ -154,7 +145,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Trace - STM32
 		//******************************************************************************
-		#if (defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)) && (!defined(ALX_MBED))
+		#if defined(ALX_STM32F0) || defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
 		class Trace : public ATrace
 		{
 			public:
@@ -166,9 +157,9 @@ namespace Alx
 					::AlxTrace* me,
 					GPIO_TypeDef* port,
 					uint16_t pin,
-					#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+					#if defined(ALX_STM32F0) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
 					uint32_t alternate,
-					#endif	// defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+					#endif
 					USART_TypeDef* usart,
 					AlxGlobal_BaudRate baudRate
 				) : ATrace(me)
@@ -178,57 +169,15 @@ namespace Alx
 						me,
 						port,
 						pin,
-						#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+						#if defined(ALX_STM32F0) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
 						alternate,
-						#endif	// defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
+						#endif
 						usart,
 						baudRate
 					);
 				}
 				virtual ~Trace() {}
 		};
-		#endif
-
-
-		//******************************************************************************
-		// Class - Trace - Mbed OS
-		//******************************************************************************
-		#if defined(ALX_MBED)
-		class Trace : public ATrace
-		{
-			public:
-				//------------------------------------------------------------------------------
-				// Public Functions
-				//------------------------------------------------------------------------------
-				Trace
-				(
-					::AlxTrace* me
-				) : ATrace(me)
-				{
-					(void)me;
-				}
-				virtual ~Trace() {}
-				void WriteStr(const char* str) override
-				{
-					mutex.lock();
-					AlxTrace_WriteStr(me, str);
-					mutex.unlock();
-				}
-
-			private:
-				//------------------------------------------------------------------------------
-				// Private Variables
-				//------------------------------------------------------------------------------
-				Mutex mutex;
-		};
-		#endif
-
-
-		//******************************************************************************
-		// Variables
-		//******************************************************************************
-		#if defined(ALX_MBED)
-		extern Trace alxTraceCpp;
 		#endif
 	}
 }

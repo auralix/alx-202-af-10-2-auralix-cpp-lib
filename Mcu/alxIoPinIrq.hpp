@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxWdt.hpp
-  * @brief		Auralix C++ Library - ALX Watchdog Timer Module
+  * @file		alxIoPinIrq.hpp
+  * @brief		Auralix C++ Library - ALX IO Pin Module
   * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,15 +28,16 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_WDT_HPP
-#define ALX_WDT_HPP
+#ifndef ALX_IO_PIN_IRQ_HPP
+#define ALX_IO_PIN_IRQ_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxWdt.h"
+#include "alxIoPinIrq.h"
+#include "alxIoPin.hpp"
 
 
 //******************************************************************************
@@ -50,74 +51,90 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxWdt
+	namespace AlxIoPinIrq
 	{
 		//******************************************************************************
-		// Class - IWdt
+		// Class - IIoPinIrq
 		//******************************************************************************
-		class IWdt
+		class IIoPinIrq
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IWdt() {}
-				virtual ~IWdt() {}
-				virtual Alx_Status Init(void) = 0;
-				virtual Alx_Status Refresh(void) = 0;
+				IIoPinIrq() {}
+				virtual ~IIoPinIrq() {}
+				virtual void Init(void) = 0;
+				virtual void DeInit(void) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - AWdt
+		// Class - AIoPinIrq
 		//******************************************************************************
-		class AWdt : public IWdt
+		class AIoPinIrq : public IIoPinIrq
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AWdt() {}
-				virtual ~AWdt() {}
-				Alx_Status Init(void) override
+				AIoPinIrq() {}
+				virtual ~AIoPinIrq() {}
+				void Init(void) override
 				{
-					return AlxWdt_Init(&me);
+					return AlxIoPinIrq_Init(&me);
 				}
-				Alx_Status Refresh(void) override
+				void DeInit(void) override
 				{
-					return AlxWdt_Refresh(&me);
+					return AlxIoPinIrq_DeInit(&me);
 				}
 
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
 				//------------------------------------------------------------------------------
-				::AlxWdt me = {};
+				::AlxIoPinIrq me = {};
 		};
 
 
 		//******************************************************************************
-		// Class - Wdt
+		// Class - IoPinIrq
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32F7)
-		class Wdt : public AWdt
+		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4)
+		class IoPinIrq : public AIoPinIrq
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Wdt
+				IoPinIrq
 				(
-					AlxWdt_Config config
+					AlxIoPin::IIoPin** ioPinArr,
+					uint8_t numOfIoPins,
+					Alx_IrqPriority* irqPriorityArr
 				)
 				{
-					AlxWdt_Ctor
+					for (uint32_t i = 0; i < numOfIoPins; i++)
+					{
+						AlxIoPin::IIoPin* temp = *(ioPinArr + i);
+						ioPinIrqIoPinArr[i] = temp->GetCStructPtr();
+					}
+
+					AlxIoPinIrq_Ctor
 					(
 						&me,
-						config
+						ioPinIrqIoPinArr,
+						numOfIoPins,
+						irqPriorityArr
 					);
 				}
-				virtual ~Wdt() {}
+				virtual ~IoPinIrq() {}
+
+			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
+				::AlxIoPin* ioPinIrqIoPinArr[ALX_IO_PIN_IRQ_BUFF_LEN] = {};
 		};
 		#endif
 	}
@@ -126,4 +143,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_WDT_HPP
+#endif	// #ifndef ALX_IO_PIN_IRQ_HPP

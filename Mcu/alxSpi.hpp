@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxSerialPort.hpp
-  * @brief		Auralix C++ Library - ALX Serial Port Module
+  * @file		alxSpi.hpp
+  * @brief		Auralix C++ Library - ALX SPI Module
   * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,17 +28,17 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_SERIAL_PORT_HPP
-#define ALX_SERIAL_PORT_HPP
+#ifndef ALX_SPI_HPP
+#define ALX_SPI_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxSerialPort.h"
+#include "alxSpi.h"
 #include "alxIoPin.hpp"
-#include "alxFifo.hpp"
+#include "alxClk.hpp"
 
 
 //******************************************************************************
@@ -52,141 +52,129 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxSerialPort
+	namespace AlxSpi
 	{
 		//******************************************************************************
-		// Class - ISerialPort
+		// Class - ISpi
 		//******************************************************************************
-		class ISerialPort
+		class ISpi
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ISerialPort() {}
-				virtual ~ISerialPort() {}
+				ISpi() {}
+				virtual ~ISpi() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status Read(uint8_t* data, uint32_t len) = 0;
-				virtual Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t* numRead) = 0;
-				virtual Alx_Status Write(const uint8_t* data, uint32_t len) = 0;
-				virtual Alx_Status WriteStr(const char* str) = 0;
-				virtual void FlushRxFifo(void) = 0;
-				virtual uint32_t GetRxFifoNumOfEntries(void) = 0;
-				virtual void IrqHandler(void) = 0;
+				virtual Alx_Status Master_WriteRead(uint8_t* writeData, uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) = 0;
+				virtual Alx_Status Master_Write(uint8_t* writeData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) = 0;
+				virtual Alx_Status Master_Read(uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) = 0;
+				virtual void Master_AssertCs(void) = 0;
+				virtual void Master_DeAssertCs(void) = 0;
+				virtual ::AlxSpi* GetCStructPtr(void) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - ASerialPort
+		// Class - ASpi
 		//******************************************************************************
-		template <uint32_t rxFifoBuffLen>
-		class ASerialPort : public ISerialPort
+		class ASpi : public ISpi
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ASerialPort() {}
-				virtual ~ASerialPort() {}
+				ASpi() {}
+				virtual ~ASpi() {}
 				Alx_Status Init(void) override
 				{
-					return AlxSerialPort_Init(&me);
+					return AlxSpi_Init(&me);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxSerialPort_DeInit(&me);
+					return AlxSpi_DeInit(&me);
 				}
-				Alx_Status Read(uint8_t* data, uint32_t len) override
+				Alx_Status Master_WriteRead(uint8_t* writeData, uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) override
 				{
-					return AlxSerialPort_Read(&me, data, len);
+					return AlxSpi_Master_WriteRead(&me, writeData, readData, len, numOfTries, timeout_ms);
 				}
-				Alx_Status ReadStrUntil(char* str, const char* delim, uint32_t maxLen, uint32_t* numRead) override
+				Alx_Status Master_Write(uint8_t* writeData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) override
 				{
-					return AlxSerialPort_ReadStrUntil(&me, str, delim, maxLen, numRead);
+					return AlxSpi_Master_Write(&me, writeData, len, numOfTries, timeout_ms);
 				}
-				Alx_Status Write(const uint8_t* data, uint32_t len) override
+				Alx_Status Master_Read(uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) override
 				{
-					return AlxSerialPort_Write(&me, data, len);
+					return AlxSpi_Master_Read(&me, readData, len, numOfTries, timeout_ms);
 				}
-				Alx_Status WriteStr(const char* str) override
+				void Master_AssertCs(void) override
 				{
-					return AlxSerialPort_WriteStr(&me, str);
+					AlxSpi_Master_AssertCs(&me);
 				}
-				void FlushRxFifo(void) override
+				void Master_DeAssertCs(void) override
 				{
-					AlxSerialPort_FlushRxFifo(&me);
+					AlxSpi_Master_DeAssertCs(&me);
 				}
-				uint32_t GetRxFifoNumOfEntries(void) override
+				::AlxSpi* GetCStructPtr(void) override
 				{
-					return AlxSerialPort_GetRxFifoNumOfEntries(&me);
-				}
-				void IrqHandler(void) override
-				{
-					AlxSerialPort_IrqHandler(&me);
+					return &me;
 				}
 
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
 				//------------------------------------------------------------------------------
-				::AlxSerialPort me = {};
-				AlxFifo::Fifo<rxFifoBuffLen> rxFifo = {};
+				::AlxSpi me = {};
 		};
 
 
 		//******************************************************************************
-		// Class - SerialPort
+		// Class - Spi
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
-		template <uint32_t rxFifoBuffLen>
-		class SerialPort : public ASerialPort <rxFifoBuffLen>
+		#if defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4)
+		class Spi : public ASpi
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				SerialPort
+				Spi
 				(
-					USART_TypeDef* uart,
-					AlxIoPin::IIoPin* do_TX,
-					AlxIoPin::IIoPin* di_RX,
-					AlxGlobal_BaudRate baudRate,
-					uint32_t dataWidth,
-					uint32_t stopBits,
-					uint32_t parity,
-					uint16_t txTimeout_ms,
-					Alx_IrqPriority rxIrqPriority,
-					AlxSerialPort_Lin lin
-				) : ASerialPort<rxFifoBuffLen>()
+					SPI_TypeDef* spi,
+					AlxIoPin::IIoPin* do_SCK,
+					AlxIoPin::IIoPin* do_MOSI,
+					AlxIoPin::IIoPin* di_MISO,
+					AlxIoPin::IIoPin* do_nCS,
+					AlxSpi_Mode mode,
+					AlxClk::IClk* clk,
+					AlxSpi_Clk spiClk,
+					bool isWriteReadLowLevel
+				)
 				{
-					AlxSerialPort_Ctor
+					AlxSpi_Ctor
 					(
-						&this->me,
-						uart,
-						do_TX->GetCStructPtr(),
-						di_RX->GetCStructPtr(),
-						baudRate,
-						dataWidth,
-						stopBits,
-						parity,
-						txTimeout_ms,
-						this->rxFifo.GetBuffPtr(),
-						rxFifoBuffLen,
-						rxIrqPriority,
-						lin
-					 );
+						&me,
+						spi,
+						do_SCK->GetCStructPtr(),
+						do_MOSI->GetCStructPtr(),
+						di_MISO->GetCStructPtr(),
+						do_nCS->GetCStructPtr(),
+						mode,
+						clk->GetCStructPtr(),
+						spiClk,
+						isWriteReadLowLevel
+					);
 				}
-				virtual ~SerialPort() {}
+				virtual ~Spi() {}
 		};
 		#endif
 
 
 		//******************************************************************************
-		// Class - MockSerialPort
+		// Class - MockSpi
 		//******************************************************************************
 		#if defined(ALX_GTEST)
-		class MockSerialPort : public ISerialPort
+		class MockSpi : public ISpi
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -194,12 +182,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				MOCK_METHOD(Alx_Status, Init, (), (override));
 				MOCK_METHOD(Alx_Status, DeInit, (), (override));
-				MOCK_METHOD(Alx_Status, Read, (uint8_t* data, uint32_t len), (override));
-				MOCK_METHOD(Alx_Status, ReadStrUntil, (char* str, const char* delim, uint32_t maxLen, uint32_t* numRead), (override));
-				MOCK_METHOD(Alx_Status, Write, (uint8_t data), (override));
-				MOCK_METHOD(Alx_Status, Write, (const uint8_t* data, uint32_t len), (override));
-				MOCK_METHOD(Alx_Status, WriteStr, (const char* str), (override));
-				MOCK_METHOD(Alx_Status, Foreground_Handle, (), (override));
+				MOCK_METHOD(Alx_Status, Master_WriteRead, (const uint8_t* writeData, uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
+				MOCK_METHOD(void, Master_AssertCs, (), (override));
+				MOCK_METHOD(void, Master_DeAssertCs, (), (override));
 		};
 		#endif
 	}
@@ -208,4 +193,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_SERIAL_PORT_HPP
+#endif	// #ifndef ALX_SPI_HPP

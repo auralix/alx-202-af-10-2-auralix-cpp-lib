@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxDac.hpp
-  * @brief		Auralix C++ Library - ALX DAC Module
+  * @file		alxPwm.hpp
+  * @brief		Auralix C++ Library - ALX PWM Module
   * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,15 +28,16 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_DAC_HPP
-#define ALX_DAC_HPP
+#ifndef ALX_PWM_HPP
+#define ALX_PWM_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxDac.h"
+#include "alxPwm.h"
+#include "alxClk.hpp"
 #include "alxIoPin.hpp"
 
 
@@ -51,132 +52,122 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxDac
+	namespace AlxPwm
 	{
 		//******************************************************************************
-		// Class - IDac
+		// Class - IPwm
 		//******************************************************************************
-		class IDac
+		class IPwm
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IDac() {}
-				virtual ~IDac() {}
+				IPwm() {}
+				virtual ~IPwm() {}
 				virtual Alx_Status Init(void) = 0;
-				virtual Alx_Status Init(float vref_V) = 0;
 				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V) = 0;
-				virtual Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V, float vref_V) = 0;
+				virtual Alx_Status SetDuty_pct(Alx_Ch ch, float duty_pct) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - ADac
+		// Class - APwm
 		//******************************************************************************
-		class ADac : public IDac
+		class APwm : public IPwm
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ADac() {}
-				virtual ~ADac() {}
+				APwm() {}
+				virtual ~APwm() {}
 				Alx_Status Init(void) override
 				{
-					return AlxDac_Init(&me);
-				}
-				Alx_Status Init(float vref_V) override
-				{
-					return AlxDac_Init_CalibrateVref(&me, vref_V);
+					return AlxPwm_Init(&me);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxDac_DeInit(&me);
+					return AlxPwm_DeInit(&me);
 				}
-				Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V) override
+				Alx_Status SetDuty_pct(Alx_Ch ch, float duty_pct) override
 				{
-					return AlxDac_SetVoltage_V(&me, ch, voltage_V);
-				}
-				Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V, float vref_V) override
-				{
-					return AlxDac_SetVoltage_V_CalibrateVref(&me, ch, voltage_V, vref_V);
+					return AlxPwm_SetDuty_pct(&me, ch, duty_pct);
 				}
 
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
 				//------------------------------------------------------------------------------
-				::AlxDac me = {};
+				::AlxPwm me = {};
 		};
 
 
 		//******************************************************************************
-		// Class - DacMcu
+		// Class - Pwm
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
-		class DacMcu : public ADac
+		#if defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4)
+		class Pwm : public APwm
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				DacMcu
+				Pwm
 				(
-					DAC_TypeDef* dac,
+					TIM_TypeDef* tim,
 					AlxIoPin::IIoPin** ioPinArr,
 					Alx_Ch* chArr,
-					float* setVoltageDefaultArr_V,
+					float* dutyDefaultArr_pct,
 					uint8_t numOfCh,
-					bool isVrefInt_V,
-					float vrefExt_V
+ 					AlxClk::IClk* clk,
+					uint32_t prescaler,
+					uint32_t period
 				)
 				{
 					for (uint32_t i = 0; i < numOfCh; i++)
 					{
 						AlxIoPin::IIoPin* temp = *(ioPinArr + i);
-						dacIoPinArr[i] = temp->GetCStructPtr();
+						pwmIoPinArr[i] = temp->GetCStructPtr();
 					}
 
-					AlxDac_Ctor
+					AlxPwm_Ctor
 					(
 						&me,
-						dac,
-						dacIoPinArr,
+						tim,
+						pwmIoPinArr,
 						chArr,
-						setVoltageDefaultArr_V,
 						numOfCh,
-						isVrefInt_V,
-						vrefExt_V
+						clk->GetCStructPtr(),
+						dutyDefaultArr_pct,
+						prescaler,
+						period
 					);
 				}
-				virtual ~DacMcu() {}
+				virtual ~Pwm() {}
 
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxIoPin* dacIoPinArr[ALX_DAC_BUFF_LEN] = {};
+				::AlxIoPin* pwmIoPinArr[ALX_PWM_BUFF_LEN] = {};
 		};
 		#endif
 
 
 		//******************************************************************************
-		// Class - MockDac
+		// Class - MockPwm
 		//******************************************************************************
 		#if defined(ALX_GTEST)
-		class MockDac : public IDac
+		class MockPwm : public IPwm
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
 				MOCK_METHOD(Alx_Status, Init, (), (override));
-				MOCK_METHOD(Alx_Status, Init, (float voltage_V), (override));
 				MOCK_METHOD(Alx_Status, DeInit, (), (override));
-				MOCK_METHOD(Alx_Status, SetVoltage_V, (Alx_Ch ch, float voltage_V), (override));
-				MOCK_METHOD(Alx_Status, SetVoltage_V, (Alx_Ch ch, float voltage_V, float vref_V), (override));
+				MOCK_METHOD(Alx_Status, SetDuty_pct, (Alx_Ch ch, float duty_pct), (override));
 		};
 		#endif
 	}
@@ -185,4 +176,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_DAC_HPP
+#endif	// #ifndef ALX_PWM_HPP

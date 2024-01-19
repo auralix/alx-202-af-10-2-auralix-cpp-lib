@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxCan.hpp
-  * @brief		Auralix C++ Library - ALX CAN Module
+  * @file		alxAdc.hpp
+  * @brief		Auralix C++ Library - ALX ADC Module
   * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,17 +28,16 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_CAN_HPP
-#define ALX_CAN_HPP
+#ifndef ALX_ADC_HPP
+#define ALX_ADC_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxCan.h"
+#include "alxAdc.h"
 #include "alxClk.hpp"
-#include "alxFifo.hpp"
 #include "alxIoPin.hpp"
 
 
@@ -53,134 +52,137 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxCan
+	namespace AlxAdc
 	{
 		//******************************************************************************
-		// Class - ICan
+		// Class - IAdc
 		//******************************************************************************
-		class ICan
+		class IAdc
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ICan() {}
-				virtual ~ICan() {}
+				IAdc() {}
+				virtual ~IAdc() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status ReInit(void) = 0;
-				virtual Alx_Status TxMsg(AlxCan_Msg msg) = 0;
-				virtual Alx_Status TxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) = 0;
-				virtual Alx_Status RxMsg(AlxCan_Msg* msg) = 0;
-				virtual Alx_Status RxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) = 0;
-				virtual bool IsErr(void) = 0;
-				virtual void Foreground_Handle(void) = 0;
+				virtual float GetVoltage_V(Alx_Ch ch) = 0;
+				virtual float TempSens_GetTemp_degC(void) = 0;
+				virtual ::AlxAdc* GetCStructPtr(void) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - ACan
+		// Class - AAdc
 		//******************************************************************************
-		template <uint32_t txFifoMaxNumOfMsg, uint32_t rxFifoMaxNumOfMsg>
-		class ACan : public ICan
+		class AAdc : public IAdc
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ACan() {}
-				virtual ~ACan() {}
+				AAdc() {}
+				virtual ~AAdc() {}
 				Alx_Status Init(void) override
 				{
-					return AlxCan_Init(&me);
+					return AlxAdc_Init(&me);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxCan_DeInit(&me);
+					return AlxAdc_DeInit(&me);
 				}
-				Alx_Status ReInit(void) override
+				float GetVoltage_V(Alx_Ch ch) override
 				{
-					return AlxCan_ReInit(&me);
+					return AlxAdc_GetVoltage_V(&me, ch);
 				}
-				Alx_Status TxMsg(AlxCan_Msg msg) override
+				float TempSens_GetTemp_degC(void) override
 				{
-					return AlxCan_TxMsg(&me, msg);
+					return AlxAdc_TempSens_GetTemp_degC(&me);
 				}
-				Alx_Status TxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) override
+				::AlxAdc* GetCStructPtr(void) override
 				{
-					return AlxCan_TxMsgMulti(&me, msg, numOfMsg);
-				}
-				Alx_Status RxMsg(AlxCan_Msg* msg) override
-				{
-					return AlxCan_RxMsg(&me, msg);
-				}
-				Alx_Status RxMsg(AlxCan_Msg* msg, uint32_t numOfMsg) override
-				{
-					return AlxCan_RxMsgMulti(&me, msg, numOfMsg);
-				}
-				bool IsErr(void) override
-				{
-					return AlxCan_IsErr(&me);
-				}
-				void Foreground_Handle(void) override
-				{
-					return AlxCan_Foreground_Handle(&me);
+					return &me;
 				}
 
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
 				//------------------------------------------------------------------------------
-				::AlxCan me = {};
-				AlxFifo::Fifo<txFifoMaxNumOfMsg * sizeof(AlxCan_Msg)> txFifo = {};
-				AlxFifo::Fifo<rxFifoMaxNumOfMsg * sizeof(AlxCan_Msg)> rxFifo = {};
+				::AlxAdc me = {};
 		};
 
 
 		//******************************************************************************
-		// Class - Can
+		// Class - Adc
 		//******************************************************************************
-		#if (defined(ALX_STM32F4) && defined(HAL_CAN_MODULE_ENABLED)) || (defined(ALX_STM32G4) && defined(HAL_FDCAN_MODULE_ENABLED))
-		template <uint32_t txFifoMaxNumOfMsg, uint32_t rxFifoMaxNumOfMsg>
-		class Can : public ACan <txFifoMaxNumOfMsg, rxFifoMaxNumOfMsg>
+		#if defined(ALX_STM32F0) || defined(ALX_STM32F1) || defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4) || defined(ALX_STM32U5)
+		class Adc : public AAdc
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Can
+				Adc
 				(
-					#if defined(ALX_STM32F4)
-				 	CAN_TypeDef* can,
-					#endif
-				 	#if defined(ALX_STM32G4)
-					FDCAN_GlobalTypeDef* can,
-					#endif
-					AlxIoPin::IIoPin* do_CAN_TX,
-					AlxIoPin::IIoPin* di_CAN_RX,
+					ADC_TypeDef* adc,
+					AlxIoPin::IIoPin** ioPinArr,
+					uint8_t numOfIoPins,
+					Alx_Ch* chArr,
+					uint8_t numOfCh,
 					AlxClk::IClk* clk,
-					AlxCan_Clk canClk,
-					Alx_IrqPriority txIrqPriority,
-					Alx_IrqPriority rxIrqPriority
+					AlxAdc_Clk adcClk,
+					uint32_t samplingTime,
+				 	bool isVrefInt_V,
+					float vrefExt_V
 				)
 				{
-					AlxCan_Ctor
+					for (uint32_t i = 0; i < numOfIoPins; i++)
+					{
+						AlxIoPin::IIoPin* temp = *(ioPinArr + i);
+						adcIoPinArr[i] = temp->GetCStructPtr();
+					}
+
+					AlxAdc_Ctor
 					(
-						&this->me,
-						can,
-						do_CAN_TX->GetCStructPtr(),
-						di_CAN_RX->GetCStructPtr(),
+						&me,
+						adc,
+						adcIoPinArr,
+						numOfIoPins,
+						chArr,
+						numOfCh,
 						clk->GetCStructPtr(),
-						canClk,
-						this->txFifo.GetBuffPtr(),
-						txFifoMaxNumOfMsg * sizeof(AlxCan_Msg),
-						this->rxFifo.GetBuffPtr(),
-						txFifoMaxNumOfMsg * sizeof(AlxCan_Msg),
-						txIrqPriority,
-						rxIrqPriority
+						adcClk,
+						samplingTime,
+						isVrefInt_V,
+						vrefExt_V
 					);
 				}
-				virtual ~Can() {}
+				virtual ~Adc() {}
+
+			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
+				::AlxIoPin* adcIoPinArr[ALX_ADC_BUFF_LEN] = {};
+		};
+		#endif
+
+
+		//******************************************************************************
+		// Class - MockAdc
+		//******************************************************************************
+		#if defined(ALX_GTEST)
+		class MockAdc : public IAdc
+		{
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				MOCK_METHOD(Alx_Status, Init, (), (override));
+				MOCK_METHOD(Alx_Status, DeInit, (), (override));
+				MOCK_METHOD(float, GetVoltage_V, (Alx_Ch ch), (override));
+				MOCK_METHOD(float, TempSens_GetTemp_degC, (), (override));
 		};
 		#endif
 	}
@@ -189,4 +191,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_CAN_HPP
+#endif	// #ifndef ALX_ADC_HPP

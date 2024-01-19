@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxAdc.hpp
-  * @brief		Auralix C++ Library - ALX ADC Module
+  * @file		alxDac.hpp
+  * @brief		Auralix C++ Library - ALX DAC Module
   * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,16 +28,15 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_ADC_HPP
-#define ALX_ADC_HPP
+#ifndef ALX_DAC_HPP
+#define ALX_DAC_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxAdc.h"
-#include "alxClk.hpp"
+#include "alxDac.h"
 #include "alxIoPin.hpp"
 
 
@@ -52,137 +51,132 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxAdc
+	namespace AlxDac
 	{
 		//******************************************************************************
-		// Class - IAdc
+		// Class - IDac
 		//******************************************************************************
-		class IAdc
+		class IDac
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAdc() {}
-				virtual ~IAdc() {}
+				IDac() {}
+				virtual ~IDac() {}
 				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status Init(float vref_V) = 0;
 				virtual Alx_Status DeInit(void) = 0;
-				virtual float GetVoltage_V(Alx_Ch ch) = 0;
-				virtual float TempSens_GetTemp_degC(void) = 0;
-				virtual ::AlxAdc* GetCStructPtr(void) = 0;
+				virtual Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V) = 0;
+				virtual Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V, float vref_V) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - AAdc
+		// Class - ADac
 		//******************************************************************************
-		class AAdc : public IAdc
+		class ADac : public IDac
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AAdc() {}
-				virtual ~AAdc() {}
+				ADac() {}
+				virtual ~ADac() {}
 				Alx_Status Init(void) override
 				{
-					return AlxAdc_Init(&me);
+					return AlxDac_Init(&me);
+				}
+				Alx_Status Init(float vref_V) override
+				{
+					return AlxDac_Init_CalibrateVref(&me, vref_V);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxAdc_DeInit(&me);
+					return AlxDac_DeInit(&me);
 				}
-				float GetVoltage_V(Alx_Ch ch) override
+				Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V) override
 				{
-					return AlxAdc_GetVoltage_V(&me, ch);
+					return AlxDac_SetVoltage_V(&me, ch, voltage_V);
 				}
-				float TempSens_GetTemp_degC(void) override
+				Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V, float vref_V) override
 				{
-					return AlxAdc_TempSens_GetTemp_degC(&me);
-				}
-				::AlxAdc* GetCStructPtr(void) override
-				{
-					return &me;
+					return AlxDac_SetVoltage_V_CalibrateVref(&me, ch, voltage_V, vref_V);
 				}
 
 			protected:
 				//------------------------------------------------------------------------------
 				// Protected Variables
 				//------------------------------------------------------------------------------
-				::AlxAdc me = {};
+				::AlxDac me = {};
 		};
 
 
 		//******************************************************************************
-		// Class - Adc
+		// Class - DacMcu
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0)
-		class Adc : public AAdc
+		#if defined(ALX_STM32F4) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4)
+		class DacMcu : public ADac
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Adc
+				DacMcu
 				(
-					ADC_TypeDef* adc,
+					DAC_TypeDef* dac,
 					AlxIoPin::IIoPin** ioPinArr,
-					uint8_t numOfIoPins,
 					Alx_Ch* chArr,
+					float* setVoltageDefaultArr_V,
 					uint8_t numOfCh,
-					AlxClk::IClk* clk,
-					AlxAdc_Clk adcClk,
-					uint32_t samplingTime,
-				 	bool isVrefInt_V,
+					bool isVrefInt_V,
 					float vrefExt_V
 				)
 				{
-					for (uint32_t i = 0; i < numOfIoPins; i++)
+					for (uint32_t i = 0; i < numOfCh; i++)
 					{
 						AlxIoPin::IIoPin* temp = *(ioPinArr + i);
-						adcIoPinArr[i] = temp->GetCStructPtr();
+						dacIoPinArr[i] = temp->GetCStructPtr();
 					}
 
-					AlxAdc_Ctor
+					AlxDac_Ctor
 					(
 						&me,
-						adc,
-						adcIoPinArr,
-						numOfIoPins,
+						dac,
+						dacIoPinArr,
 						chArr,
+						setVoltageDefaultArr_V,
 						numOfCh,
-						clk->GetCStructPtr(),
-						adcClk,
-						samplingTime,
 						isVrefInt_V,
 						vrefExt_V
 					);
 				}
-				virtual ~Adc() {}
+				virtual ~DacMcu() {}
 
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxIoPin* adcIoPinArr[ALX_ADC_BUFF_LEN] = {};
+				::AlxIoPin* dacIoPinArr[ALX_DAC_BUFF_LEN] = {};
 		};
 		#endif
 
 
 		//******************************************************************************
-		// Class - MockAdc
+		// Class - MockDac
 		//******************************************************************************
 		#if defined(ALX_GTEST)
-		class MockAdc : public IAdc
+		class MockDac : public IDac
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
 				MOCK_METHOD(Alx_Status, Init, (), (override));
+				MOCK_METHOD(Alx_Status, Init, (float voltage_V), (override));
 				MOCK_METHOD(Alx_Status, DeInit, (), (override));
-				MOCK_METHOD(float, GetVoltage_V, (Alx_Ch ch), (override));
-				MOCK_METHOD(float, TempSens_GetTemp_degC, (), (override));
+				MOCK_METHOD(Alx_Status, SetVoltage_V, (Alx_Ch ch, float voltage_V), (override));
+				MOCK_METHOD(Alx_Status, SetVoltage_V, (Alx_Ch ch, float voltage_V, float vref_V), (override));
 		};
 		#endif
 	}
@@ -191,4 +185,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_ADC_HPP
+#endif	// #ifndef ALX_DAC_HPP

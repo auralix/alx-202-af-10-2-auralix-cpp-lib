@@ -2,7 +2,7 @@
   ******************************************************************************
   * @file		alxTick.hpp
   * @brief		Auralix C++ Library - ALX Tick Module
-  * @copyright	Copyright (C) 2020-2022 Auralix d.o.o. All rights reserved.
+  * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
   *
@@ -68,69 +68,27 @@ namespace Alx
 				virtual ~Tick() {}
 				uint64_t Get_ns(void) const volatile
 				{
-					#if defined(ALX_MBED)
-						mbed::CriticalSectionLock::enable();
-						uint64_t val = AlxTick_Get_ns(me);
-						mbed::CriticalSectionLock::disable();
-						return val;
-					#else
-						return AlxTick_Get_ns(me);
-					#endif
+					return AlxTick_Get_ns(me);
 				}
 				uint64_t Get_us(void) const volatile
 				{
-					#if defined(ALX_MBED)
-						mbed::CriticalSectionLock::enable();
-						uint64_t val = AlxTick_Get_us(me);
-						mbed::CriticalSectionLock::disable();
-						return val;
-					#else
-						return AlxTick_Get_us(me);
-					#endif
+					return AlxTick_Get_us(me);
 				}
 				uint64_t Get_ms(void) const volatile
 				{
-					#if defined(ALX_MBED)
-						mbed::CriticalSectionLock::enable();
-						uint64_t val = AlxTick_Get_ms(me);
-						mbed::CriticalSectionLock::disable();
-						return val;
-					#else
-						return AlxTick_Get_ms(me);
-					#endif
+					return AlxTick_Get_ms(me);
 				}
 				uint64_t Get_sec(void) const volatile
 				{
-					#if defined(ALX_MBED)
-						mbed::CriticalSectionLock::enable();
-						uint64_t val = AlxTick_Get_sec(me);
-						mbed::CriticalSectionLock::disable();
-						return val;
-					#else
-						return AlxTick_Get_sec(me);
-					#endif
+					return AlxTick_Get_sec(me);
 				}
 				uint64_t Get_min(void) const volatile
 				{
-					#if defined(ALX_MBED)
-						mbed::CriticalSectionLock::enable();
-						uint64_t val = AlxTick_Get_min(me);
-						mbed::CriticalSectionLock::disable();
-						return val;
-					#else
-						return AlxTick_Get_min(me);
-					#endif
+					return AlxTick_Get_min(me);
 				}
 				uint64_t Get_hr(void) const volatile
 				{
-					#if defined(ALX_MBED)
-						mbed::CriticalSectionLock::enable();
-						uint64_t val = AlxTick_Get_hr(me);
-						mbed::CriticalSectionLock::disable();
-						return val;
-					#else
-						return AlxTick_Get_hr(me);
-					#endif
+					return AlxTick_Get_hr(me);
 				}
 				void Inc_ns(void) const volatile
 				{
@@ -182,13 +140,7 @@ namespace Alx
 				}
 				void Reset(void) const volatile
 				{
-					#if defined(ALX_MBED)
-						mbed::CriticalSectionLock::enable();
-						AlxTick_Reset(me);
-						mbed::CriticalSectionLock::disable();
-					#else
-						AlxTick_Reset(me);
-					#endif
+					AlxTick_Reset(me);
 				}
 
 			private:
