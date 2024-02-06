@@ -67,10 +67,10 @@ namespace Alx
 				virtual int32_t UnMount(void) = 0;
 				virtual int32_t Format(void) = 0;
 				virtual int32_t Remove(const char* path) = 0;
-//				virtual int32_t FileOpen(AlxFs_File* file, const char* path, int32_t flags) = 0;	// TODO
-//				virtual int32_t FileClose(AlxFs_File* file) = 0;
-//				virtual int32_t FileRead(AlxFs_File* file, void* buff, uint32_t len) = 0;
-//				virtual int32_t FileWrite(AlxFs_File* file, void* buff, uint32_t len) = 0;
+				virtual int32_t FileOpen(AlxFs_File* file, const char* path, int32_t flags) = 0;
+				virtual int32_t FileClose(AlxFs_File* file) = 0;
+				virtual int32_t FileRead(AlxFs_File* file, void* buff, uint32_t len) = 0;
+				virtual int32_t FileWrite(AlxFs_File* file, void* buff, uint32_t len) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
 		};
 
@@ -84,7 +84,42 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				// TODO
+				int32_t Mount(void) override
+				{
+					return AlxFs_Mount(&me);
+				}
+				int32_t UnMount(void) override
+				{
+					return AlxFs_UnMount(&me);
+				}
+				int32_t Format(void) override
+				{
+					return AlxFs_Format(&me);
+				}
+				int32_t Remove(const char* path) override
+				{
+					return AlxFs_Remove(&me, path);
+				}
+				int32_t FileOpen(AlxFs_File* file, const char* path, int32_t flags) override
+				{
+					return AlxFs_FileOpen(&me, file, path, flags);
+				}
+				int32_t FileClose(AlxFs_File* file) override
+				{
+					return AlxFs_FileClose(&me, file);
+				}
+				int32_t FileRead(AlxFs_File* file, void* buff, uint32_t len) override
+				{
+					return AlxFs_FileRead(&me, file, buff, len);
+				}
+				int32_t FileWrite(AlxFs_File* file, void* buff, uint32_t len) override
+				{
+					return AlxFs_FileWrite(&me, file, buff, len);
+				}
+				::AlxFs* GetCStructPtr(void) override
+				{
+					return &me;
+				}
 
 			private:
 				//------------------------------------------------------------------------------
