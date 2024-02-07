@@ -37,6 +37,7 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxParamItem.h"
+#include "alxParamKvStore.hpp"
 
 
 //******************************************************************************
@@ -157,7 +158,7 @@ namespace Alx
 				// Uint8
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -172,7 +173,7 @@ namespace Alx
 					AlxParamItem_CtorUint8
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -187,7 +188,7 @@ namespace Alx
 				// Uint16
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -202,7 +203,7 @@ namespace Alx
 					AlxParamItem_CtorUint16
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -217,7 +218,7 @@ namespace Alx
 				// Uint32
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -232,7 +233,7 @@ namespace Alx
 					AlxParamItem_CtorUint32
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -247,7 +248,7 @@ namespace Alx
 				// Uint64
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -262,7 +263,7 @@ namespace Alx
 					AlxParamItem_CtorUint64
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -277,7 +278,7 @@ namespace Alx
 				// Int8
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -292,7 +293,7 @@ namespace Alx
 					AlxParamItem_CtorInt8
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -307,7 +308,7 @@ namespace Alx
 				// Int16
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -322,7 +323,7 @@ namespace Alx
 					AlxParamItem_CtorInt16
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -337,7 +338,7 @@ namespace Alx
 				// Int32
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -352,7 +353,7 @@ namespace Alx
 					AlxParamItem_CtorInt32
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -367,7 +368,7 @@ namespace Alx
 				// Int64
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -382,7 +383,7 @@ namespace Alx
 					AlxParamItem_CtorInt64
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -397,7 +398,7 @@ namespace Alx
 				// Float
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -412,7 +413,7 @@ namespace Alx
 					AlxParamItem_CtorFloat
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -427,7 +428,7 @@ namespace Alx
 				// Double
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -442,7 +443,7 @@ namespace Alx
 					AlxParamItem_CtorDouble
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -457,7 +458,7 @@ namespace Alx
 				// Bool
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -467,7 +468,7 @@ namespace Alx
 					AlxParamItem_CtorBool
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
@@ -487,7 +488,7 @@ namespace Alx
 				// Str
 				ParamItem
 				(
-					AlxParamKvStore* paramKvStore,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
 					const char* key,
 					uint32_t id,
 					uint32_t groupId,
@@ -498,7 +499,7 @@ namespace Alx
 					AlxParamItem_CtorStr
 					(
 						&me,
-						paramKvStore,
+						paramKvStore->GetCStructPtr(),
 						key,
 						id,
 						groupId,
