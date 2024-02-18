@@ -45,30 +45,6 @@
 
 
 //******************************************************************************
-// Preprocessor
-//******************************************************************************
-#define ALX_OS_CRITICAL_SECTION_FILE "alxOsCriticalSection.hpp"
-
-// Assert //
-#if defined(_ALX_OS_CRITICAL_SECTION_ASSERT_BKPT) || defined(_ALX_ASSERT_BKPT_ALL)
-	#define ALX_OS_CRITICAL_SECTION_ASSERT(expr) ALX_ASSERT_BKPT(ALX_OS_CRITICAL_SECTION_FILE, expr)
-#elif defined(_ALX_OS_CRITICAL_SECTION_ASSERT_TRACE) || defined(_ALX_ASSERT_TRACE_ALL)
-	#define ALX_OS_CRITICAL_SECTION_ASSERT(expr) ALX_ASSERT_TRACE(ALX_OS_CRITICAL_SECTION_FILE, expr)
-#elif defined(_ALX_OS_CRITICAL_SECTION_ASSERT_RST) || defined(_ALX_ASSERT_RST_ALL)
-	#define ALX_OS_CRITICAL_SECTION_ASSERT(expr) ALX_ASSERT_RST(ALX_OS_CRITICAL_SECTION_FILE, expr)
-#else
-	#define ALX_OS_CRITICAL_SECTION_ASSERT(expr) do{} while (false)
-#endif
-
-// Trace //
-#if defined(_ALX_OS_CRITICAL_SECTION_TRACE) || defined(_ALX_TRACE_ALL)
-	#define ALX_OS_CRITICAL_SECTION_TRACE(...) ALX_TRACE_STD(ALX_OS_CRITICAL_SECTION_FILE, __VA_ARGS__)
-#else
-	#define ALX_OS_CRITICAL_SECTION_TRACE(...) do{} while (false)
-#endif
-
-
-//******************************************************************************
 // Code
 //******************************************************************************
 namespace Alx
