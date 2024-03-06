@@ -67,7 +67,7 @@ namespace Alx
 				virtual Alx_Status UnMount(void) = 0;
 				virtual Alx_Status Format(void) = 0;
 				virtual Alx_Status Remove(const char* path) = 0;
-				virtual Alx_Status File_Open(AlxFs_File* file, const char* path, int32_t flags) = 0;
+				virtual Alx_Status File_Open(AlxFs_File* file, const char* path, const char* mode) = 0;
 				virtual Alx_Status File_Close(AlxFs_File* file) = 0;
 				virtual int32_t File_Read(AlxFs_File* file, void* buff, uint32_t len) = 0;
 				virtual int32_t File_Write(AlxFs_File* file, void* buff, uint32_t len) = 0;
@@ -110,9 +110,9 @@ namespace Alx
 				{
 					return AlxFs_Remove(&me, path);
 				}
-				Alx_Status File_Open(AlxFs_File* file, const char* path, int32_t flags) override
+				Alx_Status File_Open(AlxFs_File* file, const char* path, const char* mode) override
 				{
-					return AlxFs_File_Open(&me, file, path, flags);
+					return AlxFs_File_Open(&me, file, path, mode);
 				}
 				Alx_Status File_Close(AlxFs_File* file) override
 				{
