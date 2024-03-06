@@ -71,6 +71,10 @@ namespace Alx
 				virtual Alx_Status File_Close(AlxFs_File* file) = 0;
 				virtual int32_t File_Read(AlxFs_File* file, void* buff, uint32_t len) = 0;
 				virtual int32_t File_Write(AlxFs_File* file, void* buff, uint32_t len) = 0;
+				virtual Alx_Status File_Sync(AlxFs_File* file) = 0;
+				virtual int32_t File_Seek(AlxFs_File* file, int32_t offset, int32_t whence) = 0;
+				virtual int32_t File_Tell(AlxFs_File* file) = 0;
+				virtual int32_t File_Size(AlxFs_File* file) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
 		};
 
@@ -121,6 +125,22 @@ namespace Alx
 				int32_t File_Write(AlxFs_File* file, void* buff, uint32_t len) override
 				{
 					return AlxFs_File_Write(&me, file, buff, len);
+				}
+				Alx_Status File_Sync(AlxFs_File* file) override
+				{
+					return AlxFs_File_Sync(&me, file);
+				}
+				int32_t File_Seek(AlxFs_File* file, int32_t offset, int32_t whence) override
+				{
+					return AlxFs_File_Seek(&me, file, offset, whence);
+				}
+				int32_t File_Tell(AlxFs_File* file) override
+				{
+					return AlxFs_File_Tell(&me, file);
+				}
+				int32_t File_Size(AlxFs_File* file) override
+				{
+					return AlxFs_File_Size(&me, file);
 				}
 				::AlxFs* GetCStructPtr(void) override
 				{
