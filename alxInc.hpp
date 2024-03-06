@@ -59,6 +59,7 @@
 #include "alxI2s.hpp"
 #include "alxIoPin.hpp"
 #include "alxIoPinIrq.hpp"
+#include "alxMmc.hpp"
 #include "alxPwm.hpp"
 #include "alxRtc.hpp"
 #include "alxSerialPort.hpp"
