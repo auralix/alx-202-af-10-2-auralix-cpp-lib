@@ -67,10 +67,10 @@ namespace Alx
 				virtual Alx_Status UnMount(void) = 0;
 				virtual Alx_Status Format(void) = 0;
 				virtual Alx_Status Remove(const char* path) = 0;
-				virtual Alx_Status FileOpen(AlxFs_File* file, const char* path, int32_t flags) = 0;
-				virtual Alx_Status FileClose(AlxFs_File* file) = 0;
-				virtual int32_t FileRead(AlxFs_File* file, void* buff, uint32_t len) = 0;
-				virtual int32_t FileWrite(AlxFs_File* file, void* buff, uint32_t len) = 0;
+				virtual Alx_Status File_Open(AlxFs_File* file, const char* path, int32_t flags) = 0;
+				virtual Alx_Status File_Close(AlxFs_File* file) = 0;
+				virtual int32_t File_Read(AlxFs_File* file, void* buff, uint32_t len) = 0;
+				virtual int32_t File_Write(AlxFs_File* file, void* buff, uint32_t len) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
 		};
 
@@ -106,21 +106,21 @@ namespace Alx
 				{
 					return AlxFs_Remove(&me, path);
 				}
-				Alx_Status FileOpen(AlxFs_File* file, const char* path, int32_t flags) override
+				Alx_Status File_Open(AlxFs_File* file, const char* path, int32_t flags) override
 				{
-					return AlxFs_FileOpen(&me, file, path, flags);
+					return AlxFs_File_Open(&me, file, path, flags);
 				}
-				Alx_Status FileClose(AlxFs_File* file) override
+				Alx_Status File_Close(AlxFs_File* file) override
 				{
-					return AlxFs_FileClose(&me, file);
+					return AlxFs_File_Close(&me, file);
 				}
-				int32_t FileRead(AlxFs_File* file, void* buff, uint32_t len) override
+				int32_t File_Read(AlxFs_File* file, void* buff, uint32_t len) override
 				{
-					return AlxFs_FileRead(&me, file, buff, len);
+					return AlxFs_File_Read(&me, file, buff, len);
 				}
-				int32_t FileWrite(AlxFs_File* file, void* buff, uint32_t len) override
+				int32_t File_Write(AlxFs_File* file, void* buff, uint32_t len) override
 				{
-					return AlxFs_FileWrite(&me, file, buff, len);
+					return AlxFs_File_Write(&me, file, buff, len);
 				}
 				::AlxFs* GetCStructPtr(void) override
 				{
