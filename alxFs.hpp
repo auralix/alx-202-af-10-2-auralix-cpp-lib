@@ -63,12 +63,12 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IFs() {}
 				virtual ~IFs() {}
-				virtual int32_t Mount(void) = 0;
-				virtual int32_t UnMount(void) = 0;
-				virtual int32_t Format(void) = 0;
-				virtual int32_t Remove(const char* path) = 0;
-				virtual int32_t FileOpen(AlxFs_File* file, const char* path, int32_t flags) = 0;
-				virtual int32_t FileClose(AlxFs_File* file) = 0;
+				virtual Alx_Status Mount(void) = 0;
+				virtual Alx_Status UnMount(void) = 0;
+				virtual Alx_Status Format(void) = 0;
+				virtual Alx_Status Remove(const char* path) = 0;
+				virtual Alx_Status FileOpen(AlxFs_File* file, const char* path, int32_t flags) = 0;
+				virtual Alx_Status FileClose(AlxFs_File* file) = 0;
 				virtual int32_t FileRead(AlxFs_File* file, void* buff, uint32_t len) = 0;
 				virtual int32_t FileWrite(AlxFs_File* file, void* buff, uint32_t len) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
@@ -90,27 +90,27 @@ namespace Alx
 					AlxFs_Ctor(&me);
 				}
 				virtual ~Fs() {}
-				int32_t Mount(void) override
+				Alx_Status Mount(void) override
 				{
 					return AlxFs_Mount(&me);
 				}
-				int32_t UnMount(void) override
+				Alx_Status UnMount(void) override
 				{
 					return AlxFs_UnMount(&me);
 				}
-				int32_t Format(void) override
+				Alx_Status Format(void) override
 				{
 					return AlxFs_Format(&me);
 				}
-				int32_t Remove(const char* path) override
+				Alx_Status Remove(const char* path) override
 				{
 					return AlxFs_Remove(&me, path);
 				}
-				int32_t FileOpen(AlxFs_File* file, const char* path, int32_t flags) override
+				Alx_Status FileOpen(AlxFs_File* file, const char* path, int32_t flags) override
 				{
 					return AlxFs_FileOpen(&me, file, path, flags);
 				}
-				int32_t FileClose(AlxFs_File* file) override
+				Alx_Status FileClose(AlxFs_File* file) override
 				{
 					return AlxFs_FileClose(&me, file);
 				}
