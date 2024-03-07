@@ -37,6 +37,7 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxFs.h"
+#include "alxMmc.hpp"
 
 
 //******************************************************************************
@@ -91,16 +92,32 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				Fs
 				(
-					void* alxBlockDevice,
-					::AlxFs_Config config
+					::AlxFs_Config config,
+					AlxMmc::IMmc* alxMmc
 				)
 				{
-					AlxFs_Ctor
-					(
-						&me,
-						alxBlockDevice,
-						config
-					);
+					if (config == AlxFs_Config_Lfs_FlashInt)
+					{
+						AlxFs_Ctor
+						(
+							&me,
+							config,
+							NULL
+						);
+					}
+					else if	(config == AlxFs_Config_Lfs_Mmc)
+					{
+						AlxFs_Ctor
+						(
+							&me,
+							config,
+							alxMmc->GetCStructPtr()
+						);
+					}
+					else
+					{
+						ALX_FS_ASSERT(false);	// We should never get here
+					}
 				}
 				virtual ~Fs() {}
 				Alx_Status Mount(void) override
