@@ -89,9 +89,18 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Fs()
+				Fs
+				(
+					void* alxBlockDevice,
+					::AlxFs_Config config
+				)
 				{
-					AlxFs_Ctor(&me);
+					AlxFs_Ctor
+					(
+						&me,
+						alxBlockDevice,
+						config
+					);
 				}
 				virtual ~Fs() {}
 				Alx_Status Mount(void) override
