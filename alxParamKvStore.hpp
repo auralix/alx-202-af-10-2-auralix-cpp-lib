@@ -66,8 +66,8 @@ namespace Alx
 				virtual ~IParamKvStore() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status Get(const char* key, void* buff, uint32_t len, uint32_t* actualLen) = 0;
-				virtual Alx_Status Set(const char* key, void* buff, uint32_t len) = 0;
+				virtual Alx_Status Get(const char* key, void* data, uint32_t lenMax, uint32_t* lenActual) = 0;
+				virtual Alx_Status Set(const char* key, void* data, uint32_t len) = 0;
 				virtual Alx_Status Remove(const char* key) = 0;
 				virtual ::AlxParamKvStore* GetCStructPtr(void) = 0;
 		};
@@ -102,13 +102,13 @@ namespace Alx
 				{
 					return AlxParamKvStore_DeInit(&me);
 				}
-				Alx_Status Get(const char* key, void* buff, uint32_t len, uint32_t* actualLen) override
+				Alx_Status Get(const char* key, void* data, uint32_t lenMax, uint32_t* lenActual) override
 				{
-					return AlxParamKvStore_Get(&me, key, buff, len, actualLen);
+					return AlxParamKvStore_Get(&me, key, data, lenMax, lenActual);
 				}
-				Alx_Status Set(const char* key, void* buff, uint32_t len) override
+				Alx_Status Set(const char* key, void* data, uint32_t len) override
 				{
-					return AlxParamKvStore_Set(&me, key, buff, len);
+					return AlxParamKvStore_Set(&me, key, data, len);
 				}
 				Alx_Status Remove(const char* key) override
 				{
