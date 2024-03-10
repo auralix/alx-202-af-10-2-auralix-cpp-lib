@@ -76,9 +76,13 @@ namespace Alx
 				virtual Alx_Status File_Write(AlxFs_File* file, void* data, uint32_t len) = 0;
 				virtual Alx_Status File_WriteStr(AlxFs_File* file, char* str) = 0;
 				virtual Alx_Status File_Sync(AlxFs_File* file) = 0;
-				virtual int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) = 0;
-				virtual int32_t File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) = 0;
-				virtual int32_t File_Size(AlxFs_File* file, uint32_t* fileSize) = 0;
+				virtual Alx_Status File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) = 0;
+				virtual Alx_Status File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) = 0;
+				virtual Alx_Status File_Size(AlxFs_File* file, uint32_t* fileSize) = 0;
+				virtual Alx_Status Dir_Make(const char* path) = 0;
+				virtual Alx_Status Dir_Open(AlxFs_Dir* dir, const char* path) = 0;
+				virtual Alx_Status Dir_Close(AlxFs_Dir* dir) = 0;
+				virtual Alx_Status Dir_Read(AlxFs_Dir* dir, AlxFs_Info* info) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
 		};
 
@@ -171,17 +175,33 @@ namespace Alx
 				{
 					return AlxFs_File_Sync(&me, file);
 				}
-				int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) override
+				Alx_Status File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) override
 				{
 					return AlxFs_File_Seek(&me, file, offset, origin, filePositionNew);
 				}
-				int32_t File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) override
+				Alx_Status File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) override
 				{
 					return AlxFs_File_Tell(&me, file, filePositionCurrent);
 				}
-				int32_t File_Size(AlxFs_File* file, uint32_t* fileSize) override
+				Alx_Status File_Size(AlxFs_File* file, uint32_t* fileSize) override
 				{
 					return AlxFs_File_Size(&me, file, fileSize);
+				}
+				Alx_Status Dir_Make(const char* path) override
+				{
+					return AlxFs_Dir_Make(&me, path);
+				}
+				Alx_Status Dir_Open(AlxFs_Dir* dir, const char* path) override
+				{
+					return AlxFs_Dir_Open(&me, dir, path);
+				}
+				Alx_Status Dir_Close(AlxFs_Dir* dir) override
+				{
+					return AlxFs_Dir_Close(&me, dir);
+				}
+				Alx_Status Dir_Read(AlxFs_Dir* dir, AlxFs_Info* info) override
+				{
+					return AlxFs_Dir_Read(&me, dir, info);
 				}
 				::AlxFs* GetCStructPtr(void) override
 				{
