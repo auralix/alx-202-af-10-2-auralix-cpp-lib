@@ -72,8 +72,9 @@ namespace Alx
 				virtual Alx_Status File_Open(AlxFs_File* file, const char* path, const char* mode) = 0;
 				virtual Alx_Status File_Close(AlxFs_File* file) = 0;
 				virtual Alx_Status File_Read(AlxFs_File* file, void* data, uint32_t lenMax, uint32_t* lenActual) = 0;
+				virtual Alx_Status File_ReadStrUntil(AlxFs_File* file, char* str, const char* delim, uint32_t lenMax, uint32_t* lenActual) = 0;
 				virtual Alx_Status File_Write(AlxFs_File* file, void* data, uint32_t len) = 0;
-				virtual Alx_Status File_WriteStr(AlxFs_File* file, const char* str) = 0;
+				virtual Alx_Status File_WriteStr(AlxFs_File* file, char* str) = 0;
 				virtual Alx_Status File_Sync(AlxFs_File* file) = 0;
 				virtual int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) = 0;
 				virtual int32_t File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) = 0;
@@ -154,11 +155,15 @@ namespace Alx
 				{
 					return AlxFs_File_Read(&me, file, data, lenMax, lenActual);
 				}
+				Alx_Status File_ReadStrUntil(AlxFs_File* file, char* str, const char* delim, uint32_t lenMax, uint32_t* lenActual) override
+				{
+					return AlxFs_File_ReadStrUntil(&me, file, str, delim, lenMax, lenActual);
+				}
 				Alx_Status File_Write(AlxFs_File* file, void* data, uint32_t len) override
 				{
 					return AlxFs_File_Write(&me, file, data, len);
 				}
-				Alx_Status File_WriteStr(AlxFs_File* file, const char* str) override
+				Alx_Status File_WriteStr(AlxFs_File* file, char* str) override
 				{
 					return AlxFs_File_WriteStr(&me, file, str);
 				}
