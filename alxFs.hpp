@@ -68,12 +68,13 @@ namespace Alx
 				virtual Alx_Status UnMount(void) = 0;
 				virtual Alx_Status Format(void) = 0;
 				virtual Alx_Status Remove(const char* path) = 0;
+				virtual Alx_Status Rename(const char* pathOld, const char* pathNew) = 0;
 				virtual Alx_Status File_Open(AlxFs_File* file, const char* path, const char* mode) = 0;
 				virtual Alx_Status File_Close(AlxFs_File* file) = 0;
-				virtual int32_t File_Read(AlxFs_File* file, void* buff, uint32_t len) = 0;
-				virtual int32_t File_Write(AlxFs_File* file, void* buff, uint32_t len) = 0;
+				virtual int32_t File_Read(AlxFs_File* file, void* data, uint32_t len) = 0;
+				virtual int32_t File_Write(AlxFs_File* file, void* data, uint32_t len) = 0;
 				virtual Alx_Status File_Sync(AlxFs_File* file) = 0;
-				virtual int32_t File_Seek(AlxFs_File* file, int32_t offset, int32_t whence) = 0;
+				virtual int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin) = 0;
 				virtual int32_t File_Tell(AlxFs_File* file) = 0;
 				virtual int32_t File_Size(AlxFs_File* file) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
@@ -136,6 +137,10 @@ namespace Alx
 				{
 					return AlxFs_Remove(&me, path);
 				}
+				Alx_Status Rename(const char* pathOld, const char* pathNew) override
+				{
+					return AlxFs_Rename(&me, pathOld, pathNew);
+				}
 				Alx_Status File_Open(AlxFs_File* file, const char* path, const char* mode) override
 				{
 					return AlxFs_File_Open(&me, file, path, mode);
@@ -144,9 +149,9 @@ namespace Alx
 				{
 					return AlxFs_File_Close(&me, file);
 				}
-				int32_t File_Read(AlxFs_File* file, void* buff, uint32_t len) override
+				int32_t File_Read(AlxFs_File* file, void* data, uint32_t len) override
 				{
-					return AlxFs_File_Read(&me, file, buff, len);
+					return AlxFs_File_Read(&me, file, data, len);
 				}
 				int32_t File_Write(AlxFs_File* file, void* buff, uint32_t len) override
 				{
@@ -156,9 +161,9 @@ namespace Alx
 				{
 					return AlxFs_File_Sync(&me, file);
 				}
-				int32_t File_Seek(AlxFs_File* file, int32_t offset, int32_t whence) override
+				int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin) override
 				{
-					return AlxFs_File_Seek(&me, file, offset, whence);
+					return AlxFs_File_Seek(&me, file, offset, origin);
 				}
 				int32_t File_Tell(AlxFs_File* file) override
 				{
