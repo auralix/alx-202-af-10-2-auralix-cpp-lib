@@ -75,9 +75,9 @@ namespace Alx
 				virtual Alx_Status File_Write(AlxFs_File* file, void* data, uint32_t len) = 0;
 				virtual Alx_Status File_WriteStr(AlxFs_File* file, const char* str) = 0;
 				virtual Alx_Status File_Sync(AlxFs_File* file) = 0;
-				virtual int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin) = 0;
-				virtual int32_t File_Tell(AlxFs_File* file) = 0;
-				virtual int32_t File_Size(AlxFs_File* file) = 0;
+				virtual int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) = 0;
+				virtual int32_t File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) = 0;
+				virtual int32_t File_Size(AlxFs_File* file, uint32_t* fileSize) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
 		};
 
@@ -166,17 +166,17 @@ namespace Alx
 				{
 					return AlxFs_File_Sync(&me, file);
 				}
-				int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin) override
+				int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) override
 				{
-					return AlxFs_File_Seek(&me, file, offset, origin);
+					return AlxFs_File_Seek(&me, file, offset, origin, filePositionNew);
 				}
-				int32_t File_Tell(AlxFs_File* file) override
+				int32_t File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) override
 				{
-					return AlxFs_File_Tell(&me, file);
+					return AlxFs_File_Tell(&me, file, filePositionCurrent);
 				}
-				int32_t File_Size(AlxFs_File* file) override
+				int32_t File_Size(AlxFs_File* file, uint32_t* fileSize) override
 				{
-					return AlxFs_File_Size(&me, file);
+					return AlxFs_File_Size(&me, file, fileSize);
 				}
 				::AlxFs* GetCStructPtr(void) override
 				{
