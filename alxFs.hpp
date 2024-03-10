@@ -83,6 +83,7 @@ namespace Alx
 				virtual Alx_Status Dir_Open(AlxFs_Dir* dir, const char* path) = 0;
 				virtual Alx_Status Dir_Close(AlxFs_Dir* dir) = 0;
 				virtual Alx_Status Dir_Read(AlxFs_Dir* dir, AlxFs_Info* info) = 0;
+				virtual Alx_Status Dir_Trace(AlxFs_Dir* dir) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
 		};
 
@@ -202,6 +203,10 @@ namespace Alx
 				Alx_Status Dir_Read(AlxFs_Dir* dir, AlxFs_Info* info) override
 				{
 					return AlxFs_Dir_Read(&me, dir, info);
+				}
+				Alx_Status Dir_Trace(AlxFs_Dir* dir) override
+				{
+					return AlxFs_Dir_Trace(&me, dir);
 				}
 				::AlxFs* GetCStructPtr(void) override
 				{
