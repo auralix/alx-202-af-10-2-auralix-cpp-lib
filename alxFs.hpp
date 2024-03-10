@@ -73,6 +73,7 @@ namespace Alx
 				virtual Alx_Status File_Close(AlxFs_File* file) = 0;
 				virtual int32_t File_Read(AlxFs_File* file, void* data, uint32_t len) = 0;
 				virtual int32_t File_Write(AlxFs_File* file, void* data, uint32_t len) = 0;
+				virtual int32_t File_WriteStr(AlxFs_File* file, const char* str) = 0;
 				virtual Alx_Status File_Sync(AlxFs_File* file) = 0;
 				virtual int32_t File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin) = 0;
 				virtual int32_t File_Tell(AlxFs_File* file) = 0;
@@ -156,6 +157,10 @@ namespace Alx
 				int32_t File_Write(AlxFs_File* file, void* buff, uint32_t len) override
 				{
 					return AlxFs_File_Write(&me, file, buff, len);
+				}
+				int32_t File_WriteStr(AlxFs_File* file, const char* str) override
+				{
+					return AlxFs_File_WriteStr(&me, file, str);
 				}
 				Alx_Status File_Sync(AlxFs_File* file) override
 				{
