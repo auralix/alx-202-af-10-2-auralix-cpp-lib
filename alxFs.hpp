@@ -66,6 +66,7 @@ namespace Alx
 				virtual ~IFs() {}
 				virtual Alx_Status Mount(void) = 0;
 				virtual Alx_Status UnMount(void) = 0;
+				virtual Alx_Status MountFormat(void) = 0;
 				virtual Alx_Status Format(void) = 0;
 				virtual Alx_Status Remove(const char* path) = 0;
 				virtual Alx_Status Rename(const char* pathOld, const char* pathNew) = 0;
@@ -135,6 +136,10 @@ namespace Alx
 				Alx_Status UnMount(void) override
 				{
 					return AlxFs_UnMount(&me);
+				}
+				Alx_Status MountFormat(void) override
+				{
+					return AlxFs_MountFormat(&me);
 				}
 				Alx_Status Format(void) override
 				{

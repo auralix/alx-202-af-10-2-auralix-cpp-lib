@@ -87,6 +87,7 @@
 #include "alxInc.hpp"
 #include "alxInterpLin.hpp"
 #include "alxLinFun.hpp"
+#include "alxLogger.hpp"
 #include "alxMemRaw.hpp"
 #include "alxMemSafe.hpp"
 #include "alxNtpClient.hpp"
