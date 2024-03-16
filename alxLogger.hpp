@@ -67,10 +67,10 @@ namespace Alx
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status Handle(void) = 0;
-				virtual Alx_Status Trace_ReadLog(void* data, uint32_t lenMax, uint32_t* lenActual) = 0;
-				virtual Alx_Status Trace_WriteLog(void* data, uint32_t len) = 0;
-				virtual Alx_Status Data_ReadLog(void* data, uint32_t lenMax, uint32_t* lenActual) = 0;
-				virtual Alx_Status Data_WriteLog(void* data, uint32_t len) = 0;
+				virtual Alx_Status Trace_ReadLog(char* str) = 0;
+				virtual Alx_Status Trace_WriteLog(char* str) = 0;
+				virtual Alx_Status Data_ReadLog(char* str) = 0;
+				virtual Alx_Status Data_WriteLog(char* str) = 0;
 				virtual ::AlxLogger* GetCStructPtr(void) = 0;
 		};
 
@@ -114,21 +114,21 @@ namespace Alx
 				{
 					return AlxLogger_Handle(&me);
 				}
-				Alx_Status Trace_ReadLog(void* data, uint32_t lenMax, uint32_t* lenActual) override
+				Alx_Status Trace_ReadLog(char* str) override
 				{
-					return AlxLogger_Trace_ReadLog(&me, data, lenMax, lenActual);
+					return AlxLogger_Trace_ReadLog(&me, str);
 				}
-				Alx_Status Trace_WriteLog(void* data, uint32_t len) override
+				Alx_Status Trace_WriteLog(char* str) override
 				{
-					return AlxLogger_Trace_WriteLog(&me, data, len);
+					return AlxLogger_Trace_WriteLog(&me, str);
 				}
-				Alx_Status Data_ReadLog(void* data, uint32_t lenMax, uint32_t* lenActual) override
+				Alx_Status Data_ReadLog(char* str) override
 				{
-					return AlxLogger_Data_ReadLog(&me, data, lenMax, lenActual);
+					return AlxLogger_Data_ReadLog(&me, str);
 				}
-				Alx_Status Data_WriteLog(void* data, uint32_t len) override
+				Alx_Status Data_WriteLog(char* str) override
 				{
-					return AlxLogger_Data_WriteLog(&me, data, len);
+					return AlxLogger_Data_WriteLog(&me, str);
 				}
 				::AlxLogger* GetCStructPtr(void) override
 				{
