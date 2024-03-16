@@ -86,13 +86,19 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				Logger
 				(
-					AlxFs::IFs* alxFs
+					AlxFs::IFs* alxFs,
+					uint32_t numOfDir,
+					uint32_t numOfFilesPerDir,
+					uint32_t numOfLogsPerFile
 				)
 				{
 					AlxLogger_Ctor
 					(
 						&me,
-						alxFs->GetCStructPtr()
+						alxFs->GetCStructPtr(),
+						numOfDir,
+						numOfFilesPerDir,
+						numOfLogsPerFile
 					);
 				}
 				virtual ~Logger() {}
