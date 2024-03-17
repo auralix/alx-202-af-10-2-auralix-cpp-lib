@@ -80,6 +80,7 @@ namespace Alx
 				virtual Alx_Status File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) = 0;
 				virtual Alx_Status File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) = 0;
 				virtual Alx_Status File_Size(AlxFs_File* file, uint32_t* fileSize) = 0;
+				virtual Alx_Status File_Trace(AlxFs_File* file) = 0;
 				virtual Alx_Status Dir_Make(const char* path) = 0;
 				virtual Alx_Status Dir_Open(AlxFs_Dir* dir, const char* path) = 0;
 				virtual Alx_Status Dir_Close(AlxFs_Dir* dir) = 0;
@@ -192,6 +193,10 @@ namespace Alx
 				Alx_Status File_Size(AlxFs_File* file, uint32_t* fileSize) override
 				{
 					return AlxFs_File_Size(&me, file, fileSize);
+				}
+				Alx_Status File_Trace(AlxFs_File* file) override
+				{
+					return AlxFs_File_Trace(&me, file);
 				}
 				Alx_Status Dir_Make(const char* path) override
 				{
