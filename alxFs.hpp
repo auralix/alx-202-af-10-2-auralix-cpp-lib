@@ -77,7 +77,7 @@ namespace Alx
 				virtual Alx_Status File_Write(AlxFs_File* file, void* data, uint32_t len) = 0;
 				virtual Alx_Status File_WriteStr(AlxFs_File* file, char* str) = 0;
 				virtual Alx_Status File_Sync(AlxFs_File* file) = 0;
-				virtual Alx_Status File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* positionNew) = 0;
+				virtual Alx_Status File_Seek(AlxFs_File* file, int32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* positionNew) = 0;
 				virtual Alx_Status File_Tell(AlxFs_File* file, uint32_t* position) = 0;
 				virtual Alx_Status File_Rewind(AlxFs_File* file) = 0;
 				virtual Alx_Status File_Size(AlxFs_File* file, uint32_t* size) = 0;
@@ -184,7 +184,7 @@ namespace Alx
 				{
 					return AlxFs_File_Sync(&me, file);
 				}
-				Alx_Status File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* positionNew) override
+				Alx_Status File_Seek(AlxFs_File* file, int32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* positionNew) override
 				{
 					return AlxFs_File_Seek(&me, file, offset, origin, positionNew);
 				}
