@@ -72,14 +72,16 @@ namespace Alx
 				virtual Alx_Status Rename(const char* pathOld, const char* pathNew) = 0;
 				virtual Alx_Status File_Open(AlxFs_File* file, const char* path, const char* mode) = 0;
 				virtual Alx_Status File_Close(AlxFs_File* file) = 0;
-				virtual Alx_Status File_Read(AlxFs_File* file, void* data, uint32_t lenMax, uint32_t* lenActual) = 0;
-				virtual Alx_Status File_ReadStrUntil(AlxFs_File* file, char* str, const char* delim, uint32_t lenMax, uint32_t* lenActual) = 0;
+				virtual Alx_Status File_Read(AlxFs_File* file, void* data, uint32_t len, uint32_t* lenActual) = 0;
+				virtual Alx_Status File_ReadStrUntil(AlxFs_File* file, char* str, const char* delim, uint32_t len, uint32_t* lenActual) = 0;
 				virtual Alx_Status File_Write(AlxFs_File* file, void* data, uint32_t len) = 0;
 				virtual Alx_Status File_WriteStr(AlxFs_File* file, char* str) = 0;
 				virtual Alx_Status File_Sync(AlxFs_File* file) = 0;
-				virtual Alx_Status File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) = 0;
-				virtual Alx_Status File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) = 0;
-				virtual Alx_Status File_Size(AlxFs_File* file, uint32_t* fileSize) = 0;
+				virtual Alx_Status File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* positionNew) = 0;
+				virtual Alx_Status File_Tell(AlxFs_File* file, uint32_t* position) = 0;
+				virtual Alx_Status File_Rewind(AlxFs_File* file) = 0;
+				virtual Alx_Status File_Size(AlxFs_File* file, uint32_t* size) = 0;
+				virtual Alx_Status File_Truncate(AlxFs_File* file, uint32_t size) = 0;
 				virtual Alx_Status File_Trace(const char* path) = 0;
 				virtual Alx_Status Dir_Make(const char* path) = 0;
 				virtual Alx_Status Dir_Open(AlxFs_Dir* dir, const char* path) = 0;
@@ -162,13 +164,13 @@ namespace Alx
 				{
 					return AlxFs_File_Close(&me, file);
 				}
-				Alx_Status File_Read(AlxFs_File* file, void* data, uint32_t lenMax, uint32_t* lenActual) override
+				Alx_Status File_Read(AlxFs_File* file, void* data, uint32_t len, uint32_t* lenActual) override
 				{
-					return AlxFs_File_Read(&me, file, data, lenMax, lenActual);
+					return AlxFs_File_Read(&me, file, data, len, lenActual);
 				}
-				Alx_Status File_ReadStrUntil(AlxFs_File* file, char* str, const char* delim, uint32_t lenMax, uint32_t* lenActual) override
+				Alx_Status File_ReadStrUntil(AlxFs_File* file, char* str, const char* delim, uint32_t len, uint32_t* lenActual) override
 				{
-					return AlxFs_File_ReadStrUntil(&me, file, str, delim, lenMax, lenActual);
+					return AlxFs_File_ReadStrUntil(&me, file, str, delim, len, lenActual);
 				}
 				Alx_Status File_Write(AlxFs_File* file, void* data, uint32_t len) override
 				{
@@ -182,17 +184,25 @@ namespace Alx
 				{
 					return AlxFs_File_Sync(&me, file);
 				}
-				Alx_Status File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* filePositionNew) override
+				Alx_Status File_Seek(AlxFs_File* file, uint32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* positionNew) override
 				{
-					return AlxFs_File_Seek(&me, file, offset, origin, filePositionNew);
+					return AlxFs_File_Seek(&me, file, offset, origin, positionNew);
 				}
-				Alx_Status File_Tell(AlxFs_File* file, uint32_t* filePositionCurrent) override
+				Alx_Status File_Tell(AlxFs_File* file, uint32_t* position) override
 				{
-					return AlxFs_File_Tell(&me, file, filePositionCurrent);
+					return AlxFs_File_Tell(&me, file, position);
 				}
-				Alx_Status File_Size(AlxFs_File* file, uint32_t* fileSize) override
+				Alx_Status File_Rewind(AlxFs_File* file) override
 				{
-					return AlxFs_File_Size(&me, file, fileSize);
+					return AlxFs_File_Rewind(&me, file);
+				}
+				Alx_Status File_Size(AlxFs_File* file, uint32_t* size) override
+				{
+					return AlxFs_File_Size(&me, file, size);
+				}
+				Alx_Status File_Truncate(AlxFs_File* file, uint32_t size) override
+				{
+					return AlxFs_File_Truncate(&me, file, size);
 				}
 				Alx_Status File_Trace(const char* path) override
 				{
