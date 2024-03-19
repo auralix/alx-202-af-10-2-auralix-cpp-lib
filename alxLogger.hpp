@@ -65,12 +65,10 @@ namespace Alx
 				ILogger() {}
 				virtual ~ILogger() {}
 				virtual Alx_Status Init(void) = 0;
-				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status Handle(void) = 0;
-				virtual Alx_Status Trace_ReadLog(char* str) = 0;
-				virtual Alx_Status Trace_WriteLog(char* str) = 0;
-				virtual Alx_Status Data_ReadLog(char* str) = 0;
-				virtual Alx_Status Data_WriteLog(char* str) = 0;
+				virtual Alx_Status Trace_ReadLog(char* log, uint32_t numOfLogs) = 0;
+				virtual Alx_Status Trace_WriteLog(const char* log, uint32_t numOfLogs) = 0;
+				virtual Alx_Status Data_ReadLog(char* log, uint32_t numOfLogs) = 0;
+				virtual Alx_Status Data_WriteLog(const char* log, uint32_t numOfLogs) = 0;
 				virtual ::AlxLogger* GetCStructPtr(void) = 0;
 		};
 
@@ -106,29 +104,21 @@ namespace Alx
 				{
 					return AlxLogger_Init(&me);
 				}
-				Alx_Status DeInit(void) override
+				Alx_Status Trace_ReadLog(char* log, uint32_t numOfLogs) override
 				{
-					return AlxLogger_DeInit(&me);
+					return AlxLogger_Trace_ReadLog(&me, log, numOfLogs);
 				}
-				Alx_Status Handle(void) override
+				Alx_Status Trace_WriteLog(const char* log, uint32_t numOfLogs) override
 				{
-					return AlxLogger_Handle(&me);
+					return AlxLogger_Trace_WriteLog(&me, log, numOfLogs);
 				}
-				Alx_Status Trace_ReadLog(char* str) override
+				Alx_Status Data_ReadLog(char* log, uint32_t numOfLogs) override
 				{
-					return AlxLogger_Trace_ReadLog(&me, str);
+					return AlxLogger_Data_ReadLog(&me, log, numOfLogs);
 				}
-				Alx_Status Trace_WriteLog(char* str) override
+				Alx_Status Data_WriteLog(const char* log, uint32_t numOfLogs) override
 				{
-					return AlxLogger_Trace_WriteLog(&me, str);
-				}
-				Alx_Status Data_ReadLog(char* str) override
-				{
-					return AlxLogger_Data_ReadLog(&me, str);
-				}
-				Alx_Status Data_WriteLog(char* str) override
-				{
-					return AlxLogger_Data_WriteLog(&me, str);
+					return AlxLogger_Data_WriteLog(&me, log, numOfLogs);
 				}
 				::AlxLogger* GetCStructPtr(void) override
 				{
