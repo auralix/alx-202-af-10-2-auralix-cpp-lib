@@ -66,9 +66,9 @@ namespace Alx
 				virtual ~ILogger() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status Trace_ReadLog(char* log, uint32_t numOfLogs) = 0;
-				virtual Alx_Status Trace_WriteLog(const char* log, uint32_t numOfLogs) = 0;
+				virtual Alx_Status Trace_WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) = 0;
 				virtual Alx_Status Data_ReadLog(char* log, uint32_t numOfLogs) = 0;
-				virtual Alx_Status Data_WriteLog(const char* log, uint32_t numOfLogs) = 0;
+				virtual Alx_Status Data_WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) = 0;
 				virtual ::AlxLogger* GetCStructPtr(void) = 0;
 		};
 
@@ -87,7 +87,8 @@ namespace Alx
 					AlxFs::IFs* alxFs,
 					uint32_t numOfDir,
 					uint32_t numOfFilesPerDir,
-					uint32_t numOfLogsPerFile
+					uint32_t numOfLogsPerFile,
+					const char* logDelim
 				)
 				{
 					AlxLogger_Ctor
@@ -96,7 +97,8 @@ namespace Alx
 						alxFs->GetCStructPtr(),
 						numOfDir,
 						numOfFilesPerDir,
-						numOfLogsPerFile
+						numOfLogsPerFile,
+						logDelim
 					);
 				}
 				virtual ~Logger() {}
@@ -108,17 +110,17 @@ namespace Alx
 				{
 					return AlxLogger_Trace_ReadLog(&me, log, numOfLogs);
 				}
-				Alx_Status Trace_WriteLog(const char* log, uint32_t numOfLogs) override
+				Alx_Status Trace_WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) override
 				{
-					return AlxLogger_Trace_WriteLog(&me, log, numOfLogs);
+					return AlxLogger_Trace_WriteLog(&me, log, numOfLogs, appendLogDelim);
 				}
 				Alx_Status Data_ReadLog(char* log, uint32_t numOfLogs) override
 				{
 					return AlxLogger_Data_ReadLog(&me, log, numOfLogs);
 				}
-				Alx_Status Data_WriteLog(const char* log, uint32_t numOfLogs) override
+				Alx_Status Data_WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) override
 				{
-					return AlxLogger_Data_WriteLog(&me, log, numOfLogs);
+					return AlxLogger_Data_WriteLog(&me, log, numOfLogs, appendLogDelim);
 				}
 				::AlxLogger* GetCStructPtr(void) override
 				{
