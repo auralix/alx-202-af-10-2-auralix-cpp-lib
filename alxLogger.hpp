@@ -68,6 +68,8 @@ namespace Alx
 				virtual Alx_Status ReadLog(char* log, uint32_t numOfLogs) = 0;
 				virtual Alx_Status WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) = 0;
 				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
+				virtual AlxLogger_Metadata GetMetadata(void) = 0;
+				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
 				virtual ::AlxLogger* GetCStructPtr(void) = 0;
 		};
 
@@ -116,6 +118,14 @@ namespace Alx
 				Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) override
 				{
 					return AlxLogger_StoreMetadata(&me, config);
+				}
+				AlxLogger_Metadata GetMetadata(void) override
+				{
+					return AlxLogger_GetMetadata(&me);
+				}
+				AlxLogger_Metadata GetMetadataStored(void) override
+				{
+					return AlxLogger_GetMetadataStored(&me);
 				}
 				::AlxLogger* GetCStructPtr(void) override
 				{
