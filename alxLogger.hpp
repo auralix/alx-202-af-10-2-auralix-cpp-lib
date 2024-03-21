@@ -65,10 +65,9 @@ namespace Alx
 				ILogger() {}
 				virtual ~ILogger() {}
 				virtual Alx_Status Init(void) = 0;
-				virtual Alx_Status Trace_ReadLog(char* log, uint32_t numOfLogs) = 0;
-				virtual Alx_Status Trace_WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) = 0;
-				virtual Alx_Status Data_ReadLog(char* log, uint32_t numOfLogs) = 0;
-				virtual Alx_Status Data_WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) = 0;
+				virtual Alx_Status ReadLog(char* log, uint32_t numOfLogs) = 0;
+				virtual Alx_Status WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) = 0;
+				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
 				virtual ::AlxLogger* GetCStructPtr(void) = 0;
 		};
 
@@ -106,21 +105,17 @@ namespace Alx
 				{
 					return AlxLogger_Init(&me);
 				}
-				Alx_Status Trace_ReadLog(char* log, uint32_t numOfLogs) override
+				Alx_Status ReadLog(char* log, uint32_t numOfLogs) override
 				{
-					return AlxLogger_Trace_ReadLog(&me, log, numOfLogs);
+					return AlxLogger_ReadLog(&me, log, numOfLogs);
 				}
-				Alx_Status Trace_WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) override
+				Alx_Status WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) override
 				{
-					return AlxLogger_Trace_WriteLog(&me, log, numOfLogs, appendLogDelim);
+					return AlxLogger_WriteLog(&me, log, numOfLogs, appendLogDelim);
 				}
-				Alx_Status Data_ReadLog(char* log, uint32_t numOfLogs) override
+				Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) override
 				{
-					return AlxLogger_Data_ReadLog(&me, log, numOfLogs);
-				}
-				Alx_Status Data_WriteLog(const char* log, uint32_t numOfLogs, bool appendLogDelim) override
-				{
-					return AlxLogger_Data_WriteLog(&me, log, numOfLogs, appendLogDelim);
+					return AlxLogger_StoreMetadata(&me, config);
 				}
 				::AlxLogger* GetCStructPtr(void) override
 				{
