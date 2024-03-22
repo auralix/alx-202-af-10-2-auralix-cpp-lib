@@ -65,10 +65,10 @@ namespace Alx
 				ILogger() {}
 				virtual ~ILogger() {}
 				virtual Alx_Status Init(void) = 0;
-				virtual Alx_Status ReadLog(char* log, uint32_t numOfLogs) = 0;
-				virtual Alx_Status WriteLog(const char* log, uint32_t numOfLogs) = 0;
+				virtual Alx_Status Read(char* logs, uint32_t numOfLogs) = 0;
+				virtual Alx_Status Write(const char* logs, uint32_t numOfLogs) = 0;
 				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
-				virtual AlxLogger_Metadata GetMetadata(void) = 0;
+				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
 				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
 				virtual ::AlxLogger* GetCStructPtr(void) = 0;
 		};
@@ -107,21 +107,21 @@ namespace Alx
 				{
 					return AlxLogger_Init(&me);
 				}
-				Alx_Status ReadLog(char* log, uint32_t numOfLogs) override
+				Alx_Status Read(char* logs, uint32_t numOfLogs) override
 				{
-					return AlxLogger_ReadLog(&me, log, numOfLogs);
+					return AlxLogger_Read(&me, logs, numOfLogs);
 				}
-				Alx_Status WriteLog(const char* log, uint32_t numOfLogs) override
+				Alx_Status Write(const char* logs, uint32_t numOfLogs) override
 				{
-					return AlxLogger_WriteLog(&me, log, numOfLogs);
+					return AlxLogger_Write(&me, logs, numOfLogs);
 				}
 				Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) override
 				{
 					return AlxLogger_StoreMetadata(&me, config);
 				}
-				AlxLogger_Metadata GetMetadata(void) override
+				AlxLogger_Metadata GetMetadataCurrent(void) override
 				{
-					return AlxLogger_GetMetadata(&me);
+					return AlxLogger_GetMetadataCurrent(&me);
 				}
 				AlxLogger_Metadata GetMetadataStored(void) override
 				{
