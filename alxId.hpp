@@ -186,13 +186,11 @@ namespace Alx
 					AlxId_Trace(&me);
 
 					ALX_ID_TRACE_FORMAT("\r\n");
-					ALX_ID_TRACE_FORMAT("Auralix C++ Library ALX ID Module Identification:\r\n");
-					ALX_ID_TRACE_FORMAT("\r\n");
+					ALX_ID_TRACE_FORMAT("AlxId.hpp - Trace\r\n");
 
 					ALX_ID_TRACE_FORMAT("Language:\r\n");
 					ALX_ID_TRACE_FORMAT("- name: C++, ver: %lu\r\n", langCpp.ver);
 					ALX_ID_TRACE_FORMAT("- name: %s, ver: %lu\r\n", langCppLib.name, langCppLib.ver);
-					ALX_ID_TRACE_FORMAT("\r\n");
 				}
 				const char* GetFwAppArtf(void) override
 				{

@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxSpi.hpp
-  * @brief		Auralix C++ Library - ALX SPI Module
+  * @file		alxMmc.hpp
+  * @brief		Auralix C++ Library - ALX MMC Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,17 +28,16 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_SPI_HPP
-#define ALX_SPI_HPP
+#ifndef ALX_MMC_HPP
+#define ALX_MMC_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxSpi.h"
+#include "alxMmc.h"
 #include "alxIoPin.hpp"
-#include "alxClk.hpp"
 
 
 //******************************************************************************
@@ -52,70 +51,55 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxSpi
+	namespace AlxMmc
 	{
 		//******************************************************************************
-		// Class - ISpi
+		// Class - IMmc
 		//******************************************************************************
-		class ISpi
+		class IMmc
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ISpi() {}
-				virtual ~ISpi() {}
+				IMmc() {}
+				virtual ~IMmc() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status Master_WriteRead(uint8_t* writeData, uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) = 0;
-				virtual Alx_Status Master_Write(uint8_t* writeData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) = 0;
-				virtual Alx_Status Master_Read(uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) = 0;
-				virtual void Master_AssertCs(void) = 0;
-				virtual void Master_DeAssertCs(void) = 0;
-				virtual ::AlxSpi* GetCStructPtr(void) = 0;
+				virtual Alx_Status ReadBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
+				virtual Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
+				virtual ::AlxMmc* GetCStructPtr(void) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - ASpi
+		// Class - AMmc
 		//******************************************************************************
-		class ASpi : public ISpi
+		class AMmc : public IMmc
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ASpi() {}
-				virtual ~ASpi() {}
+				AMmc() {}
+				virtual ~AMmc() {}
 				Alx_Status Init(void) override
 				{
-					return AlxSpi_Init(&me);
+					return AlxMmc_Init(&me);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxSpi_DeInit(&me);
+					return AlxMmc_DeInit(&me);
 				}
-				Alx_Status Master_WriteRead(uint8_t* writeData, uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) override
+				Alx_Status ReadBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) override
 				{
-					return AlxSpi_Master_WriteRead(&me, writeData, readData, len, numOfTries, timeout_ms);
+					return AlxMmc_ReadBlock(&me, numOfBlocks, addr, data, len, numOfTries, newTryWaitTime_ms);
 				}
-				Alx_Status Master_Write(uint8_t* writeData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) override
+				Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) override
 				{
-					return AlxSpi_Master_Write(&me, writeData, len, numOfTries, timeout_ms);
+					return AlxMmc_WriteBlock(&me, numOfBlocks, addr, data, len, numOfTries, newTryWaitTime_ms);
 				}
-				Alx_Status Master_Read(uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms) override
-				{
-					return AlxSpi_Master_Read(&me, readData, len, numOfTries, timeout_ms);
-				}
-				void Master_AssertCs(void) override
-				{
-					AlxSpi_Master_AssertCs(&me);
-				}
-				void Master_DeAssertCs(void) override
-				{
-					AlxSpi_Master_DeAssertCs(&me);
-				}
-				::AlxSpi* GetCStructPtr(void) override
+				::AlxMmc* GetCStructPtr(void) override
 				{
 					return &me;
 				}
@@ -124,67 +108,58 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Protected Variables
 				//------------------------------------------------------------------------------
-				::AlxSpi me = {};
+				::AlxMmc me = {};
 		};
 
 
 		//******************************************************************************
-		// Class - Spi
+		// Class - Mmc
 		//******************************************************************************
-		#if defined(ALX_STM32F4) || defined(ALX_STM32F7) || defined(ALX_STM32G4) || defined(ALX_STM32L0) || defined(ALX_STM32L4)
-		class Spi : public ASpi
+		#if defined(ALX_STM32L4)
+		class Mmc : public AMmc
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Spi
+				Mmc
 				(
-					SPI_TypeDef* spi,
-					AlxIoPin::IIoPin* do_SCK,
-					AlxIoPin::IIoPin* do_MOSI,
-					AlxIoPin::IIoPin* di_MISO,
-					AlxIoPin::IIoPin* do_nCS,
-					AlxSpi_Mode mode,
-					AlxClk::IClk* clk,
-					AlxSpi_Clk spiClk,
-					bool isWriteReadLowLevel
+					MMC_TypeDef* mmc,
+					AlxIoPin::IIoPin* do_nRST,
+					AlxIoPin::IIoPin* do_CLK,
+					AlxIoPin::IIoPin* do_CMD,
+					AlxIoPin::IIoPin* io_DAT0,
+					AlxIoPin::IIoPin* io_DAT1,
+					AlxIoPin::IIoPin* io_DAT2,
+					AlxIoPin::IIoPin* io_DAT3,
+					AlxIoPin::IIoPin* io_DAT4,
+					AlxIoPin::IIoPin* io_DAT5,
+					AlxIoPin::IIoPin* io_DAT6,
+					AlxIoPin::IIoPin* io_DAT7,
+					uint16_t blockReadWriteTimeout_ms,
+					uint16_t waitForTransferStateTimeout_ms
 				)
 				{
-					AlxSpi_Ctor
+					AlxMmc_Ctor
 					(
 						&me,
-						spi,
-						do_SCK->GetCStructPtr(),
-						do_MOSI->GetCStructPtr(),
-						di_MISO->GetCStructPtr(),
-						do_nCS->GetCStructPtr(),
-						mode,
-						clk->GetCStructPtr(),
-						spiClk,
-						isWriteReadLowLevel
+						mmc,
+						do_nRST->GetCStructPtr(),
+						do_CLK->GetCStructPtr(),
+						do_CMD->GetCStructPtr(),
+						io_DAT0->GetCStructPtr(),
+						io_DAT1->GetCStructPtr(),
+						io_DAT2->GetCStructPtr(),
+						io_DAT3->GetCStructPtr(),
+						io_DAT4->GetCStructPtr(),
+						io_DAT5->GetCStructPtr(),
+						io_DAT6->GetCStructPtr(),
+						io_DAT7->GetCStructPtr(),
+						blockReadWriteTimeout_ms,
+						waitForTransferStateTimeout_ms
 					);
 				}
-				virtual ~Spi() {}
-		};
-		#endif
-
-
-		//******************************************************************************
-		// Class - MockSpi
-		//******************************************************************************
-		#if defined(ALX_GTEST)
-		class MockSpi : public ISpi
-		{
-			public:
-				//------------------------------------------------------------------------------
-				// Public Functions
-				//------------------------------------------------------------------------------
-				MOCK_METHOD(Alx_Status, Init, (), (override));
-				MOCK_METHOD(Alx_Status, DeInit, (), (override));
-				MOCK_METHOD(Alx_Status, Master_WriteRead, (const uint8_t* writeData, uint8_t* readData, uint16_t len, uint8_t numOfTries, uint16_t timeout_ms), (override));
-				MOCK_METHOD(void, Master_AssertCs, (), (override));
-				MOCK_METHOD(void, Master_DeAssertCs, (), (override));
+				virtual ~Mmc() {}
 		};
 		#endif
 	}
@@ -193,4 +168,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_SPI_HPP
+#endif	// #ifndef ALX_MMC_HPP

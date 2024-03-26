@@ -37,6 +37,7 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxFs.h"
+#include "alxMmc.hpp"
 
 
 //******************************************************************************
@@ -63,14 +64,30 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IFs() {}
 				virtual ~IFs() {}
-				virtual int32_t Mount(void) = 0;
-				virtual int32_t UnMount(void) = 0;
-				virtual int32_t Format(void) = 0;
-				virtual int32_t Remove(const char* path) = 0;
-				virtual int32_t FileOpen(AlxFs_File* file, const char* path, int32_t flags) = 0;
-				virtual int32_t FileClose(AlxFs_File* file) = 0;
-				virtual int32_t FileRead(AlxFs_File* file, void* buff, uint32_t len) = 0;
-				virtual int32_t FileWrite(AlxFs_File* file, void* buff, uint32_t len) = 0;
+				virtual Alx_Status Mount(void) = 0;
+				virtual Alx_Status UnMount(void) = 0;
+				virtual Alx_Status MountFormat(void) = 0;
+				virtual Alx_Status Format(void) = 0;
+				virtual Alx_Status Remove(const char* path) = 0;
+				virtual Alx_Status Rename(const char* pathOld, const char* pathNew) = 0;
+				virtual Alx_Status File_Open(AlxFs_File* file, const char* path, const char* mode) = 0;
+				virtual Alx_Status File_Close(AlxFs_File* file) = 0;
+				virtual Alx_Status File_Read(AlxFs_File* file, void* data, uint32_t len, uint32_t* lenActual) = 0;
+				virtual Alx_Status File_ReadStrUntil(AlxFs_File* file, char* str, const char* delim, uint32_t len, uint32_t* lenActual) = 0;
+				virtual Alx_Status File_Write(AlxFs_File* file, void* data, uint32_t len) = 0;
+				virtual Alx_Status File_WriteStr(AlxFs_File* file, const char* str) = 0;
+				virtual Alx_Status File_Sync(AlxFs_File* file) = 0;
+				virtual Alx_Status File_Seek(AlxFs_File* file, int32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* positionNew) = 0;
+				virtual Alx_Status File_Tell(AlxFs_File* file, uint32_t* position) = 0;
+				virtual Alx_Status File_Rewind(AlxFs_File* file) = 0;
+				virtual Alx_Status File_Size(AlxFs_File* file, uint32_t* size) = 0;
+				virtual Alx_Status File_Truncate(AlxFs_File* file, uint32_t size) = 0;
+				virtual Alx_Status File_Trace(const char* path) = 0;
+				virtual Alx_Status Dir_Make(const char* path) = 0;
+				virtual Alx_Status Dir_Open(AlxFs_Dir* dir, const char* path) = 0;
+				virtual Alx_Status Dir_Close(AlxFs_Dir* dir) = 0;
+				virtual Alx_Status Dir_Read(AlxFs_Dir* dir, AlxFs_Info* info) = 0;
+				virtual Alx_Status Dir_Trace(const char* path, bool fileTrace) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
 		};
 
@@ -85,42 +102,131 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Fs()
+				Fs
+				(
+					::AlxFs_Config config,
+					AlxMmc::IMmc* alxMmc
+				)
 				{
-					AlxFs_Ctor(&me);
+					if (config == AlxFs_Config_Lfs_FlashInt)
+					{
+						AlxFs_Ctor
+						(
+							&me,
+							config,
+							NULL
+						);
+					}
+					else if	(config == AlxFs_Config_Lfs_Mmc)
+					{
+						AlxFs_Ctor
+						(
+							&me,
+							config,
+							alxMmc->GetCStructPtr()
+						);
+					}
+					else
+					{
+						ALX_FS_ASSERT(false);	// We should never get here
+					}
 				}
 				virtual ~Fs() {}
-				int32_t Mount(void) override
+				Alx_Status Mount(void) override
 				{
 					return AlxFs_Mount(&me);
 				}
-				int32_t UnMount(void) override
+				Alx_Status UnMount(void) override
 				{
 					return AlxFs_UnMount(&me);
 				}
-				int32_t Format(void) override
+				Alx_Status MountFormat(void) override
+				{
+					return AlxFs_MountFormat(&me);
+				}
+				Alx_Status Format(void) override
 				{
 					return AlxFs_Format(&me);
 				}
-				int32_t Remove(const char* path) override
+				Alx_Status Remove(const char* path) override
 				{
 					return AlxFs_Remove(&me, path);
 				}
-				int32_t FileOpen(AlxFs_File* file, const char* path, int32_t flags) override
+				Alx_Status Rename(const char* pathOld, const char* pathNew) override
 				{
-					return AlxFs_FileOpen(&me, file, path, flags);
+					return AlxFs_Rename(&me, pathOld, pathNew);
 				}
-				int32_t FileClose(AlxFs_File* file) override
+				Alx_Status File_Open(AlxFs_File* file, const char* path, const char* mode) override
 				{
-					return AlxFs_FileClose(&me, file);
+					return AlxFs_File_Open(&me, file, path, mode);
 				}
-				int32_t FileRead(AlxFs_File* file, void* buff, uint32_t len) override
+				Alx_Status File_Close(AlxFs_File* file) override
 				{
-					return AlxFs_FileRead(&me, file, buff, len);
+					return AlxFs_File_Close(&me, file);
 				}
-				int32_t FileWrite(AlxFs_File* file, void* buff, uint32_t len) override
+				Alx_Status File_Read(AlxFs_File* file, void* data, uint32_t len, uint32_t* lenActual) override
 				{
-					return AlxFs_FileWrite(&me, file, buff, len);
+					return AlxFs_File_Read(&me, file, data, len, lenActual);
+				}
+				Alx_Status File_ReadStrUntil(AlxFs_File* file, char* str, const char* delim, uint32_t len, uint32_t* lenActual) override
+				{
+					return AlxFs_File_ReadStrUntil(&me, file, str, delim, len, lenActual);
+				}
+				Alx_Status File_Write(AlxFs_File* file, void* data, uint32_t len) override
+				{
+					return AlxFs_File_Write(&me, file, data, len);
+				}
+				Alx_Status File_WriteStr(AlxFs_File* file, const char* str) override
+				{
+					return AlxFs_File_WriteStr(&me, file, str);
+				}
+				Alx_Status File_Sync(AlxFs_File* file) override
+				{
+					return AlxFs_File_Sync(&me, file);
+				}
+				Alx_Status File_Seek(AlxFs_File* file, int32_t offset, AlxFs_File_Seek_Origin origin, uint32_t* positionNew) override
+				{
+					return AlxFs_File_Seek(&me, file, offset, origin, positionNew);
+				}
+				Alx_Status File_Tell(AlxFs_File* file, uint32_t* position) override
+				{
+					return AlxFs_File_Tell(&me, file, position);
+				}
+				Alx_Status File_Rewind(AlxFs_File* file) override
+				{
+					return AlxFs_File_Rewind(&me, file);
+				}
+				Alx_Status File_Size(AlxFs_File* file, uint32_t* size) override
+				{
+					return AlxFs_File_Size(&me, file, size);
+				}
+				Alx_Status File_Truncate(AlxFs_File* file, uint32_t size) override
+				{
+					return AlxFs_File_Truncate(&me, file, size);
+				}
+				Alx_Status File_Trace(const char* path) override
+				{
+					return AlxFs_File_Trace(&me, path);
+				}
+				Alx_Status Dir_Make(const char* path) override
+				{
+					return AlxFs_Dir_Make(&me, path);
+				}
+				Alx_Status Dir_Open(AlxFs_Dir* dir, const char* path) override
+				{
+					return AlxFs_Dir_Open(&me, dir, path);
+				}
+				Alx_Status Dir_Close(AlxFs_Dir* dir) override
+				{
+					return AlxFs_Dir_Close(&me, dir);
+				}
+				Alx_Status Dir_Read(AlxFs_Dir* dir, AlxFs_Info* info) override
+				{
+					return AlxFs_Dir_Read(&me, dir, info);
+				}
+				Alx_Status Dir_Trace(const char* path, bool fileTrace) override
+				{
+					return AlxFs_Dir_Trace(&me, path, fileTrace);
 				}
 				::AlxFs* GetCStructPtr(void) override
 				{

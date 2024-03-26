@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxParamKvStore.hpp
-  * @brief		Auralix C++ Library - ALX Parameter Key-Value Store Module
+  * @file		alxLogger.hpp
+  * @brief		Auralix C++ Library - ALX Logger Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,15 +28,15 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_PARAM_KV_STORE_HPP
-#define ALX_PARAM_KV_STORE_HPP
+#ifndef ALX_LOGGER_HPP
+#define ALX_LOGGER_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxParamKvStore.h"
+#include "alxLogger.h"
 #include "alxFs.hpp"
 
 
@@ -51,70 +51,93 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxParamKvStore
+	namespace AlxLogger
 	{
 		//******************************************************************************
-		// Class - IParamKvStore
+		// Class - ILogger
 		//******************************************************************************
-		class IParamKvStore
+		class ILogger
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IParamKvStore() {}
-				virtual ~IParamKvStore() {}
+				ILogger() {}
+				virtual ~ILogger() {}
 				virtual Alx_Status Init(void) = 0;
-				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status Get(const char* key, void* data, uint32_t lenMax, uint32_t* lenActual) = 0;
-				virtual Alx_Status Set(const char* key, void* data, uint32_t len) = 0;
-				virtual Alx_Status Remove(const char* key) = 0;
-				virtual ::AlxParamKvStore* GetCStructPtr(void) = 0;
+				virtual Alx_Status Format(void) = 0;
+				virtual Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual) = 0;
+				virtual Alx_Status Write(const char* logs, uint32_t numOfLogs) = 0;
+				virtual uint32_t GetNumOfLogsToReadAvailable(void) = 0;
+				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
+				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
+				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
+				virtual ::AlxLogger* GetCStructPtr(void) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - ParamKvStore
+		// Class - Logger
 		//******************************************************************************
-		class ParamKvStore : public IParamKvStore
+		class Logger : public ILogger
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				ParamKvStore
+				Logger
 				(
-					AlxFs::IFs* fs
+					AlxFs::IFs* alxFs,
+					uint32_t numOfDir,
+					uint32_t numOfFilesPerDir,
+					uint32_t numOfLogsPerFile,
+					const char* logDelim
 				)
 				{
-					AlxParamKvStore_Ctor
+					AlxLogger_Ctor
 					(
 						&me,
-						fs->GetCStructPtr()
+						alxFs->GetCStructPtr(),
+						numOfDir,
+						numOfFilesPerDir,
+						numOfLogsPerFile,
+						logDelim
 					);
 				}
-				virtual ~ParamKvStore() {}
+				virtual ~Logger() {}
 				Alx_Status Init(void) override
 				{
-					return AlxParamKvStore_Init(&me);
+					return AlxLogger_Init(&me);
 				}
-				Alx_Status DeInit(void) override
+				Alx_Status Format(void) override
 				{
-					return AlxParamKvStore_DeInit(&me);
+					return AlxLogger_Format(&me);
 				}
-				Alx_Status Get(const char* key, void* data, uint32_t lenMax, uint32_t* lenActual) override
+				Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual) override
 				{
-					return AlxParamKvStore_Get(&me, key, data, lenMax, lenActual);
+					return AlxLogger_Read(&me, logs, numOfLogs, numOfLogsActual);
 				}
-				Alx_Status Set(const char* key, void* data, uint32_t len) override
+				Alx_Status Write(const char* logs, uint32_t numOfLogs) override
 				{
-					return AlxParamKvStore_Set(&me, key, data, len);
+					return AlxLogger_Write(&me, logs, numOfLogs);
 				}
-				Alx_Status Remove(const char* key) override
+				Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) override
 				{
-					return AlxParamKvStore_Remove(&me, key);
+					return AlxLogger_StoreMetadata(&me, config);
 				}
-				::AlxParamKvStore* GetCStructPtr(void) override
+				uint32_t GetNumOfLogsToReadAvailable(void) override
+				{
+					return AlxLogger_GetNumOfLogsToReadAvailable(&me);
+				}
+				AlxLogger_Metadata GetMetadataCurrent(void) override
+				{
+					return AlxLogger_GetMetadataCurrent(&me);
+				}
+				AlxLogger_Metadata GetMetadataStored(void) override
+				{
+					return AlxLogger_GetMetadataStored(&me);
+				}
+				::AlxLogger* GetCStructPtr(void) override
 				{
 					return &me;
 				}
@@ -123,7 +146,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxParamKvStore me = {};
+				::AlxLogger me = {};
 		};
 	}
 }
@@ -131,4 +154,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_PARAM_KV_STORE_HPP
+#endif	// #ifndef ALX_LOGGER_HPP
