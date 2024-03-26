@@ -68,7 +68,7 @@ namespace Alx
 				virtual Alx_Status Format(void) = 0;
 				virtual Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual) = 0;
 				virtual Alx_Status Write(const char* logs, uint32_t numOfLogs) = 0;
-				virtual uint32_t GetNumOfLogsToRead(void) = 0;
+				virtual uint32_t GetNumOfLogsToReadAvailable(void) = 0;
 				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
 				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
 				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
@@ -125,9 +125,9 @@ namespace Alx
 				{
 					return AlxLogger_StoreMetadata(&me, config);
 				}
-				uint32_t GetNumOfLogsToRead(void) override
+				uint32_t GetNumOfLogsToReadAvailable(void) override
 				{
-					return AlxLogger_GetNumOfLogsToRead(&me);
+					return AlxLogger_GetNumOfLogsToReadAvailable(&me);
 				}
 				AlxLogger_Metadata GetMetadataCurrent(void) override
 				{
