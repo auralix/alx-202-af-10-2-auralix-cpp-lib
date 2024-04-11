@@ -68,6 +68,7 @@ namespace Alx
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status ReadBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
 				virtual Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
+				virtual void IrqHandler(void) = 0;
 				virtual ::AlxMmc* GetCStructPtr(void) = 0;
 		};
 
@@ -98,6 +99,10 @@ namespace Alx
 				Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) override
 				{
 					return AlxMmc_WriteBlock(&me, numOfBlocks, addr, data, len, numOfTries, newTryWaitTime_ms);
+				}
+				void IrqHandler(void) override
+				{
+					AlxMmc_IrqHandler(&me);
 				}
 				::AlxMmc* GetCStructPtr(void) override
 				{
@@ -137,7 +142,8 @@ namespace Alx
 					AlxIoPin::IIoPin* io_DAT6,
 					AlxIoPin::IIoPin* io_DAT7,
 					uint16_t blockReadWriteTimeout_ms,
-					uint16_t waitForTransferStateTimeout_ms
+					uint16_t waitForTransferStateTimeout_ms,
+					Alx_IrqPriority irqPriority
 				)
 				{
 					AlxMmc_Ctor
@@ -156,7 +162,8 @@ namespace Alx
 						io_DAT6->GetCStructPtr(),
 						io_DAT7->GetCStructPtr(),
 						blockReadWriteTimeout_ms,
-						waitForTransferStateTimeout_ms
+						waitForTransferStateTimeout_ms,
+						irqPriority
 					);
 				}
 				virtual ~Mmc() {}
