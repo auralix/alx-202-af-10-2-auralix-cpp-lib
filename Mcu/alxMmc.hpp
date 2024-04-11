@@ -141,7 +141,7 @@ namespace Alx
 					AlxIoPin::IIoPin* io_DAT5,
 					AlxIoPin::IIoPin* io_DAT6,
 					AlxIoPin::IIoPin* io_DAT7,
-					uint16_t blockReadWriteTimeout_ms,
+					uint16_t dmaReadWriteTimeout_ms,
 					uint16_t waitForTransferStateTimeout_ms,
 					Alx_IrqPriority irqPriority
 				)
@@ -161,7 +161,7 @@ namespace Alx
 						io_DAT5->GetCStructPtr(),
 						io_DAT6->GetCStructPtr(),
 						io_DAT7->GetCStructPtr(),
-						blockReadWriteTimeout_ms,
+						dmaReadWriteTimeout_ms,
 						waitForTransferStateTimeout_ms,
 						irqPriority
 					);
