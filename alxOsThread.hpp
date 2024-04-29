@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxOsCriticalSection.hpp
-  * @brief		Auralix C++ Library - ALX OS Critical Section Module
+  * @file		alxOsThread.hpp
+  * @brief		Auralix C++ Library - ALX OS Thread Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,14 +28,15 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_OS_CRITICAL_SECTION_HPP
-#define ALX_OS_CRITICAL_SECTION_HPP
+#ifndef ALX_OS_THREAD_HPP
+#define ALX_OS_THREAD_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
+#include "alxOsThread.h"
 
 
 //******************************************************************************
@@ -49,27 +50,72 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxOsCriticalSection
+	namespace AlxOsThread
 	{
 		//******************************************************************************
-		// Functions
+		// Class - IAlxOsThread
 		//******************************************************************************
-		static inline void Enter(void)
+		class IAlxOsThread
 		{
-			#if defined(ALX_MBED)
-			mbed::CriticalSectionLock::enable();
-			#endif
-		}
-		static inline void Exit(void)
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				IAlxOsThread() {}
+				virtual ~IAlxOsThread() {}
+				virtual Alx_Status Start(void) = 0;
+				virtual void Yield(void) = 0;
+		};
+
+
+		//******************************************************************************
+		// Class - AlxOsThread
+		//******************************************************************************
+		class AlxOsThread : public IAlxOsThread
 		{
-			#if defined(ALX_MBED)
-			mbed::CriticalSectionLock::disable();
-			#endif
-		}
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				AlxOsThread
+				(
+					TaskFunction_t pxTaskCode,
+					const char* const pcName,
+					uint32_t usStackDepth_byte,
+					void* const pvParameters,
+					UBaseType_t uxPriority
+				)
+				{
+					AlxOsThread_Ctor
+					(
+						&me,
+						pxTaskCode,
+						pcName,
+						usStackDepth_byte,
+						pvParameters,
+						uxPriority
+					);
+				}
+				virtual ~AlxOsThread() {}
+				Alx_Status Start(void) override
+				{
+					return AlxOsThread_Start(&me);
+				}
+				void Yield(void) override
+				{
+					AlxOsThread_Yield(&me);
+				}
+
+			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
+				::AlxOsThread me = {};
+		};
 	}
 }
 
 
-#endif	// #if defined(ALX_CPP_LIB)
+#endif	// #if defined(ALX_C_LIB) && defined(ALX_FREE_RTOS)
 
-#endif	// #ifndef ALX_OS_CRITICAL_SECTION_HPP
+#endif	// #ifndef ALX_OS_THREAD_HPP

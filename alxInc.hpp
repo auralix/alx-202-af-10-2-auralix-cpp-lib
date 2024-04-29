@@ -91,7 +91,8 @@
 #include "alxMemRaw.hpp"
 #include "alxMemSafe.hpp"
 #include "alxNtpClient.hpp"
-#include "alxOsCriticalSection.hpp"
+#include "alxOsMutex.hpp"
+#include "alxOsThread.hpp"
 #include "alxParamGroup.hpp"
 #include "alxParamItem.hpp"
 #include "alxParamKvStore.hpp"
@@ -100,7 +101,6 @@
 #include "alxSd.hpp"
 #include "alxSm.hpp"
 #include "alxTempSensRtdVdiv.hpp"
-#include "alxTick.hpp"
 #include "alxTimSw.hpp"
 
 

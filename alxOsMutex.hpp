@@ -1,7 +1,7 @@
-/**
+﻿/**
   ******************************************************************************
-  * @file		alxTick.hpp
-  * @brief		Auralix C++ Library - ALX Tick Module
+  * @file		alxOsMutex.hpp
+  * @brief		Auralix C++ Library - ALX OS Mutex Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,21 +28,21 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_TICK_HPP
-#define ALX_TICK_HPP
+#ifndef ALX_OS_MUTEX_HPP
+#define ALX_OS_MUTEX_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxTick.h"
+#include "alxOsMutex.h"
 
 
 //******************************************************************************
 // Module Guard
 //******************************************************************************
-#if defined(ALX_CPP_LIB)
+#if defined(ALX_C_LIB) && defined(ALX_FREE_RTOS)
 
 
 //******************************************************************************
@@ -50,109 +50,62 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxTick
+	namespace AlxOsMutex
 	{
 		//******************************************************************************
-		// Class - Tick
+		// Class - IAlxOsMutex
 		//******************************************************************************
-		class Tick
+		class IAlxOsMutex
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Tick(volatile ::AlxTick* me) : me(me)
+				IAlxOsMutex() {}
+				virtual ~IAlxOsMutex() {}
+				virtual void Lock(void) = 0;
+				virtual void Unlock(void) = 0;
+				virtual bool IsUnlocked(void) = 0;
+		};
+
+
+		//******************************************************************************
+		// Class - AlxOsMutex
+		//******************************************************************************
+		class AlxOsMutex : public IAlxOsMutex
+		{
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				AlxOsMutex()
 				{
-					AlxTick_Ctor(me);
+					AlxOsMutex_Ctor(&me);
 				}
-				virtual ~Tick() {}
-				uint64_t Get_ns(void) const volatile
+				virtual ~AlxOsMutex() {}
+				void Lock(void) override
 				{
-					return AlxTick_Get_ns(me);
+					AlxOsMutex_Lock(&me);
 				}
-				uint64_t Get_us(void) const volatile
+				void Unlock(void) override
 				{
-					return AlxTick_Get_us(me);
+					AlxOsMutex_Unlock(&me);
 				}
-				uint64_t Get_ms(void) const volatile
+				bool IsUnlocked(void) override
 				{
-					return AlxTick_Get_ms(me);
-				}
-				uint64_t Get_sec(void) const volatile
-				{
-					return AlxTick_Get_sec(me);
-				}
-				uint64_t Get_min(void) const volatile
-				{
-					return AlxTick_Get_min(me);
-				}
-				uint64_t Get_hr(void) const volatile
-				{
-					return AlxTick_Get_hr(me);
-				}
-				void Inc_ns(void) const volatile
-				{
-					AlxTick_Inc_ns(me);
-				}
-				void Inc_us(void) const volatile
-				{
-					AlxTick_Inc_us(me);
-				}
-				void Inc_ms(void) const volatile
-				{
-					AlxTick_Inc_ms(me);
-				}
-				void Inc_sec(void) const volatile
-				{
-					AlxTick_Inc_sec(me);
-				}
-				void Inc_min(void) const volatile
-				{
-					AlxTick_Inc_min(me);
-				}
-				void Inc_hr(void) const volatile
-				{
-					AlxTick_Inc_hr(me);
-				}
-				void Inc_ns(uint64_t ticks_ns) const volatile
-				{
-					AlxTick_IncRange_ns(me, ticks_ns);
-				}
-				void Inc_us(uint64_t ticks_us) const volatile
-				{
-					AlxTick_IncRange_us(me, ticks_us);
-				}
-				void Inc_ms(uint64_t ticks_ms) const volatile
-				{
-					AlxTick_IncRange_ms(me, ticks_ms);
-				}
-				void Inc_sec(uint64_t ticks_sec) const volatile
-				{
-					AlxTick_IncRange_sec(me, ticks_sec);
-				}
-				void Inc_min(uint64_t ticks_min) const volatile
-				{
-					AlxTick_IncRange_min(me, ticks_min);
-				}
-				void Inc_hr(uint64_t ticks_hr) const volatile
-				{
-					AlxTick_IncRange_hr(me, ticks_hr);
-				}
-				void Reset(void) const volatile
-				{
-					AlxTick_Reset(me);
+					return AlxOsMutex_IsUnlocked(&me);
 				}
 
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				volatile ::AlxTick* me = nullptr;
+				::AlxOsMutex me = {};
 		};
 	}
 }
 
 
-#endif	// #if defined(ALX_CPP_LIB)
+#endif	// #if defined(ALX_C_LIB) && defined(ALX_FREE_RTOS)
 
-#endif	// #ifndef ALX_TICK_HPP
+#endif	// #ifndef ALX_OS_MUTEX_HPP
