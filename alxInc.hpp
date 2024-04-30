@@ -90,6 +90,7 @@
 #include "alxLogger.hpp"
 #include "alxMemRaw.hpp"
 #include "alxMemSafe.hpp"
+#include "alxNet.hpp"
 #include "alxNtpClient.hpp"
 #include "alxOsMutex.hpp"
 #include "alxOsThread.hpp"
@@ -100,6 +101,7 @@
 #include "alxParamStore.hpp"
 #include "alxSd.hpp"
 #include "alxSm.hpp"
+#include "alxSocket.hpp"
 #include "alxTempSensRtdVdiv.hpp"
 #include "alxTimSw.hpp"
 
