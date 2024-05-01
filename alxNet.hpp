@@ -77,11 +77,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				Net
 				(
+					AlxNet_Config config
 				)
 				{
 					AlxNet_Ctor
 					(
-						&me
+						&me,
+						config
 					);
 				}
 				virtual ~Net() {}
