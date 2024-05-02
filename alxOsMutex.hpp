@@ -42,7 +42,7 @@
 //******************************************************************************
 // Module Guard
 //******************************************************************************
-#if defined(ALX_C_LIB) && defined(ALX_FREE_RTOS)
+#if defined(ALX_C_LIB)
 
 
 //******************************************************************************
@@ -106,6 +106,6 @@ namespace Alx
 }
 
 
-#endif	// #if defined(ALX_C_LIB) && defined(ALX_FREE_RTOS)
+#endif	// #if defined(ALX_C_LIB)
 
 #endif	// #ifndef ALX_OS_MUTEX_HPP

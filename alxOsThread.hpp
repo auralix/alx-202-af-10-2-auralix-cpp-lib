@@ -79,21 +79,21 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				AlxOsThread
 				(
-					TaskFunction_t pxTaskCode,
-					const char* const pcName,
-					uint32_t usStackDepth_byte,
-					void* const pvParameters,
-					UBaseType_t uxPriority
+					void (*func)(void*),
+					const char* name,
+					uint32_t stackLen_byte,
+					void* param,
+					uint32_t priority
 				)
 				{
 					AlxOsThread_Ctor
 					(
 						&me,
-						pxTaskCode,
-						pcName,
-						usStackDepth_byte,
-						pvParameters,
-						uxPriority
+						func,
+						name,
+						stackLen_byte,
+						param,
+						priority
 					);
 				}
 				virtual ~AlxOsThread() {}
@@ -116,6 +116,6 @@ namespace Alx
 }
 
 
-#endif	// #if defined(ALX_C_LIB) && defined(ALX_FREE_RTOS)
+#endif	// #if defined(ALX_C_LIB)
 
 #endif	// #ifndef ALX_OS_THREAD_HPP
