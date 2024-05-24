@@ -95,7 +95,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - Fs
 		//******************************************************************************
-		#if defined(ALX_CPP_LIB) && defined(ALX_LFS)
+		#if defined(ALX_CPP_LIB)
 		class Fs : public IFs
 		{
 			public:

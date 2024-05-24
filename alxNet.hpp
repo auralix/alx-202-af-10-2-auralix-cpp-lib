@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxOsCriticalSection.hpp
-  * @brief		Auralix C++ Library - ALX OS Critical Section Module
+  * @file		alxNet.hpp
+  * @brief		Auralix C++ Library - ALX Network Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,14 +28,15 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_OS_CRITICAL_SECTION_HPP
-#define ALX_OS_CRITICAL_SECTION_HPP
+#ifndef ALX_SOCKET_HPP
+#define ALX_SOCKET_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
+#include "alxNet.h"
 
 
 //******************************************************************************
@@ -49,27 +50,54 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxOsCriticalSection
+	namespace AlxNet
 	{
 		//******************************************************************************
-		// Functions
+		// Class - INet
 		//******************************************************************************
-		static inline void Enter(void)
+		class INet
 		{
-			#if defined(ALX_MBED)
-			mbed::CriticalSectionLock::enable();
-			#endif
-		}
-		static inline void Exit(void)
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				INet() {}
+				virtual ~INet() {}
+		};
+
+
+		//******************************************************************************
+		// Class - Net
+		//******************************************************************************
+		class Net : public INet
 		{
-			#if defined(ALX_MBED)
-			mbed::CriticalSectionLock::disable();
-			#endif
-		}
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				Net
+				(
+					AlxNet_Config config
+				)
+				{
+					AlxNet_Ctor
+					(
+						&me,
+						config
+					);
+				}
+				virtual ~Net() {}
+
+			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
+				::AlxNet me = {};
+		};
 	}
 }
 
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_OS_CRITICAL_SECTION_HPP
+#endif	// #ifndef ALX_SOCKET_HPP
