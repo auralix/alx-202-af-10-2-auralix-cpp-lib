@@ -130,10 +130,12 @@ namespace Alx
 					{
 						return (AlxNet_Connect(&me));
 					}
-					else if (me.config == AlxNet_Config_Wiznet)
+					#if defined(ALX_FREE_RTOS_CELLULAR)
+					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
 					{
-						// return (modem...);
+						return (AlxNet_Connect(&me));
 					}
+					#endif
 					return Alx_Err;
 				}
 				Alx_Status Disconnect(void) override
@@ -142,10 +144,12 @@ namespace Alx
 					{
 						return (AlxNet_Disconnect(&me));
 					}
-					else if (me.config == AlxNet_Config_Wiznet)
+					#if defined(ALX_FREE_RTOS_CELLULAR)
+					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
 					{
-						// return (modem...);
+						return (AlxNet_Disconnect(&me));
 					}
+					#endif
 					return Alx_Err;
 				}
 				bool IsConnected(void) override
@@ -154,10 +158,12 @@ namespace Alx
 					{
 						return (AlxNet_IsConnected(&me));
 					}
-					else if (me.config == AlxNet_Config_Wiznet)
+					#if defined(ALX_FREE_RTOS_CELLULAR)
+					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
 					{
-						// return (modem...);
+						return AlxNet_IsConnected(&me);
 					}
+					#endif
 					return false;
 				}
 				void SetMac(const char* mac) override
@@ -222,10 +228,12 @@ namespace Alx
 					{
 						return AlxNet_GetIp(&me);
 					}
-					else if (me.config == AlxNet_Config_Wiznet)
+					#if defined(ALX_FREE_RTOS_CELLULAR)
+					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
 					{
-						// return (modem...);
+						return AlxNet_GetIp(&me);
 					}
+					#endif
 					return NULL;
 				}
 				const char* GetNetmask(void) override
