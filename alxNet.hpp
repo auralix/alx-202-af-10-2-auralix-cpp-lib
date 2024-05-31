@@ -116,10 +116,12 @@ namespace Alx
 					{
 						return (AlxNet_Init(&me));
 					}
-					else if (me.config == AlxNet_Config_Wiznet)
+					#if defined(ALX_FREE_RTOS_CELLULAR)
+					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
 					{
-						// return (modem...);
+						return AlxNet_Init(&me);
 					}
+					#endif
 					return Alx_Err;
 				}
 				Alx_Status Connect(void) override
