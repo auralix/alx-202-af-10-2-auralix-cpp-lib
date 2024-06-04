@@ -63,7 +63,7 @@ namespace Alx
 				// Public Functions
 				//------------------------------------------------------------------------------
 				INet() {}
-				virtual ~INet() {}		
+				virtual ~INet() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status Connect(void) = 0;
 				virtual Alx_Status Disconnect(void) = 0;
@@ -79,7 +79,7 @@ namespace Alx
 				virtual void Dns_SetIp(uint8_t dnsId, const char* ip) = 0;
 				virtual Alx_Status Dns_GetHostByName(const char* hostname, char* ip) = 0;
 				virtual void Dhcp_Enable(bool enable) = 0;
-				virtual bool Dhcp_WasAddrSupplied(void) = 0;	
+				virtual bool Dhcp_WasAddrSupplied(void) = 0;
 		};
 
 
@@ -277,9 +277,9 @@ namespace Alx
 					{
 						return AlxNet_Dns_GetHostByName(&me, hostname, ip);
 					}
-					else if (me.config == AlxNet_Config_Wiznet)
+					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
 					{
-						// return (modem...);
+						return AlxNet_Dns_GetHostByName(&me, hostname, ip);
 					}
 					return Alx_Err;
 				}
