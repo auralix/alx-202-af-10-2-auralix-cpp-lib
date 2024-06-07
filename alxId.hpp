@@ -114,7 +114,8 @@ namespace Alx
 					uint8_t fwVerMinor,
 					uint8_t fwVerPatch,
 					bool fwIsBuildJobUsed,
-					bool fwIsBootloader,
+					bool fwIsBootUsed,
+					uint32_t fwBootIdAddr,
 					AlxId_HwInstance* hwInstanceKnownArr,
 					uint8_t hwInstanceKnownArrLen,
 					uint8_t* hwInstanceHwIdSupportedArr,
@@ -139,7 +140,8 @@ namespace Alx
 						fwVerMinor,
 						fwVerPatch,
 						fwIsBuildJobUsed,
-						fwIsBootloader,
+						fwIsBootUsed,
+						fwBootIdAddr,
 						hwInstanceKnownArr,
 						hwInstanceKnownArrLen,
 						hwInstanceHwIdSupportedArr,
@@ -157,7 +159,8 @@ namespace Alx
 					uint8_t fwVerMinor,
 					uint8_t fwVerPatch,
 					bool fwIsBuildJobUsed,
-					bool fwIsBootloader,
+					bool fwIsBootUsed,
+					uint32_t fwBootIdAddr,
 					AlxId_HwInstance hwInstance,
 					const char* hwMcuName
 				)
@@ -171,7 +174,8 @@ namespace Alx
 						fwVerMinor,
 						fwVerPatch,
 						fwIsBuildJobUsed,
-						fwIsBootloader,
+						fwIsBootUsed,
+						fwBootIdAddr,
 						hwInstance,
 						hwMcuName
 					);
