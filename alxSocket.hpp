@@ -52,7 +52,7 @@
 namespace Alx
 {
 	namespace AlxSocket
-	{	
+	{
 		//******************************************************************************
 		// Class - ISocket
 		//******************************************************************************
@@ -101,7 +101,7 @@ namespace Alx
 				{
 					memcpy(&me, sock, sizeof(me));
 				}
-				virtual ~Socket() { 
+				virtual ~Socket() {
 					Close();
 				}
 				Alx_Status Open(::AlxNet* alxNet, AlxSocket_Protocol protocol) override
@@ -145,7 +145,7 @@ namespace Alx
 				{
 					AlxSocket_SetTimeout_ms(&me, timeout_ms);
 				}
-		
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables

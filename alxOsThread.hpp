@@ -65,6 +65,7 @@ namespace Alx
 				virtual ~IAlxOsThread() {}
 				virtual Alx_Status Start(void) = 0;
 				virtual void Yield(void) = 0;
+				virtual void Terminate(void) = 0;
 		};
 
 
@@ -104,6 +105,10 @@ namespace Alx
 				void Yield(void) override
 				{
 					AlxOsThread_Yield(&me);
+				}
+				void Terminate(void) override
+				{
+					AlxOsThread_Terminate(&me);
 				}
 
 			private:
