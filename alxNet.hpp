@@ -112,199 +112,67 @@ namespace Alx
 				virtual ~Net() {}
 				Alx_Status Init(void) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return (AlxNet_Init(&me));
-					}
-					#if defined(ALX_FREE_RTOS_CELLULAR)
-					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
-					{
-						return AlxNet_Init(&me);
-					}
-					#endif
-					return Alx_Err;
+					return (AlxNet_Init(&me));
 				}
 				Alx_Status Connect(void) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return (AlxNet_Connect(&me));
-					}
-					#if defined(ALX_FREE_RTOS_CELLULAR)
-					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
-					{
-						return (AlxNet_Connect(&me));
-					}
-					#endif
-					return Alx_Err;
+					return (AlxNet_Connect(&me));
 				}
 				Alx_Status Disconnect(void) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return (AlxNet_Disconnect(&me));
-					}
-					#if defined(ALX_FREE_RTOS_CELLULAR)
-					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
-					{
-						return (AlxNet_Disconnect(&me));
-					}
-					#endif
-					return Alx_Err;
+					return (AlxNet_Disconnect(&me));
 				}
 				bool IsConnected(void) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return (AlxNet_IsConnected(&me));
-					}
-					#if defined(ALX_FREE_RTOS_CELLULAR)
-					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
-					{
-						return AlxNet_IsConnected(&me);
-					}
-					#endif
-					return false;
+					return (AlxNet_IsConnected(&me));
 				}
 				void SetMac(const char* mac) override
 				{
-					if(me.config == AlxNet_Config_Wiznet)
-					{
-						AlxNet_SetMac(&me, mac);
-					}
-					else if (me.config == AlxNet_Config_Wiznet)
-					{
-						// (modem...);
-					}
+					AlxNet_SetMac(&me, mac);
 				}
 				void SetIp(const char* ip) override
 				{
-					if(me.config == AlxNet_Config_Wiznet)
-					{
-						AlxNet_SetIp(&me, ip) ;
-					}
-					else if(me.config == AlxNet_Config_Wiznet)
-					{
-						// (modem...);
-					}
+					AlxNet_SetIp(&me, ip) ;
 				}
 				void SetNetmask(const char* netmask) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						AlxNet_SetNetmask(&me, netmask);
-					}
-					else if (me.config == AlxNet_Config_Wiznet)
-					{
-						// (modem...);
-					}
+					AlxNet_SetNetmask(&me, netmask);
 				}
 				void SetGateway(const char* gateway) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						AlxNet_SetGateway(&me, gateway);
-					}
-					else if (me.config == AlxNet_Config_Wiznet)
-					{
-						// (modem...);
-					}
+					AlxNet_SetGateway(&me, gateway);
 				}
 				const char* GetMac(void) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return AlxNet_GetMac(&me);
-					}
-					else if (me.config == AlxNet_Config_Wiznet)
-					{
-						// return (modem...);
-					}
-					return NULL;
+					return AlxNet_GetMac(&me);
 				}
 				const char* GetIp(void) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return AlxNet_GetIp(&me);
-					}
-					#if defined(ALX_FREE_RTOS_CELLULAR)
-					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
-					{
-						return AlxNet_GetIp(&me);
-					}
-					#endif
-					return NULL;
+					return AlxNet_GetIp(&me);
 				}
 				const char* GetNetmask(void) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return AlxNet_GetNetmask(&me);
-					}
-					else if (me.config == AlxNet_Config_Wiznet)
-					{
-						// return (modem...);
-					}
-					return NULL;
+					return AlxNet_GetNetmask(&me);
 				}
 				const char* GetGateway(void) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return AlxNet_GetGateway(&me);
-					}
-					else if (me.config == AlxNet_Config_Wiznet)
-					{
-						// return (modem...);
-					}
-					return NULL;
+					return AlxNet_GetGateway(&me);
 				}
 				void Dns_SetIp(uint8_t dnsId, const char* ip) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						AlxNet_Dns_SetIp(&me, dnsId, ip);
-					}
-					else if (me.config == AlxNet_Config_Wiznet)
-					{
-						// (modem...);
-					}
+					AlxNet_Dns_SetIp(&me, dnsId, ip);
 				}
 				Alx_Status Dns_GetHostByName(const char* hostname, char* ip) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return AlxNet_Dns_GetHostByName(&me, hostname, ip);
-					}
-					else if (me.config == AlxNet_Config_FreeRtos_Cellular)
-					{
-						return AlxNet_Dns_GetHostByName(&me, hostname, ip);
-					}
-					return Alx_Err;
+					return AlxNet_Dns_GetHostByName(&me, hostname, ip);
 				}
 				void Dhcp_Enable(bool enable) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						AlxNet_Dhcp_Enable(&me, enable);
-					}
-					else if (me.config == AlxNet_Config_Wiznet)
-					{
-						// (modem...);
-					}
+					AlxNet_Dhcp_Enable(&me, enable);
 				}
 				bool Dhcp_WasAddrSupplied(void) override
 				{
-					if (me.config == AlxNet_Config_Wiznet)
-					{
-						return AlxNet_Dhcp_WasAddrSupplied(&me);
-					}
-					else if (me.config == AlxNet_Config_Wiznet)
-					{
-						// return (modem...);
-					}
-					return false;
+					return AlxNet_Dhcp_WasAddrSupplied(&me);
 				}
 			//private:
 				//------------------------------------------------------------------------------

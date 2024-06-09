@@ -494,7 +494,7 @@ namespace Alx
 				// #3 Prepare variables
 				Alx_Status alxError = Alx_Err;
 				int32_t sockSizeOrError = -1;
-				
+
 //				nsapi_connection_status_t nsapiConnectionStatus = NSAPI_STATUS_ERROR_UNSUPPORTED;
 //
 //				// #4 Check if network is UP
@@ -539,7 +539,7 @@ namespace Alx
 				sock.SetTimeout_ms(SOCK_TIMEOUT_ms); // No Return
 
 				// #8 Open socket
-				alxError = sock.Open(&net->me, AlxSocket_Protocol_Udp);
+				alxError = sock.Open(net, AlxSocket_Protocol_Udp);
 				if (alxError != Alx_Ok)
 				{
 					ALX_NTP_CLIENT_TRACE("Err: %d", (int32_t)alxError);
@@ -669,7 +669,7 @@ namespace Alx
 			// Objects - Internal
 			char sockAddrServer_IP[16];
 			uint16_t sockAddrServer_Port;
-			
+
 			Alx::AlxSocket::Socket sock;
 
 			// Parameters

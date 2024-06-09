@@ -36,6 +36,7 @@
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
+#include "alxNet.hpp"
 #include "alxNet.h"
 #include "alxSocket.h"
 
@@ -64,7 +65,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				ISocket() {}
 				virtual ~ISocket() {}
-				virtual Alx_Status Open(::AlxNet* alxNet, AlxSocket_Protocol protocol) = 0;
+				virtual Alx_Status Open(AlxNet::Net* network, AlxSocket_Protocol protocol) = 0;
 				virtual Alx_Status Close(void) = 0;
 				virtual Alx_Status Connect(const char* ip, uint16_t port) = 0;
 				virtual Alx_Status Bind(uint16_t port) = 0;
@@ -104,9 +105,9 @@ namespace Alx
 				virtual ~Socket() {
 					Close();
 				}
-				Alx_Status Open(::AlxNet* alxNet, AlxSocket_Protocol protocol) override
+			Alx_Status Open(AlxNet::Net* network, AlxSocket_Protocol protocol) override
 				{
-					return AlxSocket_Open(&me, alxNet, protocol);
+					return AlxSocket_Open(&me, &network->me, protocol);
 				}
 				Alx_Status Close(void) override
 				{
