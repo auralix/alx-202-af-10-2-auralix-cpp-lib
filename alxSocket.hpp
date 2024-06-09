@@ -107,7 +107,7 @@ namespace Alx
 				}
 			Alx_Status Open(AlxNet::Net* network, AlxSocket_Protocol protocol) override
 				{
-					return AlxSocket_Open(&me, &network->me, protocol);
+					return AlxSocket_Open(&me, network->GetMePtr(), protocol);
 				}
 				Alx_Status Close(void) override
 				{

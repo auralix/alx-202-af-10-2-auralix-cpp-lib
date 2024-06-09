@@ -174,7 +174,11 @@ namespace Alx
 				{
 					return AlxNet_Dhcp_WasAddrSupplied(&me);
 				}
-			//private:
+				::AlxNet* GetMePtr(void)
+				{
+					return &me;
+				}
+			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
