@@ -80,6 +80,7 @@ namespace Alx
 				virtual Alx_Status Dns_GetHostByName(const char* hostname, char* ip) = 0;
 				virtual void Dhcp_Enable(bool enable) = 0;
 				virtual bool Dhcp_WasAddrSupplied(void) = 0;
+				virtual AlxNet_Config GetNetInterface(void) = 0;
 		};
 
 
@@ -173,6 +174,10 @@ namespace Alx
 				bool Dhcp_WasAddrSupplied(void) override
 				{
 					return AlxNet_Dhcp_WasAddrSupplied(&me);
+				}
+				AlxNet_Config GetNetInterface(void) override
+				{
+					return Alx_GetNetInterface(&me);
 				}
 				::AlxNet* GetMePtr(void)
 				{
