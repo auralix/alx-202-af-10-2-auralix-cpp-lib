@@ -99,6 +99,7 @@
 #include "alxParamKvStore.hpp"
 #include "alxParamMgmt.hpp"
 #include "alxParamStore.hpp"
+#include "alxPwr.hpp"
 #include "alxSd.hpp"
 #include "alxSm.hpp"
 #include "alxSocket.hpp"
