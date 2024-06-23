@@ -75,10 +75,12 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// General
 				//------------------------------------------------------------------------------
+				virtual AlxParamItem_DataType GetDataType(void) = 0;
+				virtual AlxParamItem_ParamType GetParamType(void) = 0;
 				virtual const char* GetKey(void) = 0;
 				virtual uint32_t GetId(void) = 0;
+				virtual const char* GetGroupKey(void) = 0;
 				virtual uint32_t GetGroupId(void) = 0;
-				virtual AlxParamItem_DataType GetDataType(void) = 0;
 				virtual void* GetValPtr(void) = 0;
 				virtual uint32_t GetValLen(void) = 0;
 
@@ -159,8 +161,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					uint8_t valDef,
 					uint8_t valMin,
@@ -174,8 +178,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -189,8 +195,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					uint16_t valDef,
 					uint16_t valMin,
@@ -204,8 +212,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -219,8 +229,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					uint32_t valDef,
 					uint32_t valMin,
@@ -234,8 +246,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -249,8 +263,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					uint64_t valDef,
 					uint64_t valMin,
@@ -264,8 +280,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -279,8 +297,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					int8_t valDef,
 					int8_t valMin,
@@ -294,8 +314,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -309,8 +331,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					int16_t valDef,
 					int16_t valMin,
@@ -324,8 +348,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -339,8 +365,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					int32_t valDef,
 					int32_t valMin,
@@ -354,8 +382,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -369,8 +399,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					int64_t valDef,
 					int64_t valMin,
@@ -384,8 +416,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -399,8 +433,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					float valDef,
 					float valMin,
@@ -414,8 +450,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -429,8 +467,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					double valDef,
 					double valMin,
@@ -444,8 +484,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valMin,
@@ -459,8 +501,10 @@ namespace Alx
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					bool valDef
 				)
@@ -469,8 +513,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef
 					);
@@ -478,19 +524,43 @@ namespace Alx
 				// Arr
 				ParamItem
 				(
-					const char* name,
+					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
+					const char* key,
 					uint32_t id,
-					uint32_t groupId
+					const char* groupKey,
+					uint32_t groupId,
+					void* valDef,
+					void* valBuff,
+					void* valDefBuff,
+					uint32_t valBuffLen,
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
 				)
 				{
-					// TODO
+					AlxParamItem_CtorArr
+					(
+						&me,
+						paramKvStore->GetCStructPtr(),
+						paramType,
+						key,
+						id,
+						groupKey,
+						groupId,
+						valDef,
+						valBuff,
+						valDefBuff,
+						valBuffLen,
+						valOutOfRangeHandle
+					);
 				}
 				// Str
 				ParamItem
 				(
 					AlxParamKvStore::IParamKvStore* paramKvStore,
+					AlxParamItem_ParamType paramType,
 					const char* key,
 					uint32_t id,
+					const char* groupKey,
 					uint32_t groupId,
 					const char* valDef,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
@@ -500,8 +570,10 @@ namespace Alx
 					(
 						&me,
 						paramKvStore->GetCStructPtr(),
+						paramType,
 						key,
 						id,
+						groupKey,
 						groupId,
 						valDef,
 						valOutOfRangeHandle,
@@ -519,6 +591,14 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// General
 				//------------------------------------------------------------------------------
+				AlxParamItem_DataType GetDataType(void) override
+				{
+					return AlxParamItem_GetDataType(&me);
+				}
+				AlxParamItem_ParamType GetParamType(void) override
+				{
+					return AlxParamItem_GetParamType(&me);
+				}
 				const char* GetKey(void) override
 				{
 					return AlxParamItem_GetKey(&me);
@@ -527,13 +607,13 @@ namespace Alx
 				{
 					return AlxParamItem_GetId(&me);
 				}
+				const char* GetGroupKey(void) override
+				{
+					return AlxParamItem_GetGroupKey(&me);
+				}
 				uint32_t GetGroupId(void) override
 				{
 					return AlxParamItem_GetGroupId(&me);
-				}
-				AlxParamItem_DataType GetDataType(void) override
-				{
-					return AlxParamItem_GetDataType(&me);
 				}
 				void* GetValPtr(void) override
 				{
