@@ -78,7 +78,7 @@ namespace Alx
 				virtual const char* GetKey(void) = 0;
 				virtual uint32_t GetId(void) = 0;
 				virtual uint32_t GetGroupId(void) = 0;
-				virtual AlxParamItem_Type GetType(void) = 0;
+				virtual AlxParamItem_DataType GetDataType(void) = 0;
 				virtual void* GetValPtr(void) = 0;
 				virtual uint32_t GetValLen(void) = 0;
 
@@ -531,9 +531,9 @@ namespace Alx
 				{
 					return AlxParamItem_GetGroupId(&me);
 				}
-				AlxParamItem_Type GetType(void) override
+				AlxParamItem_DataType GetDataType(void) override
 				{
-					return AlxParamItem_GetType(&me);
+					return AlxParamItem_GetDataType(&me);
 				}
 				void* GetValPtr(void) override
 				{
