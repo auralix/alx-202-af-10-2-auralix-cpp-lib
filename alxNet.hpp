@@ -81,6 +81,9 @@ namespace Alx
 				virtual void Dhcp_Enable(bool enable) = 0;
 				virtual bool Dhcp_WasAddrSupplied(void) = 0;
 				virtual AlxNet_Config GetNetInterface(void) = 0;
+				#if defined(ALX_FREE_RTOS_CELLULAR)
+				virtual void GetCellularInfo(uint8_t *rssi, uint8_t *ber) = 0;
+				#endif
 		};
 
 
@@ -179,6 +182,12 @@ namespace Alx
 				{
 					return Alx_GetNetInterface(&me);
 				}
+				#if defined(ALX_FREE_RTOS_CELLULAR)
+				void GetCellularInfo(uint8_t *rssi, uint8_t *ber) override
+				{
+					return Alx_GetCellularSignalQuality(&me, rssi, ber);
+				}
+				#endif
 				::AlxNet* GetMePtr(void)
 				{
 					return &me;
