@@ -108,9 +108,9 @@ namespace Alx
 					(
 						&me,
 						config,
-						alxSpi->GetCStructPtr(),
-						do_nRST->GetCStructPtr(),
-						di_nINT->GetCStructPtr()
+						alxSpi != nullptr ? alxSpi->GetCStructPtr() : nullptr,
+						do_nRST != nullptr ? do_nRST->GetCStructPtr() : nullptr,
+						di_nINT != nullptr ? di_nINT->GetCStructPtr() : nullptr
 					);
 				}
 				virtual ~Net() {}
