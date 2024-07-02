@@ -74,6 +74,14 @@ namespace Alx
 				virtual int32_t Send(void* data, uint32_t len) = 0;
 				virtual int32_t Recv(void* data, uint32_t len) = 0;
 				virtual void SetTimeout_ms(uint32_t timeout_ms) = 0;
+				#if defined(ALX_MBEDTLS)
+				virtual Alx_Status InitTls(
+					const char *server_cn,
+					const unsigned char *ca_cert,
+					const unsigned char *cl_cert,
+					const unsigned char *cl_key
+				) = 0;
+				#endif
 		};
 
 
@@ -146,7 +154,22 @@ namespace Alx
 				{
 					AlxSocket_SetTimeout_ms(&me, timeout_ms);
 				}
-
+				#if defined(ALX_MBEDTLS)
+				Alx_Status InitTls(
+					const char *server_cn,
+					const unsigned char *ca_cert,
+					const unsigned char *cl_cert,
+					const unsigned char *cl_key
+				) override
+				{
+					return AlxSocket_InitTls(
+						&me,
+						server_cn,
+						ca_cert,
+						cl_cert,
+						cl_key);
+				}
+				#endif
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
