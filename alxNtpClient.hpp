@@ -466,6 +466,16 @@ namespace Alx
 				, isServerIpHostnameFormat(isServerIpHostnameFormat)
 			{}
 			virtual ~NtpClient() {}
+			void SetNetwork(Alx::AlxNet::Net* net)
+			{
+				// Lock mutex
+				mutex.Lock();
+
+				this->net = net;
+
+				// Unlock mutex
+				mutex.Unlock();
+			}
 			uint64_t GetUnixTime_ns(void) override
 			{
 				ALX_NTP_CLIENT_ASSERT(false);
