@@ -37,6 +37,7 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxFs.h"
+#include "alxIoPin.hpp"
 #include "alxMmc.hpp"
 
 
@@ -105,7 +106,11 @@ namespace Alx
 				Fs
 				(
 					::AlxFs_Config config,
-					AlxMmc::IMmc* alxMmc
+					AlxMmc::IMmc* alxMmc,
+					Alx::AlxIoPin::IIoPin* do_DBG_ReadBlock,
+					Alx::AlxIoPin::IIoPin* do_DBG_WriteBlock,
+					Alx::AlxIoPin::IIoPin* do_DBG_EraseBlock,
+					Alx::AlxIoPin::IIoPin* do_DBG_SyncBlock
 				)
 				{
 					if (config == AlxFs_Config_Lfs_FlashInt)
@@ -114,6 +119,10 @@ namespace Alx
 						(
 							&me,
 							config,
+							NULL,
+							NULL,
+							NULL,
+							NULL,
 							NULL
 						);
 					}
@@ -123,7 +132,11 @@ namespace Alx
 						(
 							&me,
 							config,
-							alxMmc->GetCStructPtr()
+							alxMmc->GetCStructPtr(),
+							do_DBG_ReadBlock->GetCStructPtr(),
+							do_DBG_WriteBlock->GetCStructPtr(),
+							do_DBG_EraseBlock->GetCStructPtr(),
+							do_DBG_SyncBlock->GetCStructPtr()
 						);
 					}
 					else
