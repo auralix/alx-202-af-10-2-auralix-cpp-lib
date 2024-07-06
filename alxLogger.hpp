@@ -37,6 +37,7 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxLogger.h"
+#include "alxIoPin.hpp"
 #include "alxFs.hpp"
 
 
@@ -91,7 +92,11 @@ namespace Alx
 					uint32_t numOfDir,
 					uint32_t numOfFilesPerDir,
 					uint32_t numOfLogsPerFile,
-					const char* logDelim
+					const char* logDelim,
+					Alx::AlxIoPin::IIoPin* do_DBG_Read,
+					Alx::AlxIoPin::IIoPin* do_DBG_Write,
+					Alx::AlxIoPin::IIoPin* do_DBG_StoreReadMetadata,
+					Alx::AlxIoPin::IIoPin* do_DBG_StoreWriteMetadata
 				)
 				{
 					AlxLogger_Ctor
@@ -101,7 +106,11 @@ namespace Alx
 						numOfDir,
 						numOfFilesPerDir,
 						numOfLogsPerFile,
-						logDelim
+						logDelim,
+						do_DBG_Read->GetCStructPtr(),
+						do_DBG_Write->GetCStructPtr(),
+						do_DBG_StoreReadMetadata->GetCStructPtr(),
+						do_DBG_StoreWriteMetadata->GetCStructPtr()
 					);
 				}
 				virtual ~Logger() {}
