@@ -73,6 +73,8 @@ namespace Alx
 				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
 				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
 				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
+				virtual AlxMath_Data GetMath_Data_ReadTime_ms(void) = 0;
+				virtual AlxMath_Data GetMath_Data_WriteTime_ms(void) = 0;
 				virtual ::AlxLogger* GetCStructPtr(void) = 0;
 		};
 
@@ -145,6 +147,14 @@ namespace Alx
 				AlxLogger_Metadata GetMetadataStored(void) override
 				{
 					return AlxLogger_GetMetadataStored(&me);
+				}
+				AlxMath_Data GetMath_Data_ReadTime_ms(void) override
+				{
+					return AlxLogger_GetMath_Data_ReadTime_ms(&me);
+				}
+				AlxMath_Data GetMath_Data_WriteTime_ms(void) override
+				{
+					return AlxLogger_GetMath_Data_WriteTime_ms(&me);
 				}
 				::AlxLogger* GetCStructPtr(void) override
 				{
