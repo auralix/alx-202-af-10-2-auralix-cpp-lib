@@ -101,6 +101,15 @@ namespace Alx
 					Alx::AlxIoPin::IIoPin* do_DBG_StoreWriteMetadata
 				)
 				{
+					::AlxIoPin* _do_DBG_Read = NULL;
+					::AlxIoPin* _do_DBG_Write = NULL;
+					::AlxIoPin* _do_DBG_StoreReadMetadata = NULL;
+					::AlxIoPin* _do_DBG_StoreWriteMetadata = NULL;
+					if (do_DBG_Read != nullptr) _do_DBG_Read = do_DBG_Read->GetCStructPtr();
+					if (do_DBG_Write != nullptr) _do_DBG_Write = do_DBG_Write->GetCStructPtr();
+					if (do_DBG_StoreReadMetadata != nullptr) _do_DBG_StoreReadMetadata = do_DBG_StoreReadMetadata->GetCStructPtr();
+					if (do_DBG_StoreWriteMetadata != nullptr) _do_DBG_StoreWriteMetadata = do_DBG_StoreWriteMetadata->GetCStructPtr();
+
 					AlxLogger_Ctor
 					(
 						&me,
@@ -109,10 +118,10 @@ namespace Alx
 						numOfFilesPerDir,
 						numOfLogsPerFile,
 						logDelim,
-						do_DBG_Read->GetCStructPtr(),
-						do_DBG_Write->GetCStructPtr(),
-						do_DBG_StoreReadMetadata->GetCStructPtr(),
-						do_DBG_StoreWriteMetadata->GetCStructPtr()
+						_do_DBG_Read,
+						_do_DBG_Write,
+						_do_DBG_StoreReadMetadata,
+						_do_DBG_StoreWriteMetadata
 					);
 				}
 				virtual ~Logger() {}

@@ -113,6 +113,15 @@ namespace Alx
 					Alx::AlxIoPin::IIoPin* do_DBG_SyncBlock
 				)
 				{
+					::AlxIoPin* _do_DBG_ReadBlock = NULL;
+					::AlxIoPin* _do_DBG_WriteBlock = NULL;
+					::AlxIoPin* _do_DBG_EraseBlock = NULL;
+					::AlxIoPin* _do_DBG_SyncBlock = NULL;
+					if (do_DBG_ReadBlock != nullptr) _do_DBG_ReadBlock = do_DBG_ReadBlock->GetCStructPtr();
+					if (do_DBG_WriteBlock != nullptr) _do_DBG_WriteBlock = do_DBG_ReadBlock->GetCStructPtr();
+					if (do_DBG_EraseBlock != nullptr) _do_DBG_EraseBlock = do_DBG_ReadBlock->GetCStructPtr();
+					if (do_DBG_SyncBlock != nullptr) _do_DBG_SyncBlock = do_DBG_ReadBlock->GetCStructPtr();
+
 					if (config == AlxFs_Config_Lfs_FlashInt)
 					{
 						AlxFs_Ctor
@@ -120,10 +129,10 @@ namespace Alx
 							&me,
 							config,
 							NULL,
-							NULL,
-							NULL,
-							NULL,
-							NULL
+							_do_DBG_ReadBlock,
+							_do_DBG_WriteBlock,
+							_do_DBG_EraseBlock,
+							_do_DBG_SyncBlock
 						);
 					}
 					else if	(config == AlxFs_Config_Lfs_Mmc)
@@ -133,10 +142,10 @@ namespace Alx
 							&me,
 							config,
 							alxMmc->GetCStructPtr(),
-							do_DBG_ReadBlock->GetCStructPtr(),
-							do_DBG_WriteBlock->GetCStructPtr(),
-							do_DBG_EraseBlock->GetCStructPtr(),
-							do_DBG_SyncBlock->GetCStructPtr()
+							_do_DBG_ReadBlock,
+							_do_DBG_WriteBlock,
+							_do_DBG_EraseBlock,
+							_do_DBG_SyncBlock
 						);
 					}
 					else
