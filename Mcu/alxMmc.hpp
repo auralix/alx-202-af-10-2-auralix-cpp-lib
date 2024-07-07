@@ -38,6 +38,7 @@
 #include "alxGlobal.hpp"
 #include "alxMmc.h"
 #include "alxIoPin.hpp"
+#include "alxClk.hpp"
 
 
 //******************************************************************************
@@ -141,6 +142,8 @@ namespace Alx
 					AlxIoPin::IIoPin* io_DAT5,
 					AlxIoPin::IIoPin* io_DAT6,
 					AlxIoPin::IIoPin* io_DAT7,
+					AlxClk::IClk* clk,
+					AlxMmc_Clk mmcClk,
 					uint16_t dmaReadWriteTimeout_ms,
 					uint16_t waitForTransferStateTimeout_ms,
 					Alx_IrqPriority irqPriority
@@ -161,6 +164,8 @@ namespace Alx
 						io_DAT5->GetCStructPtr(),
 						io_DAT6->GetCStructPtr(),
 						io_DAT7->GetCStructPtr(),
+						clk->GetCStructPtr(),
+						mmcClk,
 						dmaReadWriteTimeout_ms,
 						waitForTransferStateTimeout_ms,
 						irqPriority
