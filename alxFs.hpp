@@ -113,45 +113,27 @@ namespace Alx
 					Alx::AlxIoPin::IIoPin* do_DBG_SyncBlock
 				)
 				{
+					::AlxMmc* _alxMmc = NULL;
 					::AlxIoPin* _do_DBG_ReadBlock = NULL;
 					::AlxIoPin* _do_DBG_WriteBlock = NULL;
 					::AlxIoPin* _do_DBG_EraseBlock = NULL;
 					::AlxIoPin* _do_DBG_SyncBlock = NULL;
+					if (alxMmc != nullptr) _alxMmc = alxMmc->GetCStructPtr();
 					if (do_DBG_ReadBlock != nullptr) _do_DBG_ReadBlock = do_DBG_ReadBlock->GetCStructPtr();
 					if (do_DBG_WriteBlock != nullptr) _do_DBG_WriteBlock = do_DBG_ReadBlock->GetCStructPtr();
 					if (do_DBG_EraseBlock != nullptr) _do_DBG_EraseBlock = do_DBG_ReadBlock->GetCStructPtr();
 					if (do_DBG_SyncBlock != nullptr) _do_DBG_SyncBlock = do_DBG_ReadBlock->GetCStructPtr();
 
-					if (config == AlxFs_Config_Lfs_FlashInt)
-					{
-						AlxFs_Ctor
-						(
-							&me,
-							config,
-							NULL,
-							_do_DBG_ReadBlock,
-							_do_DBG_WriteBlock,
-							_do_DBG_EraseBlock,
-							_do_DBG_SyncBlock
-						);
-					}
-					else if	(config == AlxFs_Config_Lfs_Mmc)
-					{
-						AlxFs_Ctor
-						(
-							&me,
-							config,
-							alxMmc->GetCStructPtr(),
-							_do_DBG_ReadBlock,
-							_do_DBG_WriteBlock,
-							_do_DBG_EraseBlock,
-							_do_DBG_SyncBlock
-						);
-					}
-					else
-					{
-						ALX_FS_ASSERT(false);	// We should never get here
-					}
+					AlxFs_Ctor
+					(
+						&me,
+						config,
+						_alxMmc,
+						_do_DBG_ReadBlock,
+						_do_DBG_WriteBlock,
+						_do_DBG_EraseBlock,
+						_do_DBG_SyncBlock
+					);
 				}
 				virtual ~Fs() {}
 				Alx_Status Mount(void) override
