@@ -69,6 +69,7 @@ namespace Alx
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status ReadBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
 				virtual Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
+				virtual Alx_Status WaitForTransferState(void) = 0;
 				virtual void IrqHandler(void) = 0;
 				virtual ::AlxMmc* GetCStructPtr(void) = 0;
 		};
@@ -100,6 +101,10 @@ namespace Alx
 				Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) override
 				{
 					return AlxMmc_WriteBlock(&me, numOfBlocks, addr, data, len, numOfTries, newTryWaitTime_ms);
+				}
+				Alx_Status WaitForTransferState(void) override
+				{
+					return AlxMmc_WaitForTransferState(&me);
 				}
 				void IrqHandler(void) override
 				{
