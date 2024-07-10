@@ -120,9 +120,9 @@ namespace Alx
 					::AlxIoPin* _do_DBG_SyncBlock = NULL;
 					if (alxMmc != nullptr) _alxMmc = alxMmc->GetCStructPtr();
 					if (do_DBG_ReadBlock != nullptr) _do_DBG_ReadBlock = do_DBG_ReadBlock->GetCStructPtr();
-					if (do_DBG_WriteBlock != nullptr) _do_DBG_WriteBlock = do_DBG_ReadBlock->GetCStructPtr();
-					if (do_DBG_EraseBlock != nullptr) _do_DBG_EraseBlock = do_DBG_ReadBlock->GetCStructPtr();
-					if (do_DBG_SyncBlock != nullptr) _do_DBG_SyncBlock = do_DBG_ReadBlock->GetCStructPtr();
+					if (do_DBG_WriteBlock != nullptr) _do_DBG_WriteBlock = do_DBG_WriteBlock->GetCStructPtr();
+					if (do_DBG_EraseBlock != nullptr) _do_DBG_EraseBlock = do_DBG_EraseBlock->GetCStructPtr();
+					if (do_DBG_SyncBlock != nullptr) _do_DBG_SyncBlock = do_DBG_SyncBlock->GetCStructPtr();
 
 					AlxFs_Ctor
 					(
