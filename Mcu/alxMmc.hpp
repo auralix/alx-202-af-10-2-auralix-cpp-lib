@@ -149,6 +149,8 @@ namespace Alx
 					AlxIoPin::IIoPin* io_DAT7,
 					AlxClk::IClk* clk,
 					AlxMmc_Clk mmcClk,
+					uint8_t* dmaReadWriteBuffAlign4,
+					uint32_t dmaReadWriteBuffAlign4Len,
 					uint16_t dmaReadWriteTimeout_ms,
 					uint16_t waitForTransferStateTimeout_ms,
 					Alx_IrqPriority irqPriority
@@ -171,6 +173,8 @@ namespace Alx
 						io_DAT7->GetCStructPtr(),
 						clk->GetCStructPtr(),
 						mmcClk,
+						dmaReadWriteBuffAlign4,
+						dmaReadWriteBuffAlign4Len,
 						dmaReadWriteTimeout_ms,
 						waitForTransferStateTimeout_ms,
 						irqPriority
