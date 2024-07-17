@@ -46,6 +46,7 @@
 #include "alxBts724g.hpp"
 #include "alxTmp1075.hpp"
 #include "alxTpa3255.hpp"
+#include "alxPca9539a.hpp"
 
 
 //------------------------------------------------------------------------------
