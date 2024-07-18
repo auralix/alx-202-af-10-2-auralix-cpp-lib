@@ -83,7 +83,7 @@ namespace Alx
 				Bq25890
 				(
 					Alx::AlxI2c::II2c *i2c,
-					uint16_t IINLIM,
+					uint8_t IINLIM,
 					bool JEITA_VSET,
 					bool BATFET_DIS
 				)
