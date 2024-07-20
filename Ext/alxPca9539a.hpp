@@ -65,9 +65,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IPca9539a() {}
 				virtual ~IPca9539a() {}
-				virtual void Init(void) = 0;
-				virtual void DeInit(void) = 0;
-				virtual void Handle(void) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Handle(void) = 0;
 				virtual bool ReadPin(uint8_t port, uint8_t pin) = 0;
 				virtual uint8_t ReadPort(uint8_t port) = 0;
 				virtual void WritePin(uint8_t port, uint8_t pin, bool val) = 0;
@@ -104,17 +104,17 @@ namespace Alx
 					);
 				}
 				virtual ~Pca9539a() {}
-				virtual void Init(void)
+				virtual Alx_Status Init(void)
 				{
-					AlxPca9539a_Init(&me);
+					return AlxPca9539a_Init(&me);
 				}
-				virtual void DeInit(void)
+				virtual Alx_Status DeInit(void)
 				{
-					AlxPca9539a_DeInit(&me);
+					return AlxPca9539a_DeInit(&me);
 				}
-				virtual void Handle(void)
+				virtual Alx_Status Handle(void)
 				{
-					AlxPca9539a_Handle(&me);
+					return AlxPca9539a_Handle(&me);
 				}
 				virtual bool ReadPin(uint8_t port, uint8_t pin)
 				{

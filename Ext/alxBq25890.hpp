@@ -65,9 +65,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IBq25890() {}
 				virtual ~IBq25890() {}
-				virtual void Init(void) = 0;
-				virtual void DeInit(void) = 0;
-				virtual void Handle(void) = 0;
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Handle(void) = 0;
 		};
 
 
@@ -98,21 +98,21 @@ namespace Alx
 					);
 				}
 				virtual ~Bq25890() {}
-				virtual void Init(void)
+				virtual Alx_Status Init(void)
 				{
-					AlxBq25890_Init(&me);
+					return AlxBq25890_Init(&me);
 				}
-				virtual void DeInit(void)
+				virtual Alx_Status DeInit(void)
 				{
-					AlxBq25890_DeInit(&me);
+					return AlxBq25890_DeInit(&me);
 				}
-				virtual void Handle(void)
+				virtual Alx_Status Handle(void)
 				{
-					AlxBq25890_Handle(&me);
+					return AlxBq25890_Handle(&me);
 				}
 				virtual void GetRegPtr(AlxBq25890_Reg *reg)
 				{
-					reg = &me.reg;
+					memcpy(reg, &me.reg, sizeof(AlxBq25890_Reg));
 				}
 
 			private:
