@@ -67,9 +67,9 @@ namespace Alx
 				virtual ~IMax17263() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status Handle(void) = 0;
-				virtual void GetData(max1726_user_data_t *data) = 0;
-
+				virtual Alx_Status Handle(max1726_data_t *data) = 0;
+				virtual void GetData(max1726_data_t *data) = 0;
+				virtual void GetSerial(char *serial) = 0;
 		};
 
 
@@ -94,28 +94,36 @@ namespace Alx
 					);
 				}
 				virtual ~Max17263() {}
-				virtual Alx_Status Init(void)
+				Alx_Status Init(void) override
 				{
 					return AlxMax17263_Init(&me);
 				}
-				virtual Alx_Status DeInit(void)
+				Alx_Status DeInit(void) override
 				{
 					return AlxMax17263_DeInit(&me);
 				}
-				virtual Alx_Status Handle(void)
+				Alx_Status Handle(max1726_data_t *data) override
 				{
-					return AlxMax17263_Handle(&me);
+					return AlxMax17263_Handle(&me, data);
 				}
-				virtual void GetData(max1726_user_data_t *data)
+				void GetSerial(char *serial) override
 				{
-					data->Cycles = me.user_data.Cycles;
-					data->FulLCAP = me.user_data.FulLCAP;
-					data->RepCAP = me.user_data.RepCAP;
-					data->RepSOC = me.user_data.RepSOC;
-					data->reset_happened = me.user_data.reset_happened;
-					memcpy(data->serial, me.user_data.serial, 32 + 1);
-					data->TTE = me.user_data.TTE;
-					data->TTF = me.user_data.TTF;
+					strncpy(serial, me.data.serial, 32 + 1);
+				}
+
+				void GetData(max1726_data_t *data) override
+				{
+					data->Cycles = me.data.Cycles;
+					data->FulLCAP = me.data.FulLCAP;
+					data->RepCAP = me.data.RepCAP;
+					data->RepSOC = me.data.RepSOC;
+					data->reset_happened = me.data.reset_happened;
+					data->TTE = me.data.TTE;
+					data->TTF = me.data.TTF;
+					data->AvgCurrent = me.data.AvgCurrent;
+					data->AvgTA = me.data.AvgTA;
+					data->AvgVCell = me.data.AvgVCell;
+					memcpy(&data->learned_params, &me.data.learned_params, sizeof(me.data.learned_params));
 				}
 
 			private:
