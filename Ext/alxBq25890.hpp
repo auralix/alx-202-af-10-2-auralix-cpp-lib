@@ -67,7 +67,15 @@ namespace Alx
 				virtual ~IBq25890() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status Handle(void) = 0;
+				virtual Alx_Status Poll(void) = 0;
+				virtual Alx_Status Read(AlxBq25890_Reg *reg) = 0;
+				virtual Alx_Status SetShippingMode(void) = 0;
+				virtual Alx_Status SetIINLIM(uint8_t current) = 0;
+				virtual Alx_Status SetJEITA_VSET(bool value) = 0;
+				virtual Alx_Status GetFaults(AlxBq2890_faults_t *faults) = 0;
+				virtual Alx_Status GetChargingStatus(uint8_t *status) = 0;
+
+
 		};
 
 
@@ -98,21 +106,41 @@ namespace Alx
 					);
 				}
 				virtual ~Bq25890() {}
-				virtual Alx_Status Init(void)
+				Alx_Status Init(void) override
 				{
 					return AlxBq25890_Init(&me);
 				}
-				virtual Alx_Status DeInit(void)
+				Alx_Status DeInit(void) override
 				{
 					return AlxBq25890_DeInit(&me);
 				}
-				virtual Alx_Status Handle(void)
+				Alx_Status Poll(void) override
 				{
-					return AlxBq25890_Handle(&me);
+					return AlxBq25890_Poll(&me);
 				}
-				virtual void GetRegPtr(AlxBq25890_Reg *reg)
+				Alx_Status Read(AlxBq25890_Reg *reg) override
 				{
-					memcpy(reg, &me.reg, sizeof(AlxBq25890_Reg));
+					return AlxBq25890_Read(&me, reg);
+				}
+				Alx_Status GetFaults(AlxBq2890_faults_t *faults) override
+				{
+					return AlxBq25890_GetFaults(&me, faults);
+				}
+				Alx_Status GetChargingStatus(uint8_t *status) override
+				{
+					return AlxBq25890_GetChargingStatus(&me, status);
+				}
+				Alx_Status SetShippingMode(void) override
+				{
+					return AlxBq25890_set_shipping_mode(&me);
+				}
+				Alx_Status SetJEITA_VSET(bool value) override
+				{
+					return AlxBq25890_set_JEITA_VSET(&me, value);
+				}
+				Alx_Status SetIINLIM(uint8_t current) override
+				{
+					return AlxBq25890_set_IINLIM(&me, current);
 				}
 
 			private:
