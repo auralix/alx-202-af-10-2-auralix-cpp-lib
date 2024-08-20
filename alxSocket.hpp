@@ -69,6 +69,7 @@ namespace Alx
 				virtual Alx_Status Close(void) = 0;
 				virtual Alx_Status Connect(const char* ip, uint16_t port) = 0;
 				virtual Alx_Status Bind(uint16_t port) = 0;
+				virtual Alx_Status Bind(const char* ip, uint16_t port) = 0;
 				virtual Alx_Status Listen(uint8_t backlog) = 0;
 				virtual ISocket* Accept(void) = 0;
 				virtual int32_t Send(void* data, uint32_t len) = 0;
@@ -128,6 +129,10 @@ namespace Alx
 				Alx_Status Bind(uint16_t port) override
 				{
 					return AlxSocket_Bind(&me, port);
+				}
+				Alx_Status Bind(const char* ip, uint16_t port) override
+				{
+					return AlxSocket_Bind_Mcast(&me, ip, port);
 				}
 				Alx_Status Listen(uint8_t backlog) override
 				{
