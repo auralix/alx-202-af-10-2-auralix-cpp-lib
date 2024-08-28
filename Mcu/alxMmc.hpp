@@ -38,6 +38,7 @@
 #include "alxGlobal.hpp"
 #include "alxMmc.h"
 #include "alxIoPin.hpp"
+#include "alxClk.hpp"
 
 
 //******************************************************************************
@@ -68,6 +69,7 @@ namespace Alx
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status ReadBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
 				virtual Alx_Status WriteBlock(uint32_t numOfBlocks, uint32_t addr, uint8_t* data, uint32_t len, uint8_t numOfTries, uint16_t newTryWaitTime_ms) = 0;
+				virtual Alx_Status WaitForTransferState(void) = 0;
 				virtual void IrqHandler(void) = 0;
 				virtual ::AlxMmc* GetCStructPtr(void) = 0;
 		};
@@ -76,6 +78,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - AMmc
 		//******************************************************************************
+		template <uint32_t dmaReadWriteBuffAlign4Len>
 		class AMmc : public IMmc
 		{
 			public:
@@ -100,6 +103,10 @@ namespace Alx
 				{
 					return AlxMmc_WriteBlock(&me, numOfBlocks, addr, data, len, numOfTries, newTryWaitTime_ms);
 				}
+				Alx_Status WaitForTransferState(void) override
+				{
+					return AlxMmc_WaitForTransferState(&me);
+				}
 				void IrqHandler(void) override
 				{
 					AlxMmc_IrqHandler(&me);
@@ -114,6 +121,7 @@ namespace Alx
 				// Protected Variables
 				//------------------------------------------------------------------------------
 				::AlxMmc me = {};
+				uint8_t dmaReadWriteBuffAlign4[dmaReadWriteBuffAlign4Len] __attribute__((aligned(4))) = {};
 		};
 
 
@@ -121,7 +129,8 @@ namespace Alx
 		// Class - Mmc
 		//******************************************************************************
 		#if defined(ALX_STM32L4)
-		class Mmc : public AMmc
+		template <uint32_t dmaReadWriteBuffAlign4Len>
+		class Mmc : public AMmc <dmaReadWriteBuffAlign4Len>
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -141,14 +150,16 @@ namespace Alx
 					AlxIoPin::IIoPin* io_DAT5,
 					AlxIoPin::IIoPin* io_DAT6,
 					AlxIoPin::IIoPin* io_DAT7,
+					AlxClk::IClk* clk,
+					AlxMmc_Clk mmcClk,
 					uint16_t dmaReadWriteTimeout_ms,
 					uint16_t waitForTransferStateTimeout_ms,
 					Alx_IrqPriority irqPriority
-				)
+				) : AMmc<dmaReadWriteBuffAlign4Len>()
 				{
 					AlxMmc_Ctor
 					(
-						&me,
+						&this->me,
 						mmc,
 						do_nRST->GetCStructPtr(),
 						do_CLK->GetCStructPtr(),
@@ -161,6 +172,10 @@ namespace Alx
 						io_DAT5->GetCStructPtr(),
 						io_DAT6->GetCStructPtr(),
 						io_DAT7->GetCStructPtr(),
+						clk->GetCStructPtr(),
+						mmcClk,
+						this->dmaReadWriteBuffAlign4,
+						dmaReadWriteBuffAlign4Len,
 						dmaReadWriteTimeout_ms,
 						waitForTransferStateTimeout_ms,
 						irqPriority

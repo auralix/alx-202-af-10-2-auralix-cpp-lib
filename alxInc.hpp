@@ -46,7 +46,9 @@
 #include "alxBts724g.hpp"
 #include "alxTmp1075.hpp"
 #include "alxTpa3255.hpp"
-
+#include "alxPca9539a.hpp"
+#include "alxBq25890.hpp"
+#include "alxMax17263.hpp"
 
 //------------------------------------------------------------------------------
 // ALX - MCU

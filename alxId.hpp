@@ -66,15 +66,26 @@ namespace Alx
 				virtual ~IId() {}
 				virtual void Init(void) = 0;
 				virtual void Trace(void) = 0;
-				virtual const char* GetFwAppArtf(void) = 0;
-				virtual const char* GetFwAppName(void) = 0;
-				virtual uint8_t GetFwAppVerMajor(void) = 0;
-				virtual uint8_t GetFwAppVerMinor(void) = 0;
-				virtual uint8_t GetFwAppVerPatch(void) = 0;
-				virtual uint32_t GetFwAppVerDate(void) = 0;
-				virtual uint64_t GetFwAppVer(void) = 0;
-				virtual const char* GetFwAppVerStr(void) = 0;
-				virtual const char* GetFwAppBinStr(void) = 0;
+				virtual const char* GetFwArtf(void) = 0;
+				virtual const char* GetFwName(void) = 0;
+				virtual uint8_t GetFwVerMajor(void) = 0;
+				virtual uint8_t GetFwVerMinor(void) = 0;
+				virtual uint8_t GetFwVerPatch(void) = 0;
+				virtual uint32_t GetFwVerDate(void) = 0;
+				virtual uint64_t GetFwVer(void) = 0;
+				virtual uint32_t GetFwHashShort(void) = 0;
+				virtual const char* GetFwVerStr(void) = 0;
+				virtual const char* GetFwBinStr(void) = 0;
+				virtual const char* GetFwBootArtf(void) = 0;
+				virtual const char* GetFwBootName(void) = 0;
+				virtual uint8_t GetFwBootVerMajor(void) = 0;
+				virtual uint8_t GetFwBootVerMinor(void) = 0;
+				virtual uint8_t GetFwBootVerPatch(void) = 0;
+				virtual uint32_t GetFwBootVerDate(void) = 0;
+				virtual uint64_t GetFwBootVer(void) = 0;
+				virtual uint32_t GetFwBootHashShort(void) = 0;
+				virtual const char* GetFwBootVerStr(void) = 0;
+				virtual const char* GetFwBootBinStr(void) = 0;
 				virtual const char* GetHwPcbArtf(void) = 0;
 				virtual const char* GetHwPcbName(void) = 0;
 				virtual uint8_t GetHwPcbVerMajor(void) = 0;
@@ -114,7 +125,8 @@ namespace Alx
 					uint8_t fwVerMinor,
 					uint8_t fwVerPatch,
 					bool fwIsBuildJobUsed,
-					bool fwIsBootloader,
+					bool fwIsBootUsed,
+					uint32_t fwBootIdAddr,
 					AlxId_HwInstance* hwInstanceKnownArr,
 					uint8_t hwInstanceKnownArrLen,
 					uint8_t* hwInstanceHwIdSupportedArr,
@@ -139,7 +151,8 @@ namespace Alx
 						fwVerMinor,
 						fwVerPatch,
 						fwIsBuildJobUsed,
-						fwIsBootloader,
+						fwIsBootUsed,
+						fwBootIdAddr,
 						hwInstanceKnownArr,
 						hwInstanceKnownArrLen,
 						hwInstanceHwIdSupportedArr,
@@ -157,7 +170,8 @@ namespace Alx
 					uint8_t fwVerMinor,
 					uint8_t fwVerPatch,
 					bool fwIsBuildJobUsed,
-					bool fwIsBootloader,
+					bool fwIsBootUsed,
+					uint32_t fwBootIdAddr,
 					AlxId_HwInstance hwInstance,
 					const char* hwMcuName
 				)
@@ -171,7 +185,8 @@ namespace Alx
 						fwVerMinor,
 						fwVerPatch,
 						fwIsBuildJobUsed,
-						fwIsBootloader,
+						fwIsBootUsed,
+						fwBootIdAddr,
 						hwInstance,
 						hwMcuName
 					);
@@ -192,41 +207,85 @@ namespace Alx
 					ALX_ID_TRACE_FORMAT("- name: C++, ver: %lu\r\n", langCpp.ver);
 					ALX_ID_TRACE_FORMAT("- name: %s, ver: %lu\r\n", langCppLib.name, langCppLib.ver);
 				}
-				const char* GetFwAppArtf(void) override
+				const char* GetFwArtf(void) override
 				{
-					return AlxId_GetFwAppArtf(&me);
+					return AlxId_GetFwArtf(&me);
 				}
-				const char* GetFwAppName(void) override
+				const char* GetFwName(void) override
 				{
-					return AlxId_GetFwAppName(&me);
+					return AlxId_GetFwName(&me);
 				}
-				uint8_t GetFwAppVerMajor(void) override
+				uint8_t GetFwVerMajor(void) override
 				{
-					return AlxId_GetFwAppVerMajor(&me);
+					return AlxId_GetFwVerMajor(&me);
 				}
-				uint8_t GetFwAppVerMinor(void) override
+				uint8_t GetFwVerMinor(void) override
 				{
-					return AlxId_GetFwAppVerMinor(&me);
+					return AlxId_GetFwVerMinor(&me);
 				}
-				uint8_t GetFwAppVerPatch(void) override
+				uint8_t GetFwVerPatch(void) override
 				{
-					return AlxId_GetFwAppVerPatch(&me);
+					return AlxId_GetFwVerPatch(&me);
 				}
-				uint32_t GetFwAppVerDate(void) override
+				uint32_t GetFwVerDate(void) override
 				{
-					return AlxId_GetFwAppVerDate(&me);
+					return AlxId_GetFwVerDate(&me);
 				}
-				uint64_t GetFwAppVer(void) override
+				uint64_t GetFwVer(void) override
 				{
-					return AlxId_GetFwAppVer(&me);
+					return AlxId_GetFwVer(&me);
 				}
-				const char* GetFwAppVerStr(void) override
+				uint32_t GetFwHashShort(void) override
 				{
-					return AlxId_GetFwAppVerStr(&me);
+					return AlxId_GetFwHashShort(&me);
 				}
-				const char* GetFwAppBinStr(void) override
+				const char* GetFwVerStr(void) override
 				{
-					return AlxId_GetFwAppBinStr(&me);
+					return AlxId_GetFwVerStr(&me);
+				}
+				const char* GetFwBinStr(void) override
+				{
+					return AlxId_GetFwBinStr(&me);
+				}
+				const char* GetFwBootArtf(void) override
+				{
+					return AlxId_GetFwBootArtf(&me);
+				}
+				const char* GetFwBootName(void) override
+				{
+					return AlxId_GetFwBootName(&me);
+				}
+				uint8_t GetFwBootVerMajor(void) override
+				{
+					return AlxId_GetFwBootVerMajor(&me);
+				}
+				uint8_t GetFwBootVerMinor(void) override
+				{
+					return AlxId_GetFwBootVerMinor(&me);
+				}
+				uint8_t GetFwBootVerPatch(void) override
+				{
+					return AlxId_GetFwBootVerPatch(&me);
+				}
+				uint32_t GetFwBootVerDate(void) override
+				{
+					return AlxId_GetFwBootVerDate(&me);
+				}
+				uint64_t GetFwBootVer(void) override
+				{
+					return AlxId_GetFwBootVer(&me);
+				}
+				uint32_t GetFwBootHashShort(void) override
+				{
+					return AlxId_GetFwBootHashShort(&me);
+				}
+				const char* GetFwBootVerStr(void) override
+				{
+					return AlxId_GetFwBootVerStr(&me);
+				}
+				const char* GetFwBootBinStr(void) override
+				{
+					return AlxId_GetFwBootBinStr(&me);
 				}
 				const char* GetHwPcbArtf(void) override
 				{

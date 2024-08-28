@@ -37,6 +37,7 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxLogger.h"
+#include "alxIoPin.hpp"
 #include "alxFs.hpp"
 
 
@@ -72,6 +73,8 @@ namespace Alx
 				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
 				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
 				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
+				virtual AlxMath_Data GetMath_Data_ReadTime_ms(void) = 0;
+				virtual AlxMath_Data GetMath_Data_WriteTime_ms(void) = 0;
 				virtual ::AlxLogger* GetCStructPtr(void) = 0;
 		};
 
@@ -91,9 +94,22 @@ namespace Alx
 					uint32_t numOfDir,
 					uint32_t numOfFilesPerDir,
 					uint32_t numOfLogsPerFile,
-					const char* logDelim
+					const char* logDelim,
+					Alx::AlxIoPin::IIoPin* do_DBG_Read,
+					Alx::AlxIoPin::IIoPin* do_DBG_Write,
+					Alx::AlxIoPin::IIoPin* do_DBG_StoreReadMetadata,
+					Alx::AlxIoPin::IIoPin* do_DBG_StoreWriteMetadata
 				)
 				{
+					::AlxIoPin* _do_DBG_Read = NULL;
+					::AlxIoPin* _do_DBG_Write = NULL;
+					::AlxIoPin* _do_DBG_StoreReadMetadata = NULL;
+					::AlxIoPin* _do_DBG_StoreWriteMetadata = NULL;
+					if (do_DBG_Read != nullptr) _do_DBG_Read = do_DBG_Read->GetCStructPtr();
+					if (do_DBG_Write != nullptr) _do_DBG_Write = do_DBG_Write->GetCStructPtr();
+					if (do_DBG_StoreReadMetadata != nullptr) _do_DBG_StoreReadMetadata = do_DBG_StoreReadMetadata->GetCStructPtr();
+					if (do_DBG_StoreWriteMetadata != nullptr) _do_DBG_StoreWriteMetadata = do_DBG_StoreWriteMetadata->GetCStructPtr();
+
 					AlxLogger_Ctor
 					(
 						&me,
@@ -101,7 +117,11 @@ namespace Alx
 						numOfDir,
 						numOfFilesPerDir,
 						numOfLogsPerFile,
-						logDelim
+						logDelim,
+						_do_DBG_Read,
+						_do_DBG_Write,
+						_do_DBG_StoreReadMetadata,
+						_do_DBG_StoreWriteMetadata
 					);
 				}
 				virtual ~Logger() {}
@@ -136,6 +156,14 @@ namespace Alx
 				AlxLogger_Metadata GetMetadataStored(void) override
 				{
 					return AlxLogger_GetMetadataStored(&me);
+				}
+				AlxMath_Data GetMath_Data_ReadTime_ms(void) override
+				{
+					return AlxLogger_GetMath_Data_ReadTime_ms(&me);
+				}
+				AlxMath_Data GetMath_Data_WriteTime_ms(void) override
+				{
+					return AlxLogger_GetMath_Data_WriteTime_ms(&me);
 				}
 				::AlxLogger* GetCStructPtr(void) override
 				{

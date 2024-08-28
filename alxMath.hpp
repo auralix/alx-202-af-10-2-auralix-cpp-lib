@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxOsThread.hpp
-  * @brief		Auralix C++ Library - ALX OS Thread Module
+  * @file		alxMath.hpp
+  * @brief		Auralix C++ Library - ALX Hysteresis Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,15 +28,15 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_OS_THREAD_HPP
-#define ALX_OS_THREAD_HPP
+#ifndef ALX_MATH_HPP
+#define ALX_MATH_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxOsThread.h"
+#include "alxMath.h"
 
 
 //******************************************************************************
@@ -50,77 +50,52 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxOsThread
+	namespace AlxMath
 	{
 		//******************************************************************************
-		// Class - IAlxOsThread
+		// Class - IMath
 		//******************************************************************************
-		class IAlxOsThread
+		class IMath
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAlxOsThread() {}
-				virtual ~IAlxOsThread() {}
-				virtual Alx_Status Start(void) = 0;
-				virtual void Yield(void) = 0;
-				virtual void Terminate(void) = 0;
+				IMath() {}
+				virtual ~IMath() {}
+				virtual AlxMath_Data Process(float in) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - AlxOsThread
+		// Class - Math
 		//******************************************************************************
-		class AlxOsThread : public IAlxOsThread
+		class Math : public IMath
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AlxOsThread
-				(
-					void (*func)(void*),
-					const char* name,
-					uint32_t stackLen_byte,
-					void* param,
-					uint32_t priority
-				)
+				Math()
 				{
-					AlxOsThread_Ctor
-					(
-						&me,
-						func,
-						name,
-						stackLen_byte,
-						param,
-						priority
-					);
+					AlxMath_Ctor(&me);
 				}
-				virtual ~AlxOsThread() {}
-				Alx_Status Start(void) override
+				virtual ~Math() {}
+				AlxMath_Data Process(float in) override
 				{
-					return AlxOsThread_Start(&me);
-				}
-				void Yield(void) override
-				{
-					AlxOsThread_Yield(&me);
-				}
-				void Terminate(void) override
-				{
-					AlxOsThread_Terminate(&me);
+					return AlxMath_Process(&me, in);
 				}
 
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxOsThread me = {};
+				::AlxMath me = {};
 		};
 	}
 }
 
 
-#endif	// #if defined(ALX_C_LIB)
+#endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_OS_THREAD_HPP
+#endif	// #ifndef ALX_MATH_HPP

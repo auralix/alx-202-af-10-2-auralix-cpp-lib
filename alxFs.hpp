@@ -37,6 +37,7 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxFs.h"
+#include "alxIoPin.hpp"
 #include "alxMmc.hpp"
 
 
@@ -105,31 +106,34 @@ namespace Alx
 				Fs
 				(
 					::AlxFs_Config config,
-					AlxMmc::IMmc* alxMmc
+					AlxMmc::IMmc* alxMmc,
+					Alx::AlxIoPin::IIoPin* do_DBG_ReadBlock,
+					Alx::AlxIoPin::IIoPin* do_DBG_WriteBlock,
+					Alx::AlxIoPin::IIoPin* do_DBG_EraseBlock,
+					Alx::AlxIoPin::IIoPin* do_DBG_SyncBlock
 				)
 				{
-					if (config == AlxFs_Config_Lfs_FlashInt)
-					{
-						AlxFs_Ctor
-						(
-							&me,
-							config,
-							NULL
-						);
-					}
-					else if	(config == AlxFs_Config_Lfs_Mmc)
-					{
-						AlxFs_Ctor
-						(
-							&me,
-							config,
-							alxMmc->GetCStructPtr()
-						);
-					}
-					else
-					{
-						ALX_FS_ASSERT(false);	// We should never get here
-					}
+					::AlxMmc* _alxMmc = NULL;
+					::AlxIoPin* _do_DBG_ReadBlock = NULL;
+					::AlxIoPin* _do_DBG_WriteBlock = NULL;
+					::AlxIoPin* _do_DBG_EraseBlock = NULL;
+					::AlxIoPin* _do_DBG_SyncBlock = NULL;
+					if (alxMmc != nullptr) _alxMmc = alxMmc->GetCStructPtr();
+					if (do_DBG_ReadBlock != nullptr) _do_DBG_ReadBlock = do_DBG_ReadBlock->GetCStructPtr();
+					if (do_DBG_WriteBlock != nullptr) _do_DBG_WriteBlock = do_DBG_WriteBlock->GetCStructPtr();
+					if (do_DBG_EraseBlock != nullptr) _do_DBG_EraseBlock = do_DBG_EraseBlock->GetCStructPtr();
+					if (do_DBG_SyncBlock != nullptr) _do_DBG_SyncBlock = do_DBG_SyncBlock->GetCStructPtr();
+
+					AlxFs_Ctor
+					(
+						&me,
+						config,
+						_alxMmc,
+						_do_DBG_ReadBlock,
+						_do_DBG_WriteBlock,
+						_do_DBG_EraseBlock,
+						_do_DBG_SyncBlock
+					);
 				}
 				virtual ~Fs() {}
 				Alx_Status Mount(void) override

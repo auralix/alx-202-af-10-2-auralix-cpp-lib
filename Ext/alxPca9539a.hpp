@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxOsThread.hpp
-  * @brief		Auralix C++ Library - ALX OS Thread Module
+  * @file		alxPca9539a.hpp
+  * @brief		Auralix C Library - ALX Battery Charger PCA9539A Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,15 +28,17 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_OS_THREAD_HPP
-#define ALX_OS_THREAD_HPP
+#ifndef ALX_PCA9539A_HPP
+#define ALX_PCA9539A_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxOsThread.h"
+#include "alxPca9539a.h"
+#include "alxIoPin.hpp"
+#include "alxI2c.hpp"
 
 
 //******************************************************************************
@@ -50,77 +52,100 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxOsThread
+	namespace AlxPca9539a
 	{
 		//******************************************************************************
-		// Class - IAlxOsThread
+		// Class - IPca9539a
 		//******************************************************************************
-		class IAlxOsThread
+		class IPca9539a
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAlxOsThread() {}
-				virtual ~IAlxOsThread() {}
-				virtual Alx_Status Start(void) = 0;
-				virtual void Yield(void) = 0;
-				virtual void Terminate(void) = 0;
+				IPca9539a() {}
+				virtual ~IPca9539a() {}
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Handle(void) = 0;
+				virtual bool ReadPin(uint8_t port, uint8_t pin) = 0;
+				virtual uint8_t ReadPort(uint8_t port) = 0;
+				virtual void WritePin(uint8_t port, uint8_t pin, bool val) = 0;
+				virtual void TogglePin(uint8_t port, uint8_t pin) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - AlxOsThread
+		// Class - Pca9539a
 		//******************************************************************************
-		class AlxOsThread : public IAlxOsThread
+		class Pca9539a : public IPca9539a
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AlxOsThread
+				Pca9539a
 				(
-					void (*func)(void*),
-					const char* name,
-					uint32_t stackLen_byte,
-					void* param,
-					uint32_t priority
+					Alx::AlxI2c::II2c *i2c,
+					uint8_t i2cAddr,
+					bool i2cCheckWithRead,
+					uint8_t i2cNumOfTries,
+					uint16_t i2cTimeout_ms
 				)
 				{
-					AlxOsThread_Ctor
+					AlxPca9539a_Ctor
 					(
 						&me,
-						func,
-						name,
-						stackLen_byte,
-						param,
-						priority
+						i2c->GetCStructPtr(),
+						i2cAddr,
+						i2cCheckWithRead,
+						i2cNumOfTries,
+						i2cTimeout_ms
 					);
 				}
-				virtual ~AlxOsThread() {}
-				Alx_Status Start(void) override
+				virtual ~Pca9539a() {}
+				virtual Alx_Status Init(void)
 				{
-					return AlxOsThread_Start(&me);
+					return AlxPca9539a_Init(&me);
 				}
-				void Yield(void) override
+				virtual Alx_Status DeInit(void)
 				{
-					AlxOsThread_Yield(&me);
+					return AlxPca9539a_DeInit(&me);
 				}
-				void Terminate(void) override
+				virtual Alx_Status Handle(void)
 				{
-					AlxOsThread_Terminate(&me);
+					return AlxPca9539a_Handle(&me);
+				}
+				virtual bool ReadPin(uint8_t port, uint8_t pin)
+				{
+					return AlxPca9539a_IoPin_Read(&me, port, pin);
+				}
+				virtual uint8_t ReadPort(uint8_t port)
+				{
+					return AlxPca9539a_Read_Port_Raw(&me, port);
+				}
+				virtual void WritePin(uint8_t port, uint8_t pin, bool val)
+				{
+					AlxPca9539a_IoPin_Write(&me, port, pin, val);
+				}
+				virtual void TogglePin(uint8_t port, uint8_t pin)
+				{
+					AlxPca9539a_IoPin_Toggle(&me, port, pin);
 				}
 
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxOsThread me = {};
+				::AlxPca9539a me = {};
+			public:
+
+				Alx::AlxI2c::II2c *i2c = nullptr;
 		};
 	}
 }
 
 
-#endif	// #if defined(ALX_C_LIB)
+#endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_OS_THREAD_HPP
+#endif	// #ifndef ALX_PCA9539A_HPP

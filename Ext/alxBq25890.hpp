@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxOsThread.hpp
-  * @brief		Auralix C++ Library - ALX OS Thread Module
+  * @file		alxBq25890.hpp
+  * @brief		Auralix C Library - ALX Battery Charger BQ25890 Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,15 +28,17 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_OS_THREAD_HPP
-#define ALX_OS_THREAD_HPP
+#ifndef ALX_BQ25890_HPP
+#define ALX_BQ25890_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxOsThread.h"
+#include "alxBq25890.h"
+#include "alxIoPin.hpp"
+#include "alxI2c.hpp"
 
 
 //******************************************************************************
@@ -50,77 +52,110 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxOsThread
+	namespace AlxBq25890
 	{
 		//******************************************************************************
-		// Class - IAlxOsThread
+		// Class - IBq25890
 		//******************************************************************************
-		class IAlxOsThread
+		class IBq25890
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAlxOsThread() {}
-				virtual ~IAlxOsThread() {}
-				virtual Alx_Status Start(void) = 0;
-				virtual void Yield(void) = 0;
-				virtual void Terminate(void) = 0;
+				IBq25890() {}
+				virtual ~IBq25890() {}
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Poll(void) = 0;
+				virtual Alx_Status Read(AlxBq25890_Reg *reg) = 0;
+				virtual Alx_Status SetShippingMode(void) = 0;
+				virtual Alx_Status SetIINLIM(uint8_t current) = 0;
+				virtual Alx_Status SetJEITA_VSET(bool value) = 0;
+				virtual Alx_Status GetFaults(AlxBq2890_faults_t *faults) = 0;
+				virtual Alx_Status GetChargingStatus(uint8_t *status) = 0;
+
+
 		};
 
 
 		//******************************************************************************
-		// Class - AlxOsThread
+		// Class - Bq25890
 		//******************************************************************************
-		class AlxOsThread : public IAlxOsThread
+		class Bq25890 : public IBq25890
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AlxOsThread
+				Bq25890
 				(
-					void (*func)(void*),
-					const char* name,
-					uint32_t stackLen_byte,
-					void* param,
-					uint32_t priority
+					Alx::AlxI2c::II2c *i2c,
+					uint8_t IINLIM,
+					bool JEITA_VSET,
+					bool BATFET_DIS
 				)
 				{
-					AlxOsThread_Ctor
+					AlxBq25890_Ctor
 					(
 						&me,
-						func,
-						name,
-						stackLen_byte,
-						param,
-						priority
+						i2c->GetCStructPtr(),
+						IINLIM,
+						JEITA_VSET,
+						BATFET_DIS
 					);
 				}
-				virtual ~AlxOsThread() {}
-				Alx_Status Start(void) override
+				virtual ~Bq25890() {}
+				Alx_Status Init(void) override
 				{
-					return AlxOsThread_Start(&me);
+					return AlxBq25890_Init(&me);
 				}
-				void Yield(void) override
+				Alx_Status DeInit(void) override
 				{
-					AlxOsThread_Yield(&me);
+					return AlxBq25890_DeInit(&me);
 				}
-				void Terminate(void) override
+				Alx_Status Poll(void) override
 				{
-					AlxOsThread_Terminate(&me);
+					return AlxBq25890_Poll(&me);
+				}
+				Alx_Status Read(AlxBq25890_Reg *reg) override
+				{
+					return AlxBq25890_Read(&me, reg);
+				}
+				Alx_Status GetFaults(AlxBq2890_faults_t *faults) override
+				{
+					return AlxBq25890_GetFaults(&me, faults);
+				}
+				Alx_Status GetChargingStatus(uint8_t *status) override
+				{
+					return AlxBq25890_GetChargingStatus(&me, status);
+				}
+				Alx_Status SetShippingMode(void) override
+				{
+					return AlxBq25890_set_shipping_mode(&me);
+				}
+				Alx_Status SetJEITA_VSET(bool value) override
+				{
+					return AlxBq25890_set_JEITA_VSET(&me, value);
+				}
+				Alx_Status SetIINLIM(uint8_t current) override
+				{
+					return AlxBq25890_set_IINLIM(&me, current);
 				}
 
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxOsThread me = {};
+				::AlxBq25890 me = {};
+			public:
+
+				Alx::AlxI2c::II2c *i2c = nullptr;
 		};
 	}
 }
 
 
-#endif	// #if defined(ALX_C_LIB)
+#endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_OS_THREAD_HPP
+#endif	// #ifndef ALX_BQ25890_HPP

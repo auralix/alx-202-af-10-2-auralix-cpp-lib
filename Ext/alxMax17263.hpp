@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxOsThread.hpp
-  * @brief		Auralix C++ Library - ALX OS Thread Module
+  * @file		alxMax17263.hpp
+  * @brief		Auralix C Library - ALX MAX17263 Fuel Gauge
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,15 +28,17 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_OS_THREAD_HPP
-#define ALX_OS_THREAD_HPP
+#ifndef ALX_MAX17263_HPP
+#define ALX_MAX17263_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxOsThread.h"
+#include "alxMax17263.h"
+#include "alxIoPin.hpp"
+#include "alxI2c.hpp"
 
 
 //******************************************************************************
@@ -50,77 +52,93 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxOsThread
+	namespace AlxMax17263
 	{
 		//******************************************************************************
-		// Class - IAlxOsThread
+		// Class - IMax17263
 		//******************************************************************************
-		class IAlxOsThread
+		class IMax17263
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				IAlxOsThread() {}
-				virtual ~IAlxOsThread() {}
-				virtual Alx_Status Start(void) = 0;
-				virtual void Yield(void) = 0;
-				virtual void Terminate(void) = 0;
+				IMax17263() {}
+				virtual ~IMax17263() {}
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Handle(max1726_data_t *data) = 0;
+				virtual void GetData(max1726_data_t *data) = 0;
+				virtual void GetSerial(char *serial) = 0;
 		};
 
 
 		//******************************************************************************
-		// Class - AlxOsThread
+		// Class - Max17263
 		//******************************************************************************
-		class AlxOsThread : public IAlxOsThread
+		class Max17263 : public IMax17263
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				AlxOsThread
+				Max17263
 				(
-					void (*func)(void*),
-					const char* name,
-					uint32_t stackLen_byte,
-					void* param,
-					uint32_t priority
+					Alx::AlxI2c::II2c *i2c
 				)
 				{
-					AlxOsThread_Ctor
+					AlxMax17263_Ctor
 					(
 						&me,
-						func,
-						name,
-						stackLen_byte,
-						param,
-						priority
+						i2c->GetCStructPtr()
 					);
 				}
-				virtual ~AlxOsThread() {}
-				Alx_Status Start(void) override
+				virtual ~Max17263() {}
+				Alx_Status Init(void) override
 				{
-					return AlxOsThread_Start(&me);
+					return AlxMax17263_Init(&me);
 				}
-				void Yield(void) override
+				Alx_Status DeInit(void) override
 				{
-					AlxOsThread_Yield(&me);
+					return AlxMax17263_DeInit(&me);
 				}
-				void Terminate(void) override
+				Alx_Status Handle(max1726_data_t *data) override
 				{
-					AlxOsThread_Terminate(&me);
+					return AlxMax17263_Handle(&me, data);
+				}
+				void GetSerial(char *serial) override
+				{
+					strncpy(serial, me.data.serial, 32 + 1);
+				}
+
+				void GetData(max1726_data_t *data) override
+				{
+					data->Cycles = me.data.Cycles;
+					data->FulLCAP = me.data.FulLCAP;
+					data->RepCAP = me.data.RepCAP;
+					data->RepSOC = me.data.RepSOC;
+					data->reset_happened = me.data.reset_happened;
+					data->TTE = me.data.TTE;
+					data->TTF = me.data.TTF;
+					data->AvgCurrent = me.data.AvgCurrent;
+					data->AvgTA = me.data.AvgTA;
+					data->AvgVCell = me.data.AvgVCell;
+					memcpy(&data->learned_params, &me.data.learned_params, sizeof(me.data.learned_params));
 				}
 
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxOsThread me = {};
+				::AlxMax17263 me = {};
+			public:
+
+				Alx::AlxI2c::II2c *i2c = nullptr;
 		};
 	}
 }
 
 
-#endif	// #if defined(ALX_C_LIB)
+#endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_OS_THREAD_HPP
+#endif	// #ifndef ALX_MAX17263_HPP
