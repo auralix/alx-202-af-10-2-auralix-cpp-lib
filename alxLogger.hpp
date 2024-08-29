@@ -67,7 +67,7 @@ namespace Alx
 				virtual ~ILogger() {}
 				virtual Alx_Status Init(void) = 0;
 				virtual Alx_Status Format(void) = 0;
-				virtual Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual) = 0;
+				virtual Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual, bool mdUpdate, uint64_t idStart) = 0;
 				virtual Alx_Status Write(const char* logs, uint32_t numOfLogs) = 0;
 				virtual uint32_t GetNumOfLogsToReadAvailable(void) = 0;
 				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
@@ -133,9 +133,9 @@ namespace Alx
 				{
 					return AlxLogger_Format(&me);
 				}
-				Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual) override
+				Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual, bool mdUpdate, uint64_t idStart) override
 				{
-					return AlxLogger_Read(&me, logs, numOfLogs, numOfLogsActual);
+					return AlxLogger_Read(&me, logs, numOfLogs, numOfLogsActual, mdUpdate, idStart);
 				}
 				Alx_Status Write(const char* logs, uint32_t numOfLogs) override
 				{
