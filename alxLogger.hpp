@@ -69,7 +69,9 @@ namespace Alx
 				virtual Alx_Status Format(void) = 0;
 				virtual Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual, bool mdUpdate, uint64_t idStart) = 0;
 				virtual Alx_Status Write(const char* logs, uint32_t numOfLogs) = 0;
-				virtual uint32_t GetNumOfLogsToReadAvailable(void) = 0;
+				virtual uint64_t GetNumOfLogsToReadAvailable(void) = 0;
+				virtual Alx_Status GetIdToReadOldest(uint64_t* idOldest) = 0;
+				virtual Alx_Status GetIdToReadNewest(uint64_t* idNewest) = 0;
 				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
 				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
 				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
@@ -141,13 +143,21 @@ namespace Alx
 				{
 					return AlxLogger_Write(&me, logs, numOfLogs);
 				}
+				uint64_t GetNumOfLogsToReadAvailable(void) override
+				{
+					return AlxLogger_GetNumOfLogsToReadAvailable(&me);
+				}
+				Alx_Status GetIdToReadOldest(uint64_t* idOldest) override
+				{
+					return AlxLogger_GetIdToReadOldest(&me, idOldest);
+				}
+				Alx_Status GetIdToReadNewest(uint64_t* idNewest) override
+				{
+					return AlxLogger_GetIdToReadNewest(&me, idNewest);
+				}
 				Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) override
 				{
 					return AlxLogger_StoreMetadata(&me, config);
-				}
-				uint32_t GetNumOfLogsToReadAvailable(void) override
-				{
-					return AlxLogger_GetNumOfLogsToReadAvailable(&me);
 				}
 				AlxLogger_Metadata GetMetadataCurrent(void) override
 				{
