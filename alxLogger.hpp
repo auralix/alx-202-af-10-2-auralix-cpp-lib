@@ -70,11 +70,12 @@ namespace Alx
 				virtual Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual, bool mdUpdate, uint64_t idStart) = 0;
 				virtual Alx_Status Write(const char* logs, uint32_t numOfLogs) = 0;
 				virtual uint64_t GetNumOfLogsToReadAvailable(void) = 0;
-				virtual Alx_Status GetIdToReadOldest(uint64_t* idOldest) = 0;
-				virtual Alx_Status GetIdToReadNewest(uint64_t* idNewest) = 0;
-				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
+				virtual uint64_t GetNumOfLogsToReadStored(void) = 0;
+				virtual Alx_Status GetIdToReadOldest(uint64_t* idToReadOldest) = 0;
+				virtual Alx_Status GetIdToReadNewest(uint64_t* idToReadNewest) = 0;
 				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
 				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
+				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
 				virtual AlxMath_Data GetMath_Data_ReadTime_ms(void) = 0;
 				virtual AlxMath_Data GetMath_Data_WriteTime_ms(void) = 0;
 				virtual ::AlxLogger* GetCStructPtr(void) = 0;
@@ -147,17 +148,17 @@ namespace Alx
 				{
 					return AlxLogger_GetNumOfLogsToReadAvailable(&me);
 				}
-				Alx_Status GetIdToReadOldest(uint64_t* idOldest) override
+				uint64_t GetNumOfLogsToReadStored(void) override
 				{
-					return AlxLogger_GetIdToReadOldest(&me, idOldest);
+					return AlxLogger_GetNumOfLogsToReadStored(&me);
 				}
-				Alx_Status GetIdToReadNewest(uint64_t* idNewest) override
+				Alx_Status GetIdToReadOldest(uint64_t* idToReadOldest) override
 				{
-					return AlxLogger_GetIdToReadNewest(&me, idNewest);
+					return AlxLogger_GetIdToReadOldest(&me, idToReadOldest);
 				}
-				Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) override
+				Alx_Status GetIdToReadNewest(uint64_t* idToReadNewest) override
 				{
-					return AlxLogger_StoreMetadata(&me, config);
+					return AlxLogger_GetIdToReadNewest(&me, idToReadNewest);
 				}
 				AlxLogger_Metadata GetMetadataCurrent(void) override
 				{
@@ -166,6 +167,10 @@ namespace Alx
 				AlxLogger_Metadata GetMetadataStored(void) override
 				{
 					return AlxLogger_GetMetadataStored(&me);
+				}
+				Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) override
+				{
+					return AlxLogger_StoreMetadata(&me, config);
 				}
 				AlxMath_Data GetMath_Data_ReadTime_ms(void) override
 				{
