@@ -67,7 +67,7 @@
 
 // Trace //
 #if defined(ALX_NTP_CLIENT_TRACE_ENABLE)
-	#define ALX_NTP_CLIENT_TRACE(...) ALX_TRACE_STD(ALX_NTP_CLIENT_FILE, __VA_ARGS__)
+	#define ALX_NTP_CLIENT_TRACE(...) ALX_TRACE_WRN(ALX_NTP_CLIENT_FILE, __VA_ARGS__)
 #else
 	#define ALX_NTP_CLIENT_TRACE(...) do{} while (false)
 #endif
