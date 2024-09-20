@@ -66,6 +66,7 @@ namespace Alx
 				IBq25890() {}
 				virtual ~IBq25890() {}
 				virtual Alx_Status Init(void) = 0;
+				virtual bool IsInit(void) = 0;
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status Poll(void) = 0;
 				virtual Alx_Status Read(AlxBq25890_Reg *reg) = 0;
@@ -109,6 +110,10 @@ namespace Alx
 				Alx_Status Init(void) override
 				{
 					return AlxBq25890_Init(&me);
+				}
+				bool IsInit(void) override
+				{
+					return me.isInit;
 				}
 				Alx_Status DeInit(void) override
 				{

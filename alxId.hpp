@@ -200,12 +200,12 @@ namespace Alx
 				{
 					AlxId_Trace(&me);
 
-					ALX_ID_TRACE_FORMAT("\r\n");
-					ALX_ID_TRACE_FORMAT("AlxId.hpp - Trace\r\n");
+					ALX_ID_TRACE_INF("");
+					ALX_ID_TRACE_INF("AlxId.hpp - Trace");
 
-					ALX_ID_TRACE_FORMAT("Language:\r\n");
-					ALX_ID_TRACE_FORMAT("- name: C++, ver: %lu\r\n", langCpp.ver);
-					ALX_ID_TRACE_FORMAT("- name: %s, ver: %lu\r\n", langCppLib.name, langCppLib.ver);
+					ALX_ID_TRACE_INF("Language:");
+					ALX_ID_TRACE_INF("- name: C++, ver: %lu", langCpp.ver);
+					ALX_ID_TRACE_INF("- name: %s, ver: %lu", langCppLib.name, langCppLib.ver);
 				}
 				const char* GetFwArtf(void) override
 				{

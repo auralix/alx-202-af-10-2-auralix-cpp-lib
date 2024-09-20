@@ -50,22 +50,22 @@
 //******************************************************************************
 // Preprocessor
 //******************************************************************************
-#define ALX_FTP_CLIENT_FILE "alxFtpClient.hpp"
+#define ALX_FTP_CLIENT_MODULE "AlxFtpClient.hpp"
 
 // Assert //
 #if defined(ALX_FTP_CLIENT_ASSERT_BKPT_ENABLE)
-	#define ALX_FTP_CLIENT_ASSERT(expr) ALX_ASSERT_BKPT(ALX_FTP_CLIENT_FILE, expr)
+	#define ALX_FTP_CLIENT_ASSERT(expr) ALX_ASSERT_BKPT(ALX_FTP_CLIENT_MODULE, expr)
 #elif defined(ALX_FTP_CLIENT_ASSERT_TRACE_ENABLE)
-	#define ALX_FTP_CLIENT_ASSERT(expr) ALX_ASSERT_TRACE(ALX_FTP_CLIENT_FILE, expr)
+	#define ALX_FTP_CLIENT_ASSERT(expr) ALX_ASSERT_TRACE(ALX_FTP_CLIENT_MODULE, expr)
 #elif defined(ALX_FTP_CLIENT_ASSERT_RST_ENABLE)
-	#define ALX_FTP_CLIENT_ASSERT(expr) ALX_ASSERT_RST(ALX_FTP_CLIENT_FILE, expr)
+	#define ALX_FTP_CLIENT_ASSERT(expr) ALX_ASSERT_RST(ALX_FTP_CLIENT_MODULE, expr)
 #else
 	#define ALX_FTP_CLIENT_ASSERT(expr) do{} while (false)
 #endif
 
 // Trace //
 #if defined(ALX_FTP_CLIENT_TRACE_ENABLE)
-	#define ALX_FTP_CLIENT_TRACE(...) ALX_TRACE_STD(ALX_FTP_CLIENT_FILE, __VA_ARGS__)
+	#define ALX_FTP_CLIENT_TRACE(...) ALX_TRACE_WRN(ALX_FTP_CLIENT_MODULE, __VA_ARGS__)
 #else
 	#define ALX_FTP_CLIENT_TRACE(...) do{} while (false)
 #endif

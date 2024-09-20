@@ -66,7 +66,6 @@
 #include "alxRtc.hpp"
 #include "alxSerialPort.hpp"
 #include "alxSpi.hpp"
-#include "alxTrace.hpp"
 #include "alxWdt.hpp"
 
 
