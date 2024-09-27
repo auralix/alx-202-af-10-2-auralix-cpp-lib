@@ -75,10 +75,8 @@ namespace Alx
 				virtual uint64_t GetNumOfLogsToReadStored(void) = 0;
 				virtual Alx_Status GetIdToReadOldest(uint64_t* idToReadOldest) = 0;
 				virtual Alx_Status GetIdToReadNewest(uint64_t* idToReadNewest) = 0;
-				virtual Alx_Status GetFileToReadOldest(uint32_t* fileToReadOldest) = 0;
-				virtual Alx_Status GetFileToReadNewest(uint32_t* fileToReadNewest) = 0;
-				virtual Alx_Status GetDirToReadOldest(uint32_t* dirToReadOldest) = 0;
-				virtual Alx_Status GetDirToReadNewest(uint32_t* dirToReadNewest) = 0;
+				virtual Alx_Status GetFilePathToReadOldest(char* filePathToReadOldest) = 0;
+				virtual Alx_Status GetFilePathToReadNewest(char* filePathToReadNewest) = 0;
 				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
 				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
 				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
@@ -174,21 +172,13 @@ namespace Alx
 				{
 					return AlxLogger_GetIdToReadNewest(&me, idToReadNewest);
 				}
-				Alx_Status GetFileToReadOldest(uint32_t* fileToReadOldest) override
+				Alx_Status GetFilePathToReadOldest(char* filePathToReadOldest) override
 				{
-					return AlxLogger_GetFileToReadOldest(&me, fileToReadOldest);
+					return AlxLogger_GetFilePathToReadOldest(&me, filePathToReadOldest);
 				}
-				Alx_Status GetFileToReadNewest(uint32_t* fileToReadNewest) override
+				Alx_Status GetFilePathToReadNewest(char* filePathToReadNewest) override
 				{
-					return AlxLogger_GetFileToReadNewest(&me, fileToReadNewest);
-				}
-				Alx_Status GetDirToReadOldest(uint32_t* dirToReadOldest) override
-				{
-					return AlxLogger_GetDirToReadOldest(&me, dirToReadOldest);
-				}
-				Alx_Status GetDirToReadNewest(uint32_t* dirToReadNewest) override
-				{
-					return AlxLogger_GetDirToReadNewest(&me, dirToReadNewest);
+					return AlxLogger_GetFilePathToReadNewest(&me, filePathToReadNewest);
 				}
 				AlxLogger_Metadata GetMetadataCurrent(void) override
 				{
