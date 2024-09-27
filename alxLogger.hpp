@@ -69,6 +69,7 @@ namespace Alx
 				virtual Alx_Status Format(void) = 0;
 				virtual Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual, bool mdUpdate, uint64_t idStart) = 0;
 				virtual Alx_Status ReadFile(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* chunkData, uint32_t chunkLenActual)) = 0;
+				virtual Alx_Status ReadFileFirstLine(const char* path, char* log) = 0;
 				virtual Alx_Status Write(const char* logs, uint32_t numOfLogs) = 0;
 				virtual Alx_Status GetFileSize(const char* path, uint32_t* fileSize) = 0;
 				virtual uint64_t GetNumOfLogsToReadAvailable(void) = 0;
@@ -147,6 +148,10 @@ namespace Alx
 				Alx_Status ReadFile(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* chunkData, uint32_t chunkLenActual)) override
 				{
 					return AlxLogger_ReadFile(&me, path, chunkBuff, chunkLen, chunkRead_Callback);
+				}
+				Alx_Status ReadFileFirstLine(const char* path, char* log) override
+				{
+					return AlxLogger_ReadFileFirstLine(&me, path, log);
 				}
 				Alx_Status Write(const char* logs, uint32_t numOfLogs) override
 				{
