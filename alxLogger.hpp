@@ -72,12 +72,13 @@ namespace Alx
 				virtual Alx_Status ReadFileFirstLine(const char* path, char* log) = 0;
 				virtual Alx_Status Write(const char* logs, uint32_t numOfLogs) = 0;
 				virtual Alx_Status GetFileSize(const char* path, uint32_t* fileSize) = 0;
-				virtual uint64_t GetNumOfLogsToReadAvailable(void) = 0;
-				virtual uint64_t GetNumOfLogsToReadStored(void) = 0;
-				virtual Alx_Status GetIdToReadOldest(uint64_t* idToReadOldest) = 0;
-				virtual Alx_Status GetIdToReadNewest(uint64_t* idToReadNewest) = 0;
-				virtual Alx_Status GetFilePathToReadOldest(char* filePathToReadOldest) = 0;
-				virtual Alx_Status GetFilePathToReadNewest(char* filePathToReadNewest) = 0;
+				virtual uint64_t GetNumOfLogsToProcess(void) = 0;
+				virtual Alx_Status DiscardLogsToProcess(void) = 0;
+				virtual uint64_t GetNumOfLogsStored(void) = 0;
+				virtual Alx_Status GetIdOldest(uint64_t* idOldest) = 0;
+				virtual Alx_Status GetIdNewest(uint64_t* idNewest) = 0;
+				virtual Alx_Status GetFilePathOldest(char* filePathOldest) = 0;
+				virtual Alx_Status GetFilePathNewest(char* filePathNewest) = 0;
 				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
 				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
 				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
@@ -157,33 +158,37 @@ namespace Alx
 				{
 					return AlxLogger_Write(&me, logs, numOfLogs);
 				}
-				uint64_t GetNumOfLogsToReadAvailable(void) override
+				uint64_t GetNumOfLogsToProcess(void) override
 				{
-					return AlxLogger_GetNumOfLogsToReadAvailable(&me);
+					return AlxLogger_GetNumOfLogsToProcess(&me);
+				}
+				Alx_Status DiscardLogsToProcess(void) override
+				{
+					return AlxLogger_DiscardLogsToProcess(&me);
 				}
 				Alx_Status GetFileSize(const char* path, uint32_t* fileSize) override
 				{
 					return AlxLogger_GetFileSize(&me, path, fileSize);
 				}
-				uint64_t GetNumOfLogsToReadStored(void) override
+				uint64_t GetNumOfLogsStored(void) override
 				{
-					return AlxLogger_GetNumOfLogsToReadStored(&me);
+					return AlxLogger_GetNumOfLogsStored(&me);
 				}
-				Alx_Status GetIdToReadOldest(uint64_t* idToReadOldest) override
+				Alx_Status GetIdOldest(uint64_t* idOldest) override
 				{
-					return AlxLogger_GetIdToReadOldest(&me, idToReadOldest);
+					return AlxLogger_GetIdOldest(&me, idOldest);
 				}
-				Alx_Status GetIdToReadNewest(uint64_t* idToReadNewest) override
+				Alx_Status GetIdNewest(uint64_t* idNewest) override
 				{
-					return AlxLogger_GetIdToReadNewest(&me, idToReadNewest);
+					return AlxLogger_GetIdNewest(&me, idNewest);
 				}
-				Alx_Status GetFilePathToReadOldest(char* filePathToReadOldest) override
+				Alx_Status GetFilePathOldest(char* filePathOldest) override
 				{
-					return AlxLogger_GetFilePathToReadOldest(&me, filePathToReadOldest);
+					return AlxLogger_GetFilePathOldest(&me, filePathOldest);
 				}
-				Alx_Status GetFilePathToReadNewest(char* filePathToReadNewest) override
+				Alx_Status GetFilePathNewest(char* filePathNewest) override
 				{
-					return AlxLogger_GetFilePathToReadNewest(&me, filePathToReadNewest);
+					return AlxLogger_GetFilePathNewest(&me, filePathNewest);
 				}
 				AlxLogger_Metadata GetMetadataCurrent(void) override
 				{
