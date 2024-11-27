@@ -74,6 +74,7 @@ namespace Alx
 				virtual Alx_Status GetFileSize(const char* path, uint32_t* fileSize) = 0;
 				virtual uint64_t GetNumOfLogsToProcess(void) = 0;
 				virtual Alx_Status DiscardLogsToProcess(void) = 0;
+				virtual Alx_Status RewindLogsToProcessFiles(uint32_t numOfFiles) = 0;
 				virtual uint64_t GetNumOfLogsStored(void) = 0;
 				virtual Alx_Status GetIdOldest(uint64_t* idOldest) = 0;
 				virtual Alx_Status GetIdNewest(uint64_t* idNewest) = 0;
@@ -165,6 +166,10 @@ namespace Alx
 				Alx_Status DiscardLogsToProcess(void) override
 				{
 					return AlxLogger_DiscardLogsToProcess(&me);
+				}
+				Alx_Status RewindLogsToProcessFiles(uint32_t numOfFiles) override
+				{
+					return AlxLogger_RewindLogsToProcessFiles(&me, numOfFiles);
 				}
 				Alx_Status GetFileSize(const char* path, uint32_t* fileSize) override
 				{
