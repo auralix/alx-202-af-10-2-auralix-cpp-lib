@@ -74,6 +74,7 @@ namespace Alx
 				virtual Alx_Status GetFifoXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint8_t len) = 0;
 				virtual Alx_Status GetTemp_degC(float* temp_degC) = 0;
 				virtual Alx_Status GetStatusReg(AlxAdxl355_RegVal_0x04_Status* statusReg) = 0;
+				virtual ::AlxAdxl355* GetCStructPtr(void) = 0;
 		};
 
 
@@ -133,6 +134,10 @@ namespace Alx
 				Alx_Status GetStatusReg(AlxAdxl355_RegVal_0x04_Status* statusReg) override
 				{
 					return AlxAdxl355_GetStatusReg(&me, statusReg);
+				}
+				::AlxAdxl355* GetCStructPtr(void) override
+				{
+					return &me;
 				}
 
 			private:
