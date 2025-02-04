@@ -71,6 +71,7 @@ namespace Alx
 				virtual Alx_Status Enable(void) = 0;
 				virtual Alx_Status Disable(void) = 0;
 				virtual Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) = 0;
+				virtual Alx_Status GetFifoXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint8_t len) = 0;
 				virtual Alx_Status GetTemp_degC(float* temp_degC) = 0;
 				virtual Alx_Status GetStatusReg(AlxAdxl355_RegVal_0x04_Status* statusReg) = 0;
 		};
@@ -120,6 +121,10 @@ namespace Alx
 				Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) override
 				{
 					return AlxAdxl355_GetXyz_g(&me, xyz_g);
+				}
+				Alx_Status GetFifoXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint8_t len) override
+				{
+					return AlxAdxl355_GetFifoXyz_g(&me, xyz_g, len);
 				}
 				Alx_Status GetTemp_degC(float* temp_degC) override
 				{
