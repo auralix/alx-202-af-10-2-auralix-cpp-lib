@@ -72,6 +72,7 @@
 	#define ALX_NTP_CLIENT_TRACE(...) do{} while (false)
 #endif
 
+#define NTP_MAX_RTT_ns 5000000000L
 
 //******************************************************************************
 // Code
@@ -595,6 +596,13 @@ namespace Alx
 				if (alxError != Alx_Ok)
 				{
 					ALX_NTP_CLIENT_TRACE("Err: %d", (int32_t)alxError);
+					Reset();
+					return Alx_Err;
+				}
+
+				if (ut.T4_ns - ut.T1_ns > NTP_MAX_RTT_ns)
+				{
+					ALX_NTP_CLIENT_TRACE("NTP round-trip time too long!");
 					Reset();
 					return Alx_Err;
 				}
