@@ -48,28 +48,6 @@
 
 
 //******************************************************************************
-// Includes - Mbed
-//******************************************************************************
-#if defined(ALX_MBED)
-#include <mbed.h>
-#include <mbed_trace.h>
-#include <DeviceKey.h>
-#include <EthernetInterface.h>
-#endif
-#if defined(ALX_MBED) && defined(ALX_STM32F4)
-#include <SDBlockDevice.h>
-#include <FATFileSystem.h>
-#include <kv_config.h>
-#include "KVStore.h"
-#include "kvstore_global_api.h"
-#endif
-#if defined(ALX_MBED_CLOUD_CLIENT)
-#include <mbed-cloud-client/MbedCloudClient.h>
-#include <factory_configurator_client.h>
-#endif
-
-
-//******************************************************************************
 // Includes - Auralix C Library Globals
 //******************************************************************************
 #include "alxGlobal.h"
