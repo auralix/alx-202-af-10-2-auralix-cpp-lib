@@ -70,17 +70,18 @@ namespace Alx
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status Enable(void) = 0;
 				virtual Alx_Status Disable(void) = 0;
-				virtual Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint32_t len) = 0;
 				virtual Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) = 0;
-				virtual float GetTemp_degC(void) = 0;
-				virtual Alx_Status Foreground_Handle(void) = 0;
+				virtual Alx_Status GetFifoXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint8_t len) = 0;
+				virtual Alx_Status GetTemp_degC(float* temp_degC) = 0;
+				virtual Alx_Status GetStatusReg(AlxAdxl355_RegVal_0x04_Status* statusReg) = 0;
+				virtual uint8_t GetFifoLen(void) = 0;
+				virtual ::AlxAdxl355* GetCStructPtr(void) = 0;
 		};
 
 
 		//******************************************************************************
 		// Class - Adxl355
 		//******************************************************************************
-		template <uint32_t fifoBuffLen>
 		class Adxl355 : public IAdxl355
 		{
 			public:
@@ -99,9 +100,7 @@ namespace Alx
 						&me,
 						spi->GetCStructPtr(),
 						spiNumOfTries,
-						spiTimeout_ms,
-						this->fifo.GetBuffPtr(),
-						fifoBuffLen * sizeof(AlxAdxl355_Xyz_g)
+						spiTimeout_ms
 					);
 				}
 				virtual ~Adxl355() {}
@@ -121,21 +120,29 @@ namespace Alx
 				{
 					return AlxAdxl355_Disable(&me);
 				}
-				Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint32_t len) override
-				{
-					return AlxAdxl355_GetXyzMulti_g(&me, xyz_g, len);
-				}
 				Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) override
 				{
 					return AlxAdxl355_GetXyz_g(&me, xyz_g);
 				}
-				float GetTemp_degC(void) override
+				Alx_Status GetFifoXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint8_t len) override
 				{
-					return AlxAdxl355_GetTemp_degC(&me);
+					return AlxAdxl355_GetFifoXyz_g(&me, xyz_g, len);
 				}
-				Alx_Status Foreground_Handle(void) override
+				Alx_Status GetTemp_degC(float* temp_degC) override
 				{
-					return AlxAdxl355_Foreground_Handle(&me);
+					return AlxAdxl355_GetTemp_degC(&me, temp_degC);
+				}
+				Alx_Status GetStatusReg(AlxAdxl355_RegVal_0x04_Status* statusReg) override
+				{
+					return AlxAdxl355_GetStatusReg(&me, statusReg);
+				}
+				uint8_t GetFifoLen(void) override
+				{
+					return AlxAdxl355_GetFifoLen(&me);
+				}
+				::AlxAdxl355* GetCStructPtr(void) override
+				{
+					return &me;
 				}
 
 			private:
@@ -143,7 +150,6 @@ namespace Alx
 				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxAdxl355 me = {};
-				AlxFifo::Fifo<fifoBuffLen * sizeof(AlxAdxl355_Xyz_g)> fifo = {};
 		};
 	}
 }

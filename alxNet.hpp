@@ -84,7 +84,9 @@ namespace Alx
 				virtual AlxNet_Config GetNetInterface(void) = 0;
 				#if defined(ALX_FREE_RTOS_CELLULAR)
 				virtual void GetCellularSignalInfo(int8_t *rssi, uint8_t *ber) = 0;
+				virtual void SetPdnConfig(const char* apn, const char* user, const char* pass, CellularPdnAuthType_t auth_type, uint32_t connect_timeout) = 0;
 				#endif
+				virtual int Ping(const char *address, uint16_t count, uint32_t timeout_ms) = 0;
 		};
 
 
@@ -190,12 +192,20 @@ namespace Alx
 				#if defined(ALX_FREE_RTOS_CELLULAR)
 				void GetCellularSignalInfo(int8_t *rssi, uint8_t *ber) override
 				{
-					return Alx_GetCellularSignalQuality(&me, rssi, ber);
+					return AlxNet_GetCellularSignalQuality(&me, rssi, ber);
+				}
+				void SetPdnConfig(const char* apn, const char* user, const char* pass, CellularPdnAuthType_t auth_type, uint32_t connect_timeout) override
+				{
+					AlxNet_SetPdnConfig(&me, apn, user, pass, auth_type, connect_timeout);
 				}
 				#endif
 				::AlxNet* GetMePtr(void)
 				{
 					return &me;
+				}
+				int Ping(const char *address, uint16_t count, uint32_t timeout_ms) override
+				{
+					return AlxNet_Ping(&me, address, count, timeout_ms);
 				}
 			private:
 				//------------------------------------------------------------------------------
