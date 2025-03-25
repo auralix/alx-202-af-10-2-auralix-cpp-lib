@@ -98,9 +98,10 @@ namespace Alx
 		//******************************************************************************
 		// Class - FtpClient
 		//******************************************************************************
+#if defined(ALX_FREE_RTOS)
 		template <uint32_t BUFF_LEN = 1460>
-		class FtpClient : public IFtpClient
-		{
+			class FtpClient : public IFtpClient
+			{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
@@ -142,7 +143,7 @@ namespace Alx
 					if (!net->IsConnected())
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiConnectionStatus);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -152,7 +153,7 @@ namespace Alx
 						if(net->Dns_GetHostByName(serverIp, ctrlSockAddrServer) != Alx_Ok) // FTP server IP is IP of FTP server control socket IP
 						{
 							ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
-							Reset();
+							Reset(RESET_WAIT_TIME_sec);
 							return Alx_Err;
 						}
 					}
@@ -160,13 +161,13 @@ namespace Alx
 					else
 					{
 						strcpy(ctrlSockAddrServer, serverIp);
-	//						bool status = ctrlSockAddrServer.set_ip_address(serverIp); // FTP server IP is IP of FTP server control socket IP
-	//						if (status == false)
-	//						{
-	//							ALX_FTP_CLIENT_TRACE("Err: Invalid IP");
-	//							Reset();
-	//							return Alx_Err;
-	//						}
+//						bool status = ctrlSockAddrServer.set_ip_address(serverIp); // FTP server IP is IP of FTP server control socket IP
+//						if (status == false)
+//						{
+//							ALX_FTP_CLIENT_TRACE("Err: Invalid IP");
+//							Reset(RESET_WAIT_TIME_sec);
+//							return Alx_Err;
+//						}
 					}
 
 					// #6 Set server control socket port
@@ -179,7 +180,7 @@ namespace Alx
 					if (ctrlSock.Open(net, AlxSocket_Protocol_Tcp) != Alx_Ok)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -187,7 +188,7 @@ namespace Alx
 					if (ctrlSock.Connect(ctrlSockAddrServer, ctrlSockAddrServer_Port) != Alx_Ok)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -196,7 +197,7 @@ namespace Alx
 					if (nsapiSizeOrError <= 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -204,18 +205,17 @@ namespace Alx
 					if (strncmp(buff, "220", 3) != 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
 					// #12 Send username
-					sprintf(buff, "user %s\r\n", username);
-					len = strlen(buff);
+					len = sprintf(buff, "user %s\r\n", username);
 					nsapiSizeOrError = ctrlSock.Send(buff, len);
 					if (nsapiSizeOrError != len)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -224,7 +224,7 @@ namespace Alx
 					if (nsapiSizeOrError <= 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -232,18 +232,17 @@ namespace Alx
 					if (strncmp(buff, "331", 3) != 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
 					// #15 Send password
-					sprintf(buff, "pass %s\r\n", password);
-					len = strlen(buff);
+					len = sprintf(buff, "pass %s\r\n", password);
 					nsapiSizeOrError = ctrlSock.Send(buff, len);
 					if (nsapiSizeOrError != len)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -252,7 +251,7 @@ namespace Alx
 					if (nsapiSizeOrError <= 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -260,18 +259,18 @@ namespace Alx
 					if (strncmp(buff, "230", 3) != 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
+					ALX_FTP_CLIENT_TRACE("logged in");
 					// #18 Send command to select ASCII type transfer
-					sprintf(buff, "type I\r\n");
-					len = strlen(buff);
+					len = sprintf(buff, "type I\r\n");
 					nsapiSizeOrError = ctrlSock.Send(buff, len);
 					if (nsapiSizeOrError != len)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -280,10 +279,11 @@ namespace Alx
 					if (nsapiSizeOrError <= 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
+					ALX_FTP_CLIENT_TRACE("type = I");
 					// #20 Set isLogin
 					isLogin = true;
 
@@ -307,22 +307,22 @@ namespace Alx
 					uint32_t len = 0;
 
 					// #4 Send command to Quit
-					sprintf(buff, "quit\r\n");
-					len = strlen(buff);
+					len = sprintf(buff, "quit\r\n");
 					nsapiSizeOrError = ctrlSock.Send(buff, len);
 					if (nsapiSizeOrError != len)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
 					// #5 Receive response from server
+					// often no reply, shorter reset delay since we are logging out anyway
 					nsapiSizeOrError = ctrlSock.Recv(buff, BUFF_LEN);
 					if (nsapiSizeOrError <= 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_QUIT_sec);
 						return Alx_Err;
 					}
 
@@ -330,18 +330,19 @@ namespace Alx
 					if (strncmp(buff, "221", 3) != 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
 					// Free memory
 					free(buff);
+					buff = nullptr;
 
 					// #7 Close control socket
 					if (ctrlSock.Close() != Alx_Ok)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -366,7 +367,6 @@ namespace Alx
 					Alx_Status nsapiError;
 					int  nsapiSizeOrError;
 					char* token = nullptr;
-					char* ptr = nullptr;
 					uint32_t len = 0;
 
 
@@ -374,13 +374,12 @@ namespace Alx
 					// Handle Open Data Socket
 					//******************************************************************************
 					// #4 Send command to enter passive mode
-					sprintf(buff, "pasv\r\n"); // We will not handle return
-					len = strlen(buff);
+					len = sprintf(buff, "pasv\r\n"); // We will not handle return
 					nsapiSizeOrError = ctrlSock.Send(buff, len);
 					if (nsapiSizeOrError != len)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -389,49 +388,27 @@ namespace Alx
 					if (nsapiSizeOrError <= 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
+					buff[nsapiSizeOrError] = 0; // zero terminate the response
 
 					// #6 Expected response: "227" -> Entering passive mode
 					if (strncmp(buff, "227", 3) != 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
 					// #7 Get IP and port from the recieved message
 					token = strchr(buff, '(') + 1;
-					for (uint32_t i = 0; i < 4; i++)
-					{
-						token = strtok_r(token, ",", &ptr);
-						dataSockIpArr[i] = (uint8_t)atoi(token);
-						token = ptr;
-						if (token == nullptr)
-						{
-							ALX_FTP_CLIENT_TRACE("Err");
-							Reset();
-							return Alx_Err;
-						}
-					}
-					for (uint32_t i = 0; i < 2; i++)
-					{
-						token = strtok_r(token, ",)", &ptr);
-						dataSockPort <<= 8;
-						dataSockPort += atoi(token);
-						token = ptr;
-						if (token == nullptr)
-						{
-							ALX_FTP_CLIENT_TRACE("Err");
-							Reset();
-							return Alx_Err;
-						}
-					}
+					int ip_and_port[6];
+					sscanf(token, "%d,%d,%d,%d,%d,%d", &ip_and_port[0], &ip_and_port[1], &ip_and_port[2], &ip_and_port[3], &ip_and_port[4], &ip_and_port[5]);
 
 					// #8 Set ip addres and port
-					sprintf(dataSockIpStr, "%d.%d.%d.%d", dataSockIpArr[0], dataSockIpArr[1], dataSockIpArr[2], dataSockIpArr[3]);
-					dataSockAddrServer_Port = dataSockPort; // No Return
+					sprintf(dataSockIpStr, "%d.%d.%d.%d", ip_and_port[0], ip_and_port[1], ip_and_port[2], ip_and_port[3]);
+					dataSockAddrServer_Port = (ip_and_port[4] << 8) + ip_and_port[5];
 
 					// #9 Set data socket timeout
 					dataSock.SetTimeout_ms(DATA_SOCK_TIMEOUT_ms); // No Return
@@ -440,7 +417,7 @@ namespace Alx
 					if (dataSock.Open(net, AlxSocket_Protocol_Tcp) != Alx_Ok)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -448,7 +425,7 @@ namespace Alx
 					nsapiError = Alx_Err;
 					for (uint32_t _try = 0; _try < 20; _try++)
 					{
-						if (dataSock.Connect(dataSockAddrServer, dataSockAddrServer_Port) == Alx_Ok)
+						if (dataSock.Connect(dataSockIpStr, dataSockAddrServer_Port) == Alx_Ok)
 						{
 							nsapiError = Alx_Ok;
 							break;
@@ -458,7 +435,7 @@ namespace Alx
 					if (nsapiError != Alx_Ok)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -467,13 +444,12 @@ namespace Alx
 					// Handle Send File
 					//******************************************************************************
 					// #12 Send command to initiate sending file to the server
-					sprintf(buff, "stor %s\r\n", filename);
-					len = strlen(buff);
+					len = sprintf(buff, "stor %s\r\n", filename);
 					nsapiSizeOrError = ctrlSock.Send(buff, len);
 					if (nsapiSizeOrError != len)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -481,8 +457,9 @@ namespace Alx
 					nsapiSizeOrError = ctrlSock.Recv(buff, BUFF_LEN);
 					if (nsapiSizeOrError <= 0)
 					{
+						while (1) ;
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -490,54 +467,60 @@ namespace Alx
 					if ((strncmp(buff, "150", 3) != 0) && (strncmp(buff, "125", 3) != 0))
 					{
 						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
 					// #15 Open file and get file size
 					sprintf(buff, "%s/%s", rootDir, filename); // We will not handle return
 					fp = fopen(buff, "r"); // We will not handle return
-					if (fseek(fp, 0, SEEK_END) != 0)				// Sets "cursor" at the end of the file
+					if (fp != 0)
 					{
-						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
-						return Alx_Err;
-					}
-					lenRemain = ftell(fp); // Returns the current value of the position indicator of the stream - We will not handle return
-					if (fseek(fp, 0, SEEK_SET) != 0)				// Sets "cursor" at the beginning of the file
-					{
-						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
-						return Alx_Err;
-					}
-
-					// #16 Stay in the loop until the file is sent
-					while (lenRemain > 0)
-					{
-						if (lenRemain > BUFF_LEN)
+						if (fseek(fp, 0, SEEK_END) != 0)				// Sets "cursor" at the end of the file
 						{
-							lenSend = BUFF_LEN;
+							ALX_FTP_CLIENT_TRACE("Err");
+							Reset(RESET_WAIT_TIME_sec);
+							return Alx_Err;
 						}
-						else
+						lenRemain = ftell(fp); // Returns the current value of the position indicator of the stream - We will not handle return
+						if (fseek(fp, 0, SEEK_SET) != 0)				// Sets "cursor" at the beginning of the file
 						{
-							lenSend = lenRemain;
-						}
-						fread(buff, 1, lenSend, fp); // We will not handle return
-						len = strlen(buff);
-						nsapiSizeOrError = dataSock.Send(buff, lenSend);
-						if (nsapiSizeOrError != lenSend)
-						{
-							ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-							Reset();
+							ALX_FTP_CLIENT_TRACE("Err");
+							Reset(RESET_WAIT_TIME_sec);
 							return Alx_Err;
 						}
 
-						lenRemain = lenRemain - lenSend;
+						// #16 Stay in the loop until the file is sent
+						while (lenRemain > 0)
+						{
+							if (lenRemain > BUFF_LEN)
+							{
+								lenSend = BUFF_LEN;
+							}
+							else
+							{
+								lenSend = lenRemain;
+							}
+							fread(buff, 1, lenSend, fp); // We will not handle return
+							len = strlen(buff);
+							nsapiSizeOrError = dataSock.Send(buff, lenSend);
+							if (nsapiSizeOrError != lenSend)
+							{
+								ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+								Reset(RESET_WAIT_TIME_sec);
+								return Alx_Err;
+							}
+
+							lenRemain = lenRemain - lenSend;
+						}
+
+						// #17 Close file
+						fclose(fp); // We will not handle return
 					}
-
-					// #17 Close file
-					fclose(fp); // We will not handle return
-
+					else
+					{
+						dataSock.Send((char *)"Hello world!!!\r\n", 16);
+					}
 
 					//******************************************************************************
 					// Handle Close Data Socket
@@ -546,7 +529,7 @@ namespace Alx
 					if (dataSock.Close() != Alx_Ok)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -555,7 +538,7 @@ namespace Alx
 					if (nsapiSizeOrError <= 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -563,7 +546,7 @@ namespace Alx
 					if (strncmp(buff, "226", 3) != 0)
 					{
 						ALX_FTP_CLIENT_TRACE("Err");
-						Reset();
+						Reset(RESET_WAIT_TIME_sec);
 						return Alx_Err;
 					}
 
@@ -580,7 +563,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 
 				// Parameters - Const
-				const uint32_t RESET_WAIT_TIME_min = 5;
+				const uint32_t RESET_WAIT_TIME_sec = 300;
+				const uint32_t RESET_WAIT_TIME_QUIT_sec = 5;
 				const int CTRL_SOCK_TIMEOUT_ms = 30000;
 				const int DATA_SOCK_TIMEOUT_ms = 30000;
 
@@ -623,7 +607,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Functions
 				//------------------------------------------------------------------------------
-				void Reset(void)
+				void Reset(uint32_t reset_wait_time)
 				{
 					// #1 Prepare variables
 					int nsapiError;
@@ -648,7 +632,11 @@ namespace Alx
 					dataSockAddrServer_Port = 0;
 
 					// Variables
-					buff = nullptr;
+					if (buff)
+					{
+						free(buff);
+						buff = nullptr;
+					}
 					memset(dataSockIpArr, 0, sizeof(dataSockIpArr));
 					memset(dataSockIpStr, 0, sizeof(dataSockIpStr));
 					dataSockPort = 0;
@@ -663,9 +651,593 @@ namespace Alx
 					mutex.Unlock();
 
 					// #6 Sleep for RESET_WAIT_TIME
-					AlxOsDelay_min(&alxOsDelay, RESET_WAIT_TIME_min);
+					AlxOsDelay_sec(&alxOsDelay, reset_wait_time);
 				}
-		};
+			};
+#endif
+#if defined(ALX_MBED)
+		template <uint32_t BUFF_LEN = 1460>
+			class FtpClient : public IFtpClient
+			{
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				FtpClient
+				(
+					NetworkInterface* net,
+					char* serverIp,
+					uint16_t* serverPort,
+					char* username,
+					char* password,
+					bool* isServerIpHostnameFormat)
+					: net(net)
+					, serverIp(serverIp)
+					, serverPort(serverPort)
+					, username(username)
+					, password(password)
+					, isServerIpHostnameFormat(isServerIpHostnameFormat)
+				{}
+				virtual ~FtpClient() {}
+				Alx_Status Login(void) override
+				{
+					// #1 Lock mutex
+					mutex.lock();
+
+					// #2 Assert
+					ALX_FTP_CLIENT_ASSERT(isLogin == false);
+
+					// #3 Prepare variables
+					nsapi_error_t nsapiError = NSAPI_ERROR_NO_CONNECTION;
+					nsapi_size_or_error_t  nsapiSizeOrError = NSAPI_ERROR_NO_CONNECTION;
+					nsapi_connection_status_t nsapiConnectionStatus = NSAPI_STATUS_ERROR_UNSUPPORTED;
+					uint32_t len = 0;
+
+					// Allocate memory
+					buff = (char*)calloc(BUFF_LEN, sizeof(char));
+
+					// #4 Check if network is UP
+					nsapiConnectionStatus = net->get_connection_status();
+					if (
+						(nsapiConnectionStatus != NSAPI_STATUS_LOCAL_UP) &&
+						(nsapiConnectionStatus != NSAPI_STATUS_GLOBAL_UP))
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiConnectionStatus);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #5.1 Resolve server IP address if it is in hostname format
+					if (*isServerIpHostnameFormat)
+					{
+						nsapiError = net->gethostbyname(serverIp, &ctrlSockAddrServer); // FTP server IP is IP of FTP server control socket IP
+						if (nsapiError != NSAPI_ERROR_OK)
+						{
+							ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
+							Reset(RESET_WAIT_TIME_sec);
+							return Alx_Err;
+						}
+					}
+					// #5.2 Else use provided
+					else
+					{
+						bool status = ctrlSockAddrServer.set_ip_address(serverIp); // FTP server IP is IP of FTP server control socket IP
+						if (status == false)
+						{
+							ALX_FTP_CLIENT_TRACE("Err: Invalid IP");
+							Reset(RESET_WAIT_TIME_sec);
+							return Alx_Err;
+						}
+					}
+
+					// #6 Set server control socket port
+					ctrlSockAddrServer.set_port(*serverPort); // No Return -> FTP server port is port of FTP server control socket port
+
+					// #7 Set control socket timeout
+					ctrlSock.set_timeout(CTRL_SOCK_TIMEOUT_ms); // No Return
+
+					// #8 Open control socket
+					nsapiError = ctrlSock.open(net);
+					if (nsapiError != NSAPI_ERROR_OK)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #9 Connect control socket
+					nsapiError = ctrlSock.connect(ctrlSockAddrServer);
+					if (nsapiError != NSAPI_ERROR_OK)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #10 Receive response from server
+					nsapiSizeOrError = ctrlSock.recv(buff, sizeof(buff));
+					if (nsapiSizeOrError <= 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #11 Expected response: "220" -> Service ready for new user
+					if (strncmp(buff, "220", 3) != 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #12 Send username
+					sprintf(buff, "user %s\r\n", username);
+					len = strlen(buff);
+					nsapiSizeOrError = ctrlSock.send(buff, len);
+					if (nsapiSizeOrError != (nsapi_size_or_error_t)len)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #13 Receive response from server
+					nsapiSizeOrError = ctrlSock.recv(buff, sizeof(buff));
+					if (nsapiSizeOrError <= 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #14 Expected response: "331" -> User name OK, need password
+					if (strncmp(buff, "331", 3) != 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #15 Send password
+					sprintf(buff, "pass %s\r\n", password);
+					len = strlen(buff);
+					nsapiSizeOrError = ctrlSock.send(buff, len);
+					if (nsapiSizeOrError != (nsapi_size_or_error_t)len)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #16 Receive response from server
+					nsapiSizeOrError = ctrlSock.recv(buff, sizeof(buff));
+					if (nsapiSizeOrError <= 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #17 Expected response: "230" -> User logged in, proceed
+					if (strncmp(buff, "230", 3) != 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #18 Send command to select ASCII type transfer
+					sprintf(buff, "type I\r\n");
+					len = strlen(buff);
+					nsapiSizeOrError = ctrlSock.send(buff, len);
+					if (nsapiSizeOrError != (nsapi_size_or_error_t)len)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #19 Receive response from server
+					nsapiSizeOrError = ctrlSock.recv(buff, sizeof(buff));
+					if (nsapiSizeOrError <= 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #20 Set isLogin
+					isLogin = true;
+
+					// #21 Unlock mutex
+					mutex.unlock();
+
+					// #22 Retutn OK
+					return Alx_Ok;
+				}
+				Alx_Status Logout(void) override
+				{
+					// #1 Lock mutex
+					mutex.lock();
+
+					// #2 Assert
+					ALX_FTP_CLIENT_ASSERT(isLogin == true);
+
+					// #3 Prepare variables
+					nsapi_error_t nsapiError = NSAPI_ERROR_NO_CONNECTION;
+					nsapi_size_or_error_t  nsapiSizeOrError = NSAPI_ERROR_NO_CONNECTION;
+					uint32_t len = 0;
+
+					// Free memory
+					free(buff);
+
+					// #4 Send command to Quit
+					sprintf(buff, "quit\r\n");
+					len = strlen(buff);
+					nsapiSizeOrError = ctrlSock.send(buff, len);
+					if (nsapiSizeOrError != (nsapi_size_or_error_t)len)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #5 Receive response from server
+					nsapiSizeOrError = ctrlSock.recv(buff, sizeof(buff));
+					if (nsapiSizeOrError <= 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #6 Expected response: "221" -> Service closing control connection
+					if (strncmp(buff, "221", 3) != 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #7 Close control socket
+					nsapiError = ctrlSock.close();
+					if (nsapiError != NSAPI_ERROR_OK)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #8 Reset isLogin
+					isLogin = false;
+
+					// #9 Unlock mutex
+					mutex.unlock();
+
+					// #10 Return OK
+					return Alx_Ok;
+				}
+				Alx_Status SendFile(const char *rootDir, const char* filename) override
+				{
+					// #1 Lock mutex
+					mutex.lock();
+
+					// #2 Assert
+					ALX_FTP_CLIENT_ASSERT(isLogin == true);
+
+					// #3 Prepare variables
+					nsapi_error_t nsapiError = NSAPI_ERROR_NO_CONNECTION;
+					nsapi_size_or_error_t  nsapiSizeOrError = NSAPI_ERROR_NO_CONNECTION;
+					char* token = nullptr;
+					char* ptr = nullptr;
+					uint32_t len = 0;
+
+
+					//******************************************************************************
+					// Handle Open Data Socket
+					//******************************************************************************
+					// #4 Send command to enter passive mode
+					sprintf(buff, "pasv\r\n"); // We will not handle return
+					len = strlen(buff);
+					nsapiSizeOrError = ctrlSock.send(buff, len);
+					if (nsapiSizeOrError != (nsapi_size_or_error_t)len)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #5 Receive response from server
+					nsapiSizeOrError = ctrlSock.recv(buff, BUFF_LEN);
+					if (nsapiSizeOrError <= 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #6 Expected response: "227" -> Entering passive mode
+					if (strncmp(buff, "227", 3) != 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #7 Get IP and port from the recieved message
+					token = strchr(buff, '(') + 1;
+					for (uint32_t i = 0; i < 4; i++)
+					{
+						token = strtok_r(token, ",", &ptr);
+						dataSockIpArr[i] = (uint8_t)atoi(token);
+						token = ptr;
+						if (token == nullptr)
+						{
+							ALX_FTP_CLIENT_TRACE("Err");
+							Reset(RESET_WAIT_TIME_sec);
+							return Alx_Err;
+						}
+					}
+					for (uint32_t i = 0; i < 2; i++)
+					{
+						token = strtok_r(token, ",)", &ptr);
+						dataSockPort <<= 8;
+						dataSockPort += atoi(token);
+						token = ptr;
+						if (token == nullptr)
+						{
+							ALX_FTP_CLIENT_TRACE("Err");
+							Reset(RESET_WAIT_TIME_sec);
+							return Alx_Err;
+						}
+					}
+
+					// #8 Set ip addres and port
+					sprintf(dataSockIpStr, "%d.%d.%d.%d", dataSockIpArr[0], dataSockIpArr[1], dataSockIpArr[2], dataSockIpArr[3]);
+					if (dataSockAddrServer.set_ip_address(dataSockIpStr) == false)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: Invalid IP");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+					dataSockAddrServer.set_port(dataSockPort); // No Return
+
+					// #9 Set data socket timeout
+					dataSock.set_timeout(DATA_SOCK_TIMEOUT_ms); // No Return
+
+					// #10 Open data socket
+					nsapiError = dataSock.open(net);
+					if (nsapiError != NSAPI_ERROR_OK)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #11 Connect data socket (retry 20 times)
+					for (uint32_t _try = 0; _try < 20; _try++)
+					{
+						nsapiError = dataSock.connect(dataSockAddrServer);
+						if (nsapiError == NSAPI_ERROR_OK)
+						{
+							break;
+						}
+						ThisThread::sleep_for(1ms);
+					}
+					if (nsapiError != NSAPI_ERROR_OK)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+
+					//******************************************************************************
+					// Handle Send File
+					//******************************************************************************
+					// #12 Send command to initiate sending file to the server
+					sprintf(buff, "stor %s\r\n", filename);
+					len = strlen(buff);
+					nsapiSizeOrError = ctrlSock.send(buff, len);
+					if (nsapiSizeOrError != (nsapi_size_or_error_t)len)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #13 Receive response from server
+					nsapiSizeOrError = ctrlSock.recv(buff, sizeof(buff));
+					if (nsapiSizeOrError <= 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #14 Expected response: "150" -> File status okay, about to open data connection OR "125" -> Data connection already open, transfer starting
+					if ((strncmp(buff, "150", 3) != 0) && (strncmp(buff, "125", 3) != 0))
+					{
+						ALX_FTP_CLIENT_TRACE("Err");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #15 Open file and get file size
+					sprintf(buff, "%s/%s", rootDir, filename); // We will not handle return
+					fp = fopen(buff, "r"); // We will not handle return
+					if (fseek(fp, 0, SEEK_END) != 0)				// Sets "cursor" at the end of the file
+					{
+						ALX_FTP_CLIENT_TRACE("Err");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+					lenRemain = ftell(fp); // Returns the current value of the position indicator of the stream - We will not handle return
+					if (fseek(fp, 0, SEEK_SET) != 0)				// Sets "cursor" at the beginning of the file
+					{
+						ALX_FTP_CLIENT_TRACE("Err");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #16 Stay in the loop until the file is sent
+					while (lenRemain > 0)
+					{
+						if (lenRemain > BUFF_LEN)
+						{
+							lenSend = BUFF_LEN;
+						}
+						else
+						{
+							lenSend = lenRemain;
+						}
+						fread(buff, 1, lenSend, fp); // We will not handle return
+						len = strlen(buff);
+						nsapiSizeOrError = dataSock.send(buff, lenSend);
+						if (nsapiSizeOrError != (nsapi_size_or_error_t)lenSend)
+						{
+							ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+							Reset(RESET_WAIT_TIME_sec);
+							return Alx_Err;
+						}
+
+						lenRemain = lenRemain - lenSend;
+					}
+
+					// #17 Close file
+					fclose(fp); // We will not handle return
+
+
+					//******************************************************************************
+					// Handle Close Data Socket
+					//******************************************************************************
+					// #18 Close data socket
+					nsapiError = dataSock.close();
+					if (nsapiError != NSAPI_ERROR_OK)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #19 Receive response from server
+					nsapiSizeOrError = ctrlSock.recv(buff, BUFF_LEN);
+					if (nsapiSizeOrError <= 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiSizeOrError);
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #20 Expected response: "226" -> Closing data connection, requested file action successful
+					if (strncmp(buff, "226", 3) != 0)
+					{
+						ALX_FTP_CLIENT_TRACE("Err");
+						Reset(RESET_WAIT_TIME_sec);
+						return Alx_Err;
+					}
+
+					// #21 Unlock mutex
+					mutex.unlock();
+
+					// #22 Return OK
+					return Alx_Ok;
+				}
+
+			private:
+				//------------------------------------------------------------------------------
+				// Private Variables
+				//------------------------------------------------------------------------------
+
+				// Parameters - Const
+				const Kernel::Clock::duration_u32 RESET_WAIT_TIME_min = 5min;
+				const int CTRL_SOCK_TIMEOUT_ms = 30000;
+				const int DATA_SOCK_TIMEOUT_ms = 30000;
+
+				// Objects - External
+				NetworkInterface* net =  nullptr;
+
+				// Objects - Internal - Parameters
+				SocketAddress ctrlSockAddrServer;
+
+				// Objects - Internal - Variables
+				SocketAddress dataSockAddrServer;
+				TCPSocket ctrlSock;
+				TCPSocket dataSock;
+
+				// Parameters
+				char* serverIp = nullptr;
+				uint16_t* serverPort = nullptr;
+				char* username = nullptr;
+				char* password = nullptr;
+				bool* isServerIpHostnameFormat = nullptr;
+
+				// Variables
+				char* buff = nullptr;
+				uint8_t dataSockIpArr[4] = { };
+				char dataSockIpStr[20] = { };
+				uint16_t dataSockPort = 0;
+				FILE* fp = nullptr;
+				uint32_t lenRemain = 0;
+				uint32_t lenSend = 0;
+
+				// RTOS
+				Mutex mutex;
+
+				// Info
+				bool isLogin = false;
+
+			private:
+				//------------------------------------------------------------------------------
+				// Private Functions
+				//------------------------------------------------------------------------------
+				void Reset(void)
+				{
+					// #1 Prepare variables
+					nsapi_error_t nsapiError = NSAPI_ERROR_NO_CONNECTION;
+
+					// #2 Close sockets
+					nsapiError = dataSock.close();
+					if (nsapiError != NSAPI_ERROR_OK)
+					{
+						ALX_FTP_CLIENT_TRACE("Err_DataSock: %d", (int32_t)nsapiError);
+					}
+					nsapiError = ctrlSock.close();
+					if (nsapiError != NSAPI_ERROR_OK)
+					{
+						ALX_FTP_CLIENT_TRACE("Err_CtrlSock: %d", (int32_t)nsapiError);
+					}
+
+					// #3 Close file
+					fclose(fp); // We will not handle return
+
+					// #4 Reset variables
+
+					// Objects - Internal - Variables
+					dataSockAddrServer.set_ip_address("000.000.000.000");
+					dataSockAddrServer.set_port(0);
+
+					// Variables
+					memset(buff, 0, sizeof(buff));
+					memset(dataSockIpArr, 0, sizeof(dataSockIpArr));
+					memset(dataSockIpStr, 0, sizeof(dataSockIpStr));
+					dataSockPort = 0;
+					fp = nullptr;
+					lenRemain = 0;
+					lenSend = 0;
+
+					// Info
+					isLogin = false;
+
+					// #5 Unlock mutex
+					mutex.unlock();
+
+					// #6 Sleep for RESET_WAIT_TIME
+					ThisThread::sleep_for(RESET_WAIT_TIME_min);
+				}
+			};
+#endif
 	}
 }
 
