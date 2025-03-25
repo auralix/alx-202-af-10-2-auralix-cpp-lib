@@ -38,7 +38,8 @@
 #include "alxGlobal.hpp"
 #include "alxNet.h"
 #include "alxSpi.hpp"
-#include "alxIoPin.h"
+#include "alxIoPin.hpp"
+
 
 //******************************************************************************
 // Module Guard
@@ -87,6 +88,7 @@ namespace Alx
 				virtual void SetPdnConfig(const char* apn, const char* user, const char* pass, CellularPdnAuthType_t auth_type, uint32_t connect_timeout) = 0;
 				#endif
 				virtual int Ping(const char *address, uint16_t count, uint32_t timeout_ms) = 0;
+				virtual ::AlxNet* GetCStructPtr(void) = 0;
 		};
 
 
@@ -207,6 +209,11 @@ namespace Alx
 				{
 					return AlxNet_Ping(&me, address, count, timeout_ms);
 				}
+				::AlxNet* GetCStructPtr(void) override
+				{
+					return &me;
+				}
+
 			private:
 				//------------------------------------------------------------------------------
 				// Private Variables
