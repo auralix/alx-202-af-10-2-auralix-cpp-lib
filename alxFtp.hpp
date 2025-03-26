@@ -101,31 +101,31 @@ namespace Alx
 				{
 					AlxFtp_Client_SetServerAddr(&me, serverAddr);
 				}
-				void Client_SetServerAddrIsHostname(bool serverAddrIsHostname)override
+				void Client_SetServerAddrIsHostname(bool serverAddrIsHostname) override
 				{
 					AlxFtp_Client_SetServerAddrIsHostname(&me, serverAddrIsHostname);
 				}
-				void Client_SetServerPort(uint16_t serverPort)override
+				void Client_SetServerPort(uint16_t serverPort) override
 				{
 					AlxFtp_Client_SetServerPort(&me, serverPort);
 				}
-				void Client_SetClientUsername(const char* clientUsername)override
+				void Client_SetClientUsername(const char* clientUsername) override
 				{
 					AlxFtp_Client_SetClientUsername(&me, clientUsername);
 				}
-				void Client_SetClientPassword(const char* clientPassword)override
+				void Client_SetClientPassword(const char* clientPassword) override
 				{
 					AlxFtp_Client_SetClientPassword(&me, clientPassword);
 				}
-				Alx_Status Client_Login(void)override
+				Alx_Status Client_Login(void) override
 				{
 					return AlxFtp_Client_Login(&me);
 				}
-				Alx_Status Client_Logout(void)override
+				Alx_Status Client_Logout(void) override
 				{
 					return AlxFtp_Client_Logout(&me);
 				}
-				Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath)override
+				Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath) override
 				{
 					return AlxFtp_Client_UploadFile(&me, localFilePath, remoteFilePath);
 				}
