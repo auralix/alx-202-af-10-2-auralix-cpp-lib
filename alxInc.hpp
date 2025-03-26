@@ -43,12 +43,13 @@
 #include "alxAdau1961.hpp"
 #include "alxAdxl355.hpp"
 #include "alxBq24600.hpp"
+#include "alxBq25890.hpp"
 #include "alxBts724g.hpp"
+#include "alxMax17263.hpp"
+#include "alxPca9539a.hpp"
 #include "alxTmp1075.hpp"
 #include "alxTpa3255.hpp"
-#include "alxPca9539a.hpp"
-#include "alxBq25890.hpp"
-#include "alxMax17263.hpp"
+
 
 //------------------------------------------------------------------------------
 // ALX - MCU
@@ -80,7 +81,7 @@
 #include "alxFiltGlitchBool.hpp"
 #include "alxFiltGlitchUint32.hpp"
 #include "alxFs.hpp"
-#include "alxFtpClient.hpp"
+#include "alxFtp.hpp"
 #include "alxGlobal.hpp"
 #include "alxHys1.hpp"
 #include "alxHys2.hpp"

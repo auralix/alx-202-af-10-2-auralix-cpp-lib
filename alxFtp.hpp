@@ -87,23 +87,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				Ftp
 				(
-					AlxNet::INet* alxNet,
-					const char* serverAddr,
-					bool serverAddrIsHostname,
-					uint16_t serverPort,
-					const char* clientUsername,
-					const char* clientPassword
+					AlxNet::INet* alxNet
 				)
 				{
 					AlxFtp_Ctor
 					(
 						&me,
-						alxNet->GetCStructPtr(),
-						serverAddr,
-						serverAddrIsHostname,
-						serverPort,
-						clientUsername,
-						clientPassword
+						alxNet->GetCStructPtr()
 					);
 				}
 				virtual ~Ftp() {}

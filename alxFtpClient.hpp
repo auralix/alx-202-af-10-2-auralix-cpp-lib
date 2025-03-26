@@ -98,7 +98,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - FtpClient
 		//******************************************************************************
-#if defined(ALX_FREE_RTOS)
+#if defined(ALX_FREE_RTOS_)
 		template <uint32_t BUFF_LEN = 1460>
 			class FtpClient : public IFtpClient
 			{
