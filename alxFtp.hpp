@@ -72,7 +72,7 @@ namespace Alx
 				virtual void Client_SetClientPassword(const char* clientPassword) = 0;
 				virtual Alx_Status Client_Login(void) = 0;
 				virtual Alx_Status Client_Logout(void) = 0;
-				virtual Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath) = 0;
+				virtual Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize) = 0;
 				virtual ::AlxFtp* GetCStructPtr(void) = 0;
 		};
 
@@ -128,9 +128,9 @@ namespace Alx
 				{
 					return AlxFtp_Client_Logout(&me);
 				}
-				Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath) override
+				Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize) override
 				{
-					return AlxFtp_Client_UploadFile(&me, localFilePath, remoteFilePath);
+					return AlxFtp_Client_UploadFile(&me, localFilePath, remoteFilePath, fileSize);
 				}
 				::AlxFtp* GetCStructPtr(void) override
 				{
