@@ -38,6 +38,7 @@
 #include "alxGlobal.hpp"
 #include "alxFtp.h"
 #include "alxNet.hpp"
+#include "alxFs.hpp"
 
 
 //******************************************************************************
@@ -87,13 +88,15 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				Ftp
 				(
-					AlxNet::INet* alxNet
+					AlxNet::INet* alxNet,
+					AlxFs::IFs* alxFs
 				)
 				{
 					AlxFtp_Ctor
 					(
 						&me,
-						alxNet->GetCStructPtr()
+						alxNet->GetCStructPtr(),
+						alxFs->GetCStructPtr()
 					);
 				}
 				virtual ~Ftp() {}
