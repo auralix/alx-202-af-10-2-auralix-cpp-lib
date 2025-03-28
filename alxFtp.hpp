@@ -39,6 +39,7 @@
 #include "alxFtp.h"
 #include "alxNet.hpp"
 #include "alxFs.hpp"
+#include "alxOsMutex.hpp"
 
 
 //******************************************************************************
@@ -72,7 +73,7 @@ namespace Alx
 				virtual void Client_SetClientPassword(const char* clientPassword) = 0;
 				virtual Alx_Status Client_Login(void) = 0;
 				virtual Alx_Status Client_Logout(void) = 0;
-				virtual Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize) = 0;
+				virtual Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize, AlxOsMutex::IAlxOsMutex* alxOsMutex_UploadFileInChunks) = 0;
 				virtual ::AlxFtp* GetCStructPtr(void) = 0;
 		};
 
@@ -128,9 +129,11 @@ namespace Alx
 				{
 					return AlxFtp_Client_Logout(&me);
 				}
-				Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize) override
+				Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize, AlxOsMutex::IAlxOsMutex* alxOsMutex_UploadFileInChunks) override
 				{
-					return AlxFtp_Client_UploadFile(&me, localFilePath, remoteFilePath, fileSize);
+					::AlxOsMutex* _alxOsMutex_UploadFileInChunks = NULL;
+					if (alxOsMutex_UploadFileInChunks != nullptr) _alxOsMutex_UploadFileInChunks = alxOsMutex_UploadFileInChunks->GetCStructPtr();
+					return AlxFtp_Client_UploadFile(&me, localFilePath, remoteFilePath, fileSize, _alxOsMutex_UploadFileInChunks);
 				}
 				::AlxFtp* GetCStructPtr(void) override
 				{

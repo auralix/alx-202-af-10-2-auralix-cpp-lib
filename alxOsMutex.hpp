@@ -66,6 +66,7 @@ namespace Alx
 				virtual void Lock(void) = 0;
 				virtual void Unlock(void) = 0;
 				virtual bool IsUnlocked(void) = 0;
+				virtual ::AlxOsMutex* GetCStructPtr(void) = 0;
 		};
 
 
@@ -94,6 +95,10 @@ namespace Alx
 				bool IsUnlocked(void) override
 				{
 					return AlxOsMutex_IsUnlocked(&me);
+				}
+				::AlxOsMutex* GetCStructPtr(void) override
+				{
+					return &me;
 				}
 
 			private:
