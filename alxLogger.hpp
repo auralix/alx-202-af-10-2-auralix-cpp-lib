@@ -151,9 +151,9 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Status
 				//------------------------------------------------------------------------------
-				virtual Alx_Status GetFileSize(const char* path, uint32_t* fileSize) = 0;
-				virtual Alx_Status GetFilePathOldest(char* filePathOldest) = 0;
-				virtual Alx_Status GetFilePathNewest(char* filePathNewest) = 0;
+				virtual Alx_Status File_GetSize(const char* path, uint32_t* size) = 0;
+				virtual Alx_Status File_GetPathOldest(char* pathOldest) = 0;
+				virtual Alx_Status File_GetPathNewest(char* pathNewest) = 0;
 
 
 				//------------------------------------------------------------------------------
@@ -347,17 +347,17 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Status
 				//------------------------------------------------------------------------------
-				Alx_Status GetFileSize(const char* path, uint32_t* fileSize) override
+				Alx_Status File_GetSize(const char* path, uint32_t* size) override
 				{
-					return AlxLogger_GetFileSize(&me, path, fileSize);
+					return AlxLogger_File_GetSize(&me, path, size);
 				}
-				Alx_Status GetFilePathOldest(char* filePathOldest) override
+				Alx_Status File_GetPathOldest(char* pathOldest) override
 				{
-					return AlxLogger_GetFilePathOldest(&me, filePathOldest);
+					return AlxLogger_File_GetPathOldest(&me, pathOldest);
 				}
-				Alx_Status GetFilePathNewest(char* filePathNewest) override
+				Alx_Status File_GetPathNewest(char* pathNewest) override
 				{
-					return AlxLogger_GetFilePathNewest(&me, filePathNewest);
+					return AlxLogger_File_GetPathNewest(&me, pathNewest);
 				}
 
 
