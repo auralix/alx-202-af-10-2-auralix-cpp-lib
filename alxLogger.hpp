@@ -112,8 +112,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Read/Write
 				//------------------------------------------------------------------------------
-				virtual Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual, bool mdUpdate, uint64_t idStart) = 0;
-				virtual Alx_Status Write(const char* logs, uint32_t numOfLogs) = 0;
+				virtual Alx_Status Log_Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual, bool mdUpdate, uint64_t idStart) = 0;
+				virtual Alx_Status Log_Write(const char* logs, uint32_t numOfLogs) = 0;
 
 
 				//------------------------------------------------------------------------------
@@ -143,8 +143,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Read/Write
 				//------------------------------------------------------------------------------
-				virtual Alx_Status ReadFile(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* chunkData, uint32_t chunkLenActual)) = 0;
-				virtual Alx_Status ReadFileFirstLine(const char* path, char* log) = 0;
+				virtual Alx_Status File_Read(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* chunkData, uint32_t chunkLenActual)) = 0;
+				virtual Alx_Status File_ReadFirstLine(const char* path, char* log) = 0;
 
 
 
@@ -282,13 +282,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Read/Write
 				//------------------------------------------------------------------------------
-				Alx_Status Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual, bool mdUpdate, uint64_t idStart) override
+				Alx_Status Log_Read(char* logs, uint32_t numOfLogs, uint32_t* numOfLogsActual, bool mdUpdate, uint64_t idStart) override
 				{
-					return AlxLogger_Read(&me, logs, numOfLogs, numOfLogsActual, mdUpdate, idStart);
+					return AlxLogger_Log_Read(&me, logs, numOfLogs, numOfLogsActual, mdUpdate, idStart);
 				}
-				Alx_Status Write(const char* logs, uint32_t numOfLogs) override
+				Alx_Status Log_Write(const char* logs, uint32_t numOfLogs) override
 				{
-					return AlxLogger_Write(&me, logs, numOfLogs);
+					return AlxLogger_Log_Write(&me, logs, numOfLogs);
 				}
 
 
@@ -334,13 +334,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Read/Write
 				//------------------------------------------------------------------------------
-				Alx_Status ReadFile(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* chunkData, uint32_t chunkLenActual)) override
+				Alx_Status File_Read(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* chunkData, uint32_t chunkLenActual)) override
 				{
-					return AlxLogger_ReadFile(&me, path, chunkBuff, chunkLen, chunkRead_Callback);
+					return AlxLogger_File_Read(&me, path, chunkBuff, chunkLen, chunkRead_Callback);
 				}
-				Alx_Status ReadFileFirstLine(const char* path, char* log) override
+				Alx_Status File_ReadFirstLine(const char* path, char* log) override
 				{
-					return AlxLogger_ReadFileFirstLine(&me, path, log);
+					return AlxLogger_File_ReadFirstLine(&me, path, log);
 				}
 
 
