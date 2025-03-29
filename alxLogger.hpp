@@ -144,7 +144,7 @@ namespace Alx
 				// Read/Write
 				//------------------------------------------------------------------------------
 				virtual Alx_Status File_Read(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* chunkData, uint32_t chunkLenActual)) = 0;
-				virtual Alx_Status File_ReadFirstLine(const char* path, char* log) = 0;
+				virtual Alx_Status File_ReadFirstLog(const char* path, char* log) = 0;
 
 
 
@@ -338,9 +338,9 @@ namespace Alx
 				{
 					return AlxLogger_File_Read(&me, path, chunkBuff, chunkLen, chunkRead_Callback);
 				}
-				Alx_Status File_ReadFirstLine(const char* path, char* log) override
+				Alx_Status File_ReadFirstLog(const char* path, char* log) override
 				{
-					return AlxLogger_File_ReadFirstLine(&me, path, log);
+					return AlxLogger_File_ReadFirstLog(&me, path, log);
 				}
 
 
