@@ -121,8 +121,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				virtual uint64_t Log_GetNumOfLogsToProcess(void) = 0;
 				virtual uint64_t Log_GetNumOfLogsStored(void) = 0;
-				virtual Alx_Status Log_GetIdOldest(uint64_t* idOldest) = 0;
-				virtual Alx_Status Log_GetIdNewest(uint64_t* idNewest) = 0;
+				virtual Alx_Status Log_GetIdStoredOldest(uint64_t* idStoredOldest) = 0;
+				virtual Alx_Status Log_GetIdStoredNewest(uint64_t* idStoredNewest) = 0;
 
 
 				//------------------------------------------------------------------------------
@@ -152,8 +152,8 @@ namespace Alx
 				// Status
 				//------------------------------------------------------------------------------
 				virtual Alx_Status File_GetSize(const char* path, uint32_t* size) = 0;
-				virtual Alx_Status File_GetPathOldest(char* pathOldest) = 0;
-				virtual Alx_Status File_GetPathNewest(char* pathNewest) = 0;
+				virtual Alx_Status File_GetPathStoredOldest(char* pathStoredOldest) = 0;
+				virtual Alx_Status File_GetPathStoredNewest(char* pathStoredNewest) = 0;
 
 
 				//------------------------------------------------------------------------------
@@ -303,13 +303,13 @@ namespace Alx
 				{
 					return AlxLogger_Log_GetNumOfLogsStored(&me);
 				}
-				Alx_Status Log_GetIdOldest(uint64_t* idOldest) override
+				Alx_Status Log_GetIdStoredOldest(uint64_t* idStoredOldest) override
 				{
-					return AlxLogger_Log_GetIdOldest(&me, idOldest);
+					return AlxLogger_Log_GetIdStoredOldest(&me, idStoredOldest);
 				}
-				Alx_Status Log_GetIdNewest(uint64_t* idNewest) override
+				Alx_Status Log_GetIdStoredNewest(uint64_t* idStoredNewest) override
 				{
-					return AlxLogger_Log_GetIdNewest(&me, idNewest);
+					return AlxLogger_Log_GetIdStoredNewest(&me, idStoredNewest);
 				}
 
 
@@ -351,13 +351,13 @@ namespace Alx
 				{
 					return AlxLogger_File_GetSize(&me, path, size);
 				}
-				Alx_Status File_GetPathOldest(char* pathOldest) override
+				Alx_Status File_GetPathStoredOldest(char* pathStoredOldest) override
 				{
-					return AlxLogger_File_GetPathOldest(&me, pathOldest);
+					return AlxLogger_File_GetPathStoredOldest(&me, pathStoredOldest);
 				}
-				Alx_Status File_GetPathNewest(char* pathNewest) override
+				Alx_Status File_GetPathStoredNewest(char* pathStoredNewest) override
 				{
-					return AlxLogger_File_GetPathNewest(&me, pathNewest);
+					return AlxLogger_File_GetPathStoredNewest(&me, pathStoredNewest);
 				}
 
 
