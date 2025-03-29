@@ -159,8 +159,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Management
 				//------------------------------------------------------------------------------
-				virtual Alx_Status RewindLogsToProcessFiles(uint32_t numOfFiles) = 0;
-				virtual Alx_Status ForwardLogsToProcessFiles(uint32_t numOfFiles) = 0;
+				virtual Alx_Status File_RewindLogsToProcess(uint32_t numOfFiles) = 0;
+				virtual Alx_Status File_ForwardLogsToProcess(uint32_t numOfFiles) = 0;
 		};
 
 
@@ -364,13 +364,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Management
 				//------------------------------------------------------------------------------
-				Alx_Status RewindLogsToProcessFiles(uint32_t numOfFiles) override
+				Alx_Status File_RewindLogsToProcess(uint32_t numOfFiles) override
 				{
-					return AlxLogger_RewindLogsToProcessFiles(&me, numOfFiles);
+					return AlxLogger_File_RewindLogsToProcess(&me, numOfFiles);
 				}
-				Alx_Status ForwardLogsToProcessFiles(uint32_t numOfFiles) override
+				Alx_Status File_ForwardLogsToProcess(uint32_t numOfFiles) override
 				{
-					return AlxLogger_ForwardLogsToProcessFiles(&me, numOfFiles);
+					return AlxLogger_File_ForwardLogsToProcess(&me, numOfFiles);
 				}
 
 
