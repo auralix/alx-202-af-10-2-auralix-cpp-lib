@@ -152,8 +152,10 @@ namespace Alx
 				// Status
 				//------------------------------------------------------------------------------
 				virtual Alx_Status File_GetSize(const char* path, uint32_t* size) = 0;
+				virtual uint32_t File_GetNumOfFilesToProcess(void) = 0;
 				virtual Alx_Status File_GetPathStoredOldest(char* pathStoredOldest) = 0;
 				virtual Alx_Status File_GetPathStoredNewest(char* pathStoredNewest) = 0;
+				virtual Alx_Status File_GetPathToProcessOldest(char* pathToProcessOldest) = 0;
 
 
 				//------------------------------------------------------------------------------
@@ -351,6 +353,10 @@ namespace Alx
 				{
 					return AlxLogger_File_GetSize(&me, path, size);
 				}
+				uint32_t File_GetNumOfFilesToProcess(void) override
+				{
+					return AlxLogger_File_GetNumOfFilesToProcess(&me);
+				}
 				Alx_Status File_GetPathStoredOldest(char* pathStoredOldest) override
 				{
 					return AlxLogger_File_GetPathStoredOldest(&me, pathStoredOldest);
@@ -358,6 +364,10 @@ namespace Alx
 				Alx_Status File_GetPathStoredNewest(char* pathStoredNewest) override
 				{
 					return AlxLogger_File_GetPathStoredNewest(&me, pathStoredNewest);
+				}
+				Alx_Status File_GetPathToProcessOldest(char* pathToProcessOldest) override
+				{
+					return AlxLogger_File_GetPathToProcessOldest(&me, pathToProcessOldest);
 				}
 
 
