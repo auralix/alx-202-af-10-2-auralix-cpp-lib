@@ -119,16 +119,16 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Status
 				//------------------------------------------------------------------------------
-				virtual uint64_t GetNumOfLogsToProcess(void) = 0;
-				virtual uint64_t GetNumOfLogsStored(void) = 0;
-				virtual Alx_Status GetIdOldest(uint64_t* idOldest) = 0;
-				virtual Alx_Status GetIdNewest(uint64_t* idNewest) = 0;
+				virtual uint64_t Log_GetNumOfLogsToProcess(void) = 0;
+				virtual uint64_t Log_GetNumOfLogsStored(void) = 0;
+				virtual Alx_Status Log_GetIdOldest(uint64_t* idOldest) = 0;
+				virtual Alx_Status Log_GetIdNewest(uint64_t* idNewest) = 0;
 
 
 				//------------------------------------------------------------------------------
 				// Management
 				//------------------------------------------------------------------------------
-				virtual Alx_Status DiscardLogsToProcess(void) = 0;
+				virtual Alx_Status Log_DiscardLogsToProcess(void) = 0;
 
 
 
@@ -295,30 +295,30 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Status
 				//------------------------------------------------------------------------------
-				uint64_t GetNumOfLogsToProcess(void) override
+				uint64_t Log_GetNumOfLogsToProcess(void) override
 				{
-					return AlxLogger_GetNumOfLogsToProcess(&me);
+					return AlxLogger_Log_GetNumOfLogsToProcess(&me);
 				}
-				uint64_t GetNumOfLogsStored(void) override
+				uint64_t Log_GetNumOfLogsStored(void) override
 				{
-					return AlxLogger_GetNumOfLogsStored(&me);
+					return AlxLogger_Log_GetNumOfLogsStored(&me);
 				}
-				Alx_Status GetIdOldest(uint64_t* idOldest) override
+				Alx_Status Log_GetIdOldest(uint64_t* idOldest) override
 				{
-					return AlxLogger_GetIdOldest(&me, idOldest);
+					return AlxLogger_Log_GetIdOldest(&me, idOldest);
 				}
-				Alx_Status GetIdNewest(uint64_t* idNewest) override
+				Alx_Status Log_GetIdNewest(uint64_t* idNewest) override
 				{
-					return AlxLogger_GetIdNewest(&me, idNewest);
+					return AlxLogger_Log_GetIdNewest(&me, idNewest);
 				}
 
 
 				//------------------------------------------------------------------------------
 				// Management
 				//------------------------------------------------------------------------------
-				Alx_Status DiscardLogsToProcess(void) override
+				Alx_Status Log_DiscardLogsToProcess(void) override
 				{
-					return AlxLogger_DiscardLogsToProcess(&me);
+					return AlxLogger_Log_DiscardLogsToProcess(&me);
 				}
 
 
