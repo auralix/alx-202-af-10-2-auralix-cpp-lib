@@ -90,7 +90,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				virtual AlxLogger_Metadata Metadata_GetCurrent(void) = 0;
 				virtual AlxLogger_Metadata Metadata_GetStored(void) = 0;
-				virtual Alx_Status Metadata_Store(AlxLogger_StoreMetadata_Config config) = 0;
+				virtual Alx_Status Metadata_Store(AlxLogger_Metadata_StoreConfig config) = 0;
 
 
 				//------------------------------------------------------------------------------
@@ -251,7 +251,7 @@ namespace Alx
 				{
 					return AlxLogger_Metadata_GetStored(&me);
 				}
-				Alx_Status Metadata_Store(AlxLogger_StoreMetadata_Config config) override
+				Alx_Status Metadata_Store(AlxLogger_Metadata_StoreConfig config) override
 				{
 					return AlxLogger_Metadata_Store(&me, config);
 				}
