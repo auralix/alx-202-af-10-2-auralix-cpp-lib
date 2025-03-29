@@ -88,16 +88,16 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Metadata
 				//------------------------------------------------------------------------------
-				virtual AlxLogger_Metadata GetMetadataCurrent(void) = 0;
-				virtual AlxLogger_Metadata GetMetadataStored(void) = 0;
-				virtual Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) = 0;
+				virtual AlxLogger_Metadata Metadata_GetCurrent(void) = 0;
+				virtual AlxLogger_Metadata Metadata_GetStored(void) = 0;
+				virtual Alx_Status Metadata_Store(AlxLogger_StoreMetadata_Config config) = 0;
 
 
 				//------------------------------------------------------------------------------
 				// Debug
 				//------------------------------------------------------------------------------
-				virtual AlxMath_Data GetMath_Data_ReadTime_ms(void) = 0;
-				virtual AlxMath_Data GetMath_Data_WriteTime_ms(void) = 0;
+				virtual AlxMath_Data Debug_GetReadTime_ms(void) = 0;
+				virtual AlxMath_Data Debug_GetWriteTime_ms(void) = 0;
 
 
 
@@ -243,30 +243,30 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Metadata
 				//------------------------------------------------------------------------------
-				AlxLogger_Metadata GetMetadataCurrent(void) override
+				AlxLogger_Metadata Metadata_GetCurrent(void) override
 				{
-					return AlxLogger_GetMetadataCurrent(&me);
+					return AlxLogger_Metadata_GetCurrent(&me);
 				}
-				AlxLogger_Metadata GetMetadataStored(void) override
+				AlxLogger_Metadata Metadata_GetStored(void) override
 				{
-					return AlxLogger_GetMetadataStored(&me);
+					return AlxLogger_Metadata_GetStored(&me);
 				}
-				Alx_Status StoreMetadata(AlxLogger_StoreMetadata_Config config) override
+				Alx_Status Metadata_Store(AlxLogger_StoreMetadata_Config config) override
 				{
-					return AlxLogger_StoreMetadata(&me, config);
+					return AlxLogger_Metadata_Store(&me, config);
 				}
 
 
 				//------------------------------------------------------------------------------
 				// Debug
 				//------------------------------------------------------------------------------
-				AlxMath_Data GetMath_Data_ReadTime_ms(void) override
+				AlxMath_Data Debug_GetReadTime_ms(void) override
 				{
-					return AlxLogger_GetMath_Data_ReadTime_ms(&me);
+					return AlxLogger_Debug_GetReadTime_ms(&me);
 				}
-				AlxMath_Data GetMath_Data_WriteTime_ms(void) override
+				AlxMath_Data Debug_GetWriteTime_ms(void) override
 				{
-					return AlxLogger_GetMath_Data_WriteTime_ms(&me);
+					return AlxLogger_Debug_GetWriteTime_ms(&me);
 				}
 
 
