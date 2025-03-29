@@ -119,8 +119,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Status
 				//------------------------------------------------------------------------------
-				virtual uint64_t Log_GetNumOfLogsToProcess(void) = 0;
 				virtual uint64_t Log_GetNumOfLogsStored(void) = 0;
+				virtual uint64_t Log_GetNumOfLogsToProcess(void) = 0;
 				virtual Alx_Status Log_GetIdStoredOldest(uint64_t* idStoredOldest) = 0;
 				virtual Alx_Status Log_GetIdStoredNewest(uint64_t* idStoredNewest) = 0;
 
@@ -295,13 +295,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Status
 				//------------------------------------------------------------------------------
-				uint64_t Log_GetNumOfLogsToProcess(void) override
-				{
-					return AlxLogger_Log_GetNumOfLogsToProcess(&me);
-				}
 				uint64_t Log_GetNumOfLogsStored(void) override
 				{
 					return AlxLogger_Log_GetNumOfLogsStored(&me);
+				}
+				uint64_t Log_GetNumOfLogsToProcess(void) override
+				{
+					return AlxLogger_Log_GetNumOfLogsToProcess(&me);
 				}
 				Alx_Status Log_GetIdStoredOldest(uint64_t* idStoredOldest) override
 				{
