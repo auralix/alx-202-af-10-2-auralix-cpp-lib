@@ -147,7 +147,6 @@ namespace Alx
 				virtual Alx_Status File_ReadFirstLog(const char* path, char* log) = 0;
 
 
-
 				//------------------------------------------------------------------------------
 				// Status
 				//------------------------------------------------------------------------------
@@ -161,8 +160,8 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Management
 				//------------------------------------------------------------------------------
-				virtual Alx_Status File_RewindLogsToProcess(uint32_t numOfFiles) = 0;
-				virtual Alx_Status File_ForwardLogsToProcess(uint32_t numOfFiles) = 0;
+				virtual Alx_Status File_RewindFilesToProcess(uint32_t numOfFiles) = 0;
+				virtual Alx_Status File_ForwardFilesToProcess(uint32_t numOfFiles) = 0;
 		};
 
 
@@ -374,13 +373,13 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Management
 				//------------------------------------------------------------------------------
-				Alx_Status File_RewindLogsToProcess(uint32_t numOfFiles) override
+				Alx_Status File_RewindFilesToProcess(uint32_t numOfFiles) override
 				{
-					return AlxLogger_File_RewindLogsToProcess(&me, numOfFiles);
+					return AlxLogger_File_RewindFilesToProcess(&me, numOfFiles);
 				}
-				Alx_Status File_ForwardLogsToProcess(uint32_t numOfFiles) override
+				Alx_Status File_ForwardFilesToProcess(uint32_t numOfFiles) override
 				{
-					return AlxLogger_File_ForwardLogsToProcess(&me, numOfFiles);
+					return AlxLogger_File_ForwardFilesToProcess(&me, numOfFiles);
 				}
 
 
