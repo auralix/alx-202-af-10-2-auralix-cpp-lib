@@ -73,7 +73,7 @@ namespace Alx
 				virtual void Client_SetClientPassword(const char* clientPassword) = 0;
 				virtual Alx_Status Client_Login(void) = 0;
 				virtual Alx_Status Client_Logout(void) = 0;
-				virtual Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize, AlxOsMutex::IAlxOsMutex* alxOsMutex_UploadFileInChunks) = 0;
+				virtual Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize, Alx::AlxOsMutex::IAlxOsMutex* alxOsMutex_UploadFileInChunks) = 0;
 				virtual ::AlxFtp* GetCStructPtr(void) = 0;
 		};
 
@@ -129,7 +129,7 @@ namespace Alx
 				{
 					return AlxFtp_Client_Logout(&me);
 				}
-				Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize, AlxOsMutex::IAlxOsMutex* alxOsMutex_UploadFileInChunks) override
+				Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize, Alx::AlxOsMutex::IAlxOsMutex* alxOsMutex_UploadFileInChunks) override
 				{
 					::AlxOsMutex* _alxOsMutex_UploadFileInChunks = NULL;
 					if (alxOsMutex_UploadFileInChunks != nullptr) _alxOsMutex_UploadFileInChunks = alxOsMutex_UploadFileInChunks->GetCStructPtr();

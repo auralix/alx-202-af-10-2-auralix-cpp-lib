@@ -39,6 +39,7 @@
 #include "alxLogger.h"
 #include "alxIoPin.hpp"
 #include "alxFs.hpp"
+#include "alxOsMutex.hpp"
 
 
 //******************************************************************************
@@ -143,7 +144,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Read/Write
 				//------------------------------------------------------------------------------
-				virtual Alx_Status File_Read(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* chunkData, uint32_t chunkLenActual)) = 0;
+				virtual Alx_Status File_Read(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* ctx, void* chunkData, uint32_t chunkLenActual), void* chunkRead_Callback_Ctx, uint32_t* readLen, Alx::AlxOsMutex::IAlxOsMutex* alxOsMutex) = 0;
 				virtual Alx_Status File_ReadFirstLog(const char* path, char* log) = 0;
 
 
@@ -335,9 +336,11 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Read/Write
 				//------------------------------------------------------------------------------
-				Alx_Status File_Read(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* chunkData, uint32_t chunkLenActual)) override
+				Alx_Status File_Read(const char* path, uint8_t* chunkBuff, uint32_t chunkLen, Alx_Status(*chunkRead_Callback)(void* ctx, void* chunkData, uint32_t chunkLenActual), void* chunkRead_Callback_Ctx, uint32_t* readLen, Alx::AlxOsMutex::IAlxOsMutex* alxOsMutex) override
 				{
-					return AlxLogger_File_Read(&me, path, chunkBuff, chunkLen, chunkRead_Callback);
+					::AlxOsMutex* _alxOsMutex = NULL;
+					if (alxOsMutex != nullptr) _alxOsMutex = alxOsMutex->GetCStructPtr();
+					return AlxLogger_File_Read(&me, path, chunkBuff, chunkLen, chunkRead_Callback, chunkRead_Callback_Ctx, readLen, _alxOsMutex);
 				}
 				Alx_Status File_ReadFirstLog(const char* path, char* log) override
 				{
