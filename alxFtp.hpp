@@ -71,6 +71,7 @@ namespace Alx
 				virtual void Client_SetServerPort(uint16_t serverPort) = 0;
 				virtual void Client_SetClientUsername(const char* clientUsername) = 0;
 				virtual void Client_SetClientPassword(const char* clientPassword) = 0;
+				virtual void Client_SetExtraFileHeader(const char* extraFileHeader) = 0;
 				virtual Alx_Status Client_Login(void) = 0;
 				virtual Alx_Status Client_Logout(void) = 0;
 				virtual Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize, Alx::AlxOsMutex::IAlxOsMutex* alxOsMutex_UploadFileInChunks) = 0;
@@ -120,6 +121,10 @@ namespace Alx
 				void Client_SetClientPassword(const char* clientPassword) override
 				{
 					AlxFtp_Client_SetClientPassword(&me, clientPassword);
+				}
+				void Client_SetExtraFileHeader(const char* extraFileHeader) override
+				{
+					AlxFtp_Client_SetExtraFileHeader(&me, extraFileHeader);
 				}
 				Alx_Status Client_Login(void) override
 				{
