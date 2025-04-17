@@ -74,8 +74,8 @@ namespace Alx
 				virtual void Client_SetExtraFileHeader(const char* extraFileHeader) = 0;
 				virtual Alx_Status Client_Login(void) = 0;
 				virtual Alx_Status Client_Logout(void) = 0;
-				virtual Alx_Status Client_ChangeDir(const char* path, bool* exists) = 0;
 				virtual Alx_Status Client_MakeDir(const char* path) = 0;
+				virtual Alx_Status Client_ChangeDir(const char* path, bool* exists) = 0;
 				virtual Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize, Alx::AlxOsMutex::IAlxOsMutex* alxOsMutex_UploadFileInChunks) = 0;
 				virtual ::AlxFtp* GetCStructPtr(void) = 0;
 		};
@@ -136,13 +136,13 @@ namespace Alx
 				{
 					return AlxFtp_Client_Logout(&me);
 				}
-				Alx_Status Client_ChangeDir(const char* path, bool* exists) override
-				{
-					return AlxFtp_Client_ChangeDir(&me, path, exists);
-				}
 				Alx_Status Client_MakeDir(const char* path) override
 				{
 					return AlxFtp_Client_MakeDir(&me, path);
+				}
+				Alx_Status Client_ChangeDir(const char* path, bool* exists) override
+				{
+					return AlxFtp_Client_ChangeDir(&me, path, exists);
 				}
 				Alx_Status Client_UploadFile(const char* localFilePath, const char* remoteFilePath, uint32_t* fileSize, Alx::AlxOsMutex::IAlxOsMutex* alxOsMutex_UploadFileInChunks) override
 				{
