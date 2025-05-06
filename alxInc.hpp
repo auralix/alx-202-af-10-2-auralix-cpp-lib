@@ -81,6 +81,7 @@
 #include "alxFiltGlitchBool.hpp"
 #include "alxFiltGlitchUint32.hpp"
 #include "alxFs.hpp"
+#include "alxFsSafe.hpp"
 #include "alxFtp.hpp"
 #include "alxGlobal.hpp"
 #include "alxHys1.hpp"
