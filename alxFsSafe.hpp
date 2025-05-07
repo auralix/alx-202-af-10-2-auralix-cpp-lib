@@ -64,7 +64,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IFsSafe() {}
 				virtual ~IFsSafe() {}
-				virtual Alx_Status File_Read(const char* path, void* data, uint32_t len, uint32_t* lenActual) = 0;
+				virtual Alx_Status File_Read(const char* path, void* data, uint32_t len) = 0;
 				virtual Alx_Status File_Write(const char* path, void* data, uint32_t len) = 0;
 				virtual ::AlxFsSafe* GetCStructPtr(void) = 0;
 		};
@@ -73,6 +73,7 @@ namespace Alx
 		//******************************************************************************
 		// Class - FsSafe
 		//******************************************************************************
+		template <uint32_t buffLen>
 		class FsSafe : public IFsSafe
 		{
 			public:
@@ -87,13 +88,16 @@ namespace Alx
 					AlxFsSafe_Ctor
 					(
 						&me,
-						alxFs->GetCStructPtr()
+						alxFs->GetCStructPtr(),
+						buffA,
+						buffB,
+						buffLen
 					);
 				}
 				virtual ~FsSafe() {}
-				Alx_Status File_Read(const char* path, void* data, uint32_t len, uint32_t* lenActual) override
+				Alx_Status File_Read(const char* path, void* data, uint32_t len) override
 				{
-					return AlxFsSafe_File_Read(&me, path, data, len, lenActual);
+					return AlxFsSafe_File_Read(&me, path, data, len);
 				}
 				Alx_Status File_Write(const char* path, void* data, uint32_t len) override
 				{
@@ -109,6 +113,8 @@ namespace Alx
 				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxFsSafe me = {};
+				uint8_t buffA[buffLen] ={};
+				uint8_t buffB[buffLen] ={};
 		};
 	}
 }
