@@ -83,12 +83,12 @@ namespace Alx
 				virtual Alx_Status File_Rewind(AlxFs_File* file) = 0;
 				virtual Alx_Status File_Size(AlxFs_File* file, uint32_t* size) = 0;
 				virtual Alx_Status File_Truncate(AlxFs_File* file, uint32_t size) = 0;
-				virtual Alx_Status File_Trace(const char* path) = 0;
+				virtual Alx_Status File_Trace(const char* path, bool bin) = 0;
 				virtual Alx_Status Dir_Make(const char* path) = 0;
 				virtual Alx_Status Dir_Open(AlxFs_Dir* dir, const char* path) = 0;
 				virtual Alx_Status Dir_Close(AlxFs_Dir* dir) = 0;
 				virtual Alx_Status Dir_Read(AlxFs_Dir* dir, AlxFs_Info* info) = 0;
-				virtual Alx_Status Dir_Trace(const char* path, bool fileTrace) = 0;
+				virtual Alx_Status Dir_Trace(const char* path, bool fileTrace, bool fileBin) = 0;
 				virtual ::AlxFs* GetCStructPtr(void) = 0;
 		};
 
@@ -208,9 +208,9 @@ namespace Alx
 				{
 					return AlxFs_File_Truncate(&me, file, size);
 				}
-				Alx_Status File_Trace(const char* path) override
+				Alx_Status File_Trace(const char* path, bool bin) override
 				{
-					return AlxFs_File_Trace(&me, path);
+					return AlxFs_File_Trace(&me, path, bin);
 				}
 				Alx_Status Dir_Make(const char* path) override
 				{
@@ -228,9 +228,9 @@ namespace Alx
 				{
 					return AlxFs_Dir_Read(&me, dir, info);
 				}
-				Alx_Status Dir_Trace(const char* path, bool fileTrace) override
+				Alx_Status Dir_Trace(const char* path, bool fileTrace, bool fileBin) override
 				{
-					return AlxFs_Dir_Trace(&me, path, fileTrace);
+					return AlxFs_Dir_Trace(&me, path, fileTrace, fileBin);
 				}
 				::AlxFs* GetCStructPtr(void) override
 				{
