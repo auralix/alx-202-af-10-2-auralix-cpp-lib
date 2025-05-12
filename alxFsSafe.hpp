@@ -82,13 +82,16 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				FsSafe
 				(
-					AlxFs::IFs* alxFs
+					AlxFs::IFs* alxFs,
+					bool useOrig
 				)
 				{
 					AlxFsSafe_Ctor
 					(
 						&me,
 						alxFs->GetCStructPtr(),
+						useOrig,
+						buffOrig,
 						buffA,
 						buffB,
 						buffLen
@@ -113,6 +116,7 @@ namespace Alx
 				// Private Variables
 				//------------------------------------------------------------------------------
 				::AlxFsSafe me = {};
+				uint8_t buffOrig[buffLen] ={};
 				uint8_t buffA[buffLen] ={};
 				uint8_t buffB[buffLen] ={};
 		};
