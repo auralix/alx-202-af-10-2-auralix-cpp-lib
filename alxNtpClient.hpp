@@ -406,7 +406,7 @@ namespace Alx
 				Alx::AlxNet::Net* net =  nullptr;
 
 				// Objects - Internal
-				char sockAddrServer_IP[16];
+				char sockAddrServer_IP[64] = "CAFEBABECAFEBABECAFEBABECAFEBABECAFEBABECAFEBABECAFEBABECAFEBAB";
 				uint16_t sockAddrServer_Port;
 
 				Alx::AlxSocket::Socket sock;
