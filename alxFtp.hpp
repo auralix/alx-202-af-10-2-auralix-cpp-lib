@@ -66,6 +66,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				IFtp() {}
 				virtual ~IFtp() {}
+				virtual void Client_SetNet(AlxNet::INet* alxNet) = 0;
 				virtual void Client_SetServerAddr(const char* serverAddr) = 0;
 				virtual void Client_SetServerAddrIsHostname(bool serverAddrIsHostname) = 0;
 				virtual void Client_SetServerPort(uint16_t serverPort) = 0;
@@ -92,18 +93,20 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				Ftp
 				(
-					AlxNet::INet* alxNet,
 					AlxFs::IFs* alxFs
 				)
 				{
 					AlxFtp_Ctor
 					(
 						&me,
-						alxNet->GetCStructPtr(),
 						alxFs->GetCStructPtr()
 					);
 				}
 				virtual ~Ftp() {}
+				void Client_SetNet(AlxNet::INet* alxNet) override
+				{
+					AlxFtp_Client_SetNet(&me, alxNet->GetCStructPtr());
+				}
 				void Client_SetServerAddr(const char* serverAddr) override
 				{
 					AlxFtp_Client_SetServerAddr(&me, serverAddr);
