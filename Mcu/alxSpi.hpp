@@ -168,6 +168,24 @@ namespace Alx
 					);
 				}
 				virtual ~Spi() {}
+			
+				Alx_Status Reconfigure
+				(
+					AlxSpi_Mode mode,
+					AlxSpi_DataSize dataSize,
+					AlxSpi_Clk spiClk,
+					bool isWriteReadLowLevel
+				)
+				{
+					return AlxSpi_Reconfigure
+						(
+							&me,
+							mode,
+							dataSize,
+							spiClk,
+							isWriteReadLowLevel
+						);
+				}
 		};
 		#endif
 

@@ -36,6 +36,7 @@
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
+#include "alxAccelerometer.hpp"
 #include "alxAdxl355.h"
 #include "alxIoPin.hpp"
 #include "alxSpi.hpp"
@@ -56,33 +57,9 @@ namespace Alx
 	namespace AlxAdxl355
 	{
 		//******************************************************************************
-		// Class - IAdxl355
-		//******************************************************************************
-		class IAdxl355
-		{
-			public:
-				//------------------------------------------------------------------------------
-				// Public Functions
-				//------------------------------------------------------------------------------
-				IAdxl355() {}
-				virtual ~IAdxl355() {}
-				virtual Alx_Status Init(void) = 0;
-				virtual Alx_Status DeInit(void) = 0;
-				virtual Alx_Status Enable(void) = 0;
-				virtual Alx_Status Disable(void) = 0;
-				virtual Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) = 0;
-				virtual Alx_Status GetFifoXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint8_t len) = 0;
-				virtual Alx_Status GetTemp_degC(float* temp_degC) = 0;
-				virtual Alx_Status GetStatusReg(AlxAdxl355_RegVal_0x04_Status* statusReg) = 0;
-				virtual uint8_t GetFifoLen(void) = 0;
-				virtual ::AlxAdxl355* GetCStructPtr(void) = 0;
-		};
-
-
-		//******************************************************************************
 		// Class - Adxl355
 		//******************************************************************************
-		class Adxl355 : public IAdxl355
+		class Adxl355 : public AlxAccelerometer::IAccelerometer
 		{
 			public:
 				//------------------------------------------------------------------------------
@@ -120,27 +97,15 @@ namespace Alx
 				{
 					return AlxAdxl355_Disable(&me);
 				}
-				Alx_Status GetXyz_g(AlxAdxl355_Xyz_g* xyz_g) override
+				Alx_Status GetData(AccDataPoint* data, uint8_t len) override
 				{
-					return AlxAdxl355_GetXyz_g(&me, xyz_g);
-				}
-				Alx_Status GetFifoXyz_g(AlxAdxl355_Xyz_g* xyz_g, uint8_t len) override
-				{
-					return AlxAdxl355_GetFifoXyz_g(&me, xyz_g, len);
-				}
-				Alx_Status GetTemp_degC(float* temp_degC) override
-				{
-					return AlxAdxl355_GetTemp_degC(&me, temp_degC);
-				}
-				Alx_Status GetStatusReg(AlxAdxl355_RegVal_0x04_Status* statusReg) override
-				{
-					return AlxAdxl355_GetStatusReg(&me, statusReg);
+					return AlxAdxl355_GetData(&me, data, len);
 				}
 				uint8_t GetFifoLen(void) override
 				{
 					return AlxAdxl355_GetFifoLen(&me);
 				}
-				::AlxAdxl355* GetCStructPtr(void) override
+				void* GetCStructPtr(void) override
 				{
 					return &me;
 				}

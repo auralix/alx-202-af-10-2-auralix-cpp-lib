@@ -1,7 +1,7 @@
-﻿/**
+/**
   ******************************************************************************
-  * @file		alxA352.hpp
-  * @brief		Auralix C++ Library - ALX Accelerometer Epson A352 Module
+  * @file		alxAccelerometer.hpp
+  * @brief		Auralix C++ Library - ALX Accelerometer Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,18 +28,15 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_A352_HPP
-#define ALX_A352_HPP
+#ifndef ALX_ACCELEROMETER_HPP
+#define ALX_ACCELEROMETER_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxAccelerometer.hpp"
-#include "alxA352.h"
-#include "alxIoPin.hpp"
-#include "alxSpi.hpp"
+#include "alxAccelerometer.h"
 
 
 //******************************************************************************
@@ -53,67 +50,61 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxA352
-	{
+	namespace AlxAccelerometer
+	{	
 		//******************************************************************************
-		// Class - A352
+		// Class - IAudioPlayer
 		//******************************************************************************
-		class A352 : public AlxAccelerometer::IAccelerometer
+		class IAccelerometer
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				A352
-				(
-					Alx::AlxSpi::Spi* spi,
-					uint8_t spiNumOfTries,
-					uint16_t spiTimeout_ms
-				)
-				{
-					AlxA352_Ctor
-					(
-						&me,
-						spi->GetCStructPtr(),
-						spiNumOfTries,
-						spiTimeout_ms
-					);
-				}
-				virtual ~A352() {}
-				Alx_Status Init(void) override
-				{
-					return AlxA352_Init(&me);
-				}
-				Alx_Status DeInit(void) override
-				{
-					return AlxA352_DeInit(&me);
-				}
-				Alx_Status Enable(void) override
-				{
-					return AlxA352_Enable(&me);
-				}
-				Alx_Status Disable(void) override
-				{
-					return AlxA352_Disable(&me);
-				}
-				Alx_Status GetData(AccDataPoint* data, uint8_t len) override
-				{
-					return AlxA352_GetData(&me, data, len);
-				}
-				uint8_t GetFifoLen(void) override
-				{
-					return AlxA352_GetFifoLen(&me);
-				}
-				void* GetCStructPtr(void) override
-				{
-					return &me;
-				}
-
-			private:
-				//------------------------------------------------------------------------------
-				// Private Variables
-				//------------------------------------------------------------------------------
-				::AlxA352 me = {};
+				IAccelerometer() {}
+				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Enable(void) = 0;
+				virtual Alx_Status Disable(void) = 0;
+				virtual Alx_Status GetData(AccDataPoint* data, uint8_t len) = 0;
+				virtual uint8_t GetFifoLen(void) = 0;
+				virtual void* GetCStructPtr(void) = 0;
+				virtual ~IAccelerometer() {}
+		};
+		
+		class AccDummy: public IAccelerometer
+		{
+		public:
+			AccDummy() {}
+			virtual ~AccDummy() {}
+			Alx_Status Init(void) override
+			{
+				return Alx_Err;
+			}
+			Alx_Status DeInit(void) override
+			{
+				return Alx_Err;
+			}
+			Alx_Status Enable(void) override
+			{
+				return Alx_Err;
+			}
+			Alx_Status Disable(void) override
+			{
+				return Alx_Err;
+			}
+			Alx_Status GetData(AccDataPoint* data, uint8_t len) override
+			{
+				return Alx_Err;
+			}
+			uint8_t GetFifoLen(void) override
+			{
+				return 0;
+			}
+			void* GetCStructPtr(void) override
+			{
+				return nullptr;
+			}
 		};
 	}
 }
@@ -121,4 +112,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_ADXL355_HPP
+#endif	// #ifndef ALX_ACCELEROMETER_HPP
