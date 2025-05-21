@@ -146,6 +146,7 @@ namespace Alx
 					AlxIoPin::IIoPin* di_MISO,
 					AlxIoPin::IIoPin* do_nCS,
 					AlxSpi_Mode mode,
+					AlxSpi_DataSize dataSize,
 					AlxClk::IClk* clk,
 					AlxSpi_Clk spiClk,
 					bool isWriteReadLowLevel
@@ -160,6 +161,7 @@ namespace Alx
 						di_MISO->GetCStructPtr(),
 						do_nCS->GetCStructPtr(),
 						mode,
+						dataSize,
 						clk->GetCStructPtr(),
 						spiClk,
 						isWriteReadLowLevel
