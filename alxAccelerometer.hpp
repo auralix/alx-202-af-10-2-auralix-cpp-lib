@@ -62,7 +62,7 @@ namespace Alx
 				// Public Functions
 				//------------------------------------------------------------------------------
 				IAccelerometer() {}
-				virtual Alx_Status Init(void) = 0;
+				virtual Alx_Status Init(float sampleRate) = 0;
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status Enable(void) = 0;
 				virtual Alx_Status Disable(void) = 0;
@@ -77,25 +77,26 @@ namespace Alx
 		public:
 			AccDummy() {}
 			virtual ~AccDummy() {}
-			Alx_Status Init(void) override
+			Alx_Status Init(float sampleRate) override
 			{
-				return Alx_Err;
+				return Alx_Ok;
 			}
 			Alx_Status DeInit(void) override
 			{
-				return Alx_Err;
+				return Alx_Ok;
 			}
 			Alx_Status Enable(void) override
 			{
-				return Alx_Err;
+				return Alx_Ok;
 			}
 			Alx_Status Disable(void) override
 			{
-				return Alx_Err;
+				return Alx_Ok;
 			}
 			Alx_Status GetData(AccDataPoint* data, uint8_t len) override
 			{
-				return Alx_Err;
+				memset(data, 0, sizeof(AccDataPoint) * len);
+				return Alx_Ok;
 			}
 			uint8_t GetFifoLen(void) override
 			{
