@@ -227,18 +227,14 @@ namespace Alx
 					Alx_Status alxError = Alx_Err;
 					int32_t sockSizeOrError = -1;
 
-	//				nsapi_connection_status_t nsapiConnectionStatus = NSAPI_STATUS_ERROR_UNSUPPORTED;
-	//
-	//				// #4 Check if network is UP
-	//				nsapiConnectionStatus = net->get_connection_status();
-	//				if (
-	//					(nsapiConnectionStatus != NSAPI_STATUS_LOCAL_UP) &&
-	//					(nsapiConnectionStatus != NSAPI_STATUS_GLOBAL_UP))
-	//				{
-	//					ALX_NTP_CLIENT_TRACE("Err: %d", (int32_t)nsapiConnectionStatus);
-	//					Reset();
-	//					return Alx_Err;
-	//				}
+					// #4 Check if network is UP
+					bool isNetConnected = net->IsConnected();
+					if (isNetConnected != true)
+					{
+						ALX_NTP_CLIENT_TRACE("FAIL: AlxNet_IsConnected()");
+						Reset();
+						return Alx_Err;
+					}
 
 					// #5.1 Resolve server IP address if it is in hostname format
 					if (*isServerIpHostnameFormat)
@@ -255,13 +251,6 @@ namespace Alx
 					else
 					{
 						strcpy(sockAddrServer_IP, serverIp);
-	//					bool status = sockAddrServer.set_ip_address(serverIp);
-	//					if (status == false)
-	//					{
-	//						ALX_NTP_CLIENT_TRACE("Err: Invalid IP");
-	//						Reset();
-	//						return Alx_Err;
-	//					}
 					}
 
 					// #6 Set server port
