@@ -74,6 +74,7 @@
 //------------------------------------------------------------------------------
 // ALX
 //------------------------------------------------------------------------------
+#include "alxAccelerometer.hpp"
 #include "alxAudioPlayer.hpp"
 #include "alxAudioVol.hpp"
 #include "alxAvg.hpp"
