@@ -1,7 +1,7 @@
-﻿/**
+/**
   ******************************************************************************
-  * @file		alxAdxl355.hpp
-  * @brief		Auralix C++ Library - ALX Accelerometer ADXL355 Module
+  * @file		alxAccelerometer.hpp
+  * @brief		Auralix C++ Library - ALX Accelerometer Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,19 +28,15 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_ADXL355_HPP
-#define ALX_ADXL355_HPP
+#ifndef ALX_ACCELEROMETER_HPP
+#define ALX_ACCELEROMETER_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxAccelerometer.hpp"
-#include "alxAdxl355.h"
-#include "alxIoPin.hpp"
-#include "alxSpi.hpp"
-#include "alxFifo.hpp"
+#include "alxAccelerometer.h"
 
 
 //******************************************************************************
@@ -54,67 +50,62 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxAdxl355
-	{
+	namespace AlxAccelerometer
+	{	
 		//******************************************************************************
-		// Class - Adxl355
+		// Class - IAudioPlayer
 		//******************************************************************************
-		class Adxl355 : public AlxAccelerometer::IAccelerometer
+		class IAccelerometer
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Adxl355
-				(
-					Alx::AlxSpi::Spi* spi,
-					uint8_t spiNumOfTries,
-					uint16_t spiTimeout_ms
-				)
-				{
-					AlxAdxl355_Ctor
-					(
-						&me,
-						spi->GetCStructPtr(),
-						spiNumOfTries,
-						spiTimeout_ms
-					);
-				}
-				virtual ~Adxl355() {}
-				Alx_Status Init(float sampleRate) override
-				{
-					return AlxAdxl355_Init(&me, sampleRate);
-				}
-				Alx_Status DeInit(void) override
-				{
-					return AlxAdxl355_DeInit(&me);
-				}
-				Alx_Status Enable(void) override
-				{
-					return AlxAdxl355_Enable(&me);
-				}
-				Alx_Status Disable(void) override
-				{
-					return AlxAdxl355_Disable(&me);
-				}
-				Alx_Status GetData(AccDataPoint* data, uint8_t len) override
-				{
-					return AlxAdxl355_GetData(&me, data, len);
-				}
-				uint8_t GetFifoLen(void) override
-				{
-					return AlxAdxl355_GetFifoLen(&me);
-				}
-				void* GetCStructPtr(void) override
-				{
-					return &me;
-				}
-
-			private:
-				//------------------------------------------------------------------------------
-				// Private Variables
-				//------------------------------------------------------------------------------
-				::AlxAdxl355 me = {};
+				IAccelerometer() {}
+				virtual Alx_Status Init(float sampleRate) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status Enable(void) = 0;
+				virtual Alx_Status Disable(void) = 0;
+				virtual Alx_Status GetData(AccDataPoint* data, uint8_t len) = 0;
+				virtual uint8_t GetFifoLen(void) = 0;
+				virtual void* GetCStructPtr(void) = 0;
+				virtual ~IAccelerometer() {}
+		};
+		
+		class AccDummy: public IAccelerometer
+		{
+		public:
+			AccDummy() {}
+			virtual ~AccDummy() {}
+			Alx_Status Init(float sampleRate) override
+			{
+				return Alx_Ok;
+			}
+			Alx_Status DeInit(void) override
+			{
+				return Alx_Ok;
+			}
+			Alx_Status Enable(void) override
+			{
+				return Alx_Ok;
+			}
+			Alx_Status Disable(void) override
+			{
+				return Alx_Ok;
+			}
+			Alx_Status GetData(AccDataPoint* data, uint8_t len) override
+			{
+				memset(data, 0, sizeof(AccDataPoint) * len);
+				return Alx_Ok;
+			}
+			uint8_t GetFifoLen(void) override
+			{
+				return 0;
+			}
+			void* GetCStructPtr(void) override
+			{
+				return nullptr;
+			}
 		};
 	}
 }
@@ -122,4 +113,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_ADXL355_HPP
+#endif	// #ifndef ALX_ACCELEROMETER_HPP
