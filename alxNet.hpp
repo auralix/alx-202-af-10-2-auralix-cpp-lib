@@ -69,6 +69,7 @@ namespace Alx
 				virtual Alx_Status Connect(void) = 0;
 				virtual Alx_Status Disconnect(void) = 0;
 				virtual Alx_Status Restart(void) = 0;
+				virtual void Handle(void) = 0;
 				virtual bool IsConnected(void) = 0;
 				virtual void SetMac(const char* mac) = 0;
 				virtual void SetIp(const char* ip) = 0;
@@ -134,6 +135,10 @@ namespace Alx
 				Alx_Status Restart(void) override
 				{
 					return (AlxNet_Restart(&me));
+				}
+				void Handle(void) override
+				{
+					AlxNet_Handle(&me);
 				}
 				bool IsConnected(void) override
 				{
