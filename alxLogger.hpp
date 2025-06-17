@@ -39,6 +39,7 @@
 #include "alxLogger.h"
 #include "alxIoPin.hpp"
 #include "alxFs.hpp"
+#include "alxFsSafe.hpp"
 #include "alxOsMutex.hpp"
 
 
@@ -180,6 +181,7 @@ namespace Alx
 				Logger
 				(
 					AlxFs::IFs* alxFs,
+					AlxFsSafe::IFsSafe* alxFsSafe,
 					uint32_t numOfDir,
 					uint32_t numOfFilesPerDir,
 					uint32_t numOfLogsPerFile,
@@ -203,6 +205,7 @@ namespace Alx
 					(
 						&me,
 						alxFs->GetCStructPtr(),
+						alxFsSafe->GetCStructPtr(),
 						numOfDir,
 						numOfFilesPerDir,
 						numOfLogsPerFile,

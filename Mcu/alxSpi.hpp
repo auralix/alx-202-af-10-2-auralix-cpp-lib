@@ -146,6 +146,7 @@ namespace Alx
 					AlxIoPin::IIoPin* di_MISO,
 					AlxIoPin::IIoPin* do_nCS,
 					AlxSpi_Mode mode,
+					AlxSpi_DataSize dataSize,
 					AlxClk::IClk* clk,
 					AlxSpi_Clk spiClk,
 					bool isWriteReadLowLevel
@@ -160,12 +161,31 @@ namespace Alx
 						di_MISO->GetCStructPtr(),
 						do_nCS->GetCStructPtr(),
 						mode,
+						dataSize,
 						clk->GetCStructPtr(),
 						spiClk,
 						isWriteReadLowLevel
 					);
 				}
 				virtual ~Spi() {}
+			
+				Alx_Status Reconfigure
+				(
+					AlxSpi_Mode mode,
+					AlxSpi_DataSize dataSize,
+					AlxSpi_Clk spiClk,
+					bool isWriteReadLowLevel
+				)
+				{
+					return AlxSpi_Reconfigure
+						(
+							&me,
+							mode,
+							dataSize,
+							spiClk,
+							isWriteReadLowLevel
+						);
+				}
 		};
 		#endif
 

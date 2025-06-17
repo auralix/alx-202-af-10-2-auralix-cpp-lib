@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxAdxl355.hpp
-  * @brief		Auralix C++ Library - ALX Accelerometer ADXL355 Module
+  * @file		alxFsSafe.hpp
+  * @brief		Auralix C++ Library - ALX File System Safe Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,19 +28,16 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_ADXL355_HPP
-#define ALX_ADXL355_HPP
+#ifndef ALX_FS_SAFE_HPP
+#define ALX_FS_SAFE_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxAccelerometer.hpp"
-#include "alxAdxl355.h"
-#include "alxIoPin.hpp"
-#include "alxSpi.hpp"
-#include "alxFifo.hpp"
+#include "alxFsSafe.h"
+#include "alxFs.hpp"
 
 
 //******************************************************************************
@@ -54,58 +51,62 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxAdxl355
+	namespace AlxFsSafe
 	{
 		//******************************************************************************
-		// Class - Adxl355
+		// Class - IFsSafe
 		//******************************************************************************
-		class Adxl355 : public AlxAccelerometer::IAccelerometer
+		class IFsSafe
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Adxl355
+				IFsSafe() {}
+				virtual ~IFsSafe() {}
+				virtual Alx_Status File_Read(const char* path, void* data, uint32_t len) = 0;
+				virtual Alx_Status File_Write(const char* path, void* data, uint32_t len) = 0;
+				virtual ::AlxFsSafe* GetCStructPtr(void) = 0;
+		};
+
+
+		//******************************************************************************
+		// Class - FsSafe
+		//******************************************************************************
+		template <uint32_t buffLen>
+		class FsSafe : public IFsSafe
+		{
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				FsSafe
 				(
-					Alx::AlxSpi::Spi* spi,
-					uint8_t spiNumOfTries,
-					uint16_t spiTimeout_ms
+					AlxFs::IFs* alxFs,
+					bool useOrig
 				)
 				{
-					AlxAdxl355_Ctor
+					AlxFsSafe_Ctor
 					(
 						&me,
-						spi->GetCStructPtr(),
-						spiNumOfTries,
-						spiTimeout_ms
+						alxFs->GetCStructPtr(),
+						useOrig,
+						buffOrig,
+						buffA,
+						buffB,
+						buffLen
 					);
 				}
-				virtual ~Adxl355() {}
-				Alx_Status Init(float sampleRate) override
+				virtual ~FsSafe() {}
+				Alx_Status File_Read(const char* path, void* data, uint32_t len) override
 				{
-					return AlxAdxl355_Init(&me, sampleRate);
+					return AlxFsSafe_File_Read(&me, path, data, len);
 				}
-				Alx_Status DeInit(void) override
+				Alx_Status File_Write(const char* path, void* data, uint32_t len) override
 				{
-					return AlxAdxl355_DeInit(&me);
+					return AlxFsSafe_File_Write(&me, path, data, len);
 				}
-				Alx_Status Enable(void) override
-				{
-					return AlxAdxl355_Enable(&me);
-				}
-				Alx_Status Disable(void) override
-				{
-					return AlxAdxl355_Disable(&me);
-				}
-				Alx_Status GetData(AccDataPoint* data, uint8_t len) override
-				{
-					return AlxAdxl355_GetData(&me, data, len);
-				}
-				uint8_t GetFifoLen(void) override
-				{
-					return AlxAdxl355_GetFifoLen(&me);
-				}
-				void* GetCStructPtr(void) override
+				::AlxFsSafe* GetCStructPtr(void) override
 				{
 					return &me;
 				}
@@ -114,7 +115,10 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxAdxl355 me = {};
+				::AlxFsSafe me = {};
+				uint8_t buffOrig[buffLen] ={};
+				uint8_t buffA[buffLen] ={};
+				uint8_t buffB[buffLen] ={};
 		};
 	}
 }
@@ -122,4 +126,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_ADXL355_HPP
+#endif	// #ifndef ALX_FS_SAFE_HPP

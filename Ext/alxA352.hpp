@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxAdxl355.hpp
-  * @brief		Auralix C++ Library - ALX Accelerometer ADXL355 Module
+  * @file		alxA352.hpp
+  * @brief		Auralix C++ Library - ALX Accelerometer Epson A352 Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,8 +28,8 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_ADXL355_HPP
-#define ALX_ADXL355_HPP
+#ifndef ALX_A352_HPP
+#define ALX_A352_HPP
 
 
 //******************************************************************************
@@ -37,10 +37,9 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxAccelerometer.hpp"
-#include "alxAdxl355.h"
+#include "alxA352.h"
 #include "alxIoPin.hpp"
 #include "alxSpi.hpp"
-#include "alxFifo.hpp"
 
 
 //******************************************************************************
@@ -54,25 +53,25 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxAdxl355
+	namespace AlxA352
 	{
 		//******************************************************************************
-		// Class - Adxl355
+		// Class - A352
 		//******************************************************************************
-		class Adxl355 : public AlxAccelerometer::IAccelerometer
+		class A352 : public AlxAccelerometer::IAccelerometer
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Adxl355
+				A352
 				(
 					Alx::AlxSpi::Spi* spi,
 					uint8_t spiNumOfTries,
 					uint16_t spiTimeout_ms
 				)
 				{
-					AlxAdxl355_Ctor
+					AlxA352_Ctor
 					(
 						&me,
 						spi->GetCStructPtr(),
@@ -80,30 +79,30 @@ namespace Alx
 						spiTimeout_ms
 					);
 				}
-				virtual ~Adxl355() {}
+				virtual ~A352() {}
 				Alx_Status Init(float sampleRate) override
 				{
-					return AlxAdxl355_Init(&me, sampleRate);
+					return AlxA352_Init(&me, sampleRate);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxAdxl355_DeInit(&me);
+					return AlxA352_DeInit(&me);
 				}
 				Alx_Status Enable(void) override
 				{
-					return AlxAdxl355_Enable(&me);
+					return AlxA352_Enable(&me);
 				}
 				Alx_Status Disable(void) override
 				{
-					return AlxAdxl355_Disable(&me);
+					return AlxA352_Disable(&me);
 				}
 				Alx_Status GetData(AccDataPoint* data, uint8_t len) override
 				{
-					return AlxAdxl355_GetData(&me, data, len);
+					return AlxA352_GetData(&me, data, len);
 				}
 				uint8_t GetFifoLen(void) override
 				{
-					return AlxAdxl355_GetFifoLen(&me);
+					return AlxA352_GetFifoLen(&me);
 				}
 				void* GetCStructPtr(void) override
 				{
@@ -114,7 +113,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxAdxl355 me = {};
+				::AlxA352 me = {};
 		};
 	}
 }

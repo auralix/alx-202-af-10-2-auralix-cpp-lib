@@ -40,6 +40,7 @@
 //------------------------------------------------------------------------------
 // ALX - EXT
 //------------------------------------------------------------------------------
+#include "alxA352.hpp"
 #include "alxAdau1961.hpp"
 #include "alxAdxl355.hpp"
 #include "alxBq24600.hpp"
@@ -73,6 +74,7 @@
 //------------------------------------------------------------------------------
 // ALX
 //------------------------------------------------------------------------------
+#include "alxAccelerometer.hpp"
 #include "alxAudioPlayer.hpp"
 #include "alxAudioVol.hpp"
 #include "alxAvg.hpp"
@@ -81,6 +83,7 @@
 #include "alxFiltGlitchBool.hpp"
 #include "alxFiltGlitchUint32.hpp"
 #include "alxFs.hpp"
+#include "alxFsSafe.hpp"
 #include "alxFtp.hpp"
 #include "alxGlobal.hpp"
 #include "alxHys1.hpp"
