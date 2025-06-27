@@ -81,8 +81,12 @@ namespace Alx
 				virtual uint32_t GetId(void) = 0;
 				virtual const char* GetGroupKey(void) = 0;
 				virtual uint32_t GetGroupId(void) = 0;
-				virtual void* GetValPtr(void) = 0;
 				virtual uint32_t GetValLen(void) = 0;
+				virtual AlxParamItem_ValOutOfRangeHandle GetValOutOfRangeHandle(void) = 0;
+				virtual const char* GetValUnit(void) = 0;
+				virtual bool GetValChangeTakesEffectAfterReset(void) = 0;
+				virtual uint32_t GetBuffLen(void) = 0;
+				virtual void* GetValPtr(void) = 0;
 
 
 				//------------------------------------------------------------------------------
@@ -122,9 +126,57 @@ namespace Alx
 
 
 				//------------------------------------------------------------------------------
-				// Set Default
+				// Default / Min / Max
 				//------------------------------------------------------------------------------
 				virtual void SetValToDef(void) = 0;
+				virtual uint8_t GetValDefUint8(void) = 0;
+				virtual uint16_t GetValDefUint16(void) = 0;
+				virtual uint32_t GetValDefUint32(void) = 0;
+				virtual uint64_t GetValDefUint64(void) = 0;
+				virtual int8_t GetValDefInt8(void) = 0;
+				virtual int16_t GetValDefInt16(void) = 0;
+				virtual int32_t GetValDefInt32(void) = 0;
+				virtual int64_t GetValDefInt64(void) = 0;
+				virtual float GetValDefFloat(void) = 0;
+				virtual double GetValDefDouble(void) = 0;
+				virtual bool GetValDefBool(void) = 0;
+				virtual void* GetValDefArr(void) = 0;
+				virtual const char* GetValDefStr(void) = 0;
+				virtual uint8_t GetValMinUint8(void) = 0;
+				virtual uint16_t GetValMinUint16(void) = 0;
+				virtual uint32_t GetValMinUint32(void) = 0;
+				virtual uint64_t GetValMinUint64(void) = 0;
+				virtual int8_t GetValMinInt8(void) = 0;
+				virtual int16_t GetValMinInt16(void) = 0;
+				virtual int32_t GetValMinInt32(void) = 0;
+				virtual int64_t GetValMinInt64(void) = 0;
+				virtual float GetValMinFloat(void) = 0;
+				virtual double GetValMinDouble(void) = 0;
+				virtual uint8_t GetValMaxUint8(void) = 0;
+				virtual uint16_t GetValMaxUint16(void) = 0;
+				virtual uint32_t GetValMaxUint32(void) = 0;
+				virtual uint64_t GetValMaxUint64(void) = 0;
+				virtual int8_t GetValMaxInt8(void) = 0;
+				virtual int16_t GetValMaxInt16(void) = 0;
+				virtual int32_t GetValMaxInt32(void) = 0;
+				virtual int64_t GetValMaxInt64(void) = 0;
+				virtual float GetValMaxFloat(void) = 0;
+				virtual double GetValMaxDouble(void) = 0;
+
+
+				//------------------------------------------------------------------------------
+				// Enum
+				//------------------------------------------------------------------------------
+				virtual void GetEnumArrUint8(uint8_t** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrUint16(uint16_t** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrUint32(uint32_t** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrUint64(uint64_t** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrInt8(int8_t** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrInt16(int16_t** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrInt32(int32_t** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrInt64(int64_t** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrFloat(float** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrDouble(double** enumArr, uint8_t* numOfEnums) = 0;
 
 
 				//------------------------------------------------------------------------------
@@ -153,6 +205,7 @@ namespace Alx
 				// Public Functions
 				//------------------------------------------------------------------------------
 
+
 				//------------------------------------------------------------------------------
 				// Constructor
 				//------------------------------------------------------------------------------
@@ -171,7 +224,9 @@ namespace Alx
 					uint8_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					uint8_t* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorUint8
@@ -188,7 +243,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Uint16
@@ -205,7 +262,9 @@ namespace Alx
 					uint16_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					uint16_t* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorUint16
@@ -222,7 +281,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Uint32
@@ -239,7 +300,9 @@ namespace Alx
 					uint32_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					uint32_t* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorUint32
@@ -256,7 +319,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Uint64
@@ -273,7 +338,9 @@ namespace Alx
 					uint64_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					uint64_t* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorUint64
@@ -290,7 +357,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Int8
@@ -307,7 +376,9 @@ namespace Alx
 					int8_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					int8_t* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorInt8
@@ -324,7 +395,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Int16
@@ -341,7 +414,9 @@ namespace Alx
 					int16_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					int16_t* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorInt16
@@ -358,7 +433,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Int32
@@ -375,7 +452,9 @@ namespace Alx
 					int32_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					int32_t* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorInt32
@@ -392,7 +471,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Int64
@@ -409,7 +490,9 @@ namespace Alx
 					int64_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					int64_t* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorInt64
@@ -426,7 +509,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Float
@@ -443,7 +528,9 @@ namespace Alx
 					float valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					float* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorFloat
@@ -460,7 +547,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Double
@@ -477,7 +566,9 @@ namespace Alx
 					double valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					double* enumArr,
-					uint8_t numOfEnums
+					uint8_t numOfEnums,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorDouble
@@ -494,7 +585,9 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums
+						numOfEnums,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Bool
@@ -506,7 +599,9 @@ namespace Alx
 					uint32_t id,
 					const char* groupKey,
 					uint32_t groupId,
-					bool valDef
+					bool valDef,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorBool
@@ -518,7 +613,9 @@ namespace Alx
 						id,
 						groupKey,
 						groupId,
-						valDef
+						valDef,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Arr
@@ -534,7 +631,9 @@ namespace Alx
 					void* valBuff,
 					void* valDefBuff,
 					uint32_t valBuffLen,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorArr
@@ -550,7 +649,9 @@ namespace Alx
 						valBuff,
 						valDefBuff,
 						valBuffLen,
-						valOutOfRangeHandle
+						valOutOfRangeHandle,
+						valUnit,
+						valChangeTakesEffectAfterReset
 					);
 				}
 				// Str
@@ -563,7 +664,9 @@ namespace Alx
 					const char* groupKey,
 					uint32_t groupId,
 					const char* valDef,
-					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle
+					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					const char* valUnit,
+					bool valChangeTakesEffectAfterReset
 				)
 				{
 					AlxParamItem_CtorStr
@@ -577,6 +680,8 @@ namespace Alx
 						groupId,
 						valDef,
 						valOutOfRangeHandle,
+						valUnit,
+						valChangeTakesEffectAfterReset,
 						buff,
 						buffLen
 					);
@@ -615,13 +720,29 @@ namespace Alx
 				{
 					return AlxParamItem_GetGroupId(&me);
 				}
-				void* GetValPtr(void) override
-				{
-					return AlxParamItem_GetValPtr(&me);
-				}
 				uint32_t GetValLen(void) override
 				{
 					return AlxParamItem_GetValLen(&me);
+				}
+				AlxParamItem_ValOutOfRangeHandle GetValOutOfRangeHandle(void) override
+				{
+					return AlxParamItem_GetValOutOfRangeHandle(&me);
+				}
+				const char* GetValUnit(void) override
+				{
+					return AlxParamItem_GetValUnit(&me);
+				}
+				bool GetValChangeTakesEffectAfterReset(void) override
+				{
+					return AlxParamItem_GetValChangeTakesEffectAfterReset(&me);
+				}
+				uint32_t GetBuffLen(void) override
+				{
+					return AlxParamItem_GetBuffLen(&me);
+				}
+				void* GetValPtr(void) override
+				{
+					return AlxParamItem_GetValPtr(&me);
 				}
 
 
@@ -740,11 +861,188 @@ namespace Alx
 
 
 				//------------------------------------------------------------------------------
-				// Set Default
+				// Default / Min / Max
 				//------------------------------------------------------------------------------
 				void SetValToDef(void) override
 				{
 					AlxParamItem_SetValToDef(&me);
+				}
+				uint8_t GetValDefUint8(void) override
+				{
+					return AlxParamItem_GetValDefUint8(&me);
+				}
+				uint16_t GetValDefUint16(void) override
+				{
+					return AlxParamItem_GetValDefUint16(&me);
+				}
+				uint32_t GetValDefUint32(void) override
+				{
+					return AlxParamItem_GetValDefUint32(&me);
+				}
+				uint64_t GetValDefUint64(void) override
+				{
+					return AlxParamItem_GetValDefUint64(&me);
+				}
+				int8_t GetValDefInt8(void) override
+				{
+					return AlxParamItem_GetValDefInt8(&me);
+				}
+				int16_t GetValDefInt16(void) override
+				{
+					return AlxParamItem_GetValDefInt16(&me);
+				}
+				int32_t GetValDefInt32(void) override
+				{
+					return AlxParamItem_GetValDefInt32(&me);
+				}
+				int64_t GetValDefInt64(void) override
+				{
+					return AlxParamItem_GetValDefInt64(&me);
+				}
+				float GetValDefFloat(void) override
+				{
+					return AlxParamItem_GetValDefFloat(&me);
+				}
+				double GetValDefDouble(void) override
+				{
+					return AlxParamItem_GetValDefDouble(&me);
+				}
+				bool GetValDefBool(void) override
+				{
+					return AlxParamItem_GetValDefBool(&me);
+				}
+				void* GetValDefArr(void) override
+				{
+					return AlxParamItem_GetValDefArr(&me);
+				}
+				const char* GetValDefStr(void) override
+				{
+					return AlxParamItem_GetValDefStr(&me);
+				}
+				uint8_t GetValMinUint8(void) override
+				{
+					return AlxParamItem_GetValMinUint8(&me);
+				}
+				uint16_t GetValMinUint16(void) override
+				{
+					return AlxParamItem_GetValMinUint16(&me);
+				}
+				uint32_t GetValMinUint32(void) override
+				{
+					return AlxParamItem_GetValMinUint32(&me);
+				}
+				uint64_t GetValMinUint64(void) override
+				{
+					return AlxParamItem_GetValMinUint64(&me);
+				}
+				int8_t GetValMinInt8(void) override
+				{
+					return AlxParamItem_GetValMinInt8(&me);
+				}
+				int16_t GetValMinInt16(void) override
+				{
+					return AlxParamItem_GetValMinInt16(&me);
+				}
+				int32_t GetValMinInt32(void) override
+				{
+					return AlxParamItem_GetValMinInt32(&me);
+				}
+				int64_t GetValMinInt64(void) override
+				{
+					return AlxParamItem_GetValMinInt64(&me);
+				}
+				float GetValMinFloat(void) override
+				{
+					return AlxParamItem_GetValMinFloat(&me);
+				}
+				double GetValMinDouble(void) override
+				{
+					return AlxParamItem_GetValMinDouble(&me);
+				}
+				uint8_t GetValMaxUint8(void) override
+				{
+					return AlxParamItem_GetValMaxUint8(&me);
+				}
+				uint16_t GetValMaxUint16(void) override
+				{
+					return AlxParamItem_GetValMaxUint16(&me);
+				}
+				uint32_t GetValMaxUint32(void) override
+				{
+					return AlxParamItem_GetValMaxUint32(&me);
+				}
+				uint64_t GetValMaxUint64(void) override
+				{
+					return AlxParamItem_GetValMaxUint64(&me);
+				}
+				int8_t GetValMaxInt8(void) override
+				{
+					return AlxParamItem_GetValMaxInt8(&me);
+				}
+				int16_t GetValMaxInt16(void) override
+				{
+					return AlxParamItem_GetValMaxInt16(&me);
+				}
+				int32_t GetValMaxInt32(void) override
+				{
+					return AlxParamItem_GetValMaxInt32(&me);
+				}
+				int64_t GetValMaxInt64(void) override
+				{
+					return AlxParamItem_GetValMaxInt64(&me);
+				}
+				float GetValMaxFloat(void) override
+				{
+					return AlxParamItem_GetValMaxFloat(&me);
+				}
+				double GetValMaxDouble(void) override
+				{
+					return AlxParamItem_GetValMaxDouble(&me);
+				}
+
+
+				//------------------------------------------------------------------------------
+				// Enum
+				//------------------------------------------------------------------------------
+				void GetEnumArrUint8(uint8_t** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrUint8(&me, enumArr, numOfEnums);
+				}
+				void GetEnumArrUint16(uint16_t** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrUint16(&me, enumArr, numOfEnums);
+				}
+				void GetEnumArrUint32(uint32_t** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrUint32(&me, enumArr, numOfEnums);
+				}
+				void GetEnumArrUint64(uint64_t** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrUint64(&me, enumArr, numOfEnums);
+				}
+				void GetEnumArrInt8(int8_t** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrInt8(&me, enumArr, numOfEnums);
+				}
+				void GetEnumArrInt16(int16_t** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrInt16(&me, enumArr, numOfEnums);
+				}
+				void GetEnumArrInt32(int32_t** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrInt32(&me, enumArr, numOfEnums);
+				}
+				void GetEnumArrInt64(int64_t** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrInt64(&me, enumArr, numOfEnums);
+				}
+				void GetEnumArrFloat(float** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrFloat(&me, enumArr, numOfEnums);
+				}
+				void GetEnumArrDouble(double** enumArr, uint8_t* numOfEnums) override
+				{
+					AlxParamItem_GetEnumArrDouble(&me, enumArr, numOfEnums);
 				}
 
 
