@@ -346,7 +346,7 @@ namespace Alx
 					int64_t offsetRaw_i = (((int64_t)ut.T2_ns - (int64_t)ut.T1_ns) + ((int64_t)ut.T3_ns - (int64_t)ut.T4_ns)) / 2;
 					float offsetRaw_f = (float)offsetRaw_i;
 					float offsetFiltered_f = 0.0;
-					if (requestCount == 0)
+					if (1)//(requestCount == 0)
 					{
 						offsetFiltered_f = offsetRaw_f;
 					}
