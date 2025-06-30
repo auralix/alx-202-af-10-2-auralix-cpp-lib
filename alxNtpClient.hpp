@@ -186,7 +186,9 @@ namespace Alx
 					, serverIp(serverIp)
 					, serverPort(serverPort)
 					, isServerIpHostnameFormat(isServerIpHostnameFormat)
-				{}
+				{
+					arm_biquad_cascade_df2T_init_f32(&filtOffset.S, filtOffset.numStages, filtOffset.pCoefs, filtOffset.pStates);
+				}
 				virtual ~NtpClient() {}
 				void SetNetwork(Alx::AlxNet::Net* net)
 				{
@@ -340,10 +342,16 @@ namespace Alx
 					uint64_t T3_FractNum_ns = ((uint64_t)rxPacket.transTimestamp_fractSec * 1000000000ull) / 0xFFFFFFFFull;
 					ut.T3_ns = T3_WholeNum_ns + T3_FractNum_ns;
 
-					ut.offset_ns = (((int64_t)ut.T2_ns - (int64_t)ut.T1_ns) + ((int64_t)ut.T3_ns - (int64_t)ut.T4_ns)) / 2;
-					ut.delay_ns = ((int64_t)ut.T4_ns - (int64_t)ut.T1_ns) - ((int64_t)ut.T3_ns - (int64_t)ut.T2_ns);
+					int64_t offsetRaw_i = (((int64_t)ut.T2_ns - (int64_t)ut.T1_ns) + ((int64_t)ut.T3_ns - (int64_t)ut.T4_ns)) / 2;
+					float offsetRaw_f = (float)offsetRaw_i;
+					float offsetFiltered_f = 0.0;
+					arm_biquad_cascade_df2T_f32(&filtOffset.S, &offsetRaw_f, &offsetFiltered_f, filtOffset.blockSize);
 
-					char offset_str[20] = "";
+					ut.delay_ns = ((int64_t)ut.T4_ns - (int64_t)ut.T1_ns) - ((int64_t)ut.T3_ns - (int64_t)ut.T2_ns);
+					ut.offset_ns = offsetRaw_i;
+
+					char offset_raw_str[20] = "";
+					char offset_filtered_str[20] = "";
 					char delay_str[20] = "";
 					char delay_up_str[20] = "";
 					char delay_down_str[20] = "";
@@ -351,11 +359,12 @@ namespace Alx
 					if (delay_up < 0) { delay_up *= -1; }
 					int64_t delay_down = ut.T4_ns - ut.T3_ns;
 					if (delay_down < 0) { delay_down *= -1; }
-					AlxGlobal_Slltoa(ut.offset_ns, offset_str);
+					AlxGlobal_Slltoa((int64_t)round(offsetFiltered_f), offset_filtered_str);
+					AlxGlobal_Slltoa(offsetRaw_i, offset_raw_str);
 					AlxGlobal_Slltoa(ut.delay_ns, delay_str);
 					AlxGlobal_Slltoa(delay_up, delay_up_str);
 					AlxGlobal_Slltoa(delay_down, delay_down_str);
-					ALX_NTP_CLIENT_TRACE("OFFSET: %s, DELAY: %s (UP: %s, DOWN: %s)", offset_str, delay_str, delay_up_str, delay_down_str);
+					ALX_NTP_CLIENT_TRACE("O_R: %s, O_F: %s, D: %s (UP: %s, DOWN: %s)", offset_raw_str, offset_filtered_str, delay_str, delay_up_str, delay_down_str);
 
 					// #15 Unlock mutex
 					mutex.Unlock();
@@ -433,6 +442,21 @@ namespace Alx
 
 				// RTOS
 				Alx::AlxOsMutex::AlxOsMutex mutex;
+
+				struct FiltOffset
+				{
+					const float a1 = 1.99111429e+00;
+					const float a2 = -9.91153596e-01;
+					const float b0 =  9.82591682e-06;
+					const float b1 =  1.96518336e-05;
+					const float b2 = 9.82591682e-06;
+					const float pCoefs[5] = { b0, b1, b2, a1, a2 };
+					const uint8_t numStages = 1;
+					const uint32_t blockSize = 1;
+					float pStates[2] = { 0, 0 };	// Memory for filter, 2 fields for each stage
+					float err_us = 0;
+					arm_biquad_cascade_df2T_instance_f32 S;
+				} filtOffset;
 
 			private:
 				//------------------------------------------------------------------------------
