@@ -162,6 +162,7 @@ namespace Alx
 				virtual Alx_Status GetRtcUnixTimeOffset_us(int64_t* rtcUnixTimeOffset_us) = 0;
 				virtual Alx_Status GetRtcUnixTimeOffset_ms(int64_t* rtcUnixTimeOffset_ms) = 0;
 				virtual Alx_Status GetRtcUnixTimeOffset_sec(int64_t* rtcUnixTimeOffset_sec) = 0;
+				virtual void OffsetFilterReset(void) = 0;
 		};
 
 
@@ -345,7 +346,17 @@ namespace Alx
 					int64_t offsetRaw_i = (((int64_t)ut.T2_ns - (int64_t)ut.T1_ns) + ((int64_t)ut.T3_ns - (int64_t)ut.T4_ns)) / 2;
 					float offsetRaw_f = (float)offsetRaw_i;
 					float offsetFiltered_f = 0.0;
-					arm_biquad_cascade_df2T_f32(&filtOffset.S, &offsetRaw_f, &offsetFiltered_f, filtOffset.blockSize);
+					if (requestCount == 0)
+					{
+						offsetFiltered_f = offsetRaw_f;
+					}
+					else
+					{
+						arm_biquad_cascade_df2T_f32(&filtOffset.S, &offsetRaw_f, &offsetFiltered_f, filtOffset.blockSize);
+					}
+					requestCount++;
+
+					int64_t offsetFiltered_i = (int64_t)round(offsetFiltered_f);
 
 					ut.delay_ns = ((int64_t)ut.T4_ns - (int64_t)ut.T1_ns) - ((int64_t)ut.T3_ns - (int64_t)ut.T2_ns);
 					ut.offset_ns = offsetRaw_i;
@@ -359,7 +370,7 @@ namespace Alx
 					if (delay_up < 0) { delay_up *= -1; }
 					int64_t delay_down = ut.T4_ns - ut.T3_ns;
 					if (delay_down < 0) { delay_down *= -1; }
-					AlxGlobal_Slltoa((int64_t)round(offsetFiltered_f), offset_filtered_str);
+					AlxGlobal_Slltoa(offsetFiltered_i, offset_filtered_str);
 					AlxGlobal_Slltoa(offsetRaw_i, offset_raw_str);
 					AlxGlobal_Slltoa(ut.delay_ns, delay_str);
 					AlxGlobal_Slltoa(delay_up, delay_up_str);
@@ -370,7 +381,7 @@ namespace Alx
 					mutex.Unlock();
 
 					// #16 Return
-					*rtcUnixTimeOffset_ns = ut.offset_ns;
+					*rtcUnixTimeOffset_ns = offsetFiltered_i;
 					return Alx_Ok;
 				}
 				Alx_Status GetRtcUnixTimeOffset_us(int64_t* rtcUnixTimeOffset_us) override
@@ -399,6 +410,12 @@ namespace Alx
 					*rtcUnixTimeOffset_sec = offset_ns / 1000000000;
 
 					return Alx_Ok;
+				}
+
+				void OffsetFilterReset(void) override
+				{
+					arm_biquad_cascade_df2T_init_f32(&filtOffset.S, filtOffset.numStages, filtOffset.pCoefs, filtOffset.pStates);
+					requestCount = 0;
 				}
 
 			private:
@@ -458,6 +475,7 @@ namespace Alx
 					arm_biquad_cascade_df2T_instance_f32 S;
 				} filtOffset;
 
+				uint32_t requestCount = 0;
 			private:
 				//------------------------------------------------------------------------------
 				// Private Functions
@@ -484,6 +502,8 @@ namespace Alx
 					ut.T4_ns = 0;
 					ut.offset_ns = 0;
 					ut.delay_ns = 0;
+
+					OffsetFilterReset();
 
 					// #4 Unlock mutex
 					mutex.Unlock();
