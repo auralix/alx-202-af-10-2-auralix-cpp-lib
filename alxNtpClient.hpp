@@ -343,6 +343,20 @@ namespace Alx
 					ut.offset_ns = (((int64_t)ut.T2_ns - (int64_t)ut.T1_ns) + ((int64_t)ut.T3_ns - (int64_t)ut.T4_ns)) / 2;
 					ut.delay_ns = ((int64_t)ut.T4_ns - (int64_t)ut.T1_ns) - ((int64_t)ut.T3_ns - (int64_t)ut.T2_ns);
 
+					char offset_str[20] = "";
+					char delay_str[20] = "";
+					char delay_up_str[20] = "";
+					char delay_down_str[20] = "";
+					int64_t delay_up = ut.T2_ns - ut.T1_ns;
+					if (delay_up < 0) { delay_up *= -1; }
+					int64_t delay_down = ut.T4_ns - ut.T3_ns;
+					if (delay_down < 0) { delay_down *= -1; }
+					AlxGlobal_Slltoa(ut.offset_ns, offset_str);
+					AlxGlobal_Slltoa(ut.delay_ns, delay_str);
+					AlxGlobal_Slltoa(delay_up, delay_up_str);
+					AlxGlobal_Slltoa(delay_down, delay_down_str);
+					ALX_NTP_CLIENT_TRACE("OFFSET: %s, DELAY: %s (UP: %s, DOWN: %s)", offset_str, delay_str, delay_up_str, delay_down_str);
+
 					// #15 Unlock mutex
 					mutex.Unlock();
 
