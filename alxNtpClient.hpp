@@ -162,7 +162,6 @@ namespace Alx
 				virtual Alx_Status GetRtcUnixTimeOffset_us(int64_t* rtcUnixTimeOffset_us, uint32_t* ntpRoundTripDelay_ms) = 0;
 				virtual Alx_Status GetRtcUnixTimeOffset_ms(int64_t* rtcUnixTimeOffset_ms, uint32_t* ntpRoundTripDelay_ms) = 0;
 				virtual Alx_Status GetRtcUnixTimeOffset_sec(int64_t* rtcUnixTimeOffset_sec, uint32_t* ntpRoundTripDelay_ms) = 0;
-				virtual void OffsetFilterReset(void) = 0;
 		};
 
 
@@ -187,9 +186,7 @@ namespace Alx
 					, serverIp(serverIp)
 					, serverPort(serverPort)
 					, isServerIpHostnameFormat(isServerIpHostnameFormat)
-				{
-					arm_biquad_cascade_df2T_init_f32(&filtOffset.S, filtOffset.numStages, filtOffset.pCoefs, filtOffset.pStates);
-				}
+				{}
 				virtual ~NtpClient() {}
 				void SetNetwork(Alx::AlxNet::Net* net)
 				{
@@ -343,26 +340,10 @@ namespace Alx
 					uint64_t T3_FractNum_ns = ((uint64_t)rxPacket.transTimestamp_fractSec * 1000000000ull) / 0xFFFFFFFFull;
 					ut.T3_ns = T3_WholeNum_ns + T3_FractNum_ns;
 
-					int64_t offsetRaw_i = (((int64_t)ut.T2_ns - (int64_t)ut.T1_ns) + ((int64_t)ut.T3_ns - (int64_t)ut.T4_ns)) / 2;
-					float offsetRaw_f = (float)offsetRaw_i;
-					float offsetFiltered_f = 0.0;
-					if (1)//(requestCount == 0)
-					{
-						offsetFiltered_f = offsetRaw_f;
-					}
-					else
-					{
-						arm_biquad_cascade_df2T_f32(&filtOffset.S, &offsetRaw_f, &offsetFiltered_f, filtOffset.blockSize);
-					}
-					requestCount++;
-
-					int64_t offsetFiltered_i = (int64_t)round(offsetFiltered_f);
-
+					ut.offset_ns = (((int64_t)ut.T2_ns - (int64_t)ut.T1_ns) + ((int64_t)ut.T3_ns - (int64_t)ut.T4_ns)) / 2;
 					ut.delay_ns = ((int64_t)ut.T4_ns - (int64_t)ut.T1_ns) - ((int64_t)ut.T3_ns - (int64_t)ut.T2_ns);
-					ut.offset_ns = offsetRaw_i;
 
 					char offset_raw_str[20] = "";
-					char offset_filtered_str[20] = "";
 					char delay_str[20] = "";
 					char delay_up_str[20] = "";
 					char delay_down_str[20] = "";
@@ -370,18 +351,17 @@ namespace Alx
 					if (delay_up < 0) { delay_up *= -1; }
 					int64_t delay_down = ut.T4_ns - ut.T3_ns;
 					if (delay_down < 0) { delay_down *= -1; }
-					AlxGlobal_Slltoa(offsetFiltered_i, offset_filtered_str);
-					AlxGlobal_Slltoa(offsetRaw_i, offset_raw_str);
+					AlxGlobal_Slltoa(ut.offset_ns, offset_raw_str);
 					AlxGlobal_Slltoa(ut.delay_ns, delay_str);
 					AlxGlobal_Slltoa(delay_up, delay_up_str);
 					AlxGlobal_Slltoa(delay_down, delay_down_str);
-					ALX_NTP_CLIENT_TRACE("O_R: %s, O_F: %s, D: %s (UP: %s, DOWN: %s)", offset_raw_str, offset_filtered_str, delay_str, delay_up_str, delay_down_str);
+					ALX_NTP_CLIENT_TRACE("O_R: %s, O_F: %s, D: %s (UP: %s, DOWN: %s)", offset_raw_str, offset_raw_str, delay_str, delay_up_str, delay_down_str);
 
 					// #15 Unlock mutex
 					mutex.Unlock();
 
 					// #16 Return
-					*rtcUnixTimeOffset_ns = offsetFiltered_i;
+					*rtcUnixTimeOffset_ns = ut.offset_ns;
 					if (ntpRoundTripDelay_ms != NULL)
 					{
 						*ntpRoundTripDelay_ms = (uint32_t)abs(ut.delay_ns / 1000000);
@@ -414,12 +394,6 @@ namespace Alx
 					*rtcUnixTimeOffset_sec = offset_ns / 1000000000;
 
 					return Alx_Ok;
-				}
-
-				void OffsetFilterReset(void) override
-				{
-					arm_biquad_cascade_df2T_init_f32(&filtOffset.S, filtOffset.numStages, filtOffset.pCoefs, filtOffset.pStates);
-					requestCount = 0;
 				}
 
 			private:
@@ -464,22 +438,6 @@ namespace Alx
 				// RTOS
 				Alx::AlxOsMutex::AlxOsMutex mutex;
 
-				struct FiltOffset
-				{
-					const float a1 = 1.99111429e+00;
-					const float a2 = -9.91153596e-01;
-					const float b0 =  9.82591682e-06;
-					const float b1 =  1.96518336e-05;
-					const float b2 = 9.82591682e-06;
-					const float pCoefs[5] = { b0, b1, b2, a1, a2 };
-					const uint8_t numStages = 1;
-					const uint32_t blockSize = 1;
-					float pStates[2] = { 0, 0 };	// Memory for filter, 2 fields for each stage
-					float err_us = 0;
-					arm_biquad_cascade_df2T_instance_f32 S;
-				} filtOffset;
-
-				uint32_t requestCount = 0;
 			private:
 				//------------------------------------------------------------------------------
 				// Private Functions
@@ -506,8 +464,6 @@ namespace Alx
 					ut.T4_ns = 0;
 					ut.offset_ns = 0;
 					ut.delay_ns = 0;
-
-					OffsetFilterReset();
 
 					// #4 Unlock mutex
 					mutex.Unlock();
