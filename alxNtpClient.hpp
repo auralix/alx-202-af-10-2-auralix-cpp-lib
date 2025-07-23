@@ -117,12 +117,12 @@ namespace Alx
 		{
 			struct __attribute__((packed))
 			{
-				RxPacket_Header_LI LI : 2;
-				RxPacket_Header_VN VN : 3;
-				RxPacket_Header_Mode MODE : 3;
-				uint8_t STRAT : 8;
-				uint8_t POLL : 8;
-				uint8_t PREC : 8;
+				int8_t PREC;
+				uint8_t POLL;
+				uint8_t STRAT;
+				uint8_t MODE : 3;
+				uint8_t VN : 3;
+				uint8_t LI : 2;
 			};
 			uint32_t raw;
 		};
@@ -162,6 +162,7 @@ namespace Alx
 				virtual Alx_Status GetRtcUnixTimeOffset_us(int64_t* rtcUnixTimeOffset_us, uint32_t* ntpRoundTripDelay_ms) = 0;
 				virtual Alx_Status GetRtcUnixTimeOffset_ms(int64_t* rtcUnixTimeOffset_ms, uint32_t* ntpRoundTripDelay_ms) = 0;
 				virtual Alx_Status GetRtcUnixTimeOffset_sec(int64_t* rtcUnixTimeOffset_sec, uint32_t* ntpRoundTripDelay_ms) = 0;
+				virtual RxPacket GetLastNtpResponse(void) = 0;
 		};
 
 
@@ -380,6 +381,10 @@ namespace Alx
 					*rtcUnixTimeOffset_sec = offset_ns / 1000000000;
 
 					return Alx_Ok;
+				}
+				RxPacket GetLastNtpResponse(void) override
+				{
+					return rxPacket;
 				}
 
 			private:
