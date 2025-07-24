@@ -394,7 +394,7 @@ namespace Alx
 
 				// Parameters - Const
 				const uint32_t RESET_WAIT_TIME_ms = 5000; // TODO, UDP reset PCB duration, figure out?
-				const int SOCK_TIMEOUT_ms = 30000;
+				const int SOCK_TIMEOUT_ms = 5000;
 
 				const uint32_t txPacket[12] = { '\x1b' };
 				const uint64_t TIME_FROM_1900_TO_1970_sec = 2208988800;
