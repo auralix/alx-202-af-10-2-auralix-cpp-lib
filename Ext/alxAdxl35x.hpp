@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxAdxl355.hpp
-  * @brief		Auralix C++ Library - ALX Accelerometer ADXL355 Module
+  * @file		alxAdxl35x.hpp
+  * @brief		Auralix C++ Library - ALX Accelerometer ADXL355/357 Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,8 +28,8 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_ADXL355_HPP
-#define ALX_ADXL355_HPP
+#ifndef ALX_ADXL35X_HPP
+#define ALX_ADXL35X_HPP
 
 
 //******************************************************************************
@@ -37,7 +37,7 @@
 //******************************************************************************
 #include "alxGlobal.hpp"
 #include "alxAccelerometer.hpp"
-#include "alxAdxl355.h"
+#include "alxAdxl35x.h"
 #include "alxIoPin.hpp"
 #include "alxSpi.hpp"
 #include "alxFifo.hpp"
@@ -54,56 +54,60 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxAdxl355
+	namespace AlxAdxl35x
 	{
 		//******************************************************************************
-		// Class - Adxl355
+		// Class - Adxl35x
 		//******************************************************************************
-		class Adxl355 : public AlxAccelerometer::IAccelerometer
+		class Adxl35x : public AlxAccelerometer::IAccelerometer
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				Adxl355
+				Adxl35x
 				(
+					AlxAdxlDeviceId device,
+					AlxAdxl35x_RegEnum_0x2C_Range range,
 					Alx::AlxSpi::Spi* spi,
 					uint8_t spiNumOfTries,
 					uint16_t spiTimeout_ms
 				)
 				{
-					AlxAdxl355_Ctor
+					AlxAdxl35x_Ctor
 					(
 						&me,
+						device,
+						range,
 						spi->GetCStructPtr(),
 						spiNumOfTries,
 						spiTimeout_ms
 					);
 				}
-				virtual ~Adxl355() {}
+				virtual ~Adxl35x() {}
 				Alx_Status Init(float sampleRate) override
 				{
-					return AlxAdxl355_Init(&me, sampleRate);
+					return AlxAdxl35x_Init(&me, sampleRate);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxAdxl355_DeInit(&me);
+					return AlxAdxl35x_DeInit(&me);
 				}
 				Alx_Status Enable(void) override
 				{
-					return AlxAdxl355_Enable(&me);
+					return AlxAdxl35x_Enable(&me);
 				}
 				Alx_Status Disable(void) override
 				{
-					return AlxAdxl355_Disable(&me);
+					return AlxAdxl35x_Disable(&me);
 				}
 				Alx_Status GetData(AccDataPoint* data, uint8_t len) override
 				{
-					return AlxAdxl355_GetData(&me, data, len);
+					return AlxAdxl35x_GetData(&me, data, len);
 				}
 				uint8_t GetFifoLen(void) override
 				{
-					return AlxAdxl355_GetFifoLen(&me);
+					return AlxAdxl35x_GetFifoLen(&me);
 				}
 				void* GetCStructPtr(void) override
 				{
@@ -114,7 +118,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxAdxl355 me = {};
+				::AlxAdxl35x me = {};
 		};
 	}
 }
@@ -122,4 +126,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_ADXL355_HPP
+#endif	// #ifndef ALX_ADXL35X_HPP

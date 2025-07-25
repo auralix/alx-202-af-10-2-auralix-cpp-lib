@@ -42,7 +42,7 @@
 //------------------------------------------------------------------------------
 #include "alxA352.hpp"
 #include "alxAdau1961.hpp"
-#include "alxAdxl355.hpp"
+#include "alxAdxl35x.hpp"
 #include "alxBq24600.hpp"
 #include "alxBq25890.hpp"
 #include "alxBts724g.hpp"
