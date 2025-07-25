@@ -80,9 +80,9 @@ namespace Alx
 					);
 				}
 				virtual ~A352() {}
-				Alx_Status Init(float sampleRate) override
+				Alx_Status Init(AlxAccDevice device, AlxAccRange range, float sampleRate) override
 				{
-					return AlxA352_Init(&me, sampleRate);
+					return AlxA352_Init(&me, device, range, sampleRate);
 				}
 				Alx_Status DeInit(void) override
 				{

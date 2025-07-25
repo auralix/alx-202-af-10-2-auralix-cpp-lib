@@ -51,7 +51,7 @@
 namespace Alx
 {
 	namespace AlxAccelerometer
-	{	
+	{
 		//******************************************************************************
 		// Class - IAudioPlayer
 		//******************************************************************************
@@ -62,7 +62,7 @@ namespace Alx
 				// Public Functions
 				//------------------------------------------------------------------------------
 				IAccelerometer() {}
-				virtual Alx_Status Init(float sampleRate) = 0;
+				virtual Alx_Status Init(AlxAccDevice device, AlxAccRange range, float sampleRate) = 0;
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status Enable(void) = 0;
 				virtual Alx_Status Disable(void) = 0;
@@ -71,13 +71,13 @@ namespace Alx
 				virtual void* GetCStructPtr(void) = 0;
 				virtual ~IAccelerometer() {}
 		};
-		
+
 		class AccDummy: public IAccelerometer
 		{
 		public:
 			AccDummy() {}
 			virtual ~AccDummy() {}
-			Alx_Status Init(float sampleRate) override
+			Alx_Status Init(AlxAccDevice device, AlxAccRange range, float sampleRate) override
 			{
 				return Alx_Ok;
 			}

@@ -67,8 +67,6 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				Adxl35x
 				(
-					AlxAdxlDeviceId device,
-					AlxAdxl35x_RegEnum_0x2C_Range range,
 					Alx::AlxSpi::Spi* spi,
 					uint8_t spiNumOfTries,
 					uint16_t spiTimeout_ms
@@ -77,17 +75,15 @@ namespace Alx
 					AlxAdxl35x_Ctor
 					(
 						&me,
-						device,
-						range,
 						spi->GetCStructPtr(),
 						spiNumOfTries,
 						spiTimeout_ms
 					);
 				}
 				virtual ~Adxl35x() {}
-				Alx_Status Init(float sampleRate) override
+				Alx_Status Init(AlxAccDevice device, AlxAccRange range, float sampleRate) override
 				{
-					return AlxAdxl35x_Init(&me, sampleRate);
+					return AlxAdxl35x_Init(&me, device, range, sampleRate);
 				}
 				Alx_Status DeInit(void) override
 				{
