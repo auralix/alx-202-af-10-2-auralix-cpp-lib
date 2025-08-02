@@ -167,6 +167,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Enum
 				//------------------------------------------------------------------------------
+				virtual bool GetIsEnum(void) = 0;
 				virtual void GetEnumArrUint8(uint8_t** enumArr, uint8_t* enumArrLen) = 0;
 				virtual void GetEnumArrUint16(uint16_t** enumArr, uint8_t* enumArrLen) = 0;
 				virtual void GetEnumArrUint32(uint32_t** enumArr, uint8_t* enumArrLen) = 0;
@@ -223,6 +224,7 @@ namespace Alx
 					uint8_t valMin,
 					uint8_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					uint8_t* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -242,6 +244,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -261,6 +264,7 @@ namespace Alx
 					uint16_t valMin,
 					uint16_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					uint16_t* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -280,6 +284,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -299,6 +304,7 @@ namespace Alx
 					uint32_t valMin,
 					uint32_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					uint32_t* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -318,6 +324,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -337,6 +344,7 @@ namespace Alx
 					uint64_t valMin,
 					uint64_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					uint64_t* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -356,6 +364,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -375,6 +384,7 @@ namespace Alx
 					int8_t valMin,
 					int8_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					int8_t* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -394,6 +404,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -413,6 +424,7 @@ namespace Alx
 					int16_t valMin,
 					int16_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					int16_t* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -432,6 +444,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -451,6 +464,7 @@ namespace Alx
 					int32_t valMin,
 					int32_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					int32_t* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -470,6 +484,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -489,6 +504,7 @@ namespace Alx
 					int64_t valMin,
 					int64_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					int64_t* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -508,6 +524,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -527,6 +544,7 @@ namespace Alx
 					float valMin,
 					float valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					float* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -546,6 +564,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -565,6 +584,7 @@ namespace Alx
 					double valMin,
 					double valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
+					bool isEnum,
 					double* enumArr,
 					uint8_t enumArrLen,
 					const char* valUnit,
@@ -584,6 +604,7 @@ namespace Alx
 						valMin,
 						valMax,
 						valOutOfRangeHandle,
+						isEnum,
 						enumArr,
 						enumArrLen,
 						valUnit,
@@ -1004,6 +1025,10 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Enum
 				//------------------------------------------------------------------------------
+				bool GetIsEnum(void) override
+				{
+					return AlxParamItem_GetIsEnum(&me);
+				}
 				void GetEnumArrUint8(uint8_t** enumArr, uint8_t* enumArrLen) override
 				{
 					AlxParamItem_GetEnumArrUint8(&me, enumArr, enumArrLen);
