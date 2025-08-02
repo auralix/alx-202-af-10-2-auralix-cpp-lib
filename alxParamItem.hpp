@@ -167,16 +167,16 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Enum
 				//------------------------------------------------------------------------------
-				virtual void GetEnumArrUint8(uint8_t** enumArr, uint8_t* numOfEnums) = 0;
-				virtual void GetEnumArrUint16(uint16_t** enumArr, uint8_t* numOfEnums) = 0;
-				virtual void GetEnumArrUint32(uint32_t** enumArr, uint8_t* numOfEnums) = 0;
-				virtual void GetEnumArrUint64(uint64_t** enumArr, uint8_t* numOfEnums) = 0;
-				virtual void GetEnumArrInt8(int8_t** enumArr, uint8_t* numOfEnums) = 0;
-				virtual void GetEnumArrInt16(int16_t** enumArr, uint8_t* numOfEnums) = 0;
-				virtual void GetEnumArrInt32(int32_t** enumArr, uint8_t* numOfEnums) = 0;
-				virtual void GetEnumArrInt64(int64_t** enumArr, uint8_t* numOfEnums) = 0;
-				virtual void GetEnumArrFloat(float** enumArr, uint8_t* numOfEnums) = 0;
-				virtual void GetEnumArrDouble(double** enumArr, uint8_t* numOfEnums) = 0;
+				virtual void GetEnumArrUint8(uint8_t** enumArr, uint8_t* enumArrLen) = 0;
+				virtual void GetEnumArrUint16(uint16_t** enumArr, uint8_t* enumArrLen) = 0;
+				virtual void GetEnumArrUint32(uint32_t** enumArr, uint8_t* enumArrLen) = 0;
+				virtual void GetEnumArrUint64(uint64_t** enumArr, uint8_t* enumArrLen) = 0;
+				virtual void GetEnumArrInt8(int8_t** enumArr, uint8_t* enumArrLen) = 0;
+				virtual void GetEnumArrInt16(int16_t** enumArr, uint8_t* enumArrLen) = 0;
+				virtual void GetEnumArrInt32(int32_t** enumArr, uint8_t* enumArrLen) = 0;
+				virtual void GetEnumArrInt64(int64_t** enumArr, uint8_t* enumArrLen) = 0;
+				virtual void GetEnumArrFloat(float** enumArr, uint8_t* enumArrLen) = 0;
+				virtual void GetEnumArrDouble(double** enumArr, uint8_t* enumArrLen) = 0;
 
 
 				//------------------------------------------------------------------------------
@@ -224,7 +224,7 @@ namespace Alx
 					uint8_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					uint8_t* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -243,7 +243,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -262,7 +262,7 @@ namespace Alx
 					uint16_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					uint16_t* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -281,7 +281,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -300,7 +300,7 @@ namespace Alx
 					uint32_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					uint32_t* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -319,7 +319,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -338,7 +338,7 @@ namespace Alx
 					uint64_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					uint64_t* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -357,7 +357,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -376,7 +376,7 @@ namespace Alx
 					int8_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					int8_t* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -395,7 +395,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -414,7 +414,7 @@ namespace Alx
 					int16_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					int16_t* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -433,7 +433,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -452,7 +452,7 @@ namespace Alx
 					int32_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					int32_t* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -471,7 +471,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -490,7 +490,7 @@ namespace Alx
 					int64_t valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					int64_t* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -509,7 +509,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -528,7 +528,7 @@ namespace Alx
 					float valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					float* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -547,7 +547,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -566,7 +566,7 @@ namespace Alx
 					double valMax,
 					AlxParamItem_ValOutOfRangeHandle valOutOfRangeHandle,
 					double* enumArr,
-					uint8_t numOfEnums,
+					uint8_t enumArrLen,
 					const char* valUnit,
 					bool valChangeTakesEffectAfterReset
 				)
@@ -585,7 +585,7 @@ namespace Alx
 						valMax,
 						valOutOfRangeHandle,
 						enumArr,
-						numOfEnums,
+						enumArrLen,
 						valUnit,
 						valChangeTakesEffectAfterReset
 					);
@@ -1004,45 +1004,45 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Enum
 				//------------------------------------------------------------------------------
-				void GetEnumArrUint8(uint8_t** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrUint8(uint8_t** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrUint8(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrUint8(&me, enumArr, enumArrLen);
 				}
-				void GetEnumArrUint16(uint16_t** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrUint16(uint16_t** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrUint16(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrUint16(&me, enumArr, enumArrLen);
 				}
-				void GetEnumArrUint32(uint32_t** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrUint32(uint32_t** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrUint32(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrUint32(&me, enumArr, enumArrLen);
 				}
-				void GetEnumArrUint64(uint64_t** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrUint64(uint64_t** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrUint64(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrUint64(&me, enumArr, enumArrLen);
 				}
-				void GetEnumArrInt8(int8_t** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrInt8(int8_t** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrInt8(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrInt8(&me, enumArr, enumArrLen);
 				}
-				void GetEnumArrInt16(int16_t** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrInt16(int16_t** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrInt16(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrInt16(&me, enumArr, enumArrLen);
 				}
-				void GetEnumArrInt32(int32_t** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrInt32(int32_t** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrInt32(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrInt32(&me, enumArr, enumArrLen);
 				}
-				void GetEnumArrInt64(int64_t** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrInt64(int64_t** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrInt64(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrInt64(&me, enumArr, enumArrLen);
 				}
-				void GetEnumArrFloat(float** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrFloat(float** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrFloat(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrFloat(&me, enumArr, enumArrLen);
 				}
-				void GetEnumArrDouble(double** enumArr, uint8_t* numOfEnums) override
+				void GetEnumArrDouble(double** enumArr, uint8_t* enumArrLen) override
 				{
-					AlxParamItem_GetEnumArrDouble(&me, enumArr, numOfEnums);
+					AlxParamItem_GetEnumArrDouble(&me, enumArr, enumArrLen);
 				}
 
 
