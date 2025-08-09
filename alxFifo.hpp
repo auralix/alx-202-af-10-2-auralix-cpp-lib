@@ -121,9 +121,9 @@ namespace Alx
 				{
 					return AlxFifo_GetNumOfEntries(&me);
 				}
-				void Rewind(uint32_t len) override
+				uint32_t Rewind(uint32_t len) override
 				{
-					AlxFifo_Rewind(&me, len);
+					return AlxFifo_Rewind(&me, len);
 				}
 				uint8_t* GetBuffPtr(void) override
 				{
