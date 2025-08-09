@@ -69,7 +69,6 @@ namespace Alx
 				virtual Alx_Status Write(const uint8_t* data, uint32_t len) = 0;
 				virtual Alx_Status WriteStr(const char* str) = 0;
 				virtual uint32_t GetNumOfEntries(void) = 0;
-				virtual uint32_t GetNumOfEntriesSinceFlush(void) = 0;
 				virtual void Rewind(uint32_t len) = 0;
 				virtual uint8_t* GetBuffPtr(void) = 0;
 		};
@@ -121,10 +120,6 @@ namespace Alx
 				uint32_t GetNumOfEntries(void) override
 				{
 					return AlxFifo_GetNumOfEntries(&me);
-				}
-				uint32_t GetNumOfEntriesSinceFlush(void) override
-				{
-					return AlxFifo_GetNumOfEntriesSinceFlush(&me);
 				}
 				void Rewind(uint32_t len) override
 				{
