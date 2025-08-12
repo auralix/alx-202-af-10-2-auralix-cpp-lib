@@ -53,7 +53,7 @@ namespace Alx
 	namespace AlxAccelerometer
 	{
 		//******************************************************************************
-		// Class - IAudioPlayer
+		// Class - IAccelerometer
 		//******************************************************************************
 		class IAccelerometer
 		{
@@ -62,7 +62,13 @@ namespace Alx
 				// Public Functions
 				//------------------------------------------------------------------------------
 				IAccelerometer() {}
-				virtual Alx_Status Init(AlxAccDevice device, AlxAccRange range, float sampleRate) = 0;
+				virtual Alx_Status Init
+				(
+					AlxAccDevice device,
+					AlxAccRange range,
+					float sampleRate,
+					AlxAccSyncMode syncMode
+				) = 0;
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status Enable(void) = 0;
 				virtual Alx_Status Disable(void) = 0;
@@ -77,7 +83,13 @@ namespace Alx
 		public:
 			AccDummy() {}
 			virtual ~AccDummy() {}
-			Alx_Status Init(AlxAccDevice device, AlxAccRange range, float sampleRate) override
+			Alx_Status Init
+			(
+				AlxAccDevice device,
+				AlxAccRange range,
+				float sampleRate,
+				AlxAccSyncMode syncMode
+			) override
 			{
 				return Alx_Ok;
 			}

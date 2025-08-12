@@ -69,6 +69,7 @@ namespace Alx
 				virtual Alx_Status DeInit(void) = 0;
 				virtual Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V) = 0;
 				virtual Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V, float vref_V) = 0;
+				virtual ::AlxDac* GetCStructPtr(void) = 0;
 		};
 
 
@@ -102,6 +103,10 @@ namespace Alx
 				Alx_Status SetVoltage_V(Alx_Ch ch, float voltage_V, float vref_V) override
 				{
 					return AlxDac_SetVoltage_V_CalibrateVref(&me, ch, voltage_V, vref_V);
+				}
+				::AlxDac* GetCStructPtr(void) override
+				{
+					return &me;
 				}
 
 			protected:

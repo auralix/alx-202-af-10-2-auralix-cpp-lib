@@ -46,6 +46,7 @@
 #include "alxBq24600.hpp"
 #include "alxBq25890.hpp"
 #include "alxBts724g.hpp"
+#include "alxCdce913.hpp"
 #include "alxMax17263.hpp"
 #include "alxPca9539a.hpp"
 #include "alxTmp1075.hpp"
