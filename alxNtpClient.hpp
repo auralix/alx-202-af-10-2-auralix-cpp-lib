@@ -117,12 +117,12 @@ namespace Alx
 		{
 			struct __attribute__((packed))
 			{
-				RxPacket_Header_LI LI : 2;
-				RxPacket_Header_VN VN : 3;
-				RxPacket_Header_Mode MODE : 3;
-				uint8_t STRAT : 8;
-				uint8_t POLL : 8;
-				uint8_t PREC : 8;
+				int8_t PREC;
+				uint8_t POLL;
+				uint8_t STRAT;
+				uint8_t MODE : 3;
+				uint8_t VN : 3;
+				uint8_t LI : 2;
 			};
 			uint32_t raw;
 		};
@@ -158,10 +158,11 @@ namespace Alx
 				virtual uint64_t GetUnixTime_us(void) = 0;
 				virtual uint64_t GetUnixTime_ms(void) = 0;
 				virtual uint64_t GetUnixTime_sec(void) = 0;
-				virtual Alx_Status GetRtcUnixTimeOffset_ns(int64_t* rtcUnixTimeOffset_ns) = 0;
-				virtual Alx_Status GetRtcUnixTimeOffset_us(int64_t* rtcUnixTimeOffset_us) = 0;
-				virtual Alx_Status GetRtcUnixTimeOffset_ms(int64_t* rtcUnixTimeOffset_ms) = 0;
-				virtual Alx_Status GetRtcUnixTimeOffset_sec(int64_t* rtcUnixTimeOffset_sec) = 0;
+				virtual Alx_Status GetRtcUnixTimeOffset_ns(int64_t* rtcUnixTimeOffset_ns, uint32_t* ntpRoundTripDelay_ms) = 0;
+				virtual Alx_Status GetRtcUnixTimeOffset_us(int64_t* rtcUnixTimeOffset_us, uint32_t* ntpRoundTripDelay_ms) = 0;
+				virtual Alx_Status GetRtcUnixTimeOffset_ms(int64_t* rtcUnixTimeOffset_ms, uint32_t* ntpRoundTripDelay_ms) = 0;
+				virtual Alx_Status GetRtcUnixTimeOffset_sec(int64_t* rtcUnixTimeOffset_sec, uint32_t* ntpRoundTripDelay_ms) = 0;
+				virtual RxPacket GetLastNtpResponse(void) = 0;
 		};
 
 
@@ -215,7 +216,7 @@ namespace Alx
 				{
 					return GetUnixTime_ns() / 1000000000;
 				}
-				Alx_Status GetRtcUnixTimeOffset_ns(int64_t* rtcUnixTimeOffset_ns) override
+				Alx_Status GetRtcUnixTimeOffset_ns(int64_t* rtcUnixTimeOffset_ns, uint32_t* ntpRoundTripDelay_ms) override
 				{
 					// #1 Lock mutex
 					mutex.Lock();
@@ -348,34 +349,42 @@ namespace Alx
 
 					// #16 Return
 					*rtcUnixTimeOffset_ns = ut.offset_ns;
+					if (ntpRoundTripDelay_ms != NULL)
+					{
+						*ntpRoundTripDelay_ms = (uint32_t)abs(ut.delay_ns / 1000000);
+					}
 					return Alx_Ok;
 				}
-				Alx_Status GetRtcUnixTimeOffset_us(int64_t* rtcUnixTimeOffset_us) override
+				Alx_Status GetRtcUnixTimeOffset_us(int64_t* rtcUnixTimeOffset_us, uint32_t* ntpRoundTripDelay_ms) override
 				{
 					int64_t offset_ns = 0;
-					if (GetRtcUnixTimeOffset_ns(&offset_ns) != Alx_Ok) { return Alx_Err; }
+					if (GetRtcUnixTimeOffset_ns(&offset_ns, ntpRoundTripDelay_ms) != Alx_Ok) { return Alx_Err; }
 					;
 					*rtcUnixTimeOffset_us = offset_ns / 1000;
 
 					return Alx_Ok;
 				}
-				Alx_Status GetRtcUnixTimeOffset_ms(int64_t* rtcUnixTimeOffset_ms) override
+				Alx_Status GetRtcUnixTimeOffset_ms(int64_t* rtcUnixTimeOffset_ms, uint32_t* ntpRoundTripDelay_ms) override
 				{
 					int64_t offset_ns = 0;
-					if (GetRtcUnixTimeOffset_ns(&offset_ns) != Alx_Ok) { return Alx_Err; }
+					if (GetRtcUnixTimeOffset_ns(&offset_ns, ntpRoundTripDelay_ms) != Alx_Ok) { return Alx_Err; }
 					;
 					*rtcUnixTimeOffset_ms = offset_ns / 1000000;
 
 					return Alx_Ok;
 				}
-				Alx_Status GetRtcUnixTimeOffset_sec(int64_t* rtcUnixTimeOffset_sec) override
+				Alx_Status GetRtcUnixTimeOffset_sec(int64_t* rtcUnixTimeOffset_sec, uint32_t* ntpRoundTripDelay_ms) override
 				{
 					int64_t offset_ns = 0;
-					if (GetRtcUnixTimeOffset_ns(&offset_ns) != Alx_Ok) { return Alx_Err; }
+					if (GetRtcUnixTimeOffset_ns(&offset_ns, ntpRoundTripDelay_ms) != Alx_Ok) { return Alx_Err; }
 					;
 					*rtcUnixTimeOffset_sec = offset_ns / 1000000000;
 
 					return Alx_Ok;
+				}
+				RxPacket GetLastNtpResponse(void) override
+				{
+					return rxPacket;
 				}
 
 			private:
@@ -385,7 +394,7 @@ namespace Alx
 
 				// Parameters - Const
 				const uint32_t RESET_WAIT_TIME_ms = 5000; // TODO, UDP reset PCB duration, figure out?
-				const int SOCK_TIMEOUT_ms = 30000;
+				const int SOCK_TIMEOUT_ms = 5000;
 
 				const uint32_t txPacket[12] = { '\x1b' };
 				const uint64_t TIME_FROM_1900_TO_1970_sec = 2208988800;

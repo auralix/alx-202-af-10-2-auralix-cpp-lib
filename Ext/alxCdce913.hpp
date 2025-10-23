@@ -1,7 +1,7 @@
 ﻿/**
   ******************************************************************************
-  * @file		alxA352.hpp
-  * @brief		Auralix C++ Library - ALX Accelerometer Epson A352 Module
+  * @file		alxCdce913.hpp
+  * @brief		Auralix C++ Library - ALX CDCE913 PLL Module
   * @copyright	Copyright (C) Auralix d.o.o. All rights reserved.
   *
   * @section License
@@ -28,18 +28,18 @@
 //******************************************************************************
 // Include Guard
 //******************************************************************************
-#ifndef ALX_A352_HPP
-#define ALX_A352_HPP
+#ifndef ALX_CDCE913_HPP
+#define ALX_CDCE913_HPP
 
 
 //******************************************************************************
 // Includes
 //******************************************************************************
 #include "alxGlobal.hpp"
-#include "alxAccelerometer.hpp"
-#include "alxA352.h"
+#include "alxCdce913.h"
+#include "alxI2c.hpp"
+#include "alxDac.hpp"
 #include "alxIoPin.hpp"
-#include "alxSpi.hpp"
 
 
 //******************************************************************************
@@ -53,62 +53,88 @@
 //******************************************************************************
 namespace Alx
 {
-	namespace AlxA352
+	namespace AlxCdce913
 	{
 		//******************************************************************************
-		// Class - A352
+		// Class - ICdce913
 		//******************************************************************************
-		class A352 : public AlxAccelerometer::IAccelerometer
+		class ICdce913
 		{
 			public:
 				//------------------------------------------------------------------------------
 				// Public Functions
 				//------------------------------------------------------------------------------
-				A352
+				ICdce913() {}
+				virtual Alx_Status Init
 				(
-					Alx::AlxSpi::Spi* spi,
-					uint8_t spiNumOfTries,
-					uint16_t spiTimeout_ms
+					float xtalFrequency,
+					AlxCdce913_RegEnum_INCLK xtalSource,
+					uint8_t xtalCapacitance_pF
+				) = 0;
+				virtual Alx_Status DeInit(void) = 0;
+				virtual Alx_Status SetY1OutputFreq(AlxCdce913_OutputY1 freq) = 0;
+				virtual Alx_Status SetVctrl(float vctrl_V) = 0;
+				virtual Alx_Status EnableY1(void) = 0;
+				virtual Alx_Status DisableY1(void) = 0;
+				virtual void* GetCStructPtr(void) = 0;
+				virtual ~ICdce913() {}
+		};
+
+		//******************************************************************************
+		// Class - CDCE913
+		//******************************************************************************
+		class Cdce913 : public ICdce913
+		{
+			public:
+				//------------------------------------------------------------------------------
+				// Public Functions
+				//------------------------------------------------------------------------------
+				Cdce913
+				(
+					Alx::AlxI2c::II2c* i2c,
+					Alx::AlxDac::IDac* dac,
+					float dacReference_V,
+					Alx_Ch dacChannel,
+					Alx::AlxIoPin::IIoPin* pllEnable
 				)
 				{
-					AlxA352_Ctor
-					(
+					AlxCdce913_Ctor(
 						&me,
-						spi->GetCStructPtr(),
-						spiNumOfTries,
-						spiTimeout_ms
-					);
+						i2c->GetCStructPtr(),
+						dac->GetCStructPtr(),
+						dacReference_V,
+						dacChannel,
+						pllEnable->GetCStructPtr());
 				}
-				virtual ~A352() {}
+				virtual ~Cdce913() {}
 				Alx_Status Init
 				(
-					AlxAccDevice device,
-					AlxAccRange range,
-					float sampleRate,
-					AlxAccSyncMode syncMode
+					float xtalFrequency,
+					AlxCdce913_RegEnum_INCLK xtalSource,
+					uint8_t xtalCapacitance_pF
 				) override
 				{
-					return AlxA352_Init(&me, device, range, sampleRate, syncMode);
+					return AlxCdce913_Init(&me, xtalFrequency, xtalSource, xtalCapacitance_pF);
 				}
 				Alx_Status DeInit(void) override
 				{
-					return AlxA352_DeInit(&me);
+					return AlxCdce913_DeInit(&me);
 				}
-				Alx_Status Enable(void) override
+				Alx_Status SetY1OutputFreq(AlxCdce913_OutputY1 freq) override
 				{
-					return AlxA352_Enable(&me);
+					return AlxCdce913_SetY1OutputFreq(&me, freq);
 				}
-				Alx_Status Disable(void) override
+				Alx_Status SetVctrl(float vctrl_V) override
 				{
-					return AlxA352_Disable(&me);
+					return AlxCdce913_SetVctrl(&me, vctrl_V);
 				}
-				Alx_Status GetData(AccDataPoint* data, uint8_t len) override
+				Alx_Status EnableY1(void) override
 				{
-					return AlxA352_GetData(&me, data, len);
+					return AlxCdce913_EnableY1(&me);
 				}
-				uint8_t GetFifoLen(void) override
+				Alx_Status DisableY1(void) override
 				{
-					return AlxA352_GetFifoLen(&me);
+					return AlxCdce913_DisableY1(&me);
 				}
 				void* GetCStructPtr(void) override
 				{
@@ -119,7 +145,7 @@ namespace Alx
 				//------------------------------------------------------------------------------
 				// Private Variables
 				//------------------------------------------------------------------------------
-				::AlxA352 me = {};
+				::AlxCdce913 me = {};
 		};
 	}
 }
@@ -127,4 +153,4 @@ namespace Alx
 
 #endif	// #if defined(ALX_CPP_LIB)
 
-#endif	// #ifndef ALX_A352_HPP
+#endif	// #ifndef ALX_CDCE913_HPP

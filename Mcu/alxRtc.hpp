@@ -85,6 +85,7 @@ namespace Alx
 				virtual Alx_Status TuneTime_ns(int64_t tuneTime_ns) = 0;
 				virtual Alx_Status TuneTime_us(int64_t tuneTime_ns) = 0;
 				virtual Alx_Status TuneTime_ms(int64_t tuneTime_ns) = 0;
+				virtual Alx_Status TuneClockSource(float offset) = 0;
 		};
 
 
@@ -186,6 +187,10 @@ namespace Alx
 				Alx_Status TuneTime_ms(int64_t tuneTime_ms) override
 				{
 					return AlxRtc_TuneTime_ms(&me, tuneTime_ms);
+				}
+				Alx_Status TuneClockSource(float offset) override
+				{
+					return AlxRtc_TuneClockSource(&me, offset);
 				}
 
 			protected:
